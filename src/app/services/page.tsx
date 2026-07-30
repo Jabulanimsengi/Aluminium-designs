@@ -6,9 +6,9 @@ import CTASection from "@/components/CTASection";
 import { PenTool } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Custom Aluminium & Glass Services",
+  title: "Aluminium Windows, Doors & Security | Apex Aluminium",
   description:
-    "Explore our range of architectural solutions: windows, sliding doors, shopfronts, custom fabrication, office partitions, balustrades, and repairs.",
+    "Explore our full range of home products: aluminium windows, sliding patio doors, security gates, burglar bars, and patio enclosures.",
 };
 
 export default function ServicesPage() {
@@ -19,14 +19,13 @@ export default function ServicesPage() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-5">
           <div className="inline-flex items-center gap-2 bg-surface border border-outline-variant px-3.5 py-1 font-mono text-[10px] font-bold tracking-widest uppercase rounded-full">
             <PenTool className="w-3.5 h-3.5 text-secondary" />
-            <span className="text-secondary">Architectural Product Range</span>
+            <span className="text-secondary">Products &amp; Services</span>
           </div>
           <h1 className="font-sans text-4xl sm:text-5xl font-bold uppercase tracking-tight text-primary">
-            Our Aluminium &amp; Glass Solutions
+            Aluminium Windows, Doors &amp; Security
           </h1>
           <p className="text-on-surface-variant text-base leading-relaxed max-w-2xl mx-auto">
-            From luxury residential retrofits to high-volume commercial shopfronts, we design,
-            fabricate, and install premium architectural systems from scratch.
+            Explore our full range of clean, rust-proof aluminium solutions custom-made to elevate your home.
           </p>
         </div>
       </section>

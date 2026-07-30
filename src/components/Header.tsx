@@ -165,7 +165,7 @@ export default function Header() {
               href="/quote"
               className="bg-primary hover:bg-secondary text-on-primary px-5 py-2 rounded-full font-mono text-[11px] font-bold tracking-widest uppercase transition-colors inline-flex items-center gap-1.5"
             >
-              Quotation
+              Free Quote
               <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </div>
@@ -254,7 +254,7 @@ export default function Header() {
                 onClick={() => setMobileMenuOpen(false)}
                 className="flex items-center justify-center w-full py-3.5 rounded-full bg-primary hover:bg-secondary text-on-primary font-mono text-xs font-bold uppercase tracking-widest transition-colors"
               >
-                Request Quotation
+                Request Free Quote
                 <ArrowRight className="w-4 h-4 ml-2" />
               </Link>
             </div>

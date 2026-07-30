@@ -3,15 +3,15 @@ import { Metadata } from "next";
 import { Phone, Mail, MapPin, Clock, ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Contact Us | Aluminium Designs Offices",
+  title: "Contact Us | Apex Aluminium",
   description:
-    "Contact our specialist team for site measurements, consulting, or emergency replacements. Call, email, or message us today.",
+    "Get in touch with our team for free site measurements, quotes, or advice on aluminium windows, doors, and gates. Call, email, or visit us in Sandton.",
 };
 
 export default function ContactPage() {
   const contactDetails = [
     {
-      title: "Physical Address",
+      title: "Our Address",
       value: "Unit 12, Enterprise Industrial Park, Sandton, Johannesburg, 2196",
       icon: MapPin,
       action: "https://maps.google.com/?q=Sandton+Johannesburg",
@@ -23,10 +23,10 @@ export default function ContactPage() {
       value: "+27 87 123 4567",
       icon: Phone,
       action: "tel:+27871234567",
-      actionText: "Call Office",
+      actionText: "Call Us Now",
     },
     {
-      title: "Email Inquiries",
+      title: "Email",
       value: "info@aluminiumdesigns.co.za",
       icon: Mail,
       action: "mailto:info@aluminiumdesigns.co.za",
@@ -41,13 +41,13 @@ export default function ContactPage() {
         <div className="text-center max-w-3xl mx-auto mb-16">
           <div className="inline-flex items-center gap-2 bg-surface-container-lowest border border-outline-variant px-3.5 py-1 font-mono text-[10px] font-bold tracking-widest uppercase rounded-full">
             <MapPin className="w-3.5 h-3.5 text-secondary" />
-            <span className="text-secondary">Our Location</span>
+            <span className="text-secondary">We Service All Of Gauteng</span>
           </div>
           <h1 className="mt-4 font-sans text-3xl sm:text-4xl lg:text-5xl font-bold uppercase tracking-tight text-primary">
-            Speak With Our Team
+            Get in Touch With Our Team
           </h1>
-          <p className="mt-4 text-on-surface-variant text-sm leading-relaxed">
-            Questions about profiles, glass options, lead times, or pricing? We&apos;re ready to help.
+          <p className="mt-4 text-on-surface-variant text-sm sm:text-base leading-relaxed">
+            Have questions about prices, product options, or booking a free home measurement? We&apos;re friendly and ready to help.
           </p>
         </div>
 
@@ -60,7 +60,7 @@ export default function ContactPage() {
                 return (
                   <div
                     key={item.title}
-                    className="border border-outline-variant bg-surface-container-lowest p-6 flex items-start gap-4 hover:border-primary transition-colors rounded-2xl"
+                    className="border border-outline-variant bg-surface-container-lowest p-6 flex items-start gap-4 hover:border-primary transition-colors rounded-2xl shadow-sm"
                   >
                     <div className="w-10 h-10 border border-outline-variant bg-surface-container flex items-center justify-center text-secondary shrink-0 rounded-xl">
                       <Icon className="w-5 h-5" />
@@ -77,7 +77,7 @@ export default function ContactPage() {
                           href={item.action}
                           target={item.target}
                           rel="noopener noreferrer"
-                          className="inline-flex items-center text-[10px] font-mono font-bold uppercase tracking-widest text-secondary hover:text-primary transition-colors"
+                          className="inline-flex items-center text-[10px] font-mono font-bold uppercase tracking-widest text-secondary hover:text-primary transition-colors mt-1"
                         >
                           {item.actionText}
                           <ArrowRight className="w-3 h-3 ml-1" />
@@ -90,14 +90,14 @@ export default function ContactPage() {
             </div>
 
             {/* Hours */}
-            <div className="border border-outline-variant bg-surface-container-lowest p-6 space-y-4 rounded-2xl">
+            <div className="border border-outline-variant bg-surface-container-lowest p-6 space-y-4 rounded-2xl shadow-sm">
               <h4 className="font-sans font-bold text-sm uppercase text-primary flex items-center gap-2">
                 <Clock className="w-4 h-4 text-secondary shrink-0" />
                 Working Hours
               </h4>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
                 <div>
-                  <p className="font-mono text-[10px] uppercase tracking-wider text-outline">Mon - Fri</p>
+                  <p className="font-mono text-[10px] uppercase tracking-wider text-outline">Monday - Friday</p>
                   <p className="font-sans font-bold text-primary mt-0.5">08:00 - 17:00</p>
                 </div>
                 <div>
@@ -106,14 +106,14 @@ export default function ContactPage() {
                 </div>
               </div>
               <div className="border-t border-outline-variant pt-3 font-mono text-[9px] uppercase tracking-wider text-outline">
-                Available for site measures by appointment
+                Home measurements available by appointment
               </div>
             </div>
           </div>
 
           {/* Styled Map */}
           <div className="lg:col-span-7">
-            <div className="border border-outline-variant bg-surface-container-lowest h-full min-h-[400px] flex flex-col justify-between p-6 relative overflow-hidden rounded-2xl">
+            <div className="border border-outline-variant bg-surface-container-lowest h-full min-h-[400px] flex flex-col justify-between p-6 relative overflow-hidden rounded-2xl shadow-sm">
               <div className="absolute inset-0 opacity-[0.06] pointer-events-none">
                 <svg className="w-full h-full text-primary" xmlns="http://www.w3.org/2000/svg">
                   <defs>
@@ -142,12 +142,12 @@ export default function ContactPage() {
               </div>
 
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
-                <span className="absolute w-12 h-12 bg-on-tertiary-container/20 animate-ping" />
-                <span className="w-6 h-6 bg-on-tertiary-container border-2 border-white flex items-center justify-center relative z-10">
-                  <span className="w-2.5 h-2.5 bg-white" />
+                <span className="absolute w-12 h-12 bg-on-tertiary-container/20 animate-ping rounded-full" />
+                <span className="w-6 h-6 bg-on-tertiary-container border-2 border-white flex items-center justify-center relative z-10 rounded-full">
+                  <span className="w-2 h-2 bg-white rounded-full" />
                 </span>
-                <div className="mt-2.5 bg-primary border border-outline-variant font-mono text-[9px] font-bold uppercase tracking-widest px-2.5 py-1 text-white relative z-10 rounded-full">
-                  Sandton HQ
+                <div className="mt-2.5 bg-primary border border-outline-variant font-mono text-[9px] font-bold uppercase tracking-widest px-3 py-1 text-white relative z-10 rounded-full shadow-sm">
+                  Sandton Workshop
                 </div>
               </div>
 
@@ -155,7 +155,7 @@ export default function ContactPage() {
                 <div>
                   <p className="font-sans font-bold text-primary">Enterprise Industrial Park</p>
                   <p className="font-mono text-[9px] uppercase tracking-wider text-outline mt-0.5">
-                    Secure parking &amp; loading bay inside
+                    Secure visitor parking inside
                   </p>
                 </div>
                 <a

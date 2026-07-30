@@ -9,7 +9,7 @@ interface CTASectionProps {
 
 export default function CTASection({
   title = "Ready to Start Your Project?",
-  subtitle = "Contact our expert estimators for a free on-site measurement and consultation, or request a detailed quotation online.",
+  subtitle = "Contact our team for a free on-site home measurement, or request a quick price quote online.",
 }: CTASectionProps) {
   return (
     <section className="py-24 bg-primary border-b border-outline-variant">

@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const service = services.find((s) => s.slug === `/services/${slug}`);
   if (!service) return { title: "Service Not Found" };
   return {
-    title: `${service.title} | Premium Aluminium`,
+    title: `${service.title} | Apex Aluminium`,
     description: service.shortDescription,
   };
 }
@@ -66,7 +66,7 @@ export default async function ServiceDetailPage({ params }: Props) {
           className="object-cover"
           priority
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/45 to-black/20" />
         <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-12">
           <div className="max-w-4xl mx-auto space-y-3">
             <div className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-md border border-white/20 px-3.5 py-1 font-mono text-[10px] font-bold tracking-widest uppercase rounded-full text-white">
@@ -90,7 +90,7 @@ export default async function ServiceDetailPage({ params }: Props) {
               What You Get
             </span>
             <h2 className="mt-2 font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
-              Features &amp; Benefits
+              Features &amp; Key Highlights
             </h2>
           </div>
 
@@ -100,13 +100,13 @@ export default async function ServiceDetailPage({ params }: Props) {
               return (
                 <div
                   key={feat}
-                  className="flex gap-4 border border-outline-variant bg-surface-container-lowest p-5 rounded-2xl hover:border-primary transition-colors"
+                  className="flex gap-4 border border-outline-variant bg-surface-container-lowest p-5 rounded-2xl hover:border-primary transition-colors shadow-sm"
                 >
                   <div className="w-10 h-10 rounded-xl border border-outline-variant bg-surface-container flex items-center justify-center text-secondary shrink-0 mt-0.5">
                     <Icon className="w-5 h-5" />
                   </div>
                   <div className="min-w-0">
-                    <p className="text-sm text-on-surface leading-relaxed">{feat}</p>
+                    <p className="text-sm text-on-surface font-medium leading-relaxed">{feat}</p>
                   </div>
                 </div>
               );
@@ -119,7 +119,7 @@ export default async function ServiceDetailPage({ params }: Props) {
       <section className="py-16 bg-surface-container-low border-b border-outline-variant">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <p className="font-mono text-[10px] font-bold uppercase tracking-widest text-outline mb-4">
-            Explore Other Services
+            Explore Other Products
           </p>
           <div className="flex flex-wrap gap-2">
             {otherServices.map((s) => (
@@ -146,7 +146,7 @@ export default async function ServiceDetailPage({ params }: Props) {
               Frequently Asked Questions
             </h2>
           </div>
-          <FAQAccordion limit={4} category="pricing" />
+          <FAQAccordion limit={4} category="general" />
         </div>
       </section>
 

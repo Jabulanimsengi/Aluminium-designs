@@ -5,7 +5,7 @@ interface Testimonial {
   id: string;
   name: string;
   role: string;
-  company?: string;
+  location: string;
   content: string;
   rating: number;
 }
@@ -14,29 +14,29 @@ export default function Testimonials() {
   const testimonials: Testimonial[] = [
     {
       id: "t1",
-      name: "Marcus van der Merwe",
-      role: "Lead Architect",
-      company: "VDM Studio Architects",
+      name: "Sarah & Mark Davies",
+      role: "Homeowner",
+      location: "Fourways, Johannesburg",
       content:
-        "Aluminium Designs is our go-to contractor for custom glazed facades. Their attention to detail during site measurements and drawing reviews ensures a perfect fit. They understand the structural demands of high-end architectural projects.",
+        "Replacing our old drafty wooden windows with black aluminium frames changed our whole house! It looks brand new, stays warm during cold winters, and we never have to paint them.",
       rating: 5,
     },
     {
       id: "t2",
-      name: "Sarah Jenkins",
+      name: "Thabo Mokoena",
       role: "Homeowner",
-      company: "Steyn City Estate",
+      location: "Sandton, Johannesburg",
       content:
-        "We replaced all our old steel windows and sliding patio doors with their double-glazed charcoal systems. The thermal isolation is incredible. Our home is quieter, looks extremely modern, and the sliding doors glide effortlessly.",
+        "The sliding patio doors glide so smoothly even my kids can open them with one finger. The installation team was clean, polite, and left my house completely spotless.",
       rating: 5,
     },
     {
       id: "t3",
-      name: "David Ndlovu",
-      role: "Project Manager",
-      company: "Lefika Construction",
+      name: "Michelle Botha",
+      role: "Homeowner",
+      location: "Centurion, Pretoria",
       content:
-        "We contracted them for a commercial development in Rosebank. They installed 1,200 square meters of structural glass shopfronts and office partitions under tight schedules. Exceptional safety compliance and workmanship.",
+        "We got new windows and a slatted security gate installed. Our home feels quiet, looks modern, and gives us complete peace of mind. The best home improvement we've made!",
       rating: 5,
     },
   ];
@@ -46,7 +46,7 @@ export default function Testimonials() {
       {testimonials.map((t) => (
         <div
           key={t.id}
-          className="border border-outline-variant bg-surface-container-lowest p-6 sm:p-8 flex flex-col justify-between relative hover:border-primary transition-colors rounded-2xl"
+          className="border border-outline-variant bg-surface-container-lowest p-6 sm:p-8 flex flex-col justify-between relative hover:border-primary transition-colors rounded-2xl shadow-sm"
         >
           <div className="absolute top-6 right-6 text-surface-container-high opacity-80 pointer-events-none">
             <Quote className="w-10 h-10" />
@@ -55,7 +55,7 @@ export default function Testimonials() {
           <div className="space-y-4">
             <div className="flex items-center gap-1">
               {[...Array(t.rating)].map((_, i) => (
-                <Star key={i} className="w-4 h-4 fill-on-tertiary-container text-on-tertiary-container" />
+                <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
               ))}
             </div>
             <p className="text-sm text-on-surface-variant leading-relaxed italic">
@@ -71,11 +71,10 @@ export default function Testimonials() {
             <div>
               <h4 className="font-sans font-bold text-xs text-primary flex items-center">
                 {t.name}
-                <CheckCircle className="w-3 h-3 text-emerald-600 ml-1.5 shrink-0" />
+                <CheckCircle className="w-3.5 h-3.5 text-emerald-600 ml-1.5 shrink-0" />
               </h4>
               <p className="text-[10px] font-mono text-secondary uppercase tracking-wider">
-                {t.role}
-                {t.company && <span className="text-outline-variant"> | {t.company}</span>}
+                {t.role} | {t.location}
               </p>
             </div>
           </div>

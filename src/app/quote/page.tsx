@@ -4,26 +4,26 @@ import { ClipboardList, ShieldCheck, Clock, FileText } from "lucide-react";
 import QuoteForm from "@/components/QuoteForm";
 
 export const metadata: Metadata = {
-  title: "Request a Free Quote",
+  title: "Request a Free Quote | Apex Aluminium",
   description:
-    "Get an accurate, professional quote for your aluminium windows, doors, shopfronts, or custom fabrication projects.",
+    "Get an easy, upfront quote for your home aluminium windows, doors, patio enclosures, or security gates.",
 };
 
 export default function QuotePage() {
   const steps = [
     {
-      title: "1. Submit Your Request",
-      description: "Tell us what you need, pick your preferences, and attach any plans or photos.",
+      title: "1. Tell Us What You Need",
+      description: "Pick the products you want for your home and share your preferences or photo.",
       icon: ClipboardList,
     },
     {
-      title: "2. Technical Review",
-      description: "Our team reviews your requirements and prepares a detailed, itemized quotation.",
+      title: "2. Fast Written Quote",
+      description: "Our team reviews your details and sends you a clear, itemized price quote.",
       icon: ShieldCheck,
     },
     {
-      title: "3. Free Site Measurement",
-      description: "We visit your property at no cost to take precise measurements and finalize the quote.",
+      title: "3. Free Measurement Visit",
+      description: "We visit your home at no cost to take exact measurements before making your frames.",
       icon: FileText,
     },
   ];
@@ -35,13 +35,13 @@ export default function QuotePage() {
         <div className="text-center max-w-3xl mx-auto mb-16">
           <div className="inline-flex items-center gap-2 bg-surface-container-lowest border border-outline-variant px-3.5 py-1 font-mono text-[10px] font-bold tracking-widest uppercase rounded-full">
             <Clock className="w-3.5 h-3.5 text-secondary" />
-            <span className="text-secondary">Quick Turnaround</span>
+            <span className="text-secondary">Free &amp; Fast Quote</span>
           </div>
           <h1 className="mt-4 font-sans text-3xl sm:text-4xl lg:text-5xl font-bold uppercase tracking-tight text-primary">
-            Request a Quotation
+            Request a Free Home Quote
           </h1>
-          <p className="mt-4 text-on-surface-variant text-sm leading-relaxed">
-            No measurements needed. Just tell us what you want and we&apos;ll handle everything else.
+          <p className="mt-4 text-on-surface-variant text-sm sm:text-base leading-relaxed">
+            No exact measurements needed! Just tell us what you want and we&apos;ll handle everything else.
           </p>
         </div>
 
@@ -53,9 +53,9 @@ export default function QuotePage() {
 
           {/* Sidebar */}
           <div className="lg:col-span-4 space-y-6">
-            <div className="border border-outline-variant bg-surface-container-lowest p-6 space-y-5 rounded-2xl">
+            <div className="border border-outline-variant bg-surface-container-lowest p-6 space-y-5 rounded-2xl shadow-sm">
               <h3 className="font-sans font-bold text-sm uppercase tracking-tight text-primary">
-                How We Quote Your Project
+                How Our Quoting Process Works
               </h3>
               <div className="space-y-5">
                 {steps.map((step) => {
@@ -79,26 +79,25 @@ export default function QuotePage() {
               </div>
             </div>
 
-            <div className="border border-outline-variant bg-surface-container-lowest p-6 space-y-3 rounded-2xl">
+            <div className="border border-outline-variant bg-surface-container-lowest p-6 space-y-3 rounded-2xl shadow-sm">
               <h4 className="font-sans font-bold text-sm uppercase tracking-tight text-primary">
-                Need Immediate Help?
+                Prefer to Talk or Email Us?
               </h4>
               <p className="text-xs text-on-surface-variant leading-relaxed">
-                If you have architectural drawings ready and prefer to submit them directly, or
-                require an urgent site evaluation, contact our team.
+                If you already have building plans, photos, or prefer to speak with our office team directly, feel free to call or email us anytime.
               </p>
               <div className="pt-2 space-y-1.5">
                 <p className="font-mono text-[10px] text-secondary uppercase tracking-wider">
                   Email:{" "}
                   <a
-                    href="mailto:estimates@aluminiumdesigns.co.za"
+                    href="mailto:info@aluminiumdesigns.co.za"
                     className="text-primary hover:text-on-tertiary-container font-bold"
                   >
-                    estimates@aluminiumdesigns.co.za
+                    info@aluminiumdesigns.co.za
                   </a>
                 </p>
                 <p className="font-mono text-[10px] text-secondary uppercase tracking-wider">
-                  Office:{" "}
+                  Phone:{" "}
                   <a href="tel:+27871234567" className="text-primary hover:text-on-tertiary-container font-bold">
                     +27 87 123 4567
                   </a>
