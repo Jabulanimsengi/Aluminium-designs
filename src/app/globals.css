@@ -1,0 +1,91 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --font-display: var(--font-outfit), sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  /* Material 3 design tokens */
+  --color-surface: #f7f9fc;
+  --color-on-surface: #191c1e;
+  --color-on-surface-variant: #44474a;
+
+  --color-primary: #000101;
+  --color-on-primary: #ffffff;
+  --color-primary-container: #1a1c1e;
+  --color-on-primary-container: #838486;
+
+  --color-secondary: #5b5f63;
+  --color-on-secondary: #ffffff;
+  --color-secondary-container: #e0e2e8;
+  --color-on-secondary-container: #616569;
+
+  --color-tertiary: #000000;
+  --color-on-tertiary: #ffffff;
+  --color-tertiary-container: #370e00;
+  --color-on-tertiary-container: #b45309;
+
+  --color-tertiary-fixed: #ffdbce;
+  --color-on-tertiary-fixed: #370e00;
+
+  --color-surface-container: #eceef1;
+  --color-surface-container-low: #f2f4f7;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-high: #e6e8eb;
+  --color-surface-container-highest: #e0e3e6;
+
+  --color-outline: #75777a;
+  --color-outline-variant: #c5c6ca;
+  --color-inverse-surface: #2d3133;
+  --color-inverse-on-surface: #eff1f4;
+
+  --animate-fade-in: fade-in 0.6s ease-out forwards;
+  --animate-fade-in-up: fade-in-up 0.5s ease-out forwards;
+  --animate-slide-in: slide-in 0.3s ease-out forwards;
+  --animate-slide-in-left: slide-in-left 0.3s ease-out forwards;
+
+  @keyframes slide-in-left {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(0); }
+  }
+
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes fade-in-up {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes slide-in {
+    from { transform: translateX(100%); }
+    to { transform: translateX(0); }
+  }
+}
+
+:root {
+  --background: #f7f9fc;
+  --foreground: #191c1e;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+/* Utility: hide scrollbars */
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Dotted leader for spec tables */
+.dotted-leader {
+  flex-grow: 1;
+  border-bottom: 1px dotted #c5c6ca;
+  margin: 0 8px;
+  margin-bottom: 5px;
+}
