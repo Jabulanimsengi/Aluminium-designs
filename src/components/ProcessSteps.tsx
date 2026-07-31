@@ -1,5 +1,5 @@
 import React from "react";
-import { MessageSquare, Ruler, FileSpreadsheet, Hammer, Drill, Award, type LucideIcon } from "lucide-react";
+import { Ruler, Hammer, Award, type LucideIcon } from "lucide-react";
 
 interface Step {
   number: string;
@@ -12,38 +12,23 @@ export default function ProcessSteps() {
   const steps: Step[] = [
     {
       number: "01",
-      title: "First Chat",
-      description: "Tell us what you need — new windows, patio doors, or security gates for your home.",
-      icon: MessageSquare,
-    },
-    {
-      number: "02",
-      title: "Free Home Visit",
-      description: "We visit your home to take exact measurements so everything fits perfectly.",
+      title: "Consult & Measure",
+      description:
+        "Tell us what you need, then we visit your property to assess the space and take accurate measurements.",
       icon: Ruler,
     },
     {
-      number: "03",
-      title: "Clear Pricing",
-      description: "You get a simple, upfront quote with no hidden fees or extra costs.",
-      icon: FileSpreadsheet,
-    },
-    {
-      number: "04",
-      title: "Custom Making",
-      description: "We manufacture your frames and glass from scratch in our factory.",
+      number: "02",
+      title: "Quote & Manufacture",
+      description:
+        "You receive a clear quote. Once approved, we custom-manufacture your aluminium frames and glass.",
       icon: Hammer,
     },
     {
-      number: "05",
-      title: "Neat Installation",
-      description: "Our friendly team fits your frames neatly and cleans up before leaving.",
-      icon: Drill,
-    },
-    {
-      number: "06",
-      title: "Final Check",
-      description: "We test all locks, handles, and sliding doors with you to ensure you are 100% happy.",
+      number: "03",
+      title: "Install & Final Check",
+      description:
+        "We install everything neatly, test all locks and moving parts, and clean the work area before handover.",
       icon: Award,
     },
   ];
@@ -51,8 +36,8 @@ export default function ProcessSteps() {
   return (
     <div className="relative">
       {/* Connector line */}
-      <div className="absolute top-7 left-12 right-12 h-px bg-outline-variant hidden xl:block z-0" />
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-6 gap-8 relative z-10">
+      <div className="absolute top-7 left-12 right-12 h-px bg-outline-variant hidden md:block z-0" />
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-10 lg:gap-16 relative z-10">
         {steps.map((step, idx) => {
           const Icon = step.icon;
           return (
@@ -66,7 +51,7 @@ export default function ProcessSteps() {
               <h4 className="font-sans font-bold text-sm uppercase text-primary mt-5 group-hover:text-on-tertiary-container transition-colors">
                 {step.title}
               </h4>
-              <p className="text-xs text-on-surface-variant leading-relaxed mt-2 max-w-[200px] md:max-w-none">
+              <p className="text-xs text-on-surface-variant leading-relaxed mt-2 max-w-xs">
                 {step.description}
               </p>
               {idx < steps.length - 1 && (

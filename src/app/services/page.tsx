@@ -6,7 +6,7 @@ import CTASection from "@/components/CTASection";
 import { PenTool } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Aluminium Windows, Doors & Security | Apex Aluminium",
+  title: "Aluminium Windows, Doors & Security | Aluminium Designs",
   description:
     "Explore our full range of home products: aluminium windows, sliding patio doors, security gates, burglar bars, and patio enclosures.",
 };
@@ -33,7 +33,7 @@ export default function ServicesPage() {
       {/* Grid */}
       <section className="py-24 bg-surface border-b border-outline-variant">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {services.map((service) => (
               <ServiceCard
                 key={service.id}

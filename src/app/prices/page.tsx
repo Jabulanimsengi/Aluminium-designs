@@ -258,7 +258,7 @@ export default function PricesPage() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
             <Link
               href="/quote"
-              className="inline-flex items-center gap-2 bg-on-tertiary-container hover:bg-[#92400e] text-white px-6 py-3.5 font-mono text-[11px] font-bold uppercase tracking-widest transition-colors rounded-full shadow-sm"
+              className="inline-flex items-center gap-2 bg-on-tertiary-container hover:bg-primary text-white px-6 py-3.5 font-mono text-[11px] font-bold uppercase tracking-widest transition-colors rounded-full shadow-sm"
             >
               Request Free Quote
               <ArrowRight className="w-4 h-4" />

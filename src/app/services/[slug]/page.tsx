@@ -8,7 +8,7 @@ import FAQAccordion from "@/components/FAQAccordion";
 import Link from "next/link";
 import {
   Shield, Wind, GlassWater, PaintBucket, Lock, Wrench,
-  Ruler, Sun, Sparkles, Drill, type LucideIcon,
+  Ruler, Sun, Sparkles, Drill, ArrowUpRight, type LucideIcon,
 } from "lucide-react";
 
 interface Props {
@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const service = services.find((s) => s.slug === `/services/${slug}`);
   if (!service) return { title: "Service Not Found" };
   return {
-    title: `${service.title} | Apex Aluminium`,
+    title: `${service.title} | Aluminium Designs`,
     description: service.shortDescription,
   };
 }
@@ -116,21 +116,63 @@ export default async function ServiceDetailPage({ params }: Props) {
       </section>
 
       {/* Other services */}
-      <section className="py-16 bg-surface-container-low border-b border-outline-variant">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="font-mono text-[10px] font-bold uppercase tracking-widest text-outline mb-4">
-            Explore Other Products
-          </p>
-          <div className="flex flex-wrap gap-2">
-            {otherServices.map((s) => (
+      <section className="py-20 bg-surface-container-low border-b border-outline-variant overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="mb-10 text-center">
+            <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
+              More Aluminium Solutions
+            </span>
+            <h2 className="mt-2 font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
+              Explore Other Products
+            </h2>
+            <p className="mt-3 max-w-xl mx-auto text-sm leading-relaxed text-on-surface-variant">
+              Browse more made-to-measure products for residential and commercial properties.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {otherServices.slice(0, 4).map((s) => (
               <Link
                 key={s.id}
                 href={s.slug}
-                className="rounded-full border border-outline-variant bg-surface hover:bg-surface-container hover:border-primary px-4 py-2 font-mono text-[10px] font-bold uppercase tracking-wider text-secondary hover:text-primary transition-colors"
+                className="group overflow-hidden border border-outline-variant bg-surface-container-lowest transition-all duration-300 hover:-translate-y-1 hover:border-primary hover:shadow-lg"
               >
-                {s.title}
+                <div className="relative aspect-[4/3] overflow-hidden bg-surface-container-high">
+                  <Image
+                    src={s.imagePath}
+                    alt={s.title}
+                    fill
+                    sizes="320px"
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/35 to-transparent" />
+                  <div className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-white text-primary shadow-md transition-colors group-hover:bg-primary group-hover:text-on-primary">
+                    <ArrowUpRight className="h-4 w-4" />
+                  </div>
+                </div>
+                <div className="p-5">
+                  <span className="font-mono text-[9px] font-bold uppercase tracking-[0.18em] text-secondary">
+                    Custom manufactured
+                  </span>
+                  <h3 className="mt-2 font-sans text-base font-bold uppercase tracking-tight text-primary">
+                    {s.title}
+                  </h3>
+                  <p className="mt-3 line-clamp-2 text-xs leading-relaxed text-on-surface-variant">
+                    {s.shortDescription}
+                  </p>
+                </div>
               </Link>
             ))}
+          </div>
+
+          <div className="mt-6 flex justify-center">
+            <Link
+              href="/services"
+              className="inline-flex items-center gap-2 rounded-full border border-outline-variant bg-surface px-5 py-3 font-mono text-[10px] font-bold uppercase tracking-widest text-primary transition-colors hover:border-primary hover:bg-primary hover:text-on-primary"
+            >
+              View All Products
+              <ArrowUpRight className="h-4 w-4" />
+            </Link>
           </div>
         </div>
       </section>

@@ -7,7 +7,7 @@ import CTASection from "@/components/CTASection";
 type FaqCategory = "general" | "installation" | "pricing";
 
 export const metadata: Metadata = {
-  title: "Frequently Asked Questions | Apex Aluminium",
+  title: "Frequently Asked Questions | Aluminium Designs",
   description:
     "Find clear answers about window and door delivery times, custom sizes, safety glass, warranties, and free home quotes.",
 };

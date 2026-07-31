@@ -5,7 +5,7 @@ import React from "react";
 export default function WhatsAppBubble() {
   const phoneNumber = "27871234567"; // Official phone number format
   const message = encodeURIComponent(
-    "Hi Apex Aluminium, I am visiting your website and would like to request a quote or consultation for an aluminium installation."
+    "Hi Aluminium Designs, I am visiting your website and would like to request a quote or consultation for an aluminium installation."
   );
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
 

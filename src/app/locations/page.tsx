@@ -5,7 +5,7 @@ import { gautengLocations } from "@/data/locations";
 import CTASection from "@/components/CTASection";
 
 export const metadata = {
-  title: "Service Areas in Gauteng | Apex Aluminium",
+  title: "Service Areas in Gauteng | Aluminium Designs",
   description: "View our list of service areas across Gauteng. We manufacture and install custom aluminium windows, doors, and security gates in Johannesburg, Pretoria, and surrounding areas.",
 };
 

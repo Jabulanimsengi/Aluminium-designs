@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, ShieldCheck, Check, Sparkles, Hammer, ChevronRight, Lock, Sun, VolumeX } from "lucide-react";
+import { ArrowRight, Check, ChevronRight, Lock, Sun, VolumeX, Building2, House, MapPin, Paintbrush, Ruler, Gem } from "lucide-react";
 import { services } from "@/data/services";
 import { projects } from "@/data/projects";
 import ServiceCard from "@/components/ServiceCard";
@@ -16,33 +16,29 @@ export default function Home() {
       title: "Zero Maintenance",
       description:
         "Our aluminium frames never rot, rust, or need painting. A quick wipe keeps them looking brand new for years.",
-      icon: Sparkles,
+      icon: Paintbrush,
       tag: "No Painting Needed",
-      span: "md:col-span-2 bg-surface-container-lowest",
     },
     {
       title: "Warm & Quiet Rooms",
       description:
         "Sealed glass and rubber joints block cold winter drafts, keep heat inside, and reduce noisy street sounds.",
-      icon: ShieldCheck,
+      icon: VolumeX,
       tag: "Draft & Noise Shield",
-      span: "md:col-span-1 bg-surface-container-lowest",
     },
     {
       title: "Made to Fit Your Space",
       description:
         "Every window and door is built from scratch to fit your exact wall openings. No generic sizes or ugly gaps.",
-      icon: Hammer,
+      icon: Ruler,
       tag: "100% Custom Fit",
-      span: "md:col-span-1 bg-surface-container-lowest",
     },
     {
       title: "Sleek Modern Finishes",
       description:
         "Durable, non-peeling colours in Matte Black, Charcoal Grey, and Satin Silver that instantly boost your home's curb appeal.",
-      icon: Sparkles,
+      icon: Gem,
       tag: "Stylish & Modern",
-      span: "md:col-span-2 bg-primary text-on-primary",
     },
   ];
 
@@ -73,7 +69,7 @@ export default function Home() {
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full pb-12 md:pb-20">
-          <div className="max-w-3xl space-y-5">
+          <div className="max-w-3xl mx-auto space-y-5 text-center">
             <div className="inline-block border-l-4 border-on-tertiary-container bg-black/60 backdrop-blur-md px-4 py-1.5 rounded-full">
               <p className="font-mono text-[10px] font-bold uppercase tracking-widest text-white">
                 Quality Windows, Doors &amp; Security Gates
@@ -82,14 +78,14 @@ export default function Home() {
             <h1 className="font-sans text-4xl sm:text-5xl lg:text-6xl font-bold uppercase leading-[1.05] tracking-tight text-white">
               Transform Your Home With Beautiful Aluminium
             </h1>
-            <p className="text-white/80 max-w-xl text-sm sm:text-base leading-relaxed bg-black/45 backdrop-blur-md p-4 border border-white/10 rounded-xl">
+            <p className="text-white/80 max-w-xl mx-auto text-sm sm:text-base leading-relaxed bg-black/45 backdrop-blur-md p-4 border border-white/10 rounded-xl">
               Clean, rust-proof, and maintenance-free. We manufacture custom aluminium doors,
               windows, and security gates designed to make your house look modern, smart, and safe.
             </p>
-            <div className="flex flex-col sm:flex-row gap-3 pt-2">
+            <div className="flex flex-col sm:flex-row justify-center gap-3 pt-2">
               <Link
                 href="/gallery"
-                className="flex items-center justify-center gap-2 rounded-full bg-on-tertiary-container hover:bg-[#92400e] text-white px-6 py-3.5 font-mono text-xs font-bold uppercase tracking-widest transition-colors"
+                className="flex items-center justify-center gap-2 rounded-full bg-on-tertiary-container hover:bg-primary text-white px-6 py-3.5 font-mono text-xs font-bold uppercase tracking-widest transition-colors"
               >
                 Explore Our Work
                 <ArrowRight className="w-4 h-4" />
@@ -114,39 +110,47 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 2. BENEFITS GRID */}
+      {/* 2. WHAT WE DO */}
       <section className="py-20 bg-surface border-b border-outline-variant">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {benefits.map((benefit) => {
-              const Icon = benefit.icon;
-              const isDark = benefit.span.includes("bg-primary");
-              return (
-                <div
-                  key={benefit.title}
-                  className={`border border-outline-variant rounded-2xl p-8 flex flex-col justify-between gap-6 ${benefit.span} ${
-                    !isDark ? "hover:border-primary hover:shadow-sm" : ""
-                  } transition-all duration-300`}
-                >
-                  <div className="flex items-center justify-between">
-                    <div className={`rounded-2xl p-3 w-fit border border-outline-variant ${isDark ? "bg-primary-container border-on-primary-container/20" : "bg-surface-container"}`}>
-                      <Icon className={`w-6 h-6 ${isDark ? "text-on-primary" : "text-primary"}`} />
-                    </div>
-                    <span className={`text-[10px] font-mono font-bold uppercase tracking-widest px-3 py-1 rounded-full border ${isDark ? "bg-white/10 text-white border-white/20" : "bg-surface-container border-outline-variant text-secondary"}`}>
-                      {benefit.tag}
-                    </span>
-                  </div>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+            <div className="lg:col-span-7 text-center">
+              <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
+                What We Do
+              </span>
+              <h1 className="mt-2 font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary max-w-3xl mx-auto">
+                Aluminium Solutions, Made and Fitted for Your Property
+              </h1>
+              <p className="mt-5 text-sm text-on-surface-variant max-w-2xl mx-auto leading-relaxed">
+                Aluminium Designs measures, manufactures, and installs custom aluminium and glass solutions. From one replacement window to a complete home renovation or commercial fit-out, every product is made to suit the space and installed with care.
+              </p>
+              <div className="mt-7 flex flex-wrap justify-center gap-3">
+                <span className="inline-flex items-center gap-2 rounded-full border border-outline-variant bg-surface-container-low px-4 py-2 text-xs font-medium text-primary">
+                  <House className="w-4 h-4 text-secondary" /> Residential projects
+                </span>
+                <span className="inline-flex items-center gap-2 rounded-full border border-outline-variant bg-surface-container-low px-4 py-2 text-xs font-medium text-primary">
+                  <Building2 className="w-4 h-4 text-secondary" /> Commercial projects
+                </span>
+                <span className="inline-flex items-center gap-2 rounded-full border border-outline-variant bg-surface-container-low px-4 py-2 text-xs font-medium text-primary">
+                  <MapPin className="w-4 h-4 text-secondary" /> Gauteng and surrounds
+                </span>
+              </div>
+            </div>
+            <div className="lg:col-span-5 grid gap-3">
+              {[
+                ["01", "Measure", "We assess your opening, requirements, and preferred finish."],
+                ["02", "Manufacture", "Your aluminium frames and glass are made to the required size."],
+                ["03", "Install", "Our team fits, checks, and leaves your space neat and ready to use."],
+              ].map(([number, title, detail]) => (
+                <div key={number} className="flex gap-4 rounded-2xl border border-outline-variant bg-surface-container-lowest p-5 shadow-sm">
+                  <span className="font-mono text-xs font-bold text-secondary">{number}</span>
                   <div>
-                    <h3 className={`font-sans text-lg font-bold uppercase mb-2 tracking-tight ${isDark ? "text-on-primary" : "text-primary"}`}>
-                      {benefit.title}
-                    </h3>
-                    <p className={`text-xs leading-relaxed ${isDark ? "text-on-primary-container" : "text-on-surface-variant"}`}>
-                      {benefit.description}
-                    </p>
+                    <h3 className="font-sans text-sm font-bold uppercase tracking-tight text-primary">{title}</h3>
+                    <p className="mt-1 text-xs leading-relaxed text-on-surface-variant">{detail}</p>
                   </div>
                 </div>
-              );
-            })}
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -154,20 +158,20 @@ export default function Home() {
       {/* 3. SERVICES SECTION */}
       <section className="py-20 bg-surface-container-low border-b border-outline-variant">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="mb-12">
+          <div className="mb-12 text-center">
             <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
-              What We Make
+              Our Core Services
             </span>
-            <h2 className="mt-2 font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
-              Custom Windows, Doors &amp; Gates
-            </h2>
-            <p className="mt-3 text-sm text-on-surface-variant max-w-xl leading-relaxed">
-              Explore our range of clean, stylish aluminium products built for homes and properties across Gauteng.
+            <h1 className="mt-2 font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
+              Windows, Doors, Security &amp; Glass
+            </h1>
+            <p className="mt-3 text-sm text-on-surface-variant max-w-xl mx-auto leading-relaxed">
+              Start with the services homeowners and businesses ask for most, then explore our complete custom aluminium range.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {services.slice(0, 6).map((service) => (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {services.filter((service) => ["windows", "doors", "sliding-stacking", "burglar-bars", "trellis-doors", "custom"].includes(service.id)).map((service) => (
               <ServiceCard
                 key={service.id}
                 title={service.title}
@@ -191,7 +195,49 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 4. CUSTOM FABRICATION */}
+      {/* 4. WHY ALUMINIUM */}
+      <section className="py-20 bg-surface border-b border-outline-variant">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="mb-12 max-w-2xl mx-auto text-center">
+            <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">Built for Everyday Living</span>
+            <h1 className="mt-2 font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">Why Choose Aluminium?</h1>
+            <p className="mt-3 text-sm leading-relaxed text-on-surface-variant">A practical, modern finish for homes and commercial spaces that need to look good and perform for years.</p>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 border-t border-l border-outline-variant bg-surface-container-lowest">
+            {benefits.map((benefit, index) => {
+              const Icon = benefit.icon;
+              return (
+                <article
+                  key={benefit.title}
+                  className="group min-h-[300px] border-r border-b border-outline-variant bg-surface-container-lowest p-7 sm:p-8 flex flex-col transition-colors duration-300 hover:bg-surface"
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="font-mono text-[10px] font-bold tracking-[0.2em] text-secondary">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <div className="flex h-11 w-11 items-center justify-center rounded-full border border-outline-variant bg-surface-container transition-all duration-300 group-hover:border-primary group-hover:bg-primary group-hover:text-on-primary">
+                      <Icon className="w-5 h-5" />
+                    </div>
+                  </div>
+                  <div className="mt-auto pt-12">
+                    <span className="font-mono text-[9px] font-bold uppercase tracking-[0.16em] text-secondary">
+                      {benefit.tag}
+                    </span>
+                    <h3 className="mt-3 font-sans text-lg font-bold uppercase tracking-tight text-primary">
+                      {benefit.title}
+                    </h3>
+                    <p className="mt-3 text-xs leading-relaxed text-on-surface-variant">
+                      {benefit.description}
+                    </p>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* 5. CUSTOM FABRICATION */}
       <section className="py-20 bg-surface border-b border-outline-variant">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
@@ -212,13 +258,13 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="lg:col-span-7 space-y-6">
+            <div className="lg:col-span-7 space-y-6 text-center">
               <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
                 Tailored Manufacturing
               </span>
-              <h2 className="font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
+              <h1 className="font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
                 Custom Made For Your Home Layout
-              </h2>
+              </h1>
               <p className="text-on-surface-variant text-sm leading-relaxed">
                 Every window, door, and security gate is manufactured from scratch to match your exact home dimensions.
                 We handle the entire process smoothly: measuring your space, custom crafting the frames in our factory,
@@ -242,17 +288,17 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 5. PROCESS SECTION */}
+      {/* 6. PROCESS SECTION */}
       <section className="py-20 bg-surface-container-low border-b border-outline-variant">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="mb-16">
+          <div className="mb-16 text-center">
             <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
               Easy Steps
             </span>
-            <h2 className="mt-2 font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
-              Our Simple 6-Step Process
-            </h2>
-            <p className="mt-3 text-sm text-on-surface-variant max-w-xl leading-relaxed">
+            <h1 className="mt-2 font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
+              Our Simple 3-Step Process
+            </h1>
+            <p className="mt-3 text-sm text-on-surface-variant max-w-xl mx-auto leading-relaxed">
               From our first chat to the final check, we make upgrading your home easy and hassle-free.
             </p>
           </div>
@@ -260,18 +306,18 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 6. GALLERY PREVIEW */}
+      {/* 7. GALLERY PREVIEW */}
       <section className="py-20 bg-surface border-b border-outline-variant">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12">
+          <div className="flex flex-col items-center gap-6 mb-12 text-center">
             <div>
               <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
                 Real Home Transformations
               </span>
-              <h2 className="mt-2 font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
+              <h1 className="mt-2 font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
                 Beautiful Homes We&apos;ve Upgraded
-              </h2>
-              <p className="mt-3 text-sm text-on-surface-variant max-w-xl leading-relaxed">
+              </h1>
+              <p className="mt-3 text-sm text-on-surface-variant max-w-xl mx-auto leading-relaxed">
                 Take a look at recent window, door, and gate installations across Gauteng.
               </p>
             </div>
@@ -284,73 +330,41 @@ export default function Home() {
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {projects.slice(0, 3).map((project) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {projects.slice(0, 6).map((project) => (
               <Link
                 key={project.id}
                 href="/gallery"
-                className="group border border-outline-variant bg-surface-container-lowest rounded-2xl overflow-hidden flex flex-col hover:border-primary transition-colors shadow-sm"
+                aria-label={`View ${project.title} in the gallery`}
+                className="group relative aspect-[4/3] overflow-hidden bg-surface-container-high"
               >
-                <div className="relative h-48 w-full overflow-hidden border-b border-outline-variant bg-surface-container-high">
-                  <Image
-                    src={project.imagePath}
-                    alt={project.title}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 33vw"
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                  <span className="absolute top-3 left-3 font-mono text-[9px] font-bold uppercase tracking-widest bg-black/60 backdrop-blur-md text-white px-2.5 py-1 rounded-full">
-                    {project.category}
-                  </span>
-                </div>
-                <div className="p-5 flex flex-col justify-between flex-grow space-y-3">
-                  <div className="space-y-2">
-                    <div className="flex items-center text-[10px] font-mono text-secondary uppercase tracking-wider">
-                      <span className="w-1.5 h-1.5 bg-on-tertiary-container mr-2 rounded-full" />
-                      {project.location}
-                    </div>
-                    <h4 className="font-sans font-bold text-base text-primary uppercase tracking-tight group-hover:text-on-tertiary-container transition-colors">
-                      {project.title}
-                    </h4>
-                    <p className="text-xs text-on-surface-variant leading-relaxed line-clamp-2">
-                      {project.description}
-                    </p>
-                  </div>
-
-                  {/* Aesthetic tags */}
-                  <div className="flex flex-wrap gap-1.5 pt-2 border-t border-outline-variant">
-                    <span className="text-[9px] font-mono bg-surface-container border border-outline-variant px-2 py-0.5 rounded-full text-secondary">
-                      {project.finish}
-                    </span>
-                    <span className="text-[9px] font-mono bg-surface-container border border-outline-variant px-2 py-0.5 rounded-full text-secondary">
-                      {project.aesthetic}
-                    </span>
-                  </div>
-
-                  <div className="pt-2 flex items-center text-[11px] font-mono font-bold uppercase tracking-widest text-secondary">
-                    View Project
-                    <ChevronRight className="w-3.5 h-3.5 ml-1" />
-                  </div>
-                </div>
+                <Image
+                  src={project.imagePath}
+                  alt={project.title}
+                  fill
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <span className="absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/15" />
               </Link>
             ))}
           </div>
         </div>
       </section>
 
-      {/* 7. WHY CHOOSE US */}
+      {/* 8. WHY CHOOSE US */}
       <section className="py-20 bg-surface-container-low border-b border-outline-variant">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             <div className="lg:col-span-7 space-y-8">
-              <div>
+              <div className="text-center">
                 <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
                   Why Work With Us
                 </span>
-                <h2 className="mt-2 font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
-                  Why Homeowners Choose Apex Aluminium
-                </h2>
-                <p className="mt-3 text-sm text-on-surface-variant max-w-lg leading-relaxed">
+                <h1 className="mt-2 font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
+                  Why Homeowners Choose Aluminium Designs
+                </h1>
+                <p className="mt-3 text-sm text-on-surface-variant max-w-lg mx-auto leading-relaxed">
                   We make upgrading your windows, doors, and gates simple, neat, and stress-free.
                 </p>
               </div>
@@ -405,17 +419,17 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 8. TESTIMONIALS */}
+      {/* 9. TESTIMONIALS */}
       <section className="py-20 bg-surface border-b border-outline-variant">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="mb-12">
+          <div className="mb-12 text-center">
             <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
               Client Reviews
             </span>
-            <h2 className="mt-2 font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
+            <h1 className="mt-2 font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
               Trusted By Homeowners Across Gauteng
-            </h2>
-            <p className="mt-3 text-sm text-on-surface-variant max-w-xl leading-relaxed">
+            </h1>
+            <p className="mt-3 text-sm text-on-surface-variant max-w-xl mx-auto leading-relaxed">
               Read what happy property owners say about our work and clean installations.
             </p>
           </div>
@@ -423,17 +437,17 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 9. FAQ */}
+      {/* 10. FAQ */}
       <section className="py-20 bg-surface-container-low border-b border-outline-variant">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="mb-12">
+          <div className="mb-12 text-center">
             <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
               Quick Answers
             </span>
-            <h2 className="mt-2 font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
+            <h1 className="mt-2 font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
               Frequently Asked Questions
-            </h2>
-            <p className="mt-3 text-sm text-on-surface-variant max-w-xl leading-relaxed">
+            </h1>
+            <p className="mt-3 text-sm text-on-surface-variant max-w-xl mx-auto leading-relaxed">
               Have questions about prices, delivery times, or guarantees? Find quick answers below.
             </p>
           </div>
@@ -450,7 +464,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 10. CTA */}
+      {/* 11. CTA */}
       <CTASection />
     </div>
   );

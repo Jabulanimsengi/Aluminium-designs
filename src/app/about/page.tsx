@@ -6,7 +6,7 @@ import CTASection from "@/components/CTASection";
 export const metadata: Metadata = {
   title: "About Us | Quality Aluminium Windows & Doors",
   description:
-    "Learn how Apex Aluminium delivers precision craftsmanship, clean installations, and reliable aluminium windows, doors, and gates for homes across Gauteng.",
+    "Learn how Aluminium Designs delivers precision craftsmanship, clean installations, and reliable aluminium windows, doors, and gates for homes across Gauteng.",
 };
 
 export default function About() {
@@ -44,7 +44,7 @@ export default function About() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-5">
           <div className="inline-flex items-center gap-2 bg-surface border border-outline-variant px-3.5 py-1 font-mono text-[10px] font-bold tracking-widest uppercase rounded-full">
             <Award className="w-3.5 h-3.5 text-secondary" />
-            <span className="text-secondary">The Apex Aluminium Standard</span>
+            <span className="text-secondary">The Aluminium Designs Standard</span>
           </div>
           <h1 className="font-sans text-4xl sm:text-5xl font-bold uppercase tracking-tight text-primary">
             Crafting Quality Windows &amp; Doors Since 2011

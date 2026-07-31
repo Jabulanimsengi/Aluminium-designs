@@ -21,7 +21,7 @@ export default function GalleryPage() {
             <span className="text-secondary">Completed Installations</span>
           </div>
           <h1 className="font-sans text-4xl sm:text-5xl font-bold uppercase tracking-tight text-primary">
-            Our Architectural Portfolio
+            Our Aluminium Installation Portfolio
           </h1>
           <p className="text-on-surface-variant text-base leading-relaxed max-w-2xl mx-auto">
             Browse completed contracts showing precision engineering, clean lines, and professional

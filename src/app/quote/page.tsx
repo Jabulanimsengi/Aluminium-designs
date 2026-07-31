@@ -4,7 +4,7 @@ import { ClipboardList, ShieldCheck, Clock, FileText } from "lucide-react";
 import QuoteForm from "@/components/QuoteForm";
 
 export const metadata: Metadata = {
-  title: "Request a Free Quote | Apex Aluminium",
+  title: "Request a Free Quote | Aluminium Designs",
   description:
     "Get an easy, upfront quote for your home aluminium windows, doors, patio enclosures, or security gates.",
 };

@@ -20,13 +20,13 @@
   --color-secondary-container: #e0e2e8;
   --color-on-secondary-container: #616569;
 
-  --color-tertiary: #000000;
+  --color-tertiary: #374151;
   --color-on-tertiary: #ffffff;
-  --color-tertiary-container: #370e00;
-  --color-on-tertiary-container: #b45309;
+  --color-tertiary-container: #e5e7eb;
+  --color-on-tertiary-container: #374151;
 
-  --color-tertiary-fixed: #ffdbce;
-  --color-on-tertiary-fixed: #370e00;
+  --color-tertiary-fixed: #e5e7eb;
+  --color-on-tertiary-fixed: #111827;
 
   --color-surface-container: #eceef1;
   --color-surface-container-low: #f2f4f7;
@@ -73,6 +73,13 @@ body {
   color: var(--foreground);
   font-family: var(--font-sans);
   overflow-x: hidden;
+}
+
+@layer base {
+  :where(h1, h2, h3, h4, h5, h6) {
+    text-align: center;
+    text-wrap: balance;
+  }
 }
 
 /* Utility: hide scrollbars */

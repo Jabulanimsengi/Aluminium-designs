@@ -4,7 +4,7 @@ import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Menu, X, Phone, ChevronDown, ArrowRight, Grid } from "lucide-react";
+import { Menu, X, Phone, ChevronDown, ArrowRight } from "lucide-react";
 import { services } from "@/data/services";
 
 export default function Header() {
@@ -105,17 +105,6 @@ export default function Header() {
                     }`}
                   >
                     <div className="p-2 flex flex-col gap-0.5">
-                      <Link
-                        href="/services"
-                        className="flex items-center gap-3 p-3 hover:bg-surface-container transition-colors rounded-lg"
-                      >
-                        <Grid className="w-4 h-4 text-secondary" />
-                        <div>
-                          <p className="text-xs font-bold text-primary">All Services</p>
-                          <p className="text-[10px] text-on-surface-variant">View our full product range</p>
-                        </div>
-                      </Link>
-                      <div className="border-t border-outline-variant my-1" />
                       {services.slice(0, 6).map((s) => (
                         <Link
                           key={s.id}

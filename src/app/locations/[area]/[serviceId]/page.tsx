@@ -40,7 +40,7 @@ export async function generateMetadata({ params }: { params: Promise<{ area: str
   }
 
   return {
-    title: `${service.title} in ${location.name} | Apex Aluminium`,
+    title: `${service.title} in ${location.name} | Aluminium Designs`,
     description: `Expert installation of ${service.title.toLowerCase()} in ${location.name}. ${service.shortDescription} Get a free on-site quote in ${location.municipality} today.`,
   };
 }
@@ -63,7 +63,7 @@ export default async function LocationServicePage({ params }: { params: Promise<
     serviceType: service.title,
     provider: {
       "@type": "LocalBusiness",
-      name: `Apex Aluminium ${location.name}`,
+      name: `Aluminium Designs ${location.name}`,
       telephone: "+27-87-123-4567",
       image: "https://www.apexaluminium.co.za/images/hero_exterior.png",
       address: {
@@ -105,13 +105,13 @@ export default async function LocationServicePage({ params }: { params: Promise<
               </h1>
 
               <p className="font-sans text-on-surface-variant text-lg leading-relaxed max-w-xl">
-                Apex Aluminium specializes in custom-manufactured {service.title.toLowerCase()} for residential and commercial properties in {location.name}. {service.longDescription}
+                Aluminium Designs specializes in custom-manufactured {service.title.toLowerCase()} for residential and commercial properties in {location.name}. {service.longDescription}
               </p>
 
               <div className="flex flex-col sm:flex-row items-center gap-3 pt-4">
                 <Link
                   href="/quote"
-                  className="flex items-center justify-center gap-2 bg-on-tertiary-container hover:bg-[#92400e] text-white px-6 py-3.5 font-mono text-[11px] font-bold uppercase tracking-widest transition-colors w-full sm:w-auto rounded-full"
+                  className="flex items-center justify-center gap-2 bg-on-tertiary-container hover:bg-primary text-white px-6 py-3.5 font-mono text-[11px] font-bold uppercase tracking-widest transition-colors w-full sm:w-auto rounded-full"
                 >
                   Request a Quote in {location.name}
                   <ArrowRight className="w-4 h-4" />

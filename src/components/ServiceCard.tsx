@@ -54,34 +54,45 @@ export default function ServiceCard({ title, shortDescription, slug, iconName, i
   return (
     <Link
       href={slug}
-      className="group border border-outline-variant bg-surface-container-lowest flex flex-col hover:border-primary transition-colors rounded-2xl overflow-hidden"
+      className="group grid min-h-[270px] grid-cols-1 overflow-hidden border border-outline-variant bg-surface-container-lowest transition-all duration-300 hover:-translate-y-1 hover:border-primary hover:shadow-lg sm:grid-cols-[42%_58%]"
     >
-      <div className="relative h-48 w-full overflow-hidden border-b border-outline-variant bg-surface-container-high">
+      <div className="relative min-h-56 overflow-hidden border-b border-outline-variant bg-surface-container-high sm:min-h-full sm:border-b-0 sm:border-r">
         <Image
           src={imagePath}
           alt={title}
           fill
-          sizes="(max-width: 768px) 100vw, 33vw"
-          className="object-cover transition-transform duration-500 group-hover:scale-105"
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 42vw, 21vw"
+          className="object-cover transition-transform duration-700 group-hover:scale-105"
         />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/25 to-transparent sm:bg-gradient-to-r" />
       </div>
-      <div className="p-6 flex-1 flex flex-col justify-between space-y-3">
-        <div className="space-y-2">
+      <div className="flex flex-col p-6 sm:p-7">
+        <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            {Icon && (
-                <div className="p-1.5 border border-outline-variant bg-surface-container rounded-xl">
-                <Icon className="w-3.5 h-3.5 text-secondary" />
-              </div>
-            )}
-            <h3 className="font-sans font-bold text-sm uppercase tracking-tight text-primary group-hover:text-on-tertiary-container transition-colors">
-              {title}
-            </h3>
+            <div className="flex h-9 w-9 items-center justify-center rounded-full border border-outline-variant bg-surface-container">
+              {Icon && <Icon className="w-4 h-4 text-secondary" />}
+            </div>
+            <span className="font-mono text-[9px] font-bold uppercase tracking-[0.18em] text-secondary">
+              Made to measure
+            </span>
           </div>
-          <p className="text-xs text-on-surface-variant leading-relaxed">{shortDescription}</p>
+          <div className="flex h-9 w-9 items-center justify-center rounded-full border border-outline-variant text-primary transition-colors group-hover:bg-primary group-hover:text-on-primary">
+            <ArrowUpRight className="w-4 h-4" />
+          </div>
         </div>
-        <div className="flex items-center gap-2 pt-2 border-t border-outline-variant text-[10px] font-mono font-bold uppercase tracking-widest text-secondary">
-          View Details
-          <ArrowUpRight className="w-3.5 h-3.5" />
+
+        <div className="my-6 h-px bg-outline-variant" />
+
+        <div className="flex flex-1 flex-col">
+          <h3 className="font-sans text-lg font-bold uppercase leading-tight tracking-tight text-primary transition-colors group-hover:text-on-tertiary-container">
+            {title}
+          </h3>
+          <p className="mt-3 text-xs leading-relaxed text-on-surface-variant">
+            {shortDescription}
+          </p>
+          <span className="mt-auto pt-6 font-mono text-[10px] font-bold uppercase tracking-widest text-primary">
+            Explore service
+          </span>
         </div>
       </div>
     </Link>

@@ -3,7 +3,7 @@ import { Metadata } from "next";
 import { Phone, Mail, MapPin, Clock, ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Contact Us | Apex Aluminium",
+  title: "Contact Us | Aluminium Designs",
   description:
     "Get in touch with our team for free site measurements, quotes, or advice on aluminium windows, doors, and gates. Call, email, or visit us in Sandton.",
 };

@@ -51,9 +51,9 @@ export async function generateMetadata({ params }: { params: Promise<{ area: str
   }
 
   const variations = [
-    `Premium custom aluminium windows, doors, and glass installations in ${location.name}, ${location.municipality}. Contact Apex Aluminium for a free quote in your area.`,
+    `Premium custom aluminium windows, doors, and glass installations in ${location.name}, ${location.municipality}. Contact Aluminium Designs for a free quote in your area.`,
     `Top-rated aluminium installations in ${location.name}. Custom sizing, sleek finishes, and professional fitting. Get a free quote today!`,
-    `Upgrade your ${location.name} home with modern aluminium windows and doors. Expert manufacturing and flawless installation by Apex Aluminium.`
+    `Upgrade your ${location.name} home with modern aluminium windows and doors. Expert manufacturing and flawless installation by Aluminium Designs.`
   ];
   
   const random = seededRandom(location.id);
@@ -77,7 +77,7 @@ export default async function LocationPage({ params }: { params: Promise<{ area:
   const heroVariations = [
     `Elevate your home's aesthetics with our clean, minimalist aluminium glazing solutions. We design, manufacture, and install high-quality aluminium frames for residential homes and estates across ${location.name}.`,
     `Looking for premium aluminium installations in ${location.name}? We provide custom-tailored windows, doors, and patio enclosures designed specifically for modern homes and commercial spaces in your area.`,
-    `Apex Aluminium brings smart, durable, and beautiful aluminium designs to ${location.name} residents. Explore our range of custom architectural solutions tailored for your exact building specifications.`
+    `Aluminium Designs brings smart, durable, and beautiful aluminium solutions to ${location.name} residents. Explore our range of custom architectural solutions tailored for your exact building specifications.`
   ];
   const random = seededRandom(location.id);
   const heroDescription = heroVariations[Math.floor(random() * heroVariations.length)];
@@ -126,7 +126,7 @@ export default async function LocationPage({ params }: { params: Promise<{ area:
   const localBusinessJsonLd = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
-    name: `Apex Aluminium ${location.name}`,
+    name: `Aluminium Designs ${location.name}`,
     image: "https://www.apexaluminium.co.za/images/hero_exterior.png",
     telephone: "+27-87-123-4567",
     email: "info@apexaluminium.co.za",
@@ -188,7 +188,7 @@ export default async function LocationPage({ params }: { params: Promise<{ area:
             <div className="flex flex-col sm:flex-row items-center gap-3 pt-4">
               <Link
                 href="/quote"
-                className="flex items-center justify-center gap-2 bg-on-tertiary-container hover:bg-[#92400e] text-white px-6 py-3.5 font-mono text-[11px] font-bold uppercase tracking-widest transition-colors w-full sm:w-auto rounded-full"
+                className="flex items-center justify-center gap-2 bg-on-tertiary-container hover:bg-primary text-white px-6 py-3.5 font-mono text-[11px] font-bold uppercase tracking-widest transition-colors w-full sm:w-auto rounded-full"
               >
                 Get a Free Quote in {location.name}
                 <ArrowRight className="w-4 h-4" />

@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useState, useRef, useCallback } from "react";
+import React, { useState, useRef, useCallback, useEffect } from "react";
 import Image from "next/image";
 import { projects } from "@/data/projects";
-import { MapPin, Search, X, ZoomIn, ZoomOut } from "lucide-react";
+import { ChevronLeft, ChevronRight, X, ZoomIn, ZoomOut } from "lucide-react";
 
 export default function GalleryGrid() {
   const [activeFilter, setActiveFilter] = useState<string>("all");
@@ -19,27 +19,47 @@ export default function GalleryGrid() {
     setPosition({ x: 0, y: 0 });
   }, []);
 
-  const handleWheel = useCallback((e: React.WheelEvent) => {
-    e.preventDefault();
-    setZoom((z) => Math.min(5, Math.max(0.5, z - e.deltaY * 0.005)));
+  const closeLightbox = useCallback(() => {
+    resetZoom();
+    setActiveProject(null);
+  }, [resetZoom]);
+
+  const handleWheel = useCallback((event: React.WheelEvent) => {
+    event.preventDefault();
+    setZoom((currentZoom) =>
+      Math.min(5, Math.max(0.5, currentZoom - event.deltaY * 0.005))
+    );
   }, []);
 
   const toggleZoom = useCallback(() => {
-    if (zoom > 1) resetZoom();
-    else { setZoom(2); setPosition({ x: 0, y: 0 }); }
+    if (zoom > 1) {
+      resetZoom();
+    } else {
+      setZoom(2);
+      setPosition({ x: 0, y: 0 });
+    }
   }, [zoom, resetZoom]);
 
-  const handleMouseDown = useCallback((e: React.MouseEvent) => {
-    if (zoom <= 1) return;
-    setDragging(true);
-    dragStart.current = { x: e.clientX, y: e.clientY };
-    posStart.current = { ...position };
-  }, [zoom, position]);
+  const handleMouseDown = useCallback(
+    (event: React.MouseEvent) => {
+      if (zoom <= 1) return;
+      setDragging(true);
+      dragStart.current = { x: event.clientX, y: event.clientY };
+      posStart.current = { ...position };
+    },
+    [zoom, position]
+  );
 
-  const handleMouseMove = useCallback((e: React.MouseEvent) => {
-    if (!dragging) return;
-    setPosition({ x: posStart.current.x + e.clientX - dragStart.current.x, y: posStart.current.y + e.clientY - dragStart.current.y });
-  }, [dragging]);
+  const handleMouseMove = useCallback(
+    (event: React.MouseEvent) => {
+      if (!dragging) return;
+      setPosition({
+        x: posStart.current.x + event.clientX - dragStart.current.x,
+        y: posStart.current.y + event.clientY - dragStart.current.y,
+      });
+    },
+    [dragging]
+  );
 
   const handleMouseUp = useCallback(() => setDragging(false), []);
 
@@ -59,139 +79,205 @@ export default function GalleryGrid() {
   const filteredProjects =
     activeFilter === "all"
       ? projects
-      : projects.filter((p) => p.category === activeFilter);
+      : projects.filter((project) => project.category === activeFilter);
+
+  const showProject = useCallback(
+    (direction: number) => {
+      if (!activeProject || filteredProjects.length === 0) return;
+
+      const currentIndex = filteredProjects.findIndex(
+        (project) => project.id === activeProject.id
+      );
+      const nextIndex =
+        (currentIndex + direction + filteredProjects.length) % filteredProjects.length;
+
+      resetZoom();
+      setActiveProject(filteredProjects[nextIndex]);
+    },
+    [activeProject, filteredProjects, resetZoom]
+  );
+
+  useEffect(() => {
+    if (!activeProject) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "ArrowLeft") showProject(-1);
+      if (event.key === "ArrowRight") showProject(1);
+      if (event.key === "Escape") closeLightbox();
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [activeProject, closeLightbox, showProject]);
 
   return (
-    <div className="space-y-12">
-      {/* Filter Tabs */}
+    <div className="space-y-10">
       <div className="flex flex-wrap justify-center gap-2 border-b border-outline-variant pb-4">
-        {categories.map((cat) => (
+        {categories.map((category) => (
           <button
-            key={cat.id}
-            onClick={() => setActiveFilter(cat.id)}
-            className={`px-4 py-2 font-mono text-[11px] font-bold tracking-widest uppercase border transition-colors cursor-pointer rounded-full ${
-              activeFilter === cat.id
-                ? "bg-primary text-on-primary border-primary"
-                : "bg-surface hover:bg-surface-container border-outline-variant text-secondary"
+            key={category.id}
+            onClick={() => setActiveFilter(category.id)}
+            className={`rounded-full border px-4 py-2 font-mono text-[11px] font-bold uppercase tracking-widest transition-colors ${
+              activeFilter === category.id
+                ? "border-primary bg-primary text-on-primary"
+                : "border-outline-variant bg-surface text-secondary hover:bg-surface-container"
             }`}
           >
-            {cat.name}
+            {category.name}
           </button>
         ))}
       </div>
 
-      {/* Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {filteredProjects.map((project) => (
-          <div
+          <button
             key={project.id}
+            type="button"
             onClick={() => setActiveProject(project)}
-            className="group border border-outline-variant bg-surface-container-lowest flex flex-col hover:border-primary transition-colors cursor-pointer rounded-2xl overflow-hidden"
+            aria-label={`Open ${project.title}`}
+            className="group relative aspect-[4/3] overflow-hidden bg-surface-container-high text-left"
           >
-            <div className="relative h-56 w-full overflow-hidden border-b border-outline-variant bg-surface-container-high">
-              <Image
-                src={project.imagePath}
-                alt={project.title}
-                fill
-                sizes="(max-width: 768px) 100vw, 33vw"
-                className="object-cover transition-transform duration-500 group-hover:scale-105"
-              />
-              <span className="absolute top-3 left-3 font-mono text-[9px] font-bold uppercase tracking-widest bg-black/60 backdrop-blur-md text-white px-2.5 py-1 rounded-full">
-                {project.category}
-              </span>
-              <div className="absolute top-3 right-3 w-8 h-8 border border-outline-variant bg-surface flex items-center justify-center text-outline group-hover:text-on-tertiary-container transition-colors rounded-xl">
-                <Search className="w-3.5 h-3.5" />
-              </div>
-            </div>
-
-            <div className="p-5 flex flex-col justify-between flex-grow space-y-4">
-              <div className="space-y-2">
-                <div className="flex items-center font-mono text-[10px] text-secondary uppercase tracking-wider">
-                  <MapPin className="w-3.5 h-3.5 text-secondary mr-1.5 shrink-0" />
-                  {project.location}
-                </div>
-                <h4 className="font-sans font-bold text-base uppercase text-primary tracking-tight group-hover:text-on-tertiary-container transition-colors">
-                  {project.title}
-                </h4>
-                <p className="text-xs text-on-surface-variant leading-relaxed line-clamp-2">
-                  {project.description}
-                </p>
-              </div>
-
-              <div className="border-t border-outline-variant pt-3 flex items-center justify-end font-mono text-[10px] uppercase tracking-wider text-outline">
-                <span className="text-secondary font-bold">View Detail</span>
-              </div>
-            </div>
-          </div>
+            <Image
+              src={project.imagePath}
+              alt={project.title}
+              fill
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              className="object-cover transition-transform duration-700 group-hover:scale-105"
+            />
+            <span className="absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/20" />
+            <span className="absolute left-1/2 top-1/2 flex h-11 w-11 -translate-x-1/2 -translate-y-1/2 scale-90 items-center justify-center rounded-full bg-white text-primary opacity-0 shadow-lg transition-all duration-300 group-hover:scale-100 group-hover:opacity-100">
+              <ZoomIn className="h-4 w-4" />
+            </span>
+          </button>
         ))}
       </div>
 
       {filteredProjects.length === 0 && (
-        <div className="text-center py-20 border border-outline-variant rounded-2xl">
-          <p className="font-mono text-xs text-outline uppercase tracking-wider">
-            No projects found in this category.
+        <div className="border border-outline-variant py-20 text-center">
+          <p className="font-mono text-xs uppercase tracking-wider text-outline">
+            No images found in this category.
           </p>
         </div>
       )}
 
-      {/* Lightbox */}
       {activeProject && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 animate-fade-in" onClick={() => { resetZoom(); setActiveProject(null); }}>
-          <div className="bg-surface border border-outline-variant max-w-3xl w-full max-h-[90vh] flex flex-col overflow-hidden rounded-2xl relative" onClick={(e) => e.stopPropagation()}>
-            <div className="relative w-full border-b border-outline-variant bg-black overflow-hidden" style={{ height: "50vh" }}>
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4 animate-fade-in"
+          onClick={closeLightbox}
+        >
+          <div
+            className="relative h-[85vh] w-full max-w-6xl overflow-hidden bg-black"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <button
+              type="button"
+              onClick={closeLightbox}
+              aria-label="Close image"
+              className="absolute right-4 top-4 z-20 flex h-10 w-10 items-center justify-center rounded-full border border-white/30 bg-black/60 text-white transition-colors hover:bg-black"
+            >
+              <X className="h-4 w-4" />
+            </button>
+
+            <button
+              type="button"
+              onClick={() => showProject(-1)}
+              aria-label="Previous image"
+              className="absolute left-3 top-1/2 z-20 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-black/60 text-white transition-colors hover:bg-black sm:left-5"
+            >
+              <ChevronLeft className="h-5 w-5" />
+            </button>
+
+            <button
+              type="button"
+              onClick={() => showProject(1)}
+              aria-label="Next image"
+              className="absolute right-3 top-1/2 z-20 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-black/60 text-white transition-colors hover:bg-black sm:right-5"
+            >
+              <ChevronRight className="h-5 w-5" />
+            </button>
+
+            <div className="absolute left-1/2 top-4 z-20 flex -translate-x-1/2 items-center gap-2 rounded-full border border-white/30 bg-black/60 px-3 py-2">
               <button
-                onClick={() => { resetZoom(); setActiveProject(null); }}
-                className="absolute top-3 right-3 z-20 w-8 h-8 rounded-xl border border-white/30 bg-black/60 flex items-center justify-center text-white hover:bg-black/80 transition-colors"
+                type="button"
+                aria-label="Zoom out"
+                onClick={() => setZoom((currentZoom) => Math.max(0.5, currentZoom - 0.5))}
+                className="p-1 text-white/80 hover:text-white"
               >
-                <X className="w-4 h-4" />
+                <ZoomOut className="h-4 w-4" />
               </button>
-              {/* Zoom controls */}
-              <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1 rounded-full border border-white/30 bg-black/60 px-2 py-1">
-                <button onClick={() => setZoom((z) => Math.max(0.5, z - 0.5))} className="p-1 text-white/80 hover:text-white">
-                  <ZoomOut className="w-4 h-4" />
-                </button>
-                <span className="font-mono text-[10px] text-white/70 min-w-[40px] text-center">{Math.round(zoom * 100)}%</span>
-                <button onClick={() => setZoom((z) => Math.min(5, z + 0.5))} className="p-1 text-white/80 hover:text-white">
-                  <ZoomIn className="w-4 h-4" />
-                </button>
-              </div>
-              <div
-                className="w-full h-full flex items-center justify-center"
-                style={{ cursor: zoom > 1 ? (dragging ? "grabbing" : "grab") : "zoom-in" }}
-                onWheel={handleWheel}
-                onClick={toggleZoom}
-                onMouseDown={handleMouseDown}
-                onMouseMove={handleMouseMove}
-                onMouseUp={handleMouseUp}
-                onMouseLeave={handleMouseUp}
+              <span className="min-w-10 text-center font-mono text-[10px] text-white/70">
+                {Math.round(zoom * 100)}%
+              </span>
+              <button
+                type="button"
+                aria-label="Zoom in"
+                onClick={() => setZoom((currentZoom) => Math.min(5, currentZoom + 0.5))}
+                className="p-1 text-white/80 hover:text-white"
               >
-                <Image
-                  src={activeProject.imagePath}
-                  alt={activeProject.title}
-                  width={800}
-                  height={600}
-                  className="object-contain transition-transform duration-150 select-none pointer-events-none"
-                  style={{ transform: `scale(${zoom}) translate(${position.x / zoom}px, ${position.y / zoom}px)`, maxHeight: "50vh", maxWidth: "100%" }}
-                  draggable={false}
-                />
-              </div>
+                <ZoomIn className="h-4 w-4" />
+              </button>
             </div>
-            <div className="p-6 sm:p-8 space-y-4 overflow-y-auto">
-              <div className="flex items-center justify-between">
-                <span className="font-mono text-[9px] font-bold uppercase tracking-widest bg-surface-container border border-outline-variant px-2.5 py-1 text-secondary rounded-full">
-                  {activeProject.category}
-                </span>
-                <span className="font-mono text-[10px] text-outline uppercase tracking-wider flex items-center">
-                  <MapPin className="w-3.5 h-3.5 text-secondary mr-1.5" />
-                  {activeProject.location}
-                </span>
-              </div>
-              <h3 className="font-sans font-bold text-xl uppercase text-primary tracking-tight">
-                {activeProject.title}
-              </h3>
-              <p className="text-sm text-on-surface-variant leading-relaxed">
-                {activeProject.description}
-              </p>
+
+            <div className="scrollbar-hide absolute bottom-4 left-1/2 z-20 flex w-[calc(100%-2rem)] max-w-3xl -translate-x-1/2 gap-2 overflow-x-auto rounded-xl border border-white/20 bg-black/70 p-2">
+              {filteredProjects.map((project) => {
+                const isActive = project.id === activeProject.id;
+
+                return (
+                  <button
+                    key={project.id}
+                    type="button"
+                    onClick={() => {
+                      resetZoom();
+                      setActiveProject(project);
+                    }}
+                    aria-label={`View ${project.title}`}
+                    aria-current={isActive ? "true" : undefined}
+                    className={`relative h-14 w-20 shrink-0 overflow-hidden border-2 transition-all ${
+                      isActive
+                        ? "border-white opacity-100"
+                        : "border-transparent opacity-55 hover:opacity-100"
+                    }`}
+                  >
+                    <Image
+                      src={project.imagePath}
+                      alt=""
+                      fill
+                      sizes="80px"
+                      className="object-cover"
+                    />
+                  </button>
+                );
+              })}
+            </div>
+
+            <div
+              className="flex h-full w-full items-center justify-center"
+              style={{ cursor: zoom > 1 ? (dragging ? "grabbing" : "grab") : "zoom-in" }}
+              onWheel={handleWheel}
+              onClick={toggleZoom}
+              onMouseDown={handleMouseDown}
+              onMouseMove={handleMouseMove}
+              onMouseUp={handleMouseUp}
+              onMouseLeave={handleMouseUp}
+            >
+              <Image
+                src={activeProject.imagePath}
+                alt={activeProject.title}
+                width={1400}
+                height={1050}
+                className="max-h-[85vh] max-w-full select-none object-contain transition-transform duration-150 pointer-events-none"
+                style={{
+                  transform: `scale(${zoom}) translate(${position.x / zoom}px, ${position.y / zoom}px)`,
+                }}
+                draggable={false}
+              />
             </div>
           </div>
         </div>
