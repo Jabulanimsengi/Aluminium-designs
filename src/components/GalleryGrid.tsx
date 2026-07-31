@@ -13,6 +13,23 @@ export default function GalleryGrid() {
   const [dragging, setDragging] = useState(false);
   const dragStart = useRef({ x: 0, y: 0 });
   const posStart = useRef({ x: 0, y: 0 });
+  const preloadedImages = useRef(new Set<string>());
+
+  const preloadImage = useCallback((src: string) => {
+    if (preloadedImages.current.has(src)) return;
+
+    const image = new window.Image();
+    image.src = src;
+    preloadedImages.current.add(src);
+  }, []);
+
+  const openProject = useCallback(
+    (project: (typeof projects)[0]) => {
+      preloadImage(project.imagePath);
+      setActiveProject(project);
+    },
+    [preloadImage]
+  );
 
   const resetZoom = useCallback(() => {
     setZoom(1);
@@ -92,9 +109,9 @@ export default function GalleryGrid() {
         (currentIndex + direction + filteredProjects.length) % filteredProjects.length;
 
       resetZoom();
-      setActiveProject(filteredProjects[nextIndex]);
+      openProject(filteredProjects[nextIndex]);
     },
-    [activeProject, filteredProjects, resetZoom]
+    [activeProject, filteredProjects, openProject, resetZoom]
   );
 
   useEffect(() => {
@@ -116,6 +133,20 @@ export default function GalleryGrid() {
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, [activeProject, closeLightbox, showProject]);
+
+  useEffect(() => {
+    if (!activeProject || filteredProjects.length < 2) return;
+
+    const currentIndex = filteredProjects.findIndex(
+      (project) => project.id === activeProject.id
+    );
+    const previousIndex =
+      (currentIndex - 1 + filteredProjects.length) % filteredProjects.length;
+    const nextIndex = (currentIndex + 1) % filteredProjects.length;
+
+    preloadImage(filteredProjects[previousIndex].imagePath);
+    preloadImage(filteredProjects[nextIndex].imagePath);
+  }, [activeProject, filteredProjects, preloadImage]);
 
   return (
     <div className="space-y-10">
@@ -140,7 +171,10 @@ export default function GalleryGrid() {
           <button
             key={project.id}
             type="button"
-            onClick={() => setActiveProject(project)}
+            onClick={() => openProject(project)}
+            onMouseEnter={() => preloadImage(project.imagePath)}
+            onFocus={() => preloadImage(project.imagePath)}
+            onTouchStart={() => preloadImage(project.imagePath)}
             aria-label={`Open ${project.title}`}
             className="group relative aspect-[4/3] overflow-hidden bg-surface-container-high text-left"
           >
@@ -235,8 +269,11 @@ export default function GalleryGrid() {
                     type="button"
                     onClick={() => {
                       resetZoom();
-                      setActiveProject(project);
+                      openProject(project);
                     }}
+                    onMouseEnter={() => preloadImage(project.imagePath)}
+                    onFocus={() => preloadImage(project.imagePath)}
+                    onTouchStart={() => preloadImage(project.imagePath)}
                     aria-label={`View ${project.title}`}
                     aria-current={isActive ? "true" : undefined}
                     className={`relative h-14 w-20 shrink-0 overflow-hidden border-2 transition-all ${
@@ -272,6 +309,8 @@ export default function GalleryGrid() {
                 alt={activeProject.title}
                 width={1400}
                 height={1050}
+                loading="eager"
+                unoptimized
                 className="max-h-[85vh] max-w-full select-none object-contain transition-transform duration-150 pointer-events-none"
                 style={{
                   transform: `scale(${zoom}) translate(${position.x / zoom}px, ${position.y / zoom}px)`,

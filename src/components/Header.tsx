@@ -48,7 +48,7 @@ export default function Header() {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-surface border-b border-outline-variant h-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
-        <div className="flex items-center justify-between h-full">
+        <div className="relative flex items-center justify-between h-full lg:grid lg:grid-cols-[154px_minmax(0,1fr)_auto]">
           {/* Left: hamburger on mobile */}
             <button
               onClick={() => { setMobileServicesOpen(false); setMobileServicesCount(5); setMobileMenuOpen(!mobileMenuOpen); }}
@@ -58,10 +58,10 @@ export default function Header() {
             {mobileMenuOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
           </button>
 
-          {/* Logo: centered on mobile, left-aligned on desktop */}
+          {/* Logo: aligned to the page content edge on desktop */}
           <Link
             href="/"
-            className="relative flex h-12 w-[148px] shrink-0 items-center overflow-hidden select-none sm:h-[52px] sm:w-[162px] lg:absolute lg:left-4"
+            className="relative flex h-12 w-[148px] shrink-0 items-center overflow-hidden select-none sm:h-[52px] sm:w-[162px] lg:h-12 lg:w-[154px] lg:justify-self-start"
           >
             <Image
               src="/images/real_images/logo/logo.png"
@@ -77,7 +77,7 @@ export default function Header() {
           {/* Right spacer: balances the hamburger to keep logo centered on mobile */}
           <div className="lg:hidden w-10" />
 
-          <nav className="hidden lg:flex items-center gap-6 absolute left-1/2 -translate-x-1/2">
+          <nav className="hidden lg:flex items-center justify-self-center gap-4 xl:gap-5">
             {navLinks.map((link) =>
               link.hasDropdown ? (
                 <div
@@ -142,10 +142,10 @@ export default function Header() {
           </nav>
 
           {/* Desktop CTAs */}
-          <div className="hidden lg:flex items-center gap-4">
+          <div className="hidden lg:flex items-center justify-self-end gap-4">
             <a
               href="tel:+27871234567"
-              className="flex items-center gap-2 text-secondary hover:text-primary transition-colors"
+              className="hidden 2xl:flex items-center gap-2 text-secondary hover:text-primary transition-colors"
             >
               <Phone className="w-4 h-4" />
               <span className="font-mono text-[11px] font-medium tracking-wider">+27 87 123 4567</span>

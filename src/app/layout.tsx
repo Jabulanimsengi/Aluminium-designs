@@ -4,7 +4,6 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import WhatsAppChatWidget from "@/components/WhatsAppChatWidget";
-import MobileActionBar from "@/components/MobileActionBar";
 import ScrollToTop from "@/components/ScrollToTop";
 import NavigationLoader from "@/components/NavigationLoader";
 
@@ -76,7 +75,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           rel="stylesheet"
         />
       </head>
-      <body className="min-h-full flex flex-col bg-surface text-on-surface pb-20 lg:pb-0 selection:bg-tertiary-fixed selection:text-on-tertiary-fixed">
+      <body className="min-h-full flex flex-col bg-surface text-on-surface selection:bg-tertiary-fixed selection:text-on-tertiary-fixed">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -87,7 +86,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <Footer />
         <WhatsAppChatWidget />
         <ScrollToTop />
-        <MobileActionBar />
       </body>
     </html>
   );
