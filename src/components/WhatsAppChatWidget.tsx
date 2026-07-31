@@ -14,16 +14,16 @@ const quickReplies = [
 
 export default function WhatsAppChatWidget() {
   const [open, setOpen] = useState(false);
-  const panelRef = useRef<HTMLDivElement>(null);
+  const widgetRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    function handleClickOutside(e: MouseEvent) {
-      if (panelRef.current && !panelRef.current.contains(e.target as Node)) {
+    function handleClickOutside(e: PointerEvent) {
+      if (widgetRef.current && !widgetRef.current.contains(e.target as Node)) {
         setOpen(false);
       }
     }
-    if (open) document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    if (open) document.addEventListener("pointerdown", handleClickOutside);
+    return () => document.removeEventListener("pointerdown", handleClickOutside);
   }, [open]);
 
   useEffect(() => {
@@ -39,14 +39,16 @@ export default function WhatsAppChatWidget() {
   }
 
   return (
-    <div className="fixed bottom-20 right-4 z-40 flex flex-col items-end gap-3 md:bottom-6 md:right-6">
+    <div
+      ref={widgetRef}
+      className="fixed bottom-2 right-4 z-[110] flex flex-col items-end gap-3 md:bottom-6 md:right-6 md:z-40"
+    >
       {open && (
         <div
-          ref={panelRef}
-          className="w-[320px] max-w-[calc(100vw-2rem)] animate-fade-in-up border border-outline-variant bg-surface shadow-xl overflow-hidden rounded-2xl"
+          className="max-h-[calc(100dvh-6.5rem)] w-[320px] max-w-[calc(100vw-2rem)] animate-fade-in-up overflow-y-auto overscroll-contain rounded-2xl border border-outline-variant bg-surface shadow-xl"
         >
           {/* Header */}
-          <div className="flex items-center gap-3 bg-[#075e54] px-4 py-3.5 text-white">
+          <div className="sticky top-0 z-20 flex items-center gap-3 bg-[#075e54] px-4 py-3.5 text-white">
             <div className="relative shrink-0">
               <div className="flex h-9 w-9 items-center justify-center border border-white/20 bg-white/10 font-sans text-sm font-bold">
                 AD
@@ -61,8 +63,9 @@ export default function WhatsAppChatWidget() {
               </p>
             </div>
             <button
+              type="button"
               onClick={() => setOpen(false)}
-              className="flex h-7 w-7 items-center justify-center text-white/80 hover:bg-white/10 hover:text-white transition-colors"
+              className="flex h-9 w-9 touch-manipulation items-center justify-center rounded-full text-white/80 transition-colors hover:bg-white/10 hover:text-white"
               aria-label="Close chat"
             >
               <X className="h-4 w-4" />
@@ -138,9 +141,11 @@ export default function WhatsAppChatWidget() {
 
       {/* Toggle button */}
       <button
+        type="button"
         onClick={() => setOpen((o) => !o)}
-        className="group relative flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] hover:bg-[#20ba5a] transition-colors active:scale-95 focus:outline-none focus:ring-2 focus:ring-[#25D366]/30"
+        className="group relative flex h-14 w-14 touch-manipulation items-center justify-center rounded-full bg-[#25D366] hover:bg-[#20ba5a] transition-colors active:scale-95 focus:outline-none focus:ring-2 focus:ring-[#25D366]/30"
         aria-label={open ? "Close WhatsApp chat" : "Open WhatsApp chat"}
+        aria-expanded={open}
         title="Chat with us on WhatsApp"
       >
         <span className="absolute inset-0 animate-ping rounded-full bg-[#25D366]/30" />
