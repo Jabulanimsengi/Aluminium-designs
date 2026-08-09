@@ -2,11 +2,12 @@ import React from "react";
 import { gautengLocations } from "@/data/locations";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ArrowRight, MapPin, ShieldCheck, Check, Sparkles, Hammer } from "lucide-react";
+import { ArrowRight, MapPin, ShieldCheck, Sparkles, Hammer } from "lucide-react";
 import CTASection from "@/components/CTASection";
 import FAQAccordion from "@/components/FAQAccordion";
 import ServiceCard from "@/components/ServiceCard";
 import { services } from "@/data/services";
+import { absoluteUrl, businessContact, siteUrl, whatsappQuoteUrl } from "@/lib/site";
 
 function slugify(text: string) {
   return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
@@ -62,6 +63,8 @@ export async function generateMetadata({ params }: { params: Promise<{ area: str
   return {
     title: `Aluminium Windows & Doors in ${location.name}`,
     description: desc,
+    robots: { index: true, follow: true },
+    alternates: { canonical: `${siteUrl}/locations/${location.id}` },
   };
 }
 
@@ -83,7 +86,7 @@ export default async function LocationPage({ params }: { params: Promise<{ area:
   const heroDescription = heroVariations[Math.floor(random() * heroVariations.length)];
 
   // Shuffle services deterministically based on location
-  const shuffledServices = deterministicShuffle(services.slice(0, 6), location.id);
+  const shuffledServices = deterministicShuffle(services, location.id);
 
   // Benefits logic - Shuffle the content but KEEP the layout spans consistent
   const rawBenefits = [
@@ -126,10 +129,12 @@ export default async function LocationPage({ params }: { params: Promise<{ area:
   const localBusinessJsonLd = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
-    name: `Aluminium Designs ${location.name}`,
-    image: "https://www.apexaluminium.co.za/images/hero_exterior.png",
-    telephone: "+27-87-123-4567",
-    email: "info@apexaluminium.co.za",
+    name: businessContact.name,
+    ...(absoluteUrl("/images/hero_exterior.png")
+      ? { image: absoluteUrl("/images/hero_exterior.png") }
+      : {}),
+    telephone: businessContact.phone,
+    email: businessContact.email,
     areaServed: {
       "@type": "Place",
       name: location.name,
@@ -140,10 +145,12 @@ export default async function LocationPage({ params }: { params: Promise<{ area:
     },
     address: {
       "@type": "PostalAddress",
-      addressRegion: "Gauteng",
-      addressCountry: "ZA",
+      streetAddress: businessContact.streetAddress,
+      addressLocality: `${businessContact.addressLocality}, ${businessContact.addressCity}`,
+      addressRegion: businessContact.addressRegion,
+      addressCountry: businessContact.addressCountry,
     },
-    url: `https://www.apexaluminium.co.za/locations/${location.id}`,
+    url: `${siteUrl}/locations/${location.id}`,
   };
 
   return (
@@ -156,7 +163,7 @@ export default async function LocationPage({ params }: { params: Promise<{ area:
       />
       
       {/* 1. HERO SECTION */}
-      <section className="relative min-h-[60vh] flex items-center pt-32 pb-20 overflow-hidden bg-surface border-b border-outline-variant">
+      <section className="relative min-h-[60vh] flex items-center pt-20 pb-16 overflow-hidden bg-surface border-b border-outline-variant">
         <div className="absolute inset-0 opacity-5 pointer-events-none mix-blend-multiply">
           <svg className="w-full h-full text-outline" xmlns="http://www.w3.org/2000/svg">
             <defs>
@@ -187,7 +194,7 @@ export default async function LocationPage({ params }: { params: Promise<{ area:
 
             <div className="flex flex-col sm:flex-row items-center gap-3 pt-4">
               <Link
-                href="/quote"
+                href={whatsappQuoteUrl}
                 className="flex items-center justify-center gap-2 bg-on-tertiary-container hover:bg-primary text-white px-6 py-3.5 font-mono text-[11px] font-bold uppercase tracking-widest transition-colors w-full sm:w-auto rounded-full"
               >
                 Get a Free Quote in {location.name}
@@ -242,10 +249,10 @@ export default async function LocationPage({ params }: { params: Promise<{ area:
               return (
                 <div
                   key={i}
-                  className={`rounded-2xl p-8 border border-outline-variant flex flex-col justify-between min-h-[200px] hover:border-primary transition-all duration-300 ${benefit.span}`}
+                  className={`p-8 border border-outline-variant flex flex-col justify-between min-h-[200px] hover:border-primary transition-all duration-300 ${benefit.span}`}
                 >
                   <div className="space-y-4">
-                    <div className="w-10 h-10 rounded-xl border border-outline-variant bg-surface-container flex items-center justify-center text-secondary">
+                    <div className="w-10 h-10 border border-outline-variant bg-surface-container flex items-center justify-center text-secondary">
                       <Icon className="w-5 h-5" />
                     </div>
                     <div className="space-y-2 text-left">

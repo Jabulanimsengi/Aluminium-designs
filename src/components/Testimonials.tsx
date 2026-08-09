@@ -46,7 +46,7 @@ export default function Testimonials() {
       {testimonials.map((t) => (
         <div
           key={t.id}
-          className="border border-outline-variant bg-surface-container-lowest p-6 sm:p-8 flex flex-col justify-between relative hover:border-primary transition-colors rounded-2xl shadow-sm"
+          className="border border-outline-variant bg-surface-container-lowest p-6 sm:p-8 flex flex-col justify-between relative hover:border-primary transition-colors shadow-sm"
         >
           <div className="absolute top-6 right-6 text-surface-container-high opacity-80 pointer-events-none">
             <Quote className="w-10 h-10" />
@@ -64,7 +64,7 @@ export default function Testimonials() {
           </div>
 
           <div className="border-t border-outline-variant pt-5 mt-6 flex items-center gap-3">
-            <div className="w-10 h-10 border border-outline-variant bg-surface-container flex items-center justify-center font-sans font-bold text-xs text-primary rounded-xl">
+            <div className="w-10 h-10 border border-outline-variant bg-surface-container flex items-center justify-center font-sans font-bold text-xs text-primary">
               {t.name.split(" ")[0].charAt(0)}
               {t.name.split(" ")[1]?.charAt(0) || ""}
             </div>

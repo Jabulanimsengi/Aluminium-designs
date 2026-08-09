@@ -7,7 +7,7 @@ import CTASection from "@/components/CTASection";
 type FaqCategory = "general" | "installation" | "pricing";
 
 export const metadata: Metadata = {
-  title: "Frequently Asked Questions | Aluminium Designs",
+  title: "Frequently Asked Questions",
   description:
     "Find clear answers about window and door delivery times, custom sizes, safety glass, warranties, and free home quotes.",
 };
@@ -68,7 +68,7 @@ export default function FAQPage() {
                 className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start border-b border-outline-variant pb-16 last:border-b-0 last:pb-0"
               >
                 <div className="lg:col-span-4 space-y-4">
-                  <div className="w-10 h-10 border border-outline-variant bg-surface-container flex items-center justify-center text-secondary rounded-xl shadow-sm">
+                  <div className="w-10 h-10 border border-outline-variant bg-surface-container flex items-center justify-center text-secondary shadow-sm">
                     <Icon className="w-5 h-5" />
                   </div>
                   <h3 className="font-sans font-bold text-2xl uppercase tracking-tight text-primary">

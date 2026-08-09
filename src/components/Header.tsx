@@ -6,6 +6,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Menu, X, Phone, ChevronDown, ArrowRight } from "lucide-react";
 import { services } from "@/data/services";
+import { whatsappQuoteUrl } from "@/lib/site";
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -14,6 +15,10 @@ export default function Header() {
   const [mobileServicesCount, setMobileServicesCount] = useState(5);
   const pathname = usePathname();
   const dropdownTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const mobileMenuButtonRef = useRef<HTMLButtonElement>(null);
+  const mobilePanelRef = useRef<HTMLDivElement>(null);
+  const servicesMenuRef = useRef<HTMLDivElement>(null);
+  const servicesButtonRef = useRef<HTMLButtonElement>(null);
 
   const handleDropdownEnter = () => {
     if (dropdownTimer.current) {
@@ -35,6 +40,70 @@ export default function Header() {
     };
   }, []);
 
+  useEffect(() => {
+    if (!mobileMenuOpen) return;
+
+    const previousOverflow = document.body.style.overflow;
+    const menuButton = mobileMenuButtonRef.current;
+    document.body.style.overflow = "hidden";
+
+    const panel = mobilePanelRef.current;
+    const focusableSelector =
+      'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+    const focusableElements = panel?.querySelectorAll<HTMLElement>(focusableSelector);
+    focusableElements?.[0]?.focus();
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setMobileMenuOpen(false);
+        return;
+      }
+
+      if (event.key !== "Tab" || !focusableElements?.length) return;
+      const first = focusableElements[0];
+      const last = focusableElements[focusableElements.length - 1];
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener("keydown", handleKeyDown);
+      menuButton?.focus();
+    };
+  }, [mobileMenuOpen]);
+
+  useEffect(() => {
+    if (!servicesDropdownOpen) return;
+
+    const handlePointerDown = (event: PointerEvent) => {
+      if (!servicesMenuRef.current?.contains(event.target as Node)) {
+        setServicesDropdownOpen(false);
+      }
+    };
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setServicesDropdownOpen(false);
+        servicesButtonRef.current?.focus();
+      }
+    };
+
+    document.addEventListener("pointerdown", handlePointerDown);
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("pointerdown", handlePointerDown);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [servicesDropdownOpen]);
+
   const navLinks = [
     { name: "Home", href: "/" },
     { name: "About Us", href: "/about" },
@@ -51,6 +120,8 @@ export default function Header() {
         <div className="relative flex items-center justify-between h-full lg:grid lg:grid-cols-[154px_minmax(0,1fr)_auto]">
           {/* Left: hamburger on mobile */}
             <button
+              ref={mobileMenuButtonRef}
+              type="button"
               onClick={() => { setMobileServicesOpen(false); setMobileServicesCount(5); setMobileMenuOpen(!mobileMenuOpen); }}
               className="lg:hidden p-1.5 -ml-1.5 hover:bg-surface-container transition-colors text-primary rounded-lg"
             aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
@@ -81,12 +152,19 @@ export default function Header() {
             {navLinks.map((link) =>
               link.hasDropdown ? (
                 <div
+                  ref={servicesMenuRef}
                   key={link.name}
                   className="relative"
                   onMouseEnter={handleDropdownEnter}
                   onMouseLeave={handleDropdownLeave}
                 >
                   <button
+                    ref={servicesButtonRef}
+                    type="button"
+                    aria-haspopup="true"
+                    aria-expanded={servicesDropdownOpen}
+                    aria-controls="desktop-services-menu"
+                    onClick={() => setServicesDropdownOpen((isOpen) => !isOpen)}
                     className={`relative flex items-center gap-1 text-[11px] font-mono font-bold tracking-widest uppercase transition-colors pb-1 cursor-pointer ${
                       pathname.startsWith("/services")
                         ? "text-primary after:scale-x-100"
@@ -98,7 +176,9 @@ export default function Header() {
                   </button>
 
                   <div
-                    className={`absolute left-0 top-full w-72 bg-surface border border-outline-variant rounded-xl transition-all duration-200 origin-top-left ${
+                    id="desktop-services-menu"
+                    aria-hidden={!servicesDropdownOpen}
+                    className={`absolute left-0 top-full w-72 bg-surface border border-outline-variant transition-all duration-200 origin-top-left ${
                       servicesDropdownOpen
                         ? "opacity-100 translate-y-0 scale-100 pointer-events-auto"
                         : "opacity-0 -translate-y-1 scale-95 pointer-events-none"
@@ -109,6 +189,7 @@ export default function Header() {
                         <Link
                           key={s.id}
                           href={s.slug}
+                          tabIndex={servicesDropdownOpen ? 0 : -1}
                           className="flex items-center gap-3 p-3 hover:bg-surface-container transition-colors rounded-lg"
                         >
                           <span className="text-xs font-sans font-semibold text-primary">{s.title}</span>
@@ -117,6 +198,7 @@ export default function Header() {
                       <div className="border-t border-outline-variant my-1" />
                       <Link
                         href="/services"
+                        tabIndex={servicesDropdownOpen ? 0 : -1}
                         className="flex items-center justify-center gap-2 p-3 hover:bg-surface-container transition-colors rounded-lg text-xs font-mono font-bold uppercase tracking-wider text-secondary hover:text-primary"
                       >
                         View All {services.length} Services
@@ -144,14 +226,14 @@ export default function Header() {
           {/* Desktop CTAs */}
           <div className="hidden lg:flex items-center justify-self-end gap-4">
             <a
-              href="tel:+27871234567"
+              href="tel:+27716122439"
               className="hidden 2xl:flex items-center gap-2 text-secondary hover:text-primary transition-colors"
             >
               <Phone className="w-4 h-4" />
-              <span className="font-mono text-[11px] font-medium tracking-wider">+27 87 123 4567</span>
+              <span className="font-mono text-[11px] font-medium tracking-wider">071 612 2439</span>
             </a>
             <Link
-              href="/quote"
+              href={whatsappQuoteUrl}
               className="bg-primary hover:bg-secondary text-on-primary px-5 py-2 rounded-full font-mono text-[11px] font-bold tracking-widest uppercase transition-colors inline-flex items-center gap-1.5"
             >
               Free Quote
@@ -163,11 +245,23 @@ export default function Header() {
 
       {mobileMenuOpen && (
         <div className="fixed inset-0 z-[100] flex lg:hidden">
-          <div className="fixed inset-0 bg-black/50" onClick={() => setMobileMenuOpen(false)} />
-          <div className="relative flex flex-col w-full max-w-xs bg-surface border-r border-outline-variant h-full p-6 space-y-6 shadow-xl rounded-r-2xl animate-slide-in-left">
+          <button
+            type="button"
+            className="fixed inset-0 bg-black/50"
+            onClick={() => setMobileMenuOpen(false)}
+            aria-label="Close navigation menu"
+            tabIndex={-1}
+          />
+          <div
+            ref={mobilePanelRef}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Main navigation"
+            className="relative flex h-full w-full max-w-xs flex-col space-y-6 overflow-y-auto border-r border-outline-variant bg-surface p-6 shadow-xl animate-slide-in-left"
+          >
             <div className="flex items-center justify-between pb-4 border-b border-outline-variant">
               <span className="font-sans text-sm font-black tracking-wider text-primary">MENU</span>
-              <button onClick={() => setMobileMenuOpen(false)} className="p-1 hover:bg-surface-container text-primary rounded-lg">
+              <button type="button" aria-label="Close menu" onClick={() => setMobileMenuOpen(false)} className="p-1 hover:bg-surface-container text-primary rounded-lg">
                 <X className="w-5 h-5" />
               </button>
             </div>
@@ -177,6 +271,9 @@ export default function Header() {
                 link.hasDropdown ? (
                   <div key={link.name}>
                     <button
+                      type="button"
+                      aria-expanded={mobileServicesOpen}
+                      aria-controls="mobile-services-menu"
                       onClick={() => setMobileServicesOpen((o) => !o)}
                       className="flex w-full items-center justify-between px-4 py-3 text-xs font-bold uppercase tracking-wider text-secondary hover:bg-surface-container transition-colors rounded-lg"
                     >
@@ -184,7 +281,7 @@ export default function Header() {
                       <ChevronDown className={`w-4 h-4 transition-transform ${mobileServicesOpen ? "rotate-180" : ""}`} />
                     </button>
                     {mobileServicesOpen && (
-                      <div className="border-l-2 border-outline-variant ml-4 pl-4 space-y-0.5">
+                      <div id="mobile-services-menu" className="border-l-2 border-outline-variant ml-4 pl-4 space-y-0.5">
                         <Link
                           href="/services"
                           onClick={() => setMobileMenuOpen(false)}
@@ -204,6 +301,7 @@ export default function Header() {
                         ))}
                         {mobileServicesCount < services.length && (
                           <button
+                            type="button"
                             onClick={() => setMobileServicesCount((c) => c + 5)}
                             className="w-full px-3 py-2 rounded-lg text-[10px] font-mono font-bold uppercase tracking-wider text-secondary hover:text-primary hover:bg-surface-container transition-colors text-center"
                           >
@@ -232,14 +330,14 @@ export default function Header() {
 
             <div className="border-t border-outline-variant pt-6 space-y-4">
               <a
-                href="tel:+27871234567"
-                className="flex items-center gap-3 px-4 py-3 rounded-xl border border-outline-variant bg-surface-container-low text-sm font-mono font-medium text-primary"
+                href="tel:+27716122439"
+                className="flex items-center gap-3 px-4 py-3 border border-outline-variant bg-surface-container-low text-sm font-mono font-medium text-primary"
               >
                 <Phone className="w-4 h-4 text-secondary" />
-                +27 87 123 4567
+                071 612 2439
               </a>
               <Link
-                href="/quote"
+                href={whatsappQuoteUrl}
                 onClick={() => setMobileMenuOpen(false)}
                 className="flex items-center justify-center w-full py-3.5 rounded-full bg-primary hover:bg-secondary text-on-primary font-mono text-xs font-bold uppercase tracking-widest transition-colors"
               >

@@ -43,8 +43,8 @@ export default function QuoteForm() {
     return [ `Reference: ${reference}`, `Name: ${formData.fullName}`, `Phone: ${formData.phone}`, `Email: ${formData.email}`, `Location: ${formData.location}`, `Service: ${serviceTitle}`, `Project type: ${formData.projectType}`, "", formData.description ].join("\n");
   }, [formData, serviceTitle, submission]);
 
-  const whatsappFallbackUrl = `https://wa.me/27871234567?text=${encodeURIComponent(`Hi Aluminium Designs, please help with this quote request:\n\n${quoteSummary}`)}`;
-  const emailFallbackUrl = `mailto:estimates@aluminiumdesigns.co.za?subject=${encodeURIComponent(`Quote request ${submission.status === "sent" || submission.status === "fallback" ? submission.reference : ""}`)}&body=${encodeURIComponent(quoteSummary)}`;
+  const whatsappFallbackUrl = `https://wa.me/27716122439?text=${encodeURIComponent(`Hi Aluminium Designs, please help with this quote request:\n\n${quoteSummary}`)}`;
+  const emailFallbackUrl = `mailto:info@aluminiumdesigns.co.za?subject=${encodeURIComponent(`Quote request ${submission.status === "sent" || submission.status === "fallback" ? submission.reference : ""}`)}&body=${encodeURIComponent(quoteSummary)}`;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -63,19 +63,22 @@ export default function QuoteForm() {
     try {
       const response = await fetch("/api/quote", { method: "POST", body: data });
       const result = await response.json();
+      if (result.delivery === "failed" || result.delivery === "fallback_required") {
+        setSubmission({ status: "fallback", reference: result.reference, message: result.message });
+        return;
+      }
       if (!response.ok || !result.ok) { setSubmission({ status: "error", message: result.message || "Please check the details and try again.", errors: result.errors }); return; }
-      if (result.delivery === "fallback_required") { setSubmission({ status: "fallback", reference: result.reference, message: result.message }); return; }
       setSubmission({ status: "sent", reference: result.reference });
     } catch { setSubmission({ status: "error", message: "Could not submit from this browser. Please use WhatsApp or email." }); }
     finally { setIsSubmitting(false); }
   };
 
-  const inputClass = "w-full border border-outline-variant bg-surface px-4 py-3 text-sm text-primary placeholder-outline font-sans focus:outline-none focus:border-primary transition-colors rounded-xl";
+  const inputClass = "w-full border border-outline-variant bg-surface px-4 py-3 text-sm text-primary placeholder-outline font-sans focus:outline-none focus:border-primary transition-colors rounded-none";
   const labelClass = "mb-2 block font-mono text-[10px] font-bold uppercase tracking-widest text-outline";
 
   if (submission.status === "sent" || submission.status === "fallback") {
     return (
-      <div className="mx-auto max-w-2xl animate-fade-in border border-outline-variant bg-surface-container-lowest p-8 text-center md:p-12 rounded-2xl">
+      <div className="mx-auto max-w-2xl animate-fade-in border border-outline-variant bg-surface-container-lowest p-8 text-center md:p-12">
         <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center border border-outline-variant bg-surface-container text-secondary rounded-full">
           {submission.status === "sent" ? <CheckCircle className="h-8 w-8" /> : <MessageCircle className="h-8 w-8" />}
         </div>
@@ -86,11 +89,11 @@ export default function QuoteForm() {
           {submission.status === "sent" ? (
             <>Thank you, <strong className="text-primary">{formData.fullName}</strong>. Your request was delivered.</>
           ) : (
-            "Your details passed validation, but this site is not connected to an automatic delivery destination. Send via WhatsApp or email below."
+            "Your quote request was prepared but was not delivered automatically. Send it via WhatsApp or email below."
           )}
         </p>
 
-        <div className="mx-auto mt-6 max-w-md border border-outline-variant bg-surface-container p-4 text-left text-xs rounded-xl">
+        <div className="mx-auto mt-6 max-w-md border border-outline-variant bg-surface-container p-4 text-left text-xs">
           <p className="font-mono text-[10px] text-outline uppercase"><strong>Reference:</strong> {submission.reference}</p>
           <p className="font-mono text-[10px] text-outline uppercase"><strong>Service:</strong> {serviceTitle}</p>
           <p className="font-mono text-[10px] text-outline uppercase"><strong>Sector:</strong> {formData.projectType.toUpperCase()}</p>
@@ -99,15 +102,22 @@ export default function QuoteForm() {
         </div>
 
         {submission.status === "fallback" && (
-          <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
-            <a href={whatsappFallbackUrl} target="_blank" rel="noopener noreferrer"
-              className="inline-flex items-center justify-center rounded-full bg-[#25D366] hover:bg-[#20ba5a] px-5 py-3 font-mono text-[11px] font-bold uppercase tracking-widest text-white transition-colors">
-              <MessageCircle className="mr-2 h-4 w-4" /> Send on WhatsApp
-            </a>
-            <a href={emailFallbackUrl}
-              className="inline-flex items-center justify-center rounded-full border border-outline-variant bg-surface hover:bg-surface-container px-5 py-3 font-mono text-[11px] font-bold uppercase tracking-widest text-secondary transition-colors">
-              <Mail className="mr-2 h-4 w-4" /> Send by Email
-            </a>
+          <div className="mt-6">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+              <a href={whatsappFallbackUrl} target="_blank" rel="noopener noreferrer"
+                className="inline-flex items-center justify-center rounded-full bg-[#25D366] hover:bg-[#20ba5a] px-5 py-3 font-mono text-[11px] font-bold uppercase tracking-widest text-white transition-colors">
+                <MessageCircle className="mr-2 h-4 w-4" /> Send on WhatsApp
+              </a>
+              <a href={emailFallbackUrl}
+                className="inline-flex items-center justify-center rounded-full border border-outline-variant bg-surface hover:bg-surface-container px-5 py-3 font-mono text-[11px] font-bold uppercase tracking-widest text-secondary transition-colors">
+                <Mail className="mr-2 h-4 w-4" /> Send by Email
+              </a>
+            </div>
+            {uploadedFile && (
+              <p className="mt-3 text-xs text-outline">
+                Remember to attach <strong>{uploadedFile.name}</strong> again in WhatsApp or your email app.
+              </p>
+            )}
           </div>
         )}
 
@@ -120,9 +130,9 @@ export default function QuoteForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="border border-outline-variant bg-surface-container-lowest p-6 sm:p-10 rounded-2xl">
+    <form onSubmit={handleSubmit} className="border border-outline-variant bg-surface-container-lowest p-6 sm:p-10">
       {submission.status === "error" && (
-        <div className="mb-6 border border-outline-variant bg-surface-container p-4 text-left text-xs text-on-surface-variant rounded-xl">
+        <div className="mb-6 border border-outline-variant bg-surface-container p-4 text-left text-xs text-on-surface-variant">
           <div className="flex items-start gap-2">
             <AlertCircle className="mt-0.5 h-4 w-4 shrink-0 text-on-tertiary-container" />
             <div>
@@ -188,14 +198,14 @@ export default function QuoteForm() {
         <div className="sm:col-span-2">
           <span className={labelClass}>Upload Layout, Plan, or Photo (Optional)</span>
           <div onDragEnter={handleDrag} onDragOver={handleDrag} onDragLeave={handleDrag} onDrop={handleDrop}
-            className={`border-2 border-dashed p-6 text-center transition-colors rounded-2xl ${
+            className={`border-2 border-dashed p-6 text-center transition-colors ${
               dragActive ? "border-primary bg-surface-container" : uploadedFile ? "border-primary bg-surface-container" : "border-outline-variant bg-surface hover:border-primary"
             }`}>
             <input type="file" id="file-upload" name="attachment" className="hidden" accept=".pdf,.png,.jpg,.jpeg,.dwg" onChange={handleFileChange} />
             {uploadedFile ? (
-              <div className="mx-auto flex max-w-md items-center justify-between border border-outline-variant bg-surface p-3 rounded-xl">
+              <div className="mx-auto flex max-w-md items-center justify-between border border-outline-variant bg-surface p-3">
                 <div className="flex min-w-0 items-center gap-3 text-left">
-                  <div className="flex h-8 w-8 items-center justify-center border border-outline-variant bg-surface-container text-secondary rounded-xl"><FileText className="h-4 w-4" /></div>
+                  <div className="flex h-8 w-8 items-center justify-center border border-outline-variant bg-surface-container text-secondary"><FileText className="h-4 w-4" /></div>
                   <div className="min-w-0">
                     <p className="truncate text-xs font-sans font-bold text-primary">{uploadedFile.name}</p>
                     <p className="font-mono text-[10px] text-outline">{(uploadedFile.size / 1024 / 1024).toFixed(2)} MB</p>
@@ -236,7 +246,7 @@ export default function QuoteForm() {
       <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
         <div className="flex items-start gap-2.5 text-left text-xs text-outline">
           <ShieldAlert className="mt-0.5 h-4 w-4 shrink-0 text-secondary" />
-          <p>Your information is secure. We only use your details to provide structural consultation and estimates.</p>
+          <p>We use your details only to review your project and respond to this quote request.</p>
         </div>
         <button type="submit" disabled={isSubmitting}
           className="inline-flex w-full shrink-0 cursor-pointer items-center justify-center rounded-full bg-primary hover:bg-secondary text-on-primary px-8 py-4 font-mono text-[11px] font-bold uppercase tracking-widest transition-colors disabled:opacity-50 sm:w-auto">

@@ -8,26 +8,26 @@ export interface FAQItem {
 export const faqs: FAQItem[] = [
   {
     id: "faq-1",
-    question: "Do you offer custom sizing, or are your products standard sizes?",
-    answer: "Every single product we manufacture is custom-made from scratch. We perform precise on-site measurements to ensure every window, door, and shopfront fits your exact structural opening, eliminating gaps, draughts, and structural vulnerabilities.",
+    question: "Do you make custom sizes, or do you only sell standard sizes?",
+    answer: "Everything we make is custom-built from scratch. We measure your openings on site so every window and door fits your home perfectly — no gaps, no draughts, no awkward sizes.",
     category: "general"
   },
   {
     id: "faq-2",
-    question: "How long does the design, fabrication, and installation process take?",
-    answer: "Our standard lead time is 2 to 4 weeks from deposit payment and final architectural drawing approval. The timeline depends on the scale of the project, complexity of the designs, and whether custom powder coating colors are selected.",
+    question: "How long does the whole process take?",
+    answer: "Most projects take about 2 to 4 weeks from when you pay the deposit to final installation. The exact time depends on how big the job is and whether you choose a special powder-coated colour.",
     category: "installation"
   },
   {
     id: "faq-3",
-    question: "Are your installations compliant with building and safety regulations?",
-    answer: "Yes, fully. All glass installations utilize safety-toughened or laminated glass in strict compliance with SANS (South African National Standards) or local structural building codes. We engineer for wind loads, thermal barriers, and human impact safety.",
+    question: "Are your installations safe and legal?",
+    answer: "Yes. We only use toughened or laminated safety glass that meets South African safety standards. Every window and door is built to handle strong winds and is fitted safely.",
     category: "installation"
   },
   {
     id: "faq-4",
-    question: "Do you provide free on-site measurements and quotations?",
-    answer: "Absolutely. We provide free initial site measurements, consulting, and detailed itemized quotations for projects within our standard service area. For out-of-area commercial developments, we review architectural drawings to provide initial pricing.",
+    question: "How does the on-site consultation and measurement work?",
+    answer: "We send a professional technician to your property to take precise measurements. There is a small consultation fee of R250 for Johannesburg areas and R350 for areas outside Johannesburg, which covers the site visit and travel. This fee is fully credited back against your final invoice if you proceed with the installation, so the measurement is effectively free when you go ahead.",
     category: "pricing"
   },
   {
@@ -44,38 +44,38 @@ export const faqs: FAQItem[] = [
   },
   {
     id: "faq-7",
-    question: "What is the warranty on your aluminium and glass products?",
-    answer: "We offer a 5-year structural warranty on our fabricated aluminium frames and profiles, and a 1-year warranty on moving hardware (rollers, locks, friction stays, hinges) and weather seals, subject to proper maintenance.",
+    question: "What warranty do you give on your products?",
+    answer: "We give a 5-year warranty on the aluminium frames and a 1-year warranty on moving parts like rollers, locks, and hinges, provided they are looked after properly.",
     category: "pricing"
   },
   {
     id: "faq-8",
-    question: "Do you handle the removal of old windows and doors?",
-    answer: "Yes, we offer complete retrofitting services. Our team will carefully dismantle and remove existing wood or steel frames, prep the openings, install the new premium aluminium systems, and seal the joints for a clean, weather-tight finish.",
+    question: "Do you remove the old windows and doors first?",
+    answer: "Yes. We carefully take out your old wood or steel frames, prepare the opening, install your new aluminium frames, and seal everything up for a clean, weather-tight finish.",
     category: "installation"
   },
   {
     id: "faq-9",
     question: "How much do aluminium windows and doors cost?",
-    answer: "Prices vary based on size, glass type, and finish. As a guide: standard casement windows start from R 2,700, sliding patio doors from R 4,600, and grand pivot entrance doors from R 13,000. Visit our Prices page for a full breakdown, or request a free on-site quote for an exact figure.",
+    answer: "Prices depend on size, glass, and finish. As a guide: standard windows start from R 2,700, sliding patio doors from R 4,600, and grand pivot doors from R 13,000. See our Prices page for a full list, or ask us for an exact quote.",
     category: "pricing"
   },
   {
     id: "faq-10",
-    question: "Do you require a deposit? What are your payment terms?",
-    answer: "We require a 50% deposit to begin fabrication after you approve the final quote and drawings. The remaining 50% is due upon completion and sign-off of the installation. We accept EFT and bank transfers.",
+    question: "Do you need a deposit? How do payments work?",
+    answer: "Yes, we ask for a 50% deposit to start making your order once you approve the quote and drawings. The remaining 50% is due when the installation is finished. We accept EFT and bank transfers.",
     category: "pricing"
   },
   {
     id: "faq-11",
-    question: "Does the quoted price include installation?",
-    answer: "Yes. All our quoted prices include full professional installation by our certified teams. This covers site preparation, fitting, weather sealing, and cleanup. The only items not included are VAT and any structural modifications to brickwork beyond standard openings.",
+    question: "Is installation included in the price?",
+    answer: "Yes. All our prices include full installation by our team, covering site prep, fitting, weather sealing, and cleanup. The only extras are VAT and any major changes to your brickwork beyond normal openings.",
     category: "pricing"
   },
   {
     id: "faq-12",
-    question: "Is there a price difference between powder-coated and anodized finishes?",
-    answer: "Anodized finishes (silver, bronze) are our standard and included in the base price. Premium powder coating (charcoal, matte black) typically adds 5-10% to the frame cost. The exact difference is itemized in your quotation so there are no surprises.",
+    question: "Is there a price difference between standard and premium finishes?",
+    answer: "Anodized finishes (silver, bronze) are our standard and included in the base price. Premium powder coating (charcoal, matte black) usually adds about 5-10% to the frame cost. Your quote shows the exact difference so there are no surprises.",
     category: "pricing"
   },
   {

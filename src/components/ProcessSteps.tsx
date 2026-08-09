@@ -42,7 +42,7 @@ export default function ProcessSteps() {
           const Icon = step.icon;
           return (
             <div key={step.number} className="flex flex-col items-center text-center group">
-              <div className="w-14 h-14 border border-outline-variant bg-surface-container-lowest flex items-center justify-center text-secondary group-hover:border-primary group-hover:scale-105 transition-all relative rounded-xl shadow-sm">
+              <div className="w-14 h-14 border border-outline-variant bg-surface-container-lowest flex items-center justify-center text-secondary group-hover:border-primary group-hover:scale-105 transition-all relative shadow-sm">
                 <Icon className="w-5 h-5" />
                 <span className="absolute -top-2.5 -right-2.5 font-mono text-[9px] font-bold bg-primary text-on-primary border border-primary px-2 py-0.5 rounded-full">
                   {step.number}

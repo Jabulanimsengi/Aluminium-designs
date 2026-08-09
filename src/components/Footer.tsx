@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
 import { services } from "@/data/services";
+import { businessContact, whatsappQuoteUrl } from "@/lib/site";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -14,7 +15,7 @@ export default function Footer() {
     { name: "Gallery", href: "/gallery" },
     { name: "Prices", href: "/prices" },
     { name: "FAQ", href: "/faq" },
-    { name: "Quote", href: "/quote" },
+    { name: "Quote", href: whatsappQuoteUrl },
     { name: "Contact", href: "/contact" },
   ];
 
@@ -91,13 +92,13 @@ export default function Footer() {
               <li className="flex items-start gap-3">
                 <MapPin className="w-4 h-4 text-outline shrink-0 mt-0.5" />
                 <span className="text-outline-variant leading-relaxed">
-                  Unit 12, Enterprise Industrial Park, Sandton, Johannesburg, 2196
+                  {businessContact.fullAddress}
                 </span>
               </li>
               <li className="flex items-center gap-3">
                 <Phone className="w-4 h-4 text-outline shrink-0" />
-                <a href="tel:+27871234567" className="text-outline-variant hover:text-white font-mono">
-                  +27 87 123 4567
+                <a href="tel:+27716122439" className="text-outline-variant hover:text-white font-mono">
+                  071 612 2439
                 </a>
               </li>
               <li className="flex items-center gap-3">

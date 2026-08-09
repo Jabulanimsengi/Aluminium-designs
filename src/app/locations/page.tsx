@@ -5,7 +5,7 @@ import { gautengLocations } from "@/data/locations";
 import CTASection from "@/components/CTASection";
 
 export const metadata = {
-  title: "Service Areas in Gauteng | Aluminium Designs",
+  title: "Service Areas in Gauteng",
   description: "View our list of service areas across Gauteng. We manufacture and install custom aluminium windows, doors, and security gates in Johannesburg, Pretoria, and surrounding areas.",
 };
 
@@ -27,7 +27,7 @@ export default function LocationsDirectory() {
       {/* Header Section */}
       <section className="relative py-20 lg:py-32 bg-surface-container-low border-b border-outline-variant">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl border border-outline-variant bg-surface-container text-secondary mb-2 shadow-sm">
+          <div className="inline-flex items-center justify-center w-16 h-16 border border-outline-variant bg-surface-container text-secondary mb-2 shadow-sm">
             <Map className="w-8 h-8" />
           </div>
           <h1 className="font-sans font-bold uppercase tracking-tight text-4xl sm:text-5xl text-primary">
@@ -64,7 +64,7 @@ export default function LocationsDirectory() {
                     <Link
                       key={loc.id}
                       href={`/locations/${loc.id}`}
-                      className="group flex items-center justify-between p-4 rounded-xl border border-outline-variant bg-surface-container-lowest hover:border-primary hover:bg-surface-container transition-all shadow-sm"
+                      className="group flex items-center justify-between p-4 border border-outline-variant bg-surface-container-lowest hover:border-primary hover:bg-surface-container transition-all shadow-sm"
                     >
                       <div className="flex items-center space-x-3">
                         <MapPin className="w-4 h-4 text-outline group-hover:text-on-tertiary-container transition-colors" />

@@ -5,7 +5,7 @@ import GalleryGrid from "@/components/GalleryGrid";
 import CTASection from "@/components/CTASection";
 
 export const metadata: Metadata = {
-  title: "Project Gallery | Our Portfolio",
+  title: "Aluminium Installation Portfolio",
   description:
     "Browse our completed residential, commercial, and retail projects. Precision fabrication and installation gallery.",
 };
@@ -14,7 +14,7 @@ export default function GalleryPage() {
   return (
     <div className="relative bg-surface text-on-surface">
       {/* Header */}
-      <section className="py-24 bg-surface-container-low border-b border-outline-variant">
+      <section className="py-16 sm:py-20 lg:py-24 bg-surface-container-low border-b border-outline-variant">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-5">
           <div className="inline-flex items-center gap-2 bg-surface border border-outline-variant px-3.5 py-1 font-mono text-[10px] font-bold tracking-widest uppercase rounded-full">
             <Layers className="w-3.5 h-3.5 text-secondary" />
@@ -31,7 +31,7 @@ export default function GalleryPage() {
       </section>
 
       {/* Grid */}
-      <section className="py-24 bg-surface border-b border-outline-variant">
+      <section className="py-16 sm:py-20 lg:py-24 bg-surface border-b border-outline-variant">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <GalleryGrid />
         </div>

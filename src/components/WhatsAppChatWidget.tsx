@@ -3,7 +3,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { X, ChevronRight, Clock, ShieldCheck, ArrowUpRight } from "lucide-react";
 
-const PHONE = "27871234567";
+const PHONE = "27716122439";
 
 const quickReplies = [
   { label: "Get a free quote", message: "Hi Aluminium Designs, I'd like a quote for aluminium installation at my property." },
@@ -45,7 +45,7 @@ export default function WhatsAppChatWidget() {
     >
       {open && (
         <div
-          className="max-h-[calc(100dvh-6.5rem)] w-[320px] max-w-[calc(100vw-2rem)] animate-fade-in-up overflow-y-auto overscroll-contain rounded-2xl border border-outline-variant bg-surface shadow-xl"
+          className="max-h-[calc(100dvh-6.5rem)] w-[320px] max-w-[calc(100vw-2rem)] animate-fade-in-up overflow-y-auto overscroll-contain border border-outline-variant bg-surface shadow-xl"
         >
           {/* Header */}
           <div className="sticky top-0 z-20 flex items-center gap-3 bg-[#075e54] px-4 py-3.5 text-white">
@@ -86,7 +86,7 @@ export default function WhatsAppChatWidget() {
             </div>
 
             <div className="relative z-10 flex items-start gap-2">
-              <div className="max-w-[85%] space-y-1.5 border border-outline-variant bg-white px-4 py-3 rounded-2xl">
+              <div className="max-w-[85%] space-y-1.5 border border-outline-variant bg-white px-4 py-3">
                 <p className="text-sm leading-relaxed text-on-surface">
                   Hi there! Welcome to Aluminium Designs. How can we help you today?
                 </p>
@@ -123,7 +123,7 @@ export default function WhatsAppChatWidget() {
 
           {/* Bottom bar */}
           <div className="flex items-center gap-3 border-t border-outline-variant bg-surface px-4 py-3">
-            <div className="flex-1 border border-outline-variant bg-surface-container px-3 py-2 font-mono text-[10px] text-outline uppercase tracking-wider rounded-xl">
+            <div className="flex-1 border border-outline-variant bg-surface-container px-3 py-2 font-mono text-[10px] text-outline uppercase tracking-wider rounded-none">
               Continue on WhatsApp...
             </div>
             <a
@@ -150,7 +150,7 @@ export default function WhatsAppChatWidget() {
       >
         <span className="absolute inset-0 animate-ping rounded-full bg-[#25D366]/30" />
 
-        <span className="absolute right-full mr-3 hidden w-auto whitespace-nowrap border border-outline-variant bg-surface p-2 font-mono text-[10px] font-bold uppercase tracking-widest text-primary shadow-sm group-hover:block pointer-events-none rounded-xl">
+        <span className="absolute right-full mr-3 hidden w-auto whitespace-nowrap border border-outline-variant bg-surface p-2 font-mono text-[10px] font-bold uppercase tracking-widest text-primary shadow-sm group-hover:block pointer-events-none">
           Chat with us
         </span>
 

@@ -9,6 +9,10 @@ import ProcessSteps from "@/components/ProcessSteps";
 import Testimonials from "@/components/Testimonials";
 import FAQAccordion from "@/components/FAQAccordion";
 import CTASection from "@/components/CTASection";
+import PlanningTools from "@/components/PlanningTools";
+import TrustedBy from "@/components/TrustedBy";
+import BusinessLocationMap from "@/components/BusinessLocationMap";
+import { whatsappQuoteUrl } from "@/lib/site";
 
 export default function Home() {
   const benefits = [
@@ -78,7 +82,7 @@ export default function Home() {
             <h1 className="font-sans text-4xl sm:text-5xl lg:text-6xl font-bold uppercase leading-[1.05] tracking-tight text-white">
               Transform Your Home With Beautiful Aluminium
             </h1>
-            <p className="text-white/80 max-w-xl mx-auto text-sm sm:text-base leading-relaxed bg-black/45 backdrop-blur-md p-4 border border-white/10 rounded-xl">
+            <p className="text-white/80 max-w-xl mx-auto text-sm sm:text-base leading-relaxed bg-black/45 backdrop-blur-md p-4 border border-white/10">
               Clean, rust-proof, and maintenance-free. We manufacture custom aluminium doors,
               windows, and security gates designed to make your house look modern, smart, and safe.
             </p>
@@ -91,7 +95,7 @@ export default function Home() {
                 <ArrowRight className="w-4 h-4" />
               </Link>
               <Link
-                href="/quote"
+                href={whatsappQuoteUrl}
                 className="flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white border border-white/30 px-6 py-3.5 font-mono text-xs font-bold uppercase tracking-widest transition-colors rounded-full"
               >
                 Request Free Quote
@@ -110,6 +114,8 @@ export default function Home() {
         </div>
       </section>
 
+      <TrustedBy />
+
       {/* 2. WHAT WE DO */}
       <section className="py-20 bg-surface border-b border-outline-variant">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -118,9 +124,9 @@ export default function Home() {
               <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
                 What We Do
               </span>
-              <h1 className="mt-2 font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary max-w-3xl mx-auto">
+              <h2 className="mt-2 font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary max-w-3xl mx-auto">
                 Aluminium Solutions, Made and Fitted for Your Property
-              </h1>
+              </h2>
               <p className="mt-5 text-sm text-on-surface-variant max-w-2xl mx-auto leading-relaxed">
                 Aluminium Designs measures, manufactures, and installs custom aluminium and glass solutions. From one replacement window to a complete home renovation or commercial fit-out, every product is made to suit the space and installed with care.
               </p>
@@ -142,7 +148,7 @@ export default function Home() {
                 ["02", "Manufacture", "Your aluminium frames and glass are made to the required size."],
                 ["03", "Install", "Our team fits, checks, and leaves your space neat and ready to use."],
               ].map(([number, title, detail]) => (
-                <div key={number} className="flex gap-4 rounded-2xl border border-outline-variant bg-surface-container-lowest p-5 shadow-sm">
+                <div key={number} className="flex gap-4 border border-outline-variant bg-surface-container-lowest p-5 shadow-sm">
                   <span className="font-mono text-xs font-bold text-secondary">{number}</span>
                   <div>
                     <h3 className="font-sans text-sm font-bold uppercase tracking-tight text-primary">{title}</h3>
@@ -162,16 +168,16 @@ export default function Home() {
             <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
               Our Core Services
             </span>
-            <h1 className="mt-2 font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
+            <h2 className="mt-2 font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
               Windows, Doors, Security &amp; Glass
-            </h1>
+            </h2>
             <p className="mt-3 text-sm text-on-surface-variant max-w-xl mx-auto leading-relaxed">
               Start with the services homeowners and businesses ask for most, then explore our complete custom aluminium range.
             </p>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {services.filter((service) => ["windows", "doors", "sliding-stacking", "burglar-bars", "trellis-doors", "custom"].includes(service.id)).map((service) => (
+            {services.filter((service) => service.featured).map((service) => (
               <ServiceCard
                 key={service.id}
                 title={service.title}
@@ -195,12 +201,14 @@ export default function Home() {
         </div>
       </section>
 
+      <PlanningTools />
+
       {/* 4. WHY ALUMINIUM */}
       <section className="py-20 bg-surface border-b border-outline-variant">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-12 max-w-2xl mx-auto text-center">
             <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">Built for Everyday Living</span>
-            <h1 className="mt-2 font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">Why Choose Aluminium?</h1>
+            <h2 className="mt-2 font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">Why Choose Aluminium?</h2>
             <p className="mt-3 text-sm leading-relaxed text-on-surface-variant">A practical, modern finish for homes and commercial spaces that need to look good and perform for years.</p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 border-t border-l border-outline-variant bg-surface-container-lowest">
@@ -241,7 +249,7 @@ export default function Home() {
       <section className="py-20 bg-surface border-b border-outline-variant">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            <div className="lg:col-span-5 h-[320px] sm:h-[400px] border border-outline-variant overflow-hidden relative rounded-2xl shadow-sm">
+            <div className="lg:col-span-5 h-[320px] sm:h-[400px] border border-outline-variant overflow-hidden relative shadow-sm">
               <Image
                 src="/images/slatted_gate.png"
                 alt="Custom aluminium gate installation"
@@ -252,7 +260,7 @@ export default function Home() {
               <div className="absolute top-4 left-4 bg-black/60 backdrop-blur-md text-white font-mono text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full">
                 Custom Slatted Gate
               </div>
-              <div className="absolute bottom-4 left-4 right-4 bg-white/95 border border-outline-variant rounded-2xl p-3 flex justify-between text-[10px]">
+              <div className="absolute bottom-4 left-4 right-4 bg-white/95 border border-outline-variant p-3 flex justify-between text-[10px]">
                 <span className="text-on-surface-variant font-medium">Powder-Coated Finish</span>
                 <span className="font-sans font-bold text-primary">Sandton Residence</span>
               </div>
@@ -262,9 +270,9 @@ export default function Home() {
               <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
                 Tailored Manufacturing
               </span>
-              <h1 className="font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
+              <h2 className="font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
                 Custom Made For Your Home Layout
-              </h1>
+              </h2>
               <p className="text-on-surface-variant text-sm leading-relaxed">
                 Every window, door, and security gate is manufactured from scratch to match your exact home dimensions.
                 We handle the entire process smoothly: measuring your space, custom crafting the frames in our factory,
@@ -295,9 +303,9 @@ export default function Home() {
             <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
               Easy Steps
             </span>
-            <h1 className="mt-2 font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
+            <h2 className="mt-2 font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
               Our Simple 3-Step Process
-            </h1>
+            </h2>
             <p className="mt-3 text-sm text-on-surface-variant max-w-xl mx-auto leading-relaxed">
               From our first chat to the final check, we make upgrading your home easy and hassle-free.
             </p>
@@ -314,9 +322,9 @@ export default function Home() {
               <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
                 Real Home Transformations
               </span>
-              <h1 className="mt-2 font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
+              <h2 className="mt-2 font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
                 Beautiful Homes We&apos;ve Upgraded
-              </h1>
+              </h2>
               <p className="mt-3 text-sm text-on-surface-variant max-w-xl mx-auto leading-relaxed">
                 Take a look at recent window, door, and gate installations across Gauteng.
               </p>
@@ -361,9 +369,9 @@ export default function Home() {
                 <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
                   Why Work With Us
                 </span>
-                <h1 className="mt-2 font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
+                <h2 className="mt-2 font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
                   Why Homeowners Choose Aluminium Designs
-                </h1>
+                </h2>
                 <p className="mt-3 text-sm text-on-surface-variant max-w-lg mx-auto leading-relaxed">
                   We make upgrading your windows, doors, and gates simple, neat, and stress-free.
                 </p>
@@ -379,7 +387,7 @@ export default function Home() {
             </div>
 
             <div className="lg:col-span-5">
-              <div className="border border-outline-variant bg-surface rounded-2xl p-8 space-y-5 shadow-sm">
+              <div className="border border-outline-variant bg-surface p-8 space-y-5 shadow-sm">
                 <h3 className="font-sans font-bold text-lg uppercase text-primary tracking-tight">
                   Our Homeowner Promises
                 </h3>
@@ -426,9 +434,9 @@ export default function Home() {
             <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
               Client Reviews
             </span>
-            <h1 className="mt-2 font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
+            <h2 className="mt-2 font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
               Trusted By Homeowners Across Gauteng
-            </h1>
+            </h2>
             <p className="mt-3 text-sm text-on-surface-variant max-w-xl mx-auto leading-relaxed">
               Read what happy property owners say about our work and clean installations.
             </p>
@@ -444,9 +452,9 @@ export default function Home() {
             <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
               Quick Answers
             </span>
-            <h1 className="mt-2 font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
+            <h2 className="mt-2 font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
               Frequently Asked Questions
-            </h1>
+            </h2>
             <p className="mt-3 text-sm text-on-surface-variant max-w-xl mx-auto leading-relaxed">
               Have questions about prices, delivery times, or guarantees? Find quick answers below.
             </p>
@@ -465,6 +473,8 @@ export default function Home() {
       </section>
 
       {/* 11. CTA */}
+      <BusinessLocationMap />
+
       <CTASection />
     </div>
   );

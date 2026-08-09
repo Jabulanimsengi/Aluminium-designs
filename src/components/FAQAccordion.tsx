@@ -8,19 +8,24 @@ interface FAQAccordionProps {
   limit?: number;
   category?: "general" | "installation" | "pricing" | "all";
   locationName?: string;
+  items?: { question: string; answer: string }[];
 }
 
-export default function FAQAccordion({ limit, category = "all", locationName }: FAQAccordionProps) {
-  const [openId, setOpenId] = useState<string | null>(locationName ? "loc-1" : "faq-1");
+export default function FAQAccordion({ limit, category = "all", locationName, items }: FAQAccordionProps) {
+  const [openId, setOpenId] = useState<string | null>(locationName ? "loc-1" : items ? "svc-1" : "faq-1");
 
   const baseFiltered = faqs.filter((item) => category === "all" || item.category === category);
+
+  const customItems = items
+    ? items.map((item, i) => ({ id: `svc-${i + 1}`, ...item, category: "general" as const }))
+    : [];
 
   const locationFaqs = locationName
     ? [
         {
           id: "loc-1",
           question: `Do you provide installations directly in ${locationName}?`,
-          answer: `Yes! We have dedicated installation teams servicing ${locationName} and the surrounding areas. We offer free on-site measurements and consultations for all local residential and commercial projects.`,
+          answer: `Yes! We have dedicated installation teams servicing ${locationName} and the surrounding areas. We arrange professional on-site measurements and consultations for all local residential and commercial projects (R250 in Johannesburg, R350 outside — credited back in full against your installation invoice).`,
           category: "general" as const,
         },
         {
@@ -32,7 +37,10 @@ export default function FAQAccordion({ limit, category = "all", locationName }: 
       ]
     : [];
 
-  const finalFaqs = [...locationFaqs, ...baseFiltered].slice(0, limit || faqs.length + 2);
+  const finalFaqs = [...customItems, ...locationFaqs, ...baseFiltered].slice(
+    0,
+    limit || items?.length || faqs.length + 2,
+  );
 
   const toggleFaq = (id: string) => {
     setOpenId(openId === id ? null : id);
@@ -45,14 +53,17 @@ export default function FAQAccordion({ limit, category = "all", locationName }: 
         return (
           <div
             key={faq.id}
-            className={`border transition-colors rounded-xl ${
+            className={`border transition-colors ${
               isOpen
                 ? "bg-surface-container-lowest border-outline-variant"
                 : "bg-surface-container-lowest border-outline-variant hover:border-primary"
             }`}
           >
             <button
+              type="button"
               onClick={() => toggleFaq(faq.id)}
+              aria-expanded={isOpen}
+              aria-controls={`faq-panel-${faq.id}`}
               className="flex items-center justify-between w-full p-5 text-left cursor-pointer"
             >
               <div className="flex items-center gap-3 pr-4">
@@ -66,6 +77,8 @@ export default function FAQAccordion({ limit, category = "all", locationName }: 
               />
             </button>
             <div
+              id={`faq-panel-${faq.id}`}
+              aria-hidden={!isOpen}
               className={`overflow-hidden transition-all ${
                 isOpen ? "max-h-[1000px] border-t border-outline-variant" : "max-h-0"
               }`}

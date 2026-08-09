@@ -65,7 +65,7 @@ export const gautengLocations: LocationArea[] = [
   { id: "florida", name: "Florida", type: "suburb", municipality: "City of Johannesburg" },
   { id: "ruimsig", name: "Ruimsig", type: "suburb", municipality: "City of Johannesburg" },
   { id: "honeydew", name: "Honeydew", type: "suburb", municipality: "City of Johannesburg" },
-  { id: "wtevredenpark", name: "Weltevredenpark", type: "suburb", municipality: "City of Johannesburg" },
+  { id: "weltevredenpark", name: "Weltevredenpark", type: "suburb", municipality: "City of Johannesburg" },
   { id: "wilgeheuwel", name: "Wilgeheuwel", type: "suburb", municipality: "City of Johannesburg" },
   { id: "radiokop", name: "Radiokop", type: "suburb", municipality: "City of Johannesburg" },
   { id: "zandspruit", name: "Zandspruit", type: "township", municipality: "City of Johannesburg" },
@@ -163,12 +163,12 @@ export const gautengLocations: LocationArea[] = [
   { id: "bartlett", name: "Bartlett", type: "suburb", municipality: "Ekurhuleni" },
   { id: "bardene", name: "Bardene", type: "suburb", municipality: "Ekurhuleni" },
   { id: "parkrand", name: "Parkrand", type: "suburb", municipality: "Ekurhuleni" },
-  { id: "bravpan", name: "Brakpan", type: "city", municipality: "Ekurhuleni" },
+  { id: "brakpan", name: "Brakpan", type: "city", municipality: "Ekurhuleni" },
 
   // Benoni
   { id: "benoni", name: "Benoni", type: "city", municipality: "Ekurhuleni" },
   { id: "farrarmere", name: "Farrarmere", type: "suburb", municipality: "Ekurhuleni" },
-  { id: "rnyfield", name: "Rynfield", type: "suburb", municipality: "Ekurhuleni" },
+  { id: "rynfield", name: "Rynfield", type: "suburb", municipality: "Ekurhuleni" },
   { id: "northmead", name: "Northmead", type: "suburb", municipality: "Ekurhuleni" },
   { id: "lakefield", name: "Lakefield", type: "suburb", municipality: "Ekurhuleni" },
 

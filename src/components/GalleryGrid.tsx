@@ -14,6 +14,11 @@ export default function GalleryGrid() {
   const dragStart = useRef({ x: 0, y: 0 });
   const posStart = useRef({ x: 0, y: 0 });
   const preloadedImages = useRef(new Set<string>());
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const returnFocusRef = useRef<HTMLElement | null>(null);
+  const touchStart = useRef({ x: 0, y: 0 });
+  const suppressClick = useRef(false);
 
   const preloadImage = useCallback((src: string) => {
     if (preloadedImages.current.has(src)) return;
@@ -25,6 +30,9 @@ export default function GalleryGrid() {
 
   const openProject = useCallback(
     (project: (typeof projects)[0]) => {
+      if (!returnFocusRef.current) {
+        returnFocusRef.current = document.activeElement as HTMLElement | null;
+      }
       preloadImage(project.imagePath);
       setActiveProject(project);
     },
@@ -39,6 +47,10 @@ export default function GalleryGrid() {
   const closeLightbox = useCallback(() => {
     resetZoom();
     setActiveProject(null);
+    window.requestAnimationFrame(() => {
+      returnFocusRef.current?.focus();
+      returnFocusRef.current = null;
+    });
   }, [resetZoom]);
 
   const handleWheel = useCallback((event: React.WheelEvent) => {
@@ -119,11 +131,28 @@ export default function GalleryGrid() {
 
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+    closeButtonRef.current?.focus();
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "ArrowLeft") showProject(-1);
       if (event.key === "ArrowRight") showProject(1);
       if (event.key === "Escape") closeLightbox();
+      if (event.key === "Tab") {
+        const focusable = dialogRef.current?.querySelectorAll<HTMLElement>(
+          'button:not([disabled]), [href], [tabindex]:not([tabindex="-1"])',
+        );
+        if (!focusable?.length) return;
+
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
+      }
     };
 
     window.addEventListener("keydown", handleKeyDown);
@@ -154,7 +183,9 @@ export default function GalleryGrid() {
         {categories.map((category) => (
           <button
             key={category.id}
+            type="button"
             onClick={() => setActiveFilter(category.id)}
+            aria-pressed={activeFilter === category.id}
             className={`rounded-full border px-4 py-2 font-mono text-[11px] font-bold uppercase tracking-widest transition-colors ${
               activeFilter === category.id
                 ? "border-primary bg-primary text-on-primary"
@@ -203,17 +234,22 @@ export default function GalleryGrid() {
 
       {activeProject && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4 animate-fade-in"
+          className="fixed inset-0 z-[120] flex items-center justify-center bg-black/90 p-4 animate-fade-in"
           onClick={closeLightbox}
         >
           <div
+            ref={dialogRef}
+            role="dialog"
+            aria-modal="true"
+            aria-label={`${activeProject.title} image viewer`}
             className="relative h-[85vh] w-full max-w-6xl overflow-hidden bg-black"
             onClick={(event) => event.stopPropagation()}
           >
             <button
+              ref={closeButtonRef}
               type="button"
               onClick={closeLightbox}
-              aria-label="Close image"
+              aria-label="Close image viewer"
               className="absolute right-4 top-4 z-20 flex h-10 w-10 items-center justify-center rounded-full border border-white/30 bg-black/60 text-white transition-colors hover:bg-black"
             >
               <X className="h-4 w-4" />
@@ -259,7 +295,7 @@ export default function GalleryGrid() {
               </button>
             </div>
 
-            <div className="scrollbar-hide absolute bottom-4 left-1/2 z-20 flex w-[calc(100%-2rem)] max-w-3xl -translate-x-1/2 gap-2 overflow-x-auto rounded-xl border border-white/20 bg-black/70 p-2">
+            <div className="scrollbar-hide absolute bottom-4 left-1/2 z-20 flex w-[calc(100%-2rem)] max-w-3xl -translate-x-1/2 gap-2 overflow-x-auto border border-white/20 bg-black/70 p-2">
               {filteredProjects.map((project) => {
                 const isActive = project.id === activeProject.id;
 
@@ -298,11 +334,32 @@ export default function GalleryGrid() {
               className="flex h-full w-full items-center justify-center"
               style={{ cursor: zoom > 1 ? (dragging ? "grabbing" : "grab") : "zoom-in" }}
               onWheel={handleWheel}
-              onClick={toggleZoom}
+              onClick={() => {
+                if (suppressClick.current) {
+                  suppressClick.current = false;
+                  return;
+                }
+                toggleZoom();
+              }}
               onMouseDown={handleMouseDown}
               onMouseMove={handleMouseMove}
               onMouseUp={handleMouseUp}
               onMouseLeave={handleMouseUp}
+              onTouchStart={(event) => {
+                const touch = event.touches[0];
+                touchStart.current = { x: touch.clientX, y: touch.clientY };
+              }}
+              onTouchEnd={(event) => {
+                if (zoom > 1) return;
+                const touch = event.changedTouches[0];
+                const deltaX = touch.clientX - touchStart.current.x;
+                const deltaY = touch.clientY - touchStart.current.y;
+
+                if (Math.abs(deltaX) > 50 && Math.abs(deltaX) > Math.abs(deltaY)) {
+                  suppressClick.current = true;
+                  showProject(deltaX < 0 ? 1 : -1);
+                }
+              }}
             >
               <Image
                 src={activeProject.imagePath}

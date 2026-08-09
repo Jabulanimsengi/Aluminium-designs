@@ -1,33 +1,37 @@
 import React from "react";
 import { Metadata } from "next";
 import { Phone, Mail, MapPin, Clock, ArrowRight } from "lucide-react";
+import { businessContact } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Contact Us | Aluminium Designs",
+  title: "Contact Us",
   description:
-    "Get in touch with our team for free site measurements, quotes, or advice on aluminium windows, doors, and gates. Call, email, or visit us in Sandton.",
+    "Get in touch for aluminium measurements, quotes, and advice. Call, email, or visit Aluminium Designs at 755 Sontonga Road, Moleleki Ext 1, Katlehong.",
 };
 
 export default function ContactPage() {
+  const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
+    businessContact.fullAddress,
+  )}`;
   const contactDetails = [
     {
       title: "Our Address",
-      value: "Unit 12, Enterprise Industrial Park, Sandton, Johannesburg, 2196",
+      value: businessContact.fullAddress,
       icon: MapPin,
-      action: "https://maps.google.com/?q=Sandton+Johannesburg",
+      action: directionsUrl,
       actionText: "Get Directions",
       target: "_blank",
     },
     {
       title: "Phone Line",
-      value: "+27 87 123 4567",
+      value: businessContact.phone,
       icon: Phone,
-      action: "tel:+27871234567",
+      action: `tel:${businessContact.phoneE164}`,
       actionText: "Call Us Now",
     },
     {
       title: "Email",
-      value: "info@aluminiumdesigns.co.za",
+      value: businessContact.email,
       icon: Mail,
       action: "mailto:info@aluminiumdesigns.co.za",
       actionText: "Send Email",
@@ -47,7 +51,7 @@ export default function ContactPage() {
             Get in Touch With Our Team
           </h1>
           <p className="mt-4 text-on-surface-variant text-sm sm:text-base leading-relaxed">
-            Have questions about prices, product options, or booking a free home measurement? We&apos;re friendly and ready to help.
+            Have questions about prices, product options, or booking a home measurement? We&apos;re friendly and ready to help.
           </p>
         </div>
 
@@ -60,9 +64,9 @@ export default function ContactPage() {
                 return (
                   <div
                     key={item.title}
-                    className="border border-outline-variant bg-surface-container-lowest p-6 flex items-start gap-4 hover:border-primary transition-colors rounded-2xl shadow-sm"
+                    className="border border-outline-variant bg-surface-container-lowest p-6 flex items-start gap-4 hover:border-primary transition-colors shadow-sm"
                   >
-                    <div className="w-10 h-10 border border-outline-variant bg-surface-container flex items-center justify-center text-secondary shrink-0 rounded-xl">
+                    <div className="w-10 h-10 border border-outline-variant bg-surface-container flex items-center justify-center text-secondary shrink-0">
                       <Icon className="w-5 h-5" />
                     </div>
                     <div className="space-y-1.5">
@@ -90,7 +94,7 @@ export default function ContactPage() {
             </div>
 
             {/* Hours */}
-            <div className="border border-outline-variant bg-surface-container-lowest p-6 space-y-4 rounded-2xl shadow-sm">
+            <div className="border border-outline-variant bg-surface-container-lowest p-6 space-y-4 shadow-sm">
               <h4 className="font-sans font-bold text-sm uppercase text-primary flex items-center gap-2">
                 <Clock className="w-4 h-4 text-secondary shrink-0" />
                 Working Hours
@@ -113,7 +117,7 @@ export default function ContactPage() {
 
           {/* Styled Map */}
           <div className="lg:col-span-7">
-            <div className="border border-outline-variant bg-surface-container-lowest h-full min-h-[400px] flex flex-col justify-between p-6 relative overflow-hidden rounded-2xl shadow-sm">
+            <div className="border border-outline-variant bg-surface-container-lowest h-full min-h-[400px] flex flex-col justify-between p-6 relative overflow-hidden shadow-sm">
               <div className="absolute inset-0 opacity-[0.06] pointer-events-none">
                 <svg className="w-full h-full text-primary" xmlns="http://www.w3.org/2000/svg">
                   <defs>
@@ -133,10 +137,10 @@ export default function ContactPage() {
                   <line x1="0" y1="320" x2="600" y2="320" stroke="currentColor" strokeWidth="15" />
                   <path d="M 450,0 Q 400,200 550,400" fill="none" stroke="currentColor" strokeWidth="40" />
                   <text x="70" y="50" fill="currentColor" fontSize="12" fontFamily="monospace" fontWeight="bold">
-                    M1 HIGHWAY
+                    SONTONGA ROAD
                   </text>
                   <text x="270" y="220" fill="currentColor" fontSize="12" fontFamily="monospace" fontWeight="bold">
-                    GRAYSTON DR
+                    MOLELEKI EXT 1
                   </text>
                 </svg>
               </div>
@@ -147,19 +151,19 @@ export default function ContactPage() {
                   <span className="w-2 h-2 bg-white rounded-full" />
                 </span>
                 <div className="mt-2.5 bg-primary border border-outline-variant font-mono text-[9px] font-bold uppercase tracking-widest px-3 py-1 text-white relative z-10 rounded-full shadow-sm">
-                  Sandton Workshop
+                  Katlehong Workshop
                 </div>
               </div>
 
-              <div className="mt-auto relative z-10 border border-outline-variant bg-surface p-4 flex items-center justify-between text-xs rounded-2xl">
+              <div className="mt-auto relative z-10 border border-outline-variant bg-surface p-4 flex items-center justify-between text-xs">
                 <div>
-                  <p className="font-sans font-bold text-primary">Enterprise Industrial Park</p>
+                  <p className="font-sans font-bold text-primary">755 Sontonga Road, Katlehong</p>
                   <p className="font-mono text-[9px] uppercase tracking-wider text-outline mt-0.5">
                     Secure visitor parking inside
                   </p>
                 </div>
                 <a
-                  href="https://maps.google.com/?q=Sandton+Johannesburg"
+                  href={directionsUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="px-4 py-2 border border-outline-variant bg-surface-container hover:border-primary font-mono text-[10px] font-bold uppercase tracking-widest text-secondary transition-colors rounded-full"

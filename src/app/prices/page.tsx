@@ -3,9 +3,10 @@ import { Metadata } from "next";
 import { Tag, Info, Phone, ArrowRight, ShieldCheck } from "lucide-react";
 import Link from "next/link";
 import { windowPricing, doorPricing } from "@/data/pricing";
+import { whatsappQuoteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Product Prices | Aluminium Windows & Doors",
+  title: "Aluminium Product Prices",
   description:
     "Clear, transparent pricing for aluminium windows, doors, and frames in South African Rands (ZAR). Includes professional installation.",
 };
@@ -29,18 +30,18 @@ export default function PricesPage() {
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
             <Link
-              href="/quote"
+              href={whatsappQuoteUrl}
               className="inline-flex items-center gap-2 bg-primary hover:bg-secondary text-on-primary border border-primary hover:border-secondary px-6 py-3 font-mono text-[11px] font-bold uppercase tracking-widest transition-colors rounded-full shadow-sm"
             >
               Request Free Quote
               <ArrowRight className="w-4 h-4" />
             </Link>
             <a
-              href="tel:+27871234567"
+              href="tel:+27716122439"
               className="inline-flex items-center gap-2 border border-outline-variant bg-surface hover:bg-surface-container px-6 py-3 font-mono text-[11px] font-bold uppercase tracking-widest text-secondary transition-colors rounded-full"
             >
               <Phone className="w-4 h-4" />
-              +27 87 123 4567
+              071 612 2439
             </a>
           </div>
         </div>
@@ -49,13 +50,13 @@ export default function PricesPage() {
       {/* Disclaimer */}
       <section className="py-8 bg-surface border-b border-outline-variant">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="border border-outline-variant bg-surface-container p-4 flex items-start gap-3 rounded-2xl shadow-sm">
+          <div className="border border-outline-variant bg-surface-container p-4 flex items-start gap-3 shadow-sm">
             <Info className="w-4 h-4 text-secondary shrink-0 mt-0.5" />
             <div className="space-y-1 text-xs">
               <p className="font-bold text-primary">How our pricing works</p>
               <p className="text-on-surface-variant leading-relaxed">
                 Prices shown are starting guide figures based on standard home sizes with clear safety glass.
-                Final pricing is confirmed after a <strong className="text-primary">free on-site measurement</strong>.
+                Final pricing is confirmed after a <strong className="text-primary">professional on-site measurement</strong> (R250 consultation fee in Johannesburg, R350 outside Johannesburg — credited back in full against your installation invoice).
                 Custom colours (Matte Black, Charcoal) and double glass for noise/heat protection can be added to any order.
               </p>
             </div>
@@ -79,7 +80,7 @@ export default function PricesPage() {
           </div>
 
           {/* Desktop table */}
-          <div className="hidden lg:block border border-outline-variant bg-surface-container-lowest overflow-hidden rounded-2xl shadow-sm">
+          <div className="hidden lg:block border border-outline-variant bg-surface-container-lowest overflow-hidden shadow-sm">
             <div className="grid grid-cols-6 gap-0">
               <div className="col-span-2 bg-surface-container border-b border-outline-variant p-4 font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
                 Product Type
@@ -129,7 +130,7 @@ export default function PricesPage() {
           {/* Mobile cards */}
           <div className="lg:hidden space-y-4">
             {windowPricing.map((p) => (
-              <div key={p.name} className="border border-outline-variant bg-surface-container-lowest p-5 space-y-3 rounded-2xl shadow-sm">
+              <div key={p.name} className="border border-outline-variant bg-surface-container-lowest p-5 space-y-3 shadow-sm">
                 <div>
                   <h3 className="font-sans font-bold text-sm uppercase text-primary">{p.name}</h3>
                   <p className="font-mono text-[10px] text-outline uppercase tracking-wider mt-1">{p.note}</p>
@@ -170,7 +171,7 @@ export default function PricesPage() {
           </div>
 
           {/* Desktop table */}
-          <div className="hidden lg:block border border-outline-variant bg-surface-container-lowest overflow-hidden rounded-2xl shadow-sm">
+          <div className="hidden lg:block border border-outline-variant bg-surface-container-lowest overflow-hidden shadow-sm">
             <div className="grid grid-cols-6 gap-0">
               <div className="col-span-2 bg-surface-container border-b border-outline-variant p-4 font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
                 Product Type
@@ -220,7 +221,7 @@ export default function PricesPage() {
           {/* Mobile cards */}
           <div className="lg:hidden space-y-4">
             {doorPricing.map((p) => (
-              <div key={p.name} className="border border-outline-variant bg-surface-container-lowest p-5 space-y-3 rounded-2xl shadow-sm">
+              <div key={p.name} className="border border-outline-variant bg-surface-container-lowest p-5 space-y-3 shadow-sm">
                 <div>
                   <h3 className="font-sans font-bold text-sm uppercase text-primary">{p.name}</h3>
                   <p className="font-mono text-[10px] text-outline uppercase tracking-wider mt-1">{p.note}</p>
@@ -250,25 +251,25 @@ export default function PricesPage() {
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
           <ShieldCheck className="w-10 h-10 text-on-tertiary-container mx-auto" />
           <h2 className="font-sans text-2xl sm:text-3xl font-bold uppercase tracking-tight text-on-primary">
-            Every Quote Includes a Free Home Visit
+            Every Quote Includes a Professional Home Visit
           </h2>
           <p className="text-on-primary-container/90 text-sm max-w-xl mx-auto leading-relaxed">
-            Our technician comes to your home to take accurate measurements at no charge. You get a clear, itemized written quote before any work starts.
+            Our technician comes to your home to take accurate measurements. The R250 (Johannesburg) or R350 (outside Johannesburg) consultation fee is credited back in full against your installation invoice.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
             <Link
-              href="/quote"
+              href={whatsappQuoteUrl}
               className="inline-flex items-center gap-2 bg-on-tertiary-container hover:bg-primary text-white px-6 py-3.5 font-mono text-[11px] font-bold uppercase tracking-widest transition-colors rounded-full shadow-sm"
             >
               Request Free Quote
               <ArrowRight className="w-4 h-4" />
             </Link>
             <a
-              href="tel:+27871234567"
+              href="tel:+27716122439"
               className="inline-flex items-center gap-2 bg-on-primary hover:bg-surface-container-low text-primary border border-on-primary hover:border-outline-variant px-6 py-3.5 font-mono text-[11px] font-bold uppercase tracking-widest transition-colors rounded-full"
             >
               <Phone className="w-4 h-4" />
-              +27 87 123 4567
+              071 612 2439
             </a>
           </div>
         </div>

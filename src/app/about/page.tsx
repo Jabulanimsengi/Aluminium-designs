@@ -4,7 +4,7 @@ import { ShieldCheck, Award, Ruler, Users, Hammer, CheckCircle } from "lucide-re
 import CTASection from "@/components/CTASection";
 
 export const metadata: Metadata = {
-  title: "About Us | Quality Aluminium Windows & Doors",
+  title: "About Us",
   description:
     "Learn how Aluminium Designs delivers precision craftsmanship, clean installations, and reliable aluminium windows, doors, and gates for homes across Gauteng.",
 };
@@ -59,7 +59,7 @@ export default function About() {
       <section className="py-24 bg-surface border-b border-outline-variant">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <div className="h-[360px] sm:h-[420px] border border-outline-variant bg-surface-container-lowest p-8 flex flex-col justify-between relative overflow-hidden rounded-2xl shadow-sm">
+            <div className="h-[360px] sm:h-[420px] border border-outline-variant bg-surface-container-lowest p-8 flex flex-col justify-between relative overflow-hidden shadow-sm">
               <div className="absolute inset-0 opacity-5 pointer-events-none">
                 <svg className="w-full h-full text-primary" xmlns="http://www.w3.org/2000/svg">
                   <rect width="100%" height="100%" fill="none" stroke="currentColor" strokeWidth="0.5" strokeDasharray="10,10" />
@@ -130,10 +130,10 @@ export default function About() {
               return (
                 <div
                   key={val.title}
-                  className="border border-outline-variant bg-surface-container-lowest p-6 flex flex-col justify-between h-[260px] hover:border-primary transition-colors rounded-2xl shadow-sm"
+                  className="border border-outline-variant bg-surface-container-lowest p-6 flex flex-col justify-between h-[260px] hover:border-primary transition-colors shadow-sm"
                 >
                   <div className="space-y-4">
-                    <div className="w-10 h-10 border border-outline-variant bg-surface-container flex items-center justify-center text-secondary rounded-xl">
+                    <div className="w-10 h-10 border border-outline-variant bg-surface-container flex items-center justify-center text-secondary">
                       <Icon className="w-5 h-5" />
                     </div>
                     <h3 className="font-sans font-bold text-sm uppercase text-primary tracking-tight">{val.title}</h3>
