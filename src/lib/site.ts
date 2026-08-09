@@ -1,6 +1,6 @@
 const configuredSiteUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim().replace(/\/$/, "");
 
-export const siteUrl = configuredSiteUrl || "https://aluminiumdesigns.co.za";
+export const siteUrl = configuredSiteUrl || "https://www.aluminiumdesigns.co.za";
 
 export const businessContact = {
   name: "Aluminium Designs",
