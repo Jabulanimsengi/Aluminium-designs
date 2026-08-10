@@ -140,7 +140,12 @@ export default async function ServiceDetailPage({ params }: Props) {
     <div className="relative bg-surface text-on-surface">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(content.structuredDataJsonLd) }}
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(content.structuredDataJsonLd).replaceAll(
+            "https://example.com",
+            siteUrl,
+          ),
+        }}
       />
 
       {/* HERO */}

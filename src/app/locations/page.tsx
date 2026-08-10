@@ -7,6 +7,7 @@ import CTASection from "@/components/CTASection";
 export const metadata = {
   title: "Service Areas in Gauteng",
   description: "View our list of service areas across Gauteng. We manufacture and install custom aluminium windows, doors, and security gates in Johannesburg, Pretoria, and surrounding areas.",
+  alternates: { canonical: "/locations" },
 };
 
 export default function LocationsDirectory() {

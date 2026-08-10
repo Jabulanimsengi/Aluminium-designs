@@ -1,4 +1,5 @@
 import React from "react";
+import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, Check, ChevronRight, Lock, Sun, VolumeX, Building2, House, MapPin, Paintbrush, Ruler, Gem } from "lucide-react";
@@ -13,6 +14,10 @@ import PlanningTools from "@/components/PlanningTools";
 import TrustedBy from "@/components/TrustedBy";
 import BusinessLocationMap from "@/components/BusinessLocationMap";
 import { whatsappQuoteUrl } from "@/lib/site";
+
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
 
 export default function Home() {
   const benefits = [

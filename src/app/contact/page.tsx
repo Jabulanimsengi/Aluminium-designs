@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   title: "Contact Us",
   description:
     "Get in touch for aluminium measurements, quotes, and advice. Call, email, or visit Aluminium Designs at 755 Sontonga Road, Moleleki Ext 1, Katlehong.",
+  alternates: { canonical: "/contact" },
 };
 
 export default function ContactPage() {

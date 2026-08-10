@@ -1,8 +1,25 @@
 type MonitoringEvent = {
   event: string;
+  page?: string;
   label?: string;
   destination?: string;
+  metric?: string;
+  value?: number;
+  referrer?: string;
 };
+
+function sessionId() {
+  const key = "apex-monitoring-session";
+  try {
+    const existing = window.sessionStorage.getItem(key);
+    if (existing) return existing;
+    const id = crypto.randomUUID();
+    window.sessionStorage.setItem(key, id);
+    return id;
+  } catch {
+    return "";
+  }
+}
 
 function textFrom(element: Element) {
   return (
@@ -14,6 +31,7 @@ function textFrom(element: Element) {
 }
 
 function cleanDestination(href: string) {
+  if (!href) return "";
   try {
     const url = new URL(href, window.location.origin);
     if (url.origin === "null") return `${url.protocol}${url.pathname}`;
@@ -26,8 +44,9 @@ function cleanDestination(href: string) {
 function report(event: MonitoringEvent) {
   const payload = JSON.stringify({
     ...event,
-    page: window.location.pathname,
+    page: event.page || window.location.pathname,
     timestamp: new Date().toISOString(),
+    sessionId: sessionId(),
   });
 
   try {
@@ -68,7 +87,45 @@ function clickEvents(element: Element) {
 }
 
 if (typeof window !== "undefined") {
-  report({ event: "page_view" });
+  report({ event: "page_view", referrer: cleanDestination(document.referrer) });
+
+  window.addEventListener("load", () => {
+    const navigation = performance.getEntriesByType("navigation")[0] as
+      | PerformanceNavigationTiming
+      | undefined;
+    if (navigation) {
+      report({ event: "web_vital", metric: "TTFB", value: navigation.responseStart });
+      report({ event: "web_vital", metric: "LOAD", value: navigation.loadEventEnd });
+    }
+  }, { once: true });
+
+  try {
+    new PerformanceObserver((list) => {
+      const last = list.getEntries().at(-1);
+      if (last) report({ event: "web_vital", metric: "FCP", value: last.startTime });
+    }).observe({ type: "paint", buffered: true });
+
+    new PerformanceObserver((list) => {
+      const last = list.getEntries().at(-1);
+      if (last) report({ event: "web_vital", metric: "LCP", value: last.startTime });
+    }).observe({ type: "largest-contentful-paint", buffered: true });
+
+    let cumulativeLayoutShift = 0;
+    new PerformanceObserver((list) => {
+      for (const entry of list.getEntries()) {
+        const layoutShift = entry as PerformanceEntry & { hadRecentInput?: boolean; value?: number };
+        if (!layoutShift.hadRecentInput) cumulativeLayoutShift += layoutShift.value || 0;
+      }
+    }).observe({ type: "layout-shift", buffered: true });
+
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "hidden") {
+        report({ event: "web_vital", metric: "CLS", value: cumulativeLayoutShift });
+      }
+    });
+  } catch {
+    // Older browsers can still report page views and conversions.
+  }
 
   window.addEventListener(
     "click",
@@ -83,4 +140,8 @@ if (typeof window !== "undefined") {
 
 export function onRouterTransitionStart(url: string, navigationType: "push" | "replace" | "traverse") {
   report({ event: "route_navigation", label: navigationType, destination: cleanDestination(url) });
+  window.setTimeout(() => {
+    const destination = cleanDestination(url);
+    report({ event: "page_view", page: destination.startsWith("/") ? destination : undefined });
+  }, 0);
 }

@@ -1,6 +1,7 @@
 import { mkdir, appendFile } from "node:fs/promises";
 import path from "node:path";
 import { NextRequest, NextResponse } from "next/server";
+import { getMonitoringEventsPath } from "@/lib/monitoring";
 
 export const runtime = "nodejs";
 
@@ -14,6 +15,10 @@ type MonitoringEvent = {
   label?: string;
   destination?: string;
   timestamp?: string;
+  sessionId?: string;
+  referrer?: string;
+  metric?: string;
+  value?: number;
 };
 
 function safeValue(value: unknown, maxLength: number) {
@@ -60,14 +65,20 @@ export async function POST(request: NextRequest) {
     label: safeValue(body.label, 160),
     destination: safeValue(body.destination, 200),
     timestamp: safeValue(body.timestamp, 40) || new Date().toISOString(),
+    sessionId: safeValue(body.sessionId, 80),
+    referrer: safeValue(body.referrer, 200),
+    metric: safeValue(body.metric, 20),
+    value:
+      typeof body.value === "number" && Number.isFinite(body.value)
+        ? Math.round(body.value * 100) / 100
+        : null,
   };
 
   try {
-    const eventsDirectory =
-      process.env.MONITORING_EVENTS_PATH?.trim() || path.join(process.cwd(), "data");
-    await mkdir(eventsDirectory, { recursive: true });
+    const eventsPath = getMonitoringEventsPath();
+    await mkdir(path.dirname(eventsPath), { recursive: true });
     await appendFile(
-      path.join(eventsDirectory, "monitoring-events.ndjson"),
+      eventsPath,
       `${JSON.stringify(entry)}\n`,
       "utf8",
     );

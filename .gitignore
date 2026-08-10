@@ -19,6 +19,7 @@
 
 # production
 /build
+/data/monitoring-events.ndjson
 
 # misc
 .DS_Store

@@ -1,36 +1,57 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Aluminium Designs website
 
-## Getting Started
+Next.js website for Aluminium Designs, including first-party site monitoring and search-engine indexing support.
 
-First, run the development server:
+## Local development
+
+Copy `.env.example` to `.env` and configure the required values, then run:
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The website is available at `http://localhost:3000`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Monitoring dashboard
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The private dashboard is available at `/admin`. Browser HTTP Basic authentication is controlled by:
 
-## Learn More
+```dotenv
+ADMIN_USERNAME=admin
+ADMIN_PASSWORD=use-a-long-random-password
+```
 
-To learn more about Next.js, take a look at the following resources:
+The site records page views, navigation and enquiry clicks, visitor sessions, and browser performance measurements. Events are stored as newline-delimited JSON at `MONITORING_EVENTS_PATH`, or in `./data` when the variable is omitted.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+For Docker deployments, `/app/data` is the default event directory and is declared as a volume. Mount it to persistent host or volume storage so analytics survive a container replacement:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+docker run -v apex-monitoring:/app/data --env-file .env -p 3000:3000 apex-aluminium
+```
 
-## Deploy on Vercel
+No personal contact details or full referring query strings are collected.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Search indexing
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Set the production canonical domain before building:
+
+```dotenv
+NEXT_PUBLIC_SITE_URL=https://www.aluminiumdesigns.co.za
+```
+
+The application publishes:
+
+- `https://www.aluminiumdesigns.co.za/sitemap.xml`
+- `https://www.aluminiumdesigns.co.za/robots.txt`
+
+Submit the sitemap URL in Google Search Console under **Indexing → Sitemaps**. The sitemap contains the home page, core content pages, service pages, Gauteng location pages, and valid location/service pages. Admin, API, and quote redirect routes are excluded from indexing.
+
+The sitemap makes URLs discoverable but does not guarantee indexing; Google still evaluates accessibility, canonical metadata, content quality, and duplication. Use Search Console's URL Inspection tool for priority pages after deployment.
+
+## Verification
+
+```bash
+npm run lint
+npm run build
+```

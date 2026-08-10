@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Request a Free Quote",
   description:
     "Request a free aluminium installation quotation from Aluminium Designs on WhatsApp.",
+  robots: { index: false, follow: false },
 };
 
 export default function QuotePage() {

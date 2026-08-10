@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: "Aluminium Installation Portfolio",
   description:
     "Browse our completed residential, commercial, and retail projects. Precision fabrication and installation gallery.",
+  alternates: { canonical: "/gallery" },
 };
 
 export default function GalleryPage() {

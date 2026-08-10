@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   title: "Frequently Asked Questions",
   description:
     "Find clear answers about window and door delivery times, custom sizes, safety glass, warranties, and free home quotes.",
+  alternates: { canonical: "/faq" },
 };
 
 export default function FAQPage() {

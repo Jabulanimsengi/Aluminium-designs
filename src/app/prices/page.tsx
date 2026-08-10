@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   title: "Aluminium Product Prices",
   description:
     "Clear, transparent pricing for aluminium windows, doors, and frames in South African Rands (ZAR). Includes professional installation.",
+  alternates: { canonical: "/prices" },
 };
 
 export default function PricesPage() {

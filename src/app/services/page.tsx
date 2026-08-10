@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   title: "Aluminium Windows, Doors & Security",
   description:
     "Explore our full range of home products: aluminium windows, sliding patio doors, security gates, burglar bars, and patio enclosures.",
+  alternates: { canonical: "/services" },
 };
 
 export default function ServicesPage() {

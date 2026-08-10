@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   title: "About Us",
   description:
     "Learn how Aluminium Designs delivers precision craftsmanship, clean installations, and reliable aluminium windows, doors, and gates for homes across Gauteng.",
+  alternates: { canonical: "/about" },
 };
 
 export default function About() {
