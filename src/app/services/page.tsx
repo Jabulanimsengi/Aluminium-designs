@@ -41,7 +41,6 @@ export default function ServicesPage() {
                 title={service.title}
                 shortDescription={service.shortDescription}
                 slug={service.slug}
-                iconName={service.iconName}
                 imagePath={service.imagePath}
               />
             ))}

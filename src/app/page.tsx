@@ -103,7 +103,7 @@ export default function Home() {
                 href={whatsappQuoteUrl}
                 className="flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white border border-white/30 px-6 py-3.5 font-mono text-xs font-bold uppercase tracking-widest transition-colors rounded-full"
               >
-                Request Free Quote
+                Request Quote
               </Link>
             </div>
           </div>
@@ -135,15 +135,15 @@ export default function Home() {
               <p className="mt-5 text-sm text-on-surface-variant max-w-2xl mx-auto leading-relaxed">
                 Aluminium Designs measures, manufactures, and installs custom aluminium and glass solutions. From one replacement window to a complete home renovation or commercial fit-out, every product is made to suit the space and installed with care.
               </p>
-              <div className="mt-7 flex flex-wrap justify-center gap-3">
-                <span className="inline-flex items-center gap-2 rounded-full border border-outline-variant bg-surface-container-low px-4 py-2 text-xs font-medium text-primary">
-                  <House className="w-4 h-4 text-secondary" /> Residential projects
+              <div className="mt-7 flex flex-col items-center gap-2 sm:flex-row sm:flex-wrap sm:justify-center sm:gap-3">
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-outline-variant bg-surface-container-low px-3 py-1.5 text-[11px] font-medium text-primary sm:gap-2 sm:px-4 sm:py-2 sm:text-xs">
+                  <House className="h-3.5 w-3.5 text-secondary sm:h-4 sm:w-4" /> Residential projects
                 </span>
-                <span className="inline-flex items-center gap-2 rounded-full border border-outline-variant bg-surface-container-low px-4 py-2 text-xs font-medium text-primary">
-                  <Building2 className="w-4 h-4 text-secondary" /> Commercial projects
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-outline-variant bg-surface-container-low px-3 py-1.5 text-[11px] font-medium text-primary sm:gap-2 sm:px-4 sm:py-2 sm:text-xs">
+                  <Building2 className="h-3.5 w-3.5 text-secondary sm:h-4 sm:w-4" /> Commercial projects
                 </span>
-                <span className="inline-flex items-center gap-2 rounded-full border border-outline-variant bg-surface-container-low px-4 py-2 text-xs font-medium text-primary">
-                  <MapPin className="w-4 h-4 text-secondary" /> Gauteng and surrounds
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-outline-variant bg-surface-container-low px-3 py-1.5 text-[11px] font-medium text-primary sm:gap-2 sm:px-4 sm:py-2 sm:text-xs">
+                  <MapPin className="h-3.5 w-3.5 text-secondary sm:h-4 sm:w-4" /> Gauteng and surrounds
                 </span>
               </div>
             </div>
@@ -188,13 +188,12 @@ export default function Home() {
                 title={service.title}
                 shortDescription={service.shortDescription}
                 slug={service.slug}
-                iconName={service.iconName}
                 imagePath={service.imagePath}
               />
             ))}
           </div>
 
-          <div className="mt-10">
+          <div className="mt-10 flex justify-center">
             <Link
               href="/services"
               className="inline-flex items-center text-xs font-mono font-bold uppercase tracking-widest text-primary hover:text-secondary transition-colors"

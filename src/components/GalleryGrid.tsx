@@ -178,15 +178,15 @@ export default function GalleryGrid() {
   }, [activeProject, filteredProjects, preloadImage]);
 
   return (
-    <div className="space-y-10">
-      <div className="flex flex-wrap justify-center gap-2 border-b border-outline-variant pb-4">
+    <div className="space-y-6 sm:space-y-10">
+      <div className="scrollbar-hide -mx-4 flex gap-1.5 overflow-x-auto border-b border-outline-variant px-4 pb-3 sm:mx-0 sm:flex-wrap sm:justify-center sm:gap-2 sm:px-0 sm:pb-4">
         {categories.map((category) => (
           <button
             key={category.id}
             type="button"
             onClick={() => setActiveFilter(category.id)}
             aria-pressed={activeFilter === category.id}
-            className={`rounded-full border px-4 py-2 font-mono text-[11px] font-bold uppercase tracking-widest transition-colors ${
+            className={`shrink-0 rounded-full border px-3 py-1.5 font-mono text-[10px] font-bold uppercase tracking-wider transition-colors sm:px-4 sm:py-2 sm:text-[11px] sm:tracking-widest ${
               activeFilter === category.id
                 ? "border-primary bg-primary text-on-primary"
                 : "border-outline-variant bg-surface text-secondary hover:bg-surface-container"

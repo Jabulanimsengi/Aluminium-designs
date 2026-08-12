@@ -42,6 +42,7 @@
   --animate-fade-in-up: fade-in-up 0.5s ease-out forwards;
   --animate-slide-in-left: slide-in-left 0.3s ease-out forwards;
   --animate-navigation-progress: navigation-progress 0.65s ease-out forwards;
+  --animate-trusted-by-marquee: trusted-by-marquee 32s linear infinite;
 
   @keyframes slide-in-left {
     from { transform: translateX(-100%); }
@@ -61,6 +62,10 @@
     0% { opacity: 1; transform: scaleX(0); transform-origin: left; }
     75% { opacity: 1; transform: scaleX(1); transform-origin: left; }
     100% { opacity: 0; transform: scaleX(1); transform-origin: left; }
+  }
+
+  @keyframes trusted-by-marquee {
+    to { transform: translateX(-50%); }
   }
 }
 

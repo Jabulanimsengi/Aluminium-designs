@@ -33,6 +33,26 @@ const accreditations = [
   },
 ];
 
+function Accreditation({
+  item,
+}: {
+  item: (typeof accreditations)[number];
+}) {
+  const Icon = item.icon;
+
+  return (
+    <div
+      className="flex shrink-0 items-center gap-2 text-secondary transition-colors hover:text-primary"
+      title={item.full}
+    >
+      <Icon className="w-5 h-5 shrink-0" />
+      <span className="font-sans text-sm font-bold uppercase tracking-wider">
+        {item.name}
+      </span>
+    </div>
+  );
+}
+
 export default function TrustedBy() {
   return (
     <section className="border-b border-outline-variant bg-surface-container-lowest">
@@ -41,22 +61,26 @@ export default function TrustedBy() {
           Trusted By
         </p>
 
-        <div className="mt-6 flex flex-wrap items-center justify-center gap-x-8 gap-y-4">
-          {accreditations.map((item) => {
-            const Icon = item.icon;
-            return (
+        <div className="mt-6 -mx-4 overflow-hidden sm:hidden">
+          <div className="flex w-max min-w-full animate-trusted-by-marquee hover:[animation-play-state:paused]">
+            {[false, true].map((isDuplicate) => (
               <div
-                key={item.name}
-                className="flex items-center gap-2 text-secondary transition-colors hover:text-primary"
-                title={item.full}
+                key={isDuplicate ? "duplicate" : "original"}
+                aria-hidden={isDuplicate}
+                className="flex shrink-0 gap-8 pr-8"
               >
-                <Icon className="w-5 h-5 shrink-0" />
-                <span className="font-sans text-sm font-bold uppercase tracking-wider">
-                  {item.name}
-                </span>
+                {accreditations.map((item) => (
+                  <Accreditation key={item.name} item={item} />
+                ))}
               </div>
-            );
-          })}
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-6 hidden flex-wrap items-center justify-center gap-x-8 gap-y-4 sm:flex">
+          {accreditations.map((item) => (
+            <Accreditation key={item.name} item={item} />
+          ))}
         </div>
       </div>
     </section>

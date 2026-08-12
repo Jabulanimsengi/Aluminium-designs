@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import WhatsAppChatWidget from "@/components/WhatsAppChatWidget";
 import ScrollToTop from "@/components/ScrollToTop";
 import NavigationLoader from "@/components/NavigationLoader";
+import QuotePrompt from "@/components/QuotePrompt";
 import { absoluteUrl, businessContact, siteUrl } from "@/lib/site";
 
 const inter = Inter({
@@ -99,6 +100,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <main className="flex-grow pt-16 md:pt-16">{children}</main>
         <Footer />
         <WhatsAppChatWidget />
+        <QuotePrompt />
         <ScrollToTop />
       </body>
     </html>

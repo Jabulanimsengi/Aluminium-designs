@@ -226,7 +226,6 @@ export default async function LocationPage({ params }: { params: Promise<{ area:
                   title={service.title}
                   shortDescription={service.shortDescription}
                   slug={localizedSlug}
-                  iconName={service.iconName}
                   imagePath={service.imagePath}
                 />
               );
