@@ -197,7 +197,11 @@ export default function GalleryGrid() {
         ))}
       </div>
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <p className="text-center font-mono text-[9px] font-bold uppercase tracking-widest text-secondary sm:hidden">
+        Swipe to browse projects
+      </p>
+
+      <div className="scrollbar-hide -mx-4 grid touch-pan-x snap-x snap-mandatory auto-cols-[82vw] grid-flow-col grid-rows-2 gap-3 overflow-x-auto px-4 pb-3 sm:mx-0 sm:auto-cols-auto sm:grid-flow-row sm:grid-cols-2 sm:grid-rows-none sm:gap-4 sm:overflow-visible sm:px-0 sm:pb-0 sm:snap-none lg:grid-cols-3">
         {filteredProjects.map((project) => (
           <button
             key={project.id}
@@ -207,7 +211,7 @@ export default function GalleryGrid() {
             onFocus={() => preloadImage(project.imagePath)}
             onTouchStart={() => preloadImage(project.imagePath)}
             aria-label={`Open ${project.title}`}
-            className="group relative aspect-[4/3] overflow-hidden bg-surface-container-high text-left"
+            className="group relative aspect-[4/3] snap-start overflow-hidden bg-surface-container-high text-left sm:snap-none"
           >
             <Image
               src={project.imagePath}

@@ -342,13 +342,17 @@ export default function Home() {
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <p className="mb-3 text-center font-mono text-[9px] font-bold uppercase tracking-widest text-secondary sm:hidden">
+            Swipe to browse projects
+          </p>
+
+          <div className="scrollbar-hide -mx-4 flex touch-pan-x snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-3 sm:mx-0 sm:grid sm:grid-cols-2 sm:gap-4 sm:overflow-visible sm:px-0 sm:pb-0 sm:snap-none lg:grid-cols-3">
             {projects.slice(0, 6).map((project) => (
               <Link
                 key={project.id}
                 href="/gallery"
                 aria-label={`View ${project.title} in the gallery`}
-                className="group relative aspect-[4/3] overflow-hidden bg-surface-container-high"
+                className="group relative aspect-[4/3] w-[82vw] shrink-0 snap-start overflow-hidden bg-surface-container-high sm:w-auto sm:snap-none"
               >
                 <Image
                   src={project.imagePath}
