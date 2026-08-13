@@ -17,16 +17,32 @@ export default function ScrollRevealObserver() {
     if (sections.length === 0) return;
 
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    if (reducedMotion.matches) {
-      sections.forEach((section) => section.classList.add("site-reveal-complete"));
-      return;
-    }
+    if (reducedMotion.matches) return;
+
+    const animations = new Map<HTMLElement, Animation>();
+
+    sections.forEach((section) => {
+      const animation = section.animate(
+        [
+          { opacity: 0, transform: "translate3d(0, 22px, 0)" },
+          { opacity: 1, transform: "translate3d(0, 0, 0)" },
+        ],
+        {
+          duration: 650,
+          easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+          fill: "both",
+        },
+      );
+      animation.pause();
+      animation.currentTime = 0;
+      animations.set(section, animation);
+    });
 
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (!entry.isIntersecting) return;
-          entry.target.classList.add("site-reveal-visible");
+          animations.get(entry.target as HTMLElement)?.play();
           observer.unobserve(entry.target);
         });
       },
@@ -36,24 +52,21 @@ export default function ScrollRevealObserver() {
       },
     );
 
-    const frame = window.requestAnimationFrame(() => {
-      sections.forEach((section) => {
-        section.classList.add("site-reveal");
+    sections.forEach((section) => {
+      const bounds = section.getBoundingClientRect();
 
-        if (section.getBoundingClientRect().top <= window.innerHeight * 0.92) {
-          window.requestAnimationFrame(() => {
-            section.classList.add("site-reveal-visible");
-          });
-          return;
-        }
-
+      if (bounds.bottom <= 0) {
+        animations.get(section)?.finish();
+      } else if (bounds.top <= window.innerHeight * 0.92) {
+        animations.get(section)?.play();
+      } else {
         observer.observe(section);
-      });
+      }
     });
 
     return () => {
-      window.cancelAnimationFrame(frame);
       observer.disconnect();
+      animations.forEach((animation) => animation.cancel());
     };
   }, [pathname]);
 

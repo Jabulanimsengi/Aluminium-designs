@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useCallback, useEffect, useMemo } from "react";
+import { createPortal } from "react-dom";
 import Image from "next/image";
 import { projects } from "@/data/projects";
 import { ChevronLeft, ChevronRight, X, ZoomIn, ZoomOut } from "lucide-react";
@@ -34,21 +35,22 @@ export default function GalleryGrid() {
     preloadedImages.current.add(src);
   }, []);
 
+  const resetZoom = useCallback(() => {
+    setZoom(1);
+    setPosition({ x: 0, y: 0 });
+  }, []);
+
   const openProject = useCallback(
     (project: (typeof projects)[0]) => {
       if (!returnFocusRef.current) {
         returnFocusRef.current = document.activeElement as HTMLElement | null;
       }
+      resetZoom();
       preloadImage(project.imagePath);
       setActiveProject(project);
     },
-    [preloadImage]
+    [preloadImage, resetZoom],
   );
-
-  const resetZoom = useCallback(() => {
-    setZoom(1);
-    setPosition({ x: 0, y: 0 });
-  }, []);
 
   const closeLightbox = useCallback(() => {
     resetZoom();
@@ -60,6 +62,7 @@ export default function GalleryGrid() {
   }, [resetZoom]);
 
   const handleWheel = useCallback((event: React.WheelEvent) => {
+    if (!event.ctrlKey && !event.metaKey) return;
     event.preventDefault();
     setZoom((currentZoom) =>
       Math.min(5, Math.max(0.5, currentZoom - event.deltaY * 0.005))
@@ -341,17 +344,18 @@ export default function GalleryGrid() {
         </div>
       )}
 
-      {activeProject && (
-        <div
-          className="fixed inset-0 z-[120] flex items-center justify-center bg-black/95 p-0 animate-fade-in sm:bg-black/90 sm:p-4"
-          onClick={closeLightbox}
-        >
+      {activeProject &&
+        createPortal(
+          <div
+            className="fixed inset-0 z-[120] flex items-center justify-center bg-black/95 animate-fade-in"
+            onClick={closeLightbox}
+          >
           <div
             ref={dialogRef}
             role="dialog"
             aria-modal="true"
             aria-label={`${activeProject.title} image viewer`}
-            className="relative h-[100dvh] w-full max-w-6xl overflow-hidden bg-black sm:h-[85vh]"
+            className="relative h-[100dvh] w-screen overflow-hidden bg-black"
             onClick={(event) => event.stopPropagation()}
           >
             <button
@@ -470,20 +474,21 @@ export default function GalleryGrid() {
               <Image
                 src={activeProject.imagePath}
                 alt={activeProject.title}
-                width={1400}
-                height={1050}
+                fill
+                sizes="100vw"
                 loading="eager"
                 unoptimized
-                className="max-h-[calc(100dvh-5rem)] max-w-full select-none object-contain transition-transform duration-150 pointer-events-none sm:max-h-[85vh]"
+                className="pointer-events-none select-none object-contain p-3 pb-20 transition-transform duration-150 sm:p-8 sm:pb-24"
                 style={{
                   transform: `scale(${zoom}) translate(${position.x / zoom}px, ${position.y / zoom}px)`,
                 }}
                 draggable={false}
               />
             </div>
-          </div>
-        </div>
-      )}
+            </div>
+          </div>,
+          document.body,
+        )}
     </div>
   );
 }
