@@ -8,6 +8,7 @@ export type MonitoringEvent = {
   destination: string;
   timestamp: string;
   sessionId: string;
+  visitorId: string;
   referrer: string;
   metric: string;
   value: number | null;
@@ -54,6 +55,7 @@ export async function readMonitoringEvents(): Promise<MonitoringEvent[]> {
               destination: event.destination || "",
               timestamp: event.timestamp,
               sessionId: event.sessionId || "",
+              visitorId: event.visitorId || "",
               referrer: event.referrer || "",
               metric: event.metric || "",
               value: typeof event.value === "number" ? event.value : null,

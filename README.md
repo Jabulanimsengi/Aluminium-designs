@@ -15,12 +15,16 @@ The website is available at `http://localhost:3000`.
 
 ## Monitoring dashboard
 
-The private dashboard is available at `/admin`. Browser HTTP Basic authentication is controlled by:
+The private dashboard is available at `/admin`, with its login form at `/admin/login`. Authentication is controlled by:
 
 ```dotenv
 ADMIN_USERNAME=admin
 ADMIN_PASSWORD=use-a-long-random-password
+# Optional; falls back to ADMIN_PASSWORD when omitted.
+ADMIN_SESSION_SECRET=use-a-separate-long-random-secret
 ```
+
+Successful login creates a secure, HTTP-only session that expires after eight hours.
 
 The site records page views, navigation and enquiry clicks, visitor sessions, and browser performance measurements. Events are stored as newline-delimited JSON at `MONITORING_EVENTS_PATH`, or in `./data` when the variable is omitted.
 
@@ -30,7 +34,7 @@ For Docker deployments, `/app/data` is the default event directory and is declar
 docker run -v apex-monitoring:/app/data --env-file .env -p 3000:3000 apex-aluminium
 ```
 
-No personal contact details or full referring query strings are collected.
+Monitoring uses random anonymous browser and session identifiers to connect page views and clicks into visitor journeys. No names, personal contact details, form contents, or full referring query strings are collected.
 
 ## Search indexing
 

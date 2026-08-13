@@ -15,6 +15,12 @@ export const businessContact = {
   fullAddress: "755 Sontonga Road, Moleleki Ext 1, Katlehong, Gauteng, South Africa",
 } as const;
 
+export const businessHours = {
+  weekdays: "08:00 - 17:00",
+  weekends: "Closed",
+  appointmentNote: "Home measurements available by appointment",
+} as const;
+
 const whatsappPhone = businessContact.phoneE164.replace(/\D/g, "");
 
 export function getWhatsAppQuoteUrl(message: string) {

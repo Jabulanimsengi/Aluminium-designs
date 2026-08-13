@@ -178,15 +178,39 @@ export default function GalleryGrid() {
   }, [activeProject, filteredProjects, preloadImage]);
 
   return (
-    <div className="space-y-6 sm:space-y-10">
-      <div className="scrollbar-hide -mx-4 flex gap-1.5 overflow-x-auto border-b border-outline-variant px-4 pb-3 sm:mx-0 sm:flex-wrap sm:justify-center sm:gap-2 sm:px-0 sm:pb-4">
+    <div className="space-y-5 sm:space-y-10">
+      <div className="sm:hidden">
+        <label
+          htmlFor="gallery-category"
+          className="mb-2 block font-mono text-[10px] font-bold uppercase tracking-widest text-secondary"
+        >
+          Project category
+        </label>
+        <div className="relative">
+          <select
+            id="gallery-category"
+            value={activeFilter}
+            onChange={(event) => setActiveFilter(event.target.value)}
+            className="h-12 w-full appearance-none border border-outline-variant bg-surface-container-lowest px-4 pr-11 font-mono text-xs font-bold uppercase tracking-wider text-primary outline-none focus:border-primary focus:ring-2 focus:ring-primary/15"
+          >
+            {categories.map((category) => (
+              <option key={category.id} value={category.id}>
+                {category.name}
+              </option>
+            ))}
+          </select>
+          <ChevronRight className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 rotate-90 text-secondary" />
+        </div>
+      </div>
+
+      <div className="hidden flex-wrap justify-center gap-2 border-b border-outline-variant pb-4 sm:flex">
         {categories.map((category) => (
           <button
             key={category.id}
             type="button"
             onClick={() => setActiveFilter(category.id)}
             aria-pressed={activeFilter === category.id}
-            className={`shrink-0 rounded-full border px-3 py-1.5 font-mono text-[10px] font-bold uppercase tracking-wider transition-colors sm:px-4 sm:py-2 sm:text-[11px] sm:tracking-widest ${
+            className={`shrink-0 rounded-full border px-4 py-2 font-mono text-[11px] font-bold uppercase tracking-widest transition-colors ${
               activeFilter === category.id
                 ? "border-primary bg-primary text-on-primary"
                 : "border-outline-variant bg-surface text-secondary hover:bg-surface-container"
@@ -197,12 +221,22 @@ export default function GalleryGrid() {
         ))}
       </div>
 
-      <p className="text-center font-mono text-[9px] font-bold uppercase tracking-widest text-secondary sm:hidden">
-        Swipe to browse projects
-      </p>
+      <div className="flex items-end justify-between gap-4 sm:hidden">
+        <div>
+          <p className="font-mono text-[9px] font-bold uppercase tracking-widest text-secondary">
+            Completed work
+          </p>
+          <p className="mt-1 text-sm font-bold text-primary">
+            {filteredProjects.length} {filteredProjects.length === 1 ? "project" : "projects"}
+          </p>
+        </div>
+        <p className="font-mono text-[9px] font-bold uppercase tracking-widest text-outline">
+          Tap to enlarge
+        </p>
+      </div>
 
-      <div className="scrollbar-hide -mx-4 grid touch-pan-x snap-x snap-mandatory auto-cols-[82vw] grid-flow-col grid-rows-2 gap-3 overflow-x-auto px-4 pb-3 sm:mx-0 sm:auto-cols-auto sm:grid-flow-row sm:grid-cols-2 sm:grid-rows-none sm:gap-4 sm:overflow-visible sm:px-0 sm:pb-0 sm:snap-none lg:grid-cols-3">
-        {filteredProjects.map((project) => (
+      <div className="grid grid-cols-2 gap-2 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
+        {filteredProjects.map((project, index) => (
           <button
             key={project.id}
             type="button"
@@ -211,16 +245,19 @@ export default function GalleryGrid() {
             onFocus={() => preloadImage(project.imagePath)}
             onTouchStart={() => preloadImage(project.imagePath)}
             aria-label={`Open ${project.title}`}
-            className="group relative aspect-[4/3] snap-start overflow-hidden bg-surface-container-high text-left sm:snap-none"
+            className={`group relative overflow-hidden bg-surface-container-high text-left ${
+              index === 0 ? "col-span-2 aspect-[16/10]" : "aspect-square"
+            } sm:col-span-1 sm:aspect-[4/3]`}
           >
             <Image
               src={project.imagePath}
               alt={project.title}
               fill
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              sizes={index === 0
+                ? "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                : "(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 33vw"}
               className="object-cover transition-transform duration-700 group-hover:scale-105"
             />
-            <span className="absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/20" />
             <span className="absolute left-1/2 top-1/2 flex h-11 w-11 -translate-x-1/2 -translate-y-1/2 scale-90 items-center justify-center rounded-full bg-white text-primary opacity-0 shadow-lg transition-all duration-300 group-hover:scale-100 group-hover:opacity-100">
               <ZoomIn className="h-4 w-4" />
             </span>
@@ -238,7 +275,7 @@ export default function GalleryGrid() {
 
       {activeProject && (
         <div
-          className="fixed inset-0 z-[120] flex items-center justify-center bg-black/90 p-4 animate-fade-in"
+          className="fixed inset-0 z-[120] flex items-center justify-center bg-black/95 p-0 animate-fade-in sm:bg-black/90 sm:p-4"
           onClick={closeLightbox}
         >
           <div
@@ -246,7 +283,7 @@ export default function GalleryGrid() {
             role="dialog"
             aria-modal="true"
             aria-label={`${activeProject.title} image viewer`}
-            className="relative h-[85vh] w-full max-w-6xl overflow-hidden bg-black"
+            className="relative h-[100dvh] w-full max-w-6xl overflow-hidden bg-black sm:h-[85vh]"
             onClick={(event) => event.stopPropagation()}
           >
             <button
@@ -254,7 +291,7 @@ export default function GalleryGrid() {
               type="button"
               onClick={closeLightbox}
               aria-label="Close image viewer"
-              className="absolute right-4 top-4 z-20 flex h-10 w-10 items-center justify-center rounded-full border border-white/30 bg-black/60 text-white transition-colors hover:bg-black"
+              className="absolute right-3 top-3 z-20 flex h-11 w-11 items-center justify-center rounded-full border border-white/30 bg-black/70 text-white transition-colors hover:bg-black sm:right-4 sm:top-4 sm:h-10 sm:w-10"
             >
               <X className="h-4 w-4" />
             </button>
@@ -263,7 +300,7 @@ export default function GalleryGrid() {
               type="button"
               onClick={() => showProject(-1)}
               aria-label="Previous image"
-              className="absolute left-3 top-1/2 z-20 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-black/60 text-white transition-colors hover:bg-black sm:left-5"
+              className="absolute left-2 top-1/2 z-20 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-black/70 text-white transition-colors hover:bg-black sm:left-5 sm:h-11 sm:w-11"
             >
               <ChevronLeft className="h-5 w-5" />
             </button>
@@ -272,12 +309,12 @@ export default function GalleryGrid() {
               type="button"
               onClick={() => showProject(1)}
               aria-label="Next image"
-              className="absolute right-3 top-1/2 z-20 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-black/60 text-white transition-colors hover:bg-black sm:right-5"
+              className="absolute right-2 top-1/2 z-20 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-black/70 text-white transition-colors hover:bg-black sm:right-5 sm:h-11 sm:w-11"
             >
               <ChevronRight className="h-5 w-5" />
             </button>
 
-            <div className="absolute left-1/2 top-4 z-20 flex -translate-x-1/2 items-center gap-2 rounded-full border border-white/30 bg-black/60 px-3 py-2">
+            <div className="absolute left-3 top-3 z-20 flex items-center gap-2 rounded-full border border-white/30 bg-black/70 px-3 py-2 sm:left-1/2 sm:top-4 sm:-translate-x-1/2 sm:bg-black/60">
               <button
                 type="button"
                 aria-label="Zoom out"
@@ -299,7 +336,7 @@ export default function GalleryGrid() {
               </button>
             </div>
 
-            <div className="scrollbar-hide absolute bottom-4 left-1/2 z-20 flex w-[calc(100%-2rem)] max-w-3xl -translate-x-1/2 gap-2 overflow-x-auto border border-white/20 bg-black/70 p-2">
+            <div className="scrollbar-hide absolute inset-x-0 bottom-0 z-20 flex gap-2 overflow-x-auto border-t border-white/20 bg-black/80 p-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] sm:inset-x-auto sm:bottom-4 sm:left-1/2 sm:w-[calc(100%-2rem)] sm:max-w-3xl sm:-translate-x-1/2 sm:border sm:bg-black/70 sm:pb-2">
               {filteredProjects.map((project) => {
                 const isActive = project.id === activeProject.id;
 
@@ -372,7 +409,7 @@ export default function GalleryGrid() {
                 height={1050}
                 loading="eager"
                 unoptimized
-                className="max-h-[85vh] max-w-full select-none object-contain transition-transform duration-150 pointer-events-none"
+                className="max-h-[calc(100dvh-5rem)] max-w-full select-none object-contain transition-transform duration-150 pointer-events-none sm:max-h-[85vh]"
                 style={{
                   transform: `scale(${zoom}) translate(${position.x / zoom}px, ${position.y / zoom}px)`,
                 }}

@@ -1,7 +1,7 @@
 import React from "react";
 import { Metadata } from "next";
 import { Phone, Mail, MapPin, Clock, ArrowRight } from "lucide-react";
-import { businessContact } from "@/lib/site";
+import { businessContact, businessHours } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Contact Us",
@@ -103,15 +103,15 @@ export default function ContactPage() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
                 <div>
                   <p className="font-mono text-[10px] uppercase tracking-wider text-outline">Monday - Friday</p>
-                  <p className="font-sans font-bold text-primary mt-0.5">08:00 - 17:00</p>
+                  <p className="font-sans font-bold text-primary mt-0.5">{businessHours.weekdays}</p>
                 </div>
                 <div>
                   <p className="font-mono text-[10px] uppercase tracking-wider text-outline">Sat - Sun</p>
-                  <p className="font-sans font-bold text-outline mt-0.5">Closed</p>
+                  <p className="font-sans font-bold text-outline mt-0.5">{businessHours.weekends}</p>
                 </div>
               </div>
               <div className="border-t border-outline-variant pt-3 font-mono text-[9px] uppercase tracking-wider text-outline">
-                Home measurements available by appointment
+                {businessHours.appointmentNote}
               </div>
             </div>
           </div>

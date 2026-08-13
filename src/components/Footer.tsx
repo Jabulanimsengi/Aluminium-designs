@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
 import { services } from "@/data/services";
-import { businessContact, whatsappQuoteUrl } from "@/lib/site";
+import { businessContact, businessHours, whatsappQuoteUrl } from "@/lib/site";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -109,7 +109,7 @@ export default function Footer() {
               </li>
               <li className="flex items-start gap-3">
                 <Clock className="w-4 h-4 text-outline shrink-0 mt-0.5" />
-                <span className="text-outline-variant">Mon - Fri: 08:00 - 17:00</span>
+                <span className="text-outline-variant">Mon - Fri: {businessHours.weekdays}</span>
               </li>
             </ul>
           </div>

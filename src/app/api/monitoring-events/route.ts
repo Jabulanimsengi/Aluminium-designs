@@ -16,6 +16,7 @@ type MonitoringEvent = {
   destination?: string;
   timestamp?: string;
   sessionId?: string;
+  visitorId?: string;
   referrer?: string;
   metric?: string;
   value?: number;
@@ -66,6 +67,7 @@ export async function POST(request: NextRequest) {
     destination: safeValue(body.destination, 200),
     timestamp: safeValue(body.timestamp, 40) || new Date().toISOString(),
     sessionId: safeValue(body.sessionId, 80),
+    visitorId: safeValue(body.visitorId, 80),
     referrer: safeValue(body.referrer, 200),
     metric: safeValue(body.metric, 20),
     value:

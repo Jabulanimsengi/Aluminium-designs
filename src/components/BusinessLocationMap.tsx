@@ -1,5 +1,5 @@
-import { ExternalLink, MapPin } from "lucide-react";
-import { businessContact } from "@/lib/site";
+import { Clock3, ExternalLink, MapPin } from "lucide-react";
+import { businessContact, businessHours } from "@/lib/site";
 
 const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
   businessContact.fullAddress,
@@ -21,7 +21,7 @@ export default function BusinessLocationMap() {
     <section className="border-b border-outline-variant bg-surface-container-low py-10 sm:py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid items-stretch gap-5 sm:gap-8 lg:grid-cols-[0.8fr_1.2fr]">
-          <div className="flex flex-col justify-center border border-outline-variant bg-surface-container-lowest p-5 sm:p-10">
+          <div className="order-2 flex flex-col justify-center border border-outline-variant bg-surface-container-lowest p-5 sm:p-10 lg:order-1">
             <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
               Visit Our Workshop
             </span>
@@ -38,6 +38,28 @@ export default function BusinessLocationMap() {
                 {businessContact.addressRegion}, South Africa
               </address>
             </div>
+
+            <div className="mt-6 border-t border-outline-variant pt-5 sm:mt-8">
+              <div className="flex items-center gap-2">
+                <Clock3 className="h-4 w-4 text-secondary" />
+                <h3 className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
+                  Trading hours
+                </h3>
+              </div>
+              <dl className="mt-4 space-y-3 text-sm">
+                <div className="flex items-baseline justify-between gap-4">
+                  <dt className="text-on-surface-variant">Monday - Friday</dt>
+                  <dd className="font-bold text-primary">{businessHours.weekdays}</dd>
+                </div>
+                <div className="flex items-baseline justify-between gap-4">
+                  <dt className="text-on-surface-variant">Saturday - Sunday</dt>
+                  <dd className="font-bold text-outline">{businessHours.weekends}</dd>
+                </div>
+              </dl>
+              <p className="mt-4 font-mono text-[9px] font-bold uppercase tracking-wider text-outline">
+                {businessHours.appointmentNote}
+              </p>
+            </div>
             <a
               href={directionsUrl}
               target="_blank"
@@ -49,7 +71,7 @@ export default function BusinessLocationMap() {
             </a>
           </div>
 
-          <div className="relative min-h-[280px] overflow-hidden border border-outline-variant bg-surface-container-high sm:min-h-[420px]">
+          <div className="order-1 relative min-h-[280px] overflow-hidden border border-outline-variant bg-surface-container-high sm:min-h-[420px] lg:order-2">
             <a
               href={directionsUrl}
               target="_blank"

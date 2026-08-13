@@ -8,6 +8,19 @@ type MonitoringEvent = {
   referrer?: string;
 };
 
+function visitorId() {
+  const key = "apex-monitoring-visitor";
+  try {
+    const existing = window.localStorage.getItem(key);
+    if (existing) return existing;
+    const id = crypto.randomUUID();
+    window.localStorage.setItem(key, id);
+    return id;
+  } catch {
+    return "";
+  }
+}
+
 function sessionId() {
   const key = "apex-monitoring-session";
   try {
@@ -42,11 +55,14 @@ function cleanDestination(href: string) {
 }
 
 function report(event: MonitoringEvent) {
+  if (window.location.pathname.startsWith("/admin")) return;
+
   const payload = JSON.stringify({
     ...event,
     page: event.page || window.location.pathname,
     timestamp: new Date().toISOString(),
     sessionId: sessionId(),
+    visitorId: visitorId(),
   });
 
   try {
