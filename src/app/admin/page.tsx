@@ -158,10 +158,13 @@ export default async function AdminMonitoringPage({
   const todayKey = activityDateKey(now.toISOString());
   const yesterday = new Date(now.getTime() - 86_400_000);
   const yesterdayKey = activityDateKey(yesterday.toISOString());
-  const activityGroups = new Map<string, MonitoringEvent[]>();
+  const activityGroups = new Map<string, Map<string, MonitoringEvent[]>>();
   for (const event of visibleActivity) {
     const dateKey = activityDateKey(event.timestamp);
-    activityGroups.set(dateKey, [...(activityGroups.get(dateKey) || []), event]);
+    const ipAddress = event.ipAddress || "Unknown";
+    const dateGroup = activityGroups.get(dateKey) || new Map<string, MonitoringEvent[]>();
+    dateGroup.set(ipAddress, [...(dateGroup.get(ipAddress) || []), event]);
+    activityGroups.set(dateKey, dateGroup);
   }
   const activityHref = (activity: "20" | "all") => `/admin?range=${range}&activity=${activity}`;
   const metricGroups = new Map<string, number[]>();
@@ -478,26 +481,39 @@ export default async function AdminMonitoringPage({
               </div>
             </div>
             <div className="overflow-x-auto">
-              <table className="w-full min-w-[820px] text-left text-xs">
+              <table className="w-full min-w-[760px] text-left text-xs">
                 <thead className="bg-surface-container text-[10px] uppercase tracking-wider text-secondary">
-                  <tr><th className="p-3">Time</th><th className="p-3">IP address</th><th className="p-3">Event</th><th className="p-3">Page</th><th className="p-3">Detail</th></tr>
+                  <tr><th className="p-3">Time</th><th className="p-3">Event</th><th className="p-3">Page</th><th className="p-3">Detail</th></tr>
                 </thead>
                 <tbody>
-                  {[...activityGroups.entries()].map(([dateKey, activity]) => (
+                  {[...activityGroups.entries()].map(([dateKey, ipGroups]) => (
                     <Fragment key={dateKey}>
                       <tr className="border-y border-outline-variant bg-surface-container-low">
-                        <th colSpan={5} className="px-3 py-2 font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
+                        <th colSpan={4} className="px-3 py-2 font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
                           {activityDateLabel(dateKey, todayKey, yesterdayKey)}
                         </th>
                       </tr>
-                      {activity.map((event, index) => (
-                        <tr key={`${event.timestamp}-${index}`} className="border-b border-outline-variant last:border-b-0">
-                          <td className="whitespace-nowrap p-3 text-outline">{new Date(event.timestamp).toLocaleTimeString("en-ZA", { timeZone: "Africa/Johannesburg", hour: "2-digit", minute: "2-digit", second: "2-digit" })}</td>
-                          <td className="whitespace-nowrap p-3 font-mono text-on-surface-variant">{event.ipAddress || "Unknown"}</td>
-                          <td className="p-3 font-mono font-bold text-primary">{event.event}</td>
-                          <td className="max-w-52 truncate p-3 text-on-surface-variant">{event.page}</td>
-                          <td className="max-w-64 truncate p-3 text-on-surface-variant">{event.metric ? `${event.metric}: ${event.value}` : event.label || event.destination || "—"}</td>
-                        </tr>
+                      {[...ipGroups.entries()].map(([ipAddress, activity]) => (
+                        <Fragment key={`${dateKey}-${ipAddress}`}>
+                          <tr className="border-b border-outline-variant bg-primary/[0.04]">
+                            <th colSpan={4} className="px-3 py-2">
+                              <div className="flex items-center justify-between gap-4">
+                                <span className="font-mono text-[11px] font-bold text-primary">IP address: {ipAddress}</span>
+                                <span className="font-mono text-[9px] font-bold uppercase tracking-wider text-outline">
+                                  {activity.length} {activity.length === 1 ? "event" : "events"}
+                                </span>
+                              </div>
+                            </th>
+                          </tr>
+                          {activity.map((event, index) => (
+                            <tr key={`${event.timestamp}-${index}`} className="border-b border-outline-variant last:border-b-0">
+                              <td className="whitespace-nowrap p-3 text-outline">{new Date(event.timestamp).toLocaleTimeString("en-ZA", { timeZone: "Africa/Johannesburg", hour: "2-digit", minute: "2-digit", second: "2-digit" })}</td>
+                              <td className="p-3 font-mono font-bold text-primary">{event.event}</td>
+                              <td className="max-w-52 truncate p-3 text-on-surface-variant">{event.page}</td>
+                              <td className="max-w-64 truncate p-3 text-on-surface-variant">{event.metric ? `${event.metric}: ${event.value}` : event.label || event.destination || "—"}</td>
+                            </tr>
+                          ))}
+                        </Fragment>
                       ))}
                     </Fragment>
                   ))}
