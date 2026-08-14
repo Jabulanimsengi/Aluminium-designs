@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 import {
   Activity,
   ArrowUpRight,
+  ChevronDown,
   Gauge,
   LogOut,
   Mail,
@@ -96,6 +97,15 @@ function activityDateLabel(dateKey: string, todayKey: string, yesterdayKey: stri
   }).format(new Date(`${dateKey}T12:00:00+02:00`));
 }
 
+function groupActivityByDate(events: MonitoringEvent[]) {
+  const groups = new Map<string, MonitoringEvent[]>();
+  for (const event of events) {
+    const dateKey = activityDateKey(event.timestamp);
+    groups.set(dateKey, [...(groups.get(dateKey) || []), event]);
+  }
+  return groups;
+}
+
 function isAdminPath(value: string) {
   if (!value) return false;
   try {
@@ -108,7 +118,7 @@ function isAdminPath(value: string) {
 export default async function AdminMonitoringPage({
   searchParams,
 }: {
-  searchParams: Promise<{ range?: string; activity?: string }>;
+  searchParams: Promise<{ range?: string }>;
 }) {
   const session = (await cookies()).get(ADMIN_SESSION_COOKIE)?.value;
   if (!verifyAdminSessionToken(session)) redirect("/admin/login");
@@ -152,21 +162,15 @@ export default async function AdminMonitoringPage({
   const latestWhatsappEvent = whatsappEvents[0];
   const emailPages = countBy(emailEvents, "page").slice(0, 3);
   const latestEmailEvent = emailEvents[0];
-  const requestedActivityCount = params.activity === "20" ? 20 : params.activity === "all" ? events.length : 10;
-  const visibleActivity = events.slice(0, requestedActivityCount);
   const now = new Date();
   const todayKey = activityDateKey(now.toISOString());
   const yesterday = new Date(now.getTime() - 86_400_000);
   const yesterdayKey = activityDateKey(yesterday.toISOString());
-  const activityGroups = new Map<string, Map<string, MonitoringEvent[]>>();
-  for (const event of visibleActivity) {
-    const dateKey = activityDateKey(event.timestamp);
+  const activityGroups = new Map<string, MonitoringEvent[]>();
+  for (const event of events) {
     const ipAddress = event.ipAddress || "Unknown";
-    const dateGroup = activityGroups.get(dateKey) || new Map<string, MonitoringEvent[]>();
-    dateGroup.set(ipAddress, [...(dateGroup.get(ipAddress) || []), event]);
-    activityGroups.set(dateKey, dateGroup);
+    activityGroups.set(ipAddress, [...(activityGroups.get(ipAddress) || []), event]);
   }
-  const activityHref = (activity: "20" | "all") => `/admin?range=${range}&activity=${activity}`;
   const metricGroups = new Map<string, number[]>();
   const journeyMap = new Map<string, {
     sessionId: string;
@@ -477,60 +481,67 @@ export default async function AdminMonitoringPage({
             <div className="flex flex-wrap items-center justify-between gap-3 border-b border-outline-variant p-5">
               <div>
                 <h2 className="text-left text-lg font-bold uppercase tracking-tight text-primary">Recent activity</h2>
-                <p className="mt-1 text-xs text-on-surface-variant">Showing {visibleActivity.length} of {events.length} recorded events.</p>
+                <p className="mt-1 text-xs text-on-surface-variant">
+                  Showing all {activityGroups.size} IP {activityGroups.size === 1 ? "address" : "addresses"} and {events.length} recorded {events.length === 1 ? "event" : "events"}.
+                </p>
               </div>
             </div>
-            <div className="overflow-x-auto">
-              <table className="w-full min-w-[760px] text-left text-xs">
-                <thead className="bg-surface-container text-[10px] uppercase tracking-wider text-secondary">
-                  <tr><th className="p-3">Time</th><th className="p-3">Event</th><th className="p-3">Page</th><th className="p-3">Detail</th></tr>
-                </thead>
-                <tbody>
-                  {[...activityGroups.entries()].map(([dateKey, ipGroups]) => (
-                    <Fragment key={dateKey}>
-                      <tr className="border-y border-outline-variant bg-surface-container-low">
-                        <th colSpan={4} className="px-3 py-2 font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
-                          {activityDateLabel(dateKey, todayKey, yesterdayKey)}
-                        </th>
-                      </tr>
-                      {[...ipGroups.entries()].map(([ipAddress, activity]) => (
-                        <Fragment key={`${dateKey}-${ipAddress}`}>
-                          <tr className="border-b border-outline-variant bg-primary/[0.04]">
-                            <th colSpan={4} className="px-3 py-2">
-                              <div className="flex items-center justify-between gap-4">
-                                <span className="font-mono text-[11px] font-bold text-primary">IP address: {ipAddress}</span>
-                                <span className="font-mono text-[9px] font-bold uppercase tracking-wider text-outline">
-                                  {activity.length} {activity.length === 1 ? "event" : "events"}
-                                </span>
-                              </div>
-                            </th>
-                          </tr>
-                          {activity.map((event, index) => (
-                            <tr key={`${event.timestamp}-${index}`} className="border-b border-outline-variant last:border-b-0">
-                              <td className="whitespace-nowrap p-3 text-outline">{new Date(event.timestamp).toLocaleTimeString("en-ZA", { timeZone: "Africa/Johannesburg", hour: "2-digit", minute: "2-digit", second: "2-digit" })}</td>
-                              <td className="p-3 font-mono font-bold text-primary">{event.event}</td>
-                              <td className="max-w-52 truncate p-3 text-on-surface-variant">{event.page}</td>
-                              <td className="max-w-64 truncate p-3 text-on-surface-variant">{event.metric ? `${event.metric}: ${event.value}` : event.label || event.destination || "—"}</td>
-                            </tr>
+            <div className="divide-y divide-outline-variant">
+              {[...activityGroups.entries()].map(([ipAddress, activity]) => {
+                const dateGroups = groupActivityByDate(activity);
+                const sessionCount = new Set(activity.map((event) => event.sessionId).filter(Boolean)).size;
+                const latestEvent = activity[0];
+
+                return (
+                  <details key={ipAddress} className="group">
+                    <summary className="flex cursor-pointer list-none items-center justify-between gap-4 bg-white px-4 py-4 transition-colors hover:bg-surface-container-low [&::-webkit-details-marker]:hidden">
+                      <div className="min-w-0">
+                        <p className="break-all font-mono text-xs font-bold text-primary">{ipAddress}</p>
+                        <p className="mt-1 text-[10px] text-outline">
+                          Latest activity: {latestEvent ? new Date(latestEvent.timestamp).toLocaleString("en-ZA", { timeZone: "Africa/Johannesburg" }) : "Unknown"}
+                        </p>
+                      </div>
+                      <div className="flex shrink-0 items-center gap-3">
+                        <div className="text-right font-mono text-[9px] font-bold uppercase tracking-wider text-outline">
+                          <p>{activity.length} {activity.length === 1 ? "event" : "events"}</p>
+                          <p>{sessionCount} {sessionCount === 1 ? "session" : "sessions"}</p>
+                        </div>
+                        <ChevronDown className="h-4 w-4 text-secondary transition-transform group-open:rotate-180" aria-hidden="true" />
+                      </div>
+                    </summary>
+                    <div className="overflow-x-auto border-t border-outline-variant">
+                      <table className="w-full min-w-[760px] text-left text-xs">
+                        <thead className="bg-surface-container text-[10px] uppercase tracking-wider text-secondary">
+                          <tr><th className="p-3">Time</th><th className="p-3">Event</th><th className="p-3">Page</th><th className="p-3">Detail</th></tr>
+                        </thead>
+                        <tbody>
+                          {[...dateGroups.entries()].map(([dateKey, datedActivity]) => (
+                            <Fragment key={dateKey}>
+                              <tr className="border-y border-outline-variant bg-surface-container-low">
+                                <th colSpan={4} className="px-3 py-2 font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
+                                  {activityDateLabel(dateKey, todayKey, yesterdayKey)}
+                                </th>
+                              </tr>
+                              {datedActivity.map((event, index) => (
+                                <tr key={`${event.timestamp}-${index}`} className="border-b border-outline-variant last:border-b-0">
+                                  <td className="whitespace-nowrap p-3 text-outline">{new Date(event.timestamp).toLocaleTimeString("en-ZA", { timeZone: "Africa/Johannesburg", hour: "2-digit", minute: "2-digit", second: "2-digit" })}</td>
+                                  <td className="p-3 font-mono font-bold text-primary">{event.event}</td>
+                                  <td className="max-w-52 truncate p-3 text-on-surface-variant">{event.page}</td>
+                                  <td className="max-w-64 truncate p-3 text-on-surface-variant">{event.metric ? `${event.metric}: ${event.value}` : event.label || event.destination || "—"}</td>
+                                </tr>
+                              ))}
+                            </Fragment>
                           ))}
-                        </Fragment>
-                      ))}
-                    </Fragment>
-                  ))}
-                </tbody>
-              </table>
+                        </tbody>
+                      </table>
+                    </div>
+                  </details>
+                );
+              })}
+              {!activityGroups.size ? (
+                <p className="p-6 text-center text-xs text-on-surface-variant">No activity was recorded in this period.</p>
+              ) : null}
             </div>
-            {events.length > visibleActivity.length ? (
-              <div className="flex justify-center border-t border-outline-variant p-4">
-                <Link
-                  href={requestedActivityCount <= 10 && events.length > 20 ? activityHref("20") : activityHref("all")}
-                  className="inline-flex items-center gap-2 rounded-full border border-outline-variant bg-surface px-4 py-2 font-mono text-[10px] font-bold uppercase tracking-wider text-primary transition-colors hover:border-primary hover:bg-surface-container"
-                >
-                  {requestedActivityCount <= 10 && events.length > 20 ? "View 10 more" : `View all ${events.length} activities`}
-                  <ArrowUpRight className="h-3.5 w-3.5" />
-                </Link>
-              </div>
-            ) : null}
           </div>
         </section>
       </div>
