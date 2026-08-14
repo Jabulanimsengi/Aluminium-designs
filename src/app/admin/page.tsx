@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Fragment } from "react";
 import { cookies } from "next/headers";
 import Link from "next/link";
 import { redirect } from "next/navigation";
@@ -46,7 +47,7 @@ const conversionEvents = new Set([
   "maps_directions_click",
 ]);
 
-function countBy(events: MonitoringEvent[], key: "page" | "event" | "referrer" | "destination") {
+function countBy(events: MonitoringEvent[], key: "page" | "event" | "referrer" | "destination" | "ipAddress") {
   const counts = new Map<string, number>();
   for (const event of events) {
     const value = event[key] || "(direct / unknown)";
@@ -73,6 +74,37 @@ function metricRating(metric: string, value: number) {
   return { label: "Poor", className: "text-red-700 bg-red-50" };
 }
 
+const activityDateFormatter = new Intl.DateTimeFormat("en-CA", {
+  timeZone: "Africa/Johannesburg",
+  year: "numeric",
+  month: "2-digit",
+  day: "2-digit",
+});
+
+function activityDateKey(timestamp: string) {
+  return activityDateFormatter.format(new Date(timestamp));
+}
+
+function activityDateLabel(dateKey: string, todayKey: string, yesterdayKey: string) {
+  if (dateKey === todayKey) return "Today";
+  if (dateKey === yesterdayKey) return "Yesterday";
+  return new Intl.DateTimeFormat("en-ZA", {
+    timeZone: "Africa/Johannesburg",
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  }).format(new Date(`${dateKey}T12:00:00+02:00`));
+}
+
+function isAdminPath(value: string) {
+  if (!value) return false;
+  try {
+    return new URL(value, "https://monitoring.invalid").pathname.startsWith("/admin");
+  } catch {
+    return value.startsWith("/admin");
+  }
+}
+
 export default async function AdminMonitoringPage({
   searchParams,
 }: {
@@ -88,7 +120,7 @@ export default async function AdminMonitoringPage({
   const allEvents = await readMonitoringEvents();
   const events = allEvents
     .filter((event) => range === "all" || new Date(event.timestamp).getTime() >= cutoff)
-    .filter((event) => !event.page.startsWith("/admin"))
+    .filter((event) => !isAdminPath(event.page) && !isAdminPath(event.destination))
     .sort((a, b) => Date.parse(b.timestamp) - Date.parse(a.timestamp));
   const pageViews = events.filter((event) => event.event === "page_view");
   const conversions = events.filter((event) => conversionEvents.has(event.event));
@@ -101,6 +133,11 @@ export default async function AdminMonitoringPage({
       .map((event) => event.visitorId || (event.sessionId ? `legacy:${event.sessionId}` : ""))
       .filter(Boolean),
   ).size;
+  const uniqueEngagedIps = new Set(conversions.map((event) => event.ipAddress).filter(Boolean)).size;
+  const engagedIps = countBy(
+    conversions.filter((event) => event.ipAddress),
+    "ipAddress",
+  ).slice(0, 10);
   const whatsappSessions = new Set(whatsappEvents.map((event) => event.sessionId).filter(Boolean)).size;
   const emailSessions = new Set(emailEvents.map((event) => event.sessionId).filter(Boolean)).size;
   const conversionRate = pageViews.length ? (conversions.length / pageViews.length) * 100 : 0;
@@ -117,11 +154,21 @@ export default async function AdminMonitoringPage({
   const latestEmailEvent = emailEvents[0];
   const requestedActivityCount = params.activity === "20" ? 20 : params.activity === "all" ? events.length : 10;
   const visibleActivity = events.slice(0, requestedActivityCount);
+  const now = new Date();
+  const todayKey = activityDateKey(now.toISOString());
+  const yesterday = new Date(now.getTime() - 86_400_000);
+  const yesterdayKey = activityDateKey(yesterday.toISOString());
+  const activityGroups = new Map<string, MonitoringEvent[]>();
+  for (const event of visibleActivity) {
+    const dateKey = activityDateKey(event.timestamp);
+    activityGroups.set(dateKey, [...(activityGroups.get(dateKey) || []), event]);
+  }
   const activityHref = (activity: "20" | "all") => `/admin?range=${range}&activity=${activity}`;
   const metricGroups = new Map<string, number[]>();
   const journeyMap = new Map<string, {
     sessionId: string;
     visitorId: string;
+    ipAddress: string;
     startedAt: string;
     endedAt: string;
     pages: string[];
@@ -135,6 +182,7 @@ export default async function AdminMonitoringPage({
     const journey = journeyMap.get(event.sessionId) || {
       sessionId: event.sessionId,
       visitorId: event.visitorId,
+      ipAddress: event.ipAddress,
       startedAt: event.timestamp,
       endedAt: event.timestamp,
       pages: [],
@@ -144,6 +192,7 @@ export default async function AdminMonitoringPage({
     };
     journey.endedAt = event.timestamp;
     if (!journey.visitorId && event.visitorId) journey.visitorId = event.visitorId;
+    if (!journey.ipAddress && event.ipAddress) journey.ipAddress = event.ipAddress;
     if (event.event === "page_view") {
       journey.pageViews += 1;
       if (event.page && journey.pages.at(-1) !== event.page) journey.pages.push(event.page);
@@ -169,7 +218,7 @@ export default async function AdminMonitoringPage({
     average: values.reduce((sum, value) => sum + value, 0) / values.length,
     samples: values.length,
   }));
-  const sitemapCount = 8 + services.length + gautengLocations.length + getAllLocationServiceRoutes().length;
+  const sitemapCount = 9 + services.length + gautengLocations.length + getAllLocationServiceRoutes().length;
 
   return (
     <div className="min-h-screen bg-surface-container-low py-10 sm:py-16">
@@ -201,11 +250,12 @@ export default async function AdminMonitoringPage({
           </div>
         </header>
 
-        <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+        <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
           {[
             ["Page views", pageViews.length.toLocaleString(), Activity],
             ["Visitors", uniqueVisitors.toLocaleString(), Users],
             ["Sessions", uniqueSessions.toLocaleString(), Users],
+            ["Engaged IPs", uniqueEngagedIps.toLocaleString(), MousePointerClick],
             ["Enquiry actions", conversions.length.toLocaleString(), MousePointerClick],
             ["Action rate", `${conversionRate.toFixed(1)}%`, Gauge],
           ].map(([label, value, Icon]) => (
@@ -276,14 +326,15 @@ export default async function AdminMonitoringPage({
             <p className="mt-1 text-xs text-on-surface-variant">Anonymous session paths from entry page through clicks and enquiry actions.</p>
           </div>
           <div className="overflow-x-auto">
-            <table className="w-full min-w-[900px] text-left text-xs">
+            <table className="w-full min-w-[1000px] text-left text-xs">
               <thead className="bg-surface-container text-[10px] uppercase tracking-wider text-secondary">
-                <tr><th className="p-3">Visitor</th><th className="p-3">Started</th><th className="p-3">Page journey</th><th className="p-3">Views</th><th className="p-3">Clicks</th><th className="p-3">Outcome</th></tr>
+                <tr><th className="p-3">Visitor</th><th className="p-3">IP address</th><th className="p-3">Started</th><th className="p-3">Page journey</th><th className="p-3">Views</th><th className="p-3">Clicks</th><th className="p-3">Outcome</th></tr>
               </thead>
               <tbody className="divide-y divide-outline-variant">
                 {recentJourneys.length ? recentJourneys.map((journey) => (
                   <tr key={journey.sessionId}>
                     <td className="p-3 font-mono font-bold text-primary">{journey.visitorId ? journey.visitorId.slice(0, 8) : "Legacy"}</td>
+                    <td className="whitespace-nowrap p-3 font-mono text-on-surface-variant">{journey.ipAddress || "Unknown"}</td>
                     <td className="whitespace-nowrap p-3 text-outline">{new Date(journey.startedAt).toLocaleString("en-ZA")}</td>
                     <td className="max-w-md p-3 text-on-surface-variant">{journey.pages.length ? journey.pages.join(" > ") : "No page view recorded"}</td>
                     <td className="p-3 font-mono font-bold text-primary">{journey.pageViews}</td>
@@ -291,7 +342,7 @@ export default async function AdminMonitoringPage({
                     <td className="p-3 text-on-surface-variant">{journey.outcomes.length ? journey.outcomes.map((outcome) => outcome.replaceAll("_", " ")).join(", ") : "Browsing"}</td>
                   </tr>
                 )) : (
-                  <tr><td colSpan={6} className="p-6 text-center text-on-surface-variant">Visitor journeys will appear after public-site activity is recorded.</td></tr>
+                  <tr><td colSpan={7} className="p-6 text-center text-on-surface-variant">Visitor journeys will appear after public-site activity is recorded.</td></tr>
                 )}
               </tbody>
             </table>
@@ -333,6 +384,20 @@ export default async function AdminMonitoringPage({
             </div>
 
             <div className="self-start border border-outline-variant bg-white p-6 shadow-sm">
+              <p className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">Conversion monitoring</p>
+              <h2 className="mt-2 text-left text-xl font-bold uppercase tracking-tight text-primary">Engaged IP addresses</h2>
+              <p className="mt-2 text-xs leading-relaxed text-on-surface-variant">Raw server-observed IPs for WhatsApp, phone, email, quote, and directions clicks.</p>
+              <div className="mt-5 space-y-3">
+                {engagedIps.length ? engagedIps.map(([ipAddress, count]) => (
+                  <div key={ipAddress} className="flex items-center justify-between gap-4 border-b border-outline-variant pb-3 text-xs">
+                    <span className="font-mono text-primary">{ipAddress}</span>
+                    <span className="font-mono font-bold text-secondary">{count} {count === 1 ? "action" : "actions"}</span>
+                  </div>
+                )) : <p className="text-xs text-on-surface-variant">IP addresses will appear after visitors use an enquiry button.</p>}
+              </div>
+            </div>
+
+            <div className="self-start border border-outline-variant bg-white p-6 shadow-sm">
               <div className="flex items-start justify-between gap-4">
                 <div>
                   <p className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">Conversion tracking</p>
@@ -363,7 +428,7 @@ export default async function AdminMonitoringPage({
               </div>
               {latestWhatsappEvent ? (
                 <p className="mt-4 border-t border-outline-variant pt-3 text-[10px] text-outline">
-                  Latest click: {new Date(latestWhatsappEvent.timestamp).toLocaleString("en-ZA")}
+                  Latest click: {new Date(latestWhatsappEvent.timestamp).toLocaleString("en-ZA")} · IP: {latestWhatsappEvent.ipAddress || "Unknown"}
                 </p>
               ) : null}
             </div>
@@ -399,7 +464,7 @@ export default async function AdminMonitoringPage({
               </div>
               {latestEmailEvent ? (
                 <p className="mt-4 border-t border-outline-variant pt-3 text-[10px] text-outline">
-                  Latest click: {new Date(latestEmailEvent.timestamp).toLocaleString("en-ZA")}
+                  Latest click: {new Date(latestEmailEvent.timestamp).toLocaleString("en-ZA")} · IP: {latestEmailEvent.ipAddress || "Unknown"}
                 </p>
               ) : null}
             </div>
@@ -413,18 +478,28 @@ export default async function AdminMonitoringPage({
               </div>
             </div>
             <div className="overflow-x-auto">
-              <table className="w-full min-w-[700px] text-left text-xs">
+              <table className="w-full min-w-[820px] text-left text-xs">
                 <thead className="bg-surface-container text-[10px] uppercase tracking-wider text-secondary">
-                  <tr><th className="p-3">Time</th><th className="p-3">Event</th><th className="p-3">Page</th><th className="p-3">Detail</th></tr>
+                  <tr><th className="p-3">Time</th><th className="p-3">IP address</th><th className="p-3">Event</th><th className="p-3">Page</th><th className="p-3">Detail</th></tr>
                 </thead>
-                <tbody className="divide-y divide-outline-variant">
-                  {visibleActivity.map((event, index) => (
-                    <tr key={`${event.timestamp}-${index}`}>
-                      <td className="whitespace-nowrap p-3 text-outline">{new Date(event.timestamp).toLocaleString("en-ZA")}</td>
-                      <td className="p-3 font-mono font-bold text-primary">{event.event}</td>
-                      <td className="max-w-52 truncate p-3 text-on-surface-variant">{event.page}</td>
-                      <td className="max-w-64 truncate p-3 text-on-surface-variant">{event.metric ? `${event.metric}: ${event.value}` : event.label || event.destination || "—"}</td>
-                    </tr>
+                <tbody>
+                  {[...activityGroups.entries()].map(([dateKey, activity]) => (
+                    <Fragment key={dateKey}>
+                      <tr className="border-y border-outline-variant bg-surface-container-low">
+                        <th colSpan={5} className="px-3 py-2 font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
+                          {activityDateLabel(dateKey, todayKey, yesterdayKey)}
+                        </th>
+                      </tr>
+                      {activity.map((event, index) => (
+                        <tr key={`${event.timestamp}-${index}`} className="border-b border-outline-variant last:border-b-0">
+                          <td className="whitespace-nowrap p-3 text-outline">{new Date(event.timestamp).toLocaleTimeString("en-ZA", { timeZone: "Africa/Johannesburg", hour: "2-digit", minute: "2-digit", second: "2-digit" })}</td>
+                          <td className="whitespace-nowrap p-3 font-mono text-on-surface-variant">{event.ipAddress || "Unknown"}</td>
+                          <td className="p-3 font-mono font-bold text-primary">{event.event}</td>
+                          <td className="max-w-52 truncate p-3 text-on-surface-variant">{event.page}</td>
+                          <td className="max-w-64 truncate p-3 text-on-surface-variant">{event.metric ? `${event.metric}: ${event.value}` : event.label || event.destination || "—"}</td>
+                        </tr>
+                      ))}
+                    </Fragment>
                   ))}
                 </tbody>
               </table>

@@ -13,6 +13,7 @@ const coreRoutes = [
   "/faq",
   "/contact",
   "/locations",
+  "/privacy",
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {

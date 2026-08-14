@@ -17,6 +17,7 @@ export default function Footer() {
     { name: "FAQ", href: "/faq" },
     { name: "Quote", href: whatsappQuoteUrl },
     { name: "Contact", href: "/contact" },
+    { name: "Privacy", href: "/privacy" },
   ];
 
   return (

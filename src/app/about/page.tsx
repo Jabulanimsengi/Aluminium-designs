@@ -277,28 +277,28 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="border-b border-outline-variant bg-primary py-16 text-white sm:py-20 lg:py-24">
+      <section className="border-b border-outline-variant bg-surface py-16 sm:py-20 lg:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="mx-auto mb-12 max-w-3xl text-center">
-              <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-white/60">How we work</span>
-              <h2 className="mt-2 font-sans text-3xl font-bold uppercase tracking-tight sm:text-4xl">
+              <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">How we work</span>
+              <h2 className="mt-2 font-sans text-3xl font-bold uppercase tracking-tight text-primary sm:text-4xl">
                 One process from idea to installation
               </h2>
-              <p className="mt-4 text-sm leading-relaxed text-white/70">
+              <p className="mt-4 text-sm leading-relaxed text-on-surface-variant">
                 Keeping each stage connected helps prevent incorrect sizing, unsuitable configurations, and finishing details being missed.
               </p>
             </div>
-            <div className="grid gap-px overflow-hidden border border-white/15 bg-white/15 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="grid gap-px overflow-hidden border border-outline-variant bg-outline-variant sm:grid-cols-2 lg:grid-cols-4">
               {process.map((step) => {
                 const Icon = step.icon;
                 return (
-                  <article key={step.number} className="bg-primary p-6 sm:p-7">
+                  <article key={step.number} className="bg-surface-container-lowest p-6 sm:p-7">
                     <div className="flex items-center justify-between">
-                      <span className="font-mono text-xs font-bold text-white/50">{step.number}</span>
-                      <Icon className="h-5 w-5 text-white/70" />
+                      <span className="font-mono text-xs font-bold text-outline">{step.number}</span>
+                      <Icon className="h-5 w-5 text-secondary" />
                     </div>
-                    <h3 className="mt-8 font-sans text-sm font-bold uppercase tracking-tight">{step.title}</h3>
-                    <p className="mt-3 text-xs leading-relaxed text-white/65">{step.description}</p>
+                    <h3 className="mt-8 font-sans text-sm font-bold uppercase tracking-tight text-primary">{step.title}</h3>
+                    <p className="mt-3 text-xs leading-relaxed text-on-surface-variant">{step.description}</p>
                   </article>
                 );
               })}

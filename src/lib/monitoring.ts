@@ -3,6 +3,7 @@ import path from "node:path";
 
 export type MonitoringEvent = {
   event: string;
+  ipAddress: string;
   page: string;
   label: string;
   destination: string;
@@ -50,6 +51,7 @@ export async function readMonitoringEvents(): Promise<MonitoringEvent[]> {
             if (!event.event || !event.timestamp) return [];
             return [{
               event: event.event,
+              ipAddress: event.ipAddress || "",
               page: event.page || "(unknown)",
               label: event.label || "",
               destination: event.destination || "",

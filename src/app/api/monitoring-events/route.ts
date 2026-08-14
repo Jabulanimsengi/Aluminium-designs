@@ -1,4 +1,5 @@
 import { mkdir, appendFile } from "node:fs/promises";
+import { isIP } from "node:net";
 import path from "node:path";
 import { NextRequest, NextResponse } from "next/server";
 import { getMonitoringEventsPath } from "@/lib/monitoring";
@@ -26,9 +27,36 @@ function safeValue(value: unknown, maxLength: number) {
   return typeof value === "string" ? value.trim().slice(0, maxLength) : "";
 }
 
-function isAllowed(request: NextRequest) {
+function validIp(value: string | null) {
+  if (!value) return "";
+  const candidate = value.trim().replace(/^"|"$/g, "");
+  if (isIP(candidate)) return candidate;
+
+  const ipv4WithPort = candidate.match(/^(.+):(\d+)$/)?.[1] || "";
+  return isIP(ipv4WithPort) === 4 ? ipv4WithPort : "";
+}
+
+function requestIp(request: NextRequest) {
+  const realIp = validIp(request.headers.get("x-real-ip"));
+  if (realIp) return realIp;
+
+  const cloudflareIp = validIp(request.headers.get("cf-connecting-ip"));
+  if (cloudflareIp) return cloudflareIp;
+
   const forwardedFor = request.headers.get("x-forwarded-for");
-  const clientId = forwardedFor?.split(",")[0]?.trim() || "unknown";
+  return validIp(forwardedFor?.split(",")[0] || null);
+}
+
+function isAdminPath(value: string) {
+  if (!value) return false;
+  try {
+    return new URL(value, "https://monitoring.invalid").pathname.startsWith("/admin");
+  } catch {
+    return value.startsWith("/admin");
+  }
+}
+
+function isAllowed(clientId: string) {
   const now = Date.now();
   const current = rateLimits.get(clientId);
 
@@ -43,8 +71,9 @@ function isAllowed(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+  const ipAddress = requestIp(request);
   const contentLength = Number(request.headers.get("content-length") || 0);
-  if (contentLength > MAX_EVENT_SIZE || !isAllowed(request)) {
+  if (contentLength > MAX_EVENT_SIZE || !isAllowed(ipAddress || "unknown")) {
     return new NextResponse(null, { status: 204 });
   }
 
@@ -60,11 +89,18 @@ export async function POST(request: NextRequest) {
     return new NextResponse(null, { status: 204 });
   }
 
+  const page = safeValue(body.page, 200);
+  const destination = safeValue(body.destination, 200);
+  if (isAdminPath(page) || isAdminPath(destination)) {
+    return new NextResponse(null, { status: 204 });
+  }
+
   const entry = {
     event,
-    page: safeValue(body.page, 200),
+    ipAddress,
+    page,
     label: safeValue(body.label, 160),
-    destination: safeValue(body.destination, 200),
+    destination,
     timestamp: safeValue(body.timestamp, 40) || new Date().toISOString(),
     sessionId: safeValue(body.sessionId, 80),
     visitorId: safeValue(body.visitorId, 80),

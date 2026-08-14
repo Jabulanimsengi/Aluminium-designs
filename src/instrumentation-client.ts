@@ -54,12 +54,26 @@ function cleanDestination(href: string) {
   }
 }
 
+function isAdminPath(value: string | undefined) {
+  if (!value) return false;
+  try {
+    return new URL(value, window.location.origin).pathname.startsWith("/admin");
+  } catch {
+    return value.startsWith("/admin");
+  }
+}
+
 function report(event: MonitoringEvent) {
-  if (window.location.pathname.startsWith("/admin")) return;
+  const page = event.page || window.location.pathname;
+  if (
+    window.location.pathname.startsWith("/admin") ||
+    isAdminPath(page) ||
+    isAdminPath(event.destination)
+  ) return;
 
   const payload = JSON.stringify({
     ...event,
-    page: event.page || window.location.pathname,
+    page,
     timestamp: new Date().toISOString(),
     sessionId: sessionId(),
     visitorId: visitorId(),

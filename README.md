@@ -26,7 +26,7 @@ ADMIN_SESSION_SECRET=use-a-separate-long-random-secret
 
 Successful login creates a secure, HTTP-only session that expires after eight hours.
 
-The site records page views, navigation and enquiry clicks, visitor sessions, and browser performance measurements. Events are stored as newline-delimited JSON at `MONITORING_EVENTS_PATH`, or in `./data` when the variable is omitted.
+The site records page views, navigation and enquiry clicks, visitor sessions, server-observed IP addresses, and browser performance measurements. Events are stored as newline-delimited JSON at `MONITORING_EVENTS_PATH`, or in `./data` when the variable is omitted. Raw IP addresses are visible only in the authenticated monitoring dashboard and must be handled according to the public privacy notice and the organisation's retention procedures.
 
 For Docker deployments, `/app/data` is the default event directory and is declared as a volume. Mount it to persistent host or volume storage so analytics survive a container replacement:
 

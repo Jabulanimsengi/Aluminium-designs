@@ -8,6 +8,7 @@ import ScrollToTop from "@/components/ScrollToTop";
 import NavigationLoader from "@/components/NavigationLoader";
 import QuotePrompt from "@/components/QuotePrompt";
 import ScrollRevealObserver from "@/components/ScrollRevealObserver";
+import GalleryFloatingButton from "@/components/GalleryFloatingButton";
 import { absoluteUrl, businessContact, siteUrl } from "@/lib/site";
 
 const inter = Inter({
@@ -101,6 +102,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <Header />
         <main className="flex-grow pt-16 md:pt-16">{children}</main>
         <Footer />
+        <GalleryFloatingButton />
         <WhatsAppChatWidget />
         <QuotePrompt />
         <ScrollToTop />
