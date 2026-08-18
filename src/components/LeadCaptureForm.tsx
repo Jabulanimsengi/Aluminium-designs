@@ -6,20 +6,17 @@ import { BUDGET_OPTIONS } from "@/lib/lead-options";
 
 type LeadCaptureFormProps = {
   source: "whatsapp" | "quote";
-  variant?: "modal" | "page";
   onCancel?: () => void;
 };
 
 const emptyForm = {
-  firstName: "",
-  surname: "",
+  name: "",
   phone: "",
-  email: "",
   location: "",
   budget: "",
 };
 
-export default function LeadCaptureForm({ source, variant = "modal", onCancel }: LeadCaptureFormProps) {
+export default function LeadCaptureForm({ source, onCancel }: LeadCaptureFormProps) {
   const [form, setForm] = useState(emptyForm);
   const [consent, setConsent] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -92,61 +89,48 @@ export default function LeadCaptureForm({ source, variant = "modal", onCancel }:
   const inputClass =
     "w-full border border-outline-variant bg-surface px-4 py-3 text-sm text-primary placeholder-outline font-sans focus:outline-none focus:border-primary transition-colors rounded-none";
   const labelClass =
-    "mb-2 block font-mono text-[10px] font-bold uppercase tracking-widest text-outline";
+    "mb-1.5 block font-mono text-[10px] font-bold uppercase tracking-widest text-outline";
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-5">
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <div>
-          <label htmlFor="firstName" className={labelClass}>First name <span className="text-on-tertiary-container">*</span></label>
-          <input id="firstName" name="firstName" type="text" required autoFocus
-            value={form.firstName} onChange={handleChange} placeholder="Your name"
-            className={inputClass} />
-          {fieldErrors.firstName ? <p className="mt-1 text-xs text-red-700">{fieldErrors.firstName}</p> : null}
-        </div>
-        <div>
-          <label htmlFor="surname" className={labelClass}>Surname <span className="text-on-tertiary-container">*</span></label>
-          <input id="surname" name="surname" type="text" required
-            value={form.surname} onChange={handleChange} placeholder="Your surname"
-            className={inputClass} />
-          {fieldErrors.surname ? <p className="mt-1 text-xs text-red-700">{fieldErrors.surname}</p> : null}
-        </div>
-        <div>
-          <label htmlFor="phone" className={labelClass}>Phone number <span className="text-on-tertiary-container">*</span></label>
-          <input id="phone" name="phone" type="tel" required
-            value={form.phone} onChange={handleChange} placeholder="082 123 4567"
-            className={inputClass} />
-          {fieldErrors.phone ? <p className="mt-1 text-xs text-red-700">{fieldErrors.phone}</p> : null}
-        </div>
-        <div>
-          <label htmlFor="email" className={labelClass}>Email (optional)</label>
-          <input id="email" name="email" type="email"
-            value={form.email} onChange={handleChange} placeholder="john@example.com"
-            className={inputClass} />
-          {fieldErrors.email ? <p className="mt-1 text-xs text-red-700">{fieldErrors.email}</p> : null}
-        </div>
-        <div>
-          <label htmlFor="location" className={labelClass}>Location / suburb <span className="text-on-tertiary-container">*</span></label>
-          <input id="location" name="location" type="text" required
-            value={form.location} onChange={handleChange} placeholder="e.g. Sandton, Johannesburg"
-            className={inputClass} />
-          {fieldErrors.location ? <p className="mt-1 text-xs text-red-700">{fieldErrors.location}</p> : null}
-        </div>
-        <div>
-          <label htmlFor="budget" className={labelClass}>Budget <span className="text-on-tertiary-container">*</span></label>
-          <select id="budget" name="budget" required value={form.budget} onChange={handleChange}
-            className={`${inputClass} cursor-pointer`}>
-            <option value="" disabled>Select a budget range...</option>
-            {BUDGET_OPTIONS.map((option) => <option key={option} value={option}>{option}</option>)}
-          </select>
-          {fieldErrors.budget ? <p className="mt-1 text-xs text-red-700">{fieldErrors.budget}</p> : null}
-        </div>
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <div>
+        <label htmlFor="name" className={labelClass}>Name <span className="text-on-tertiary-container">*</span></label>
+        <input id="name" name="name" type="text" required autoFocus
+          value={form.name} onChange={handleChange} placeholder="Your full name"
+          className={inputClass} />
+        {fieldErrors.name ? <p className="mt-1 text-xs text-red-700">{fieldErrors.name}</p> : null}
       </div>
 
-      <label className="flex items-start gap-2.5 text-left text-xs text-on-surface-variant">
+      <div>
+        <label htmlFor="phone" className={labelClass}>Phone number <span className="text-on-tertiary-container">*</span></label>
+        <input id="phone" name="phone" type="tel" required
+          value={form.phone} onChange={handleChange} placeholder="082 123 4567"
+          className={inputClass} />
+        {fieldErrors.phone ? <p className="mt-1 text-xs text-red-700">{fieldErrors.phone}</p> : null}
+      </div>
+
+      <div>
+        <label htmlFor="location" className={labelClass}>Location / suburb <span className="text-on-tertiary-container">*</span></label>
+        <input id="location" name="location" type="text" required
+          value={form.location} onChange={handleChange} placeholder="e.g. Sandton"
+          className={inputClass} />
+        {fieldErrors.location ? <p className="mt-1 text-xs text-red-700">{fieldErrors.location}</p> : null}
+      </div>
+
+      <div>
+        <label htmlFor="budget" className={labelClass}>Budget <span className="text-on-tertiary-container">*</span></label>
+        <select id="budget" name="budget" required value={form.budget} onChange={handleChange}
+          className={`${inputClass} cursor-pointer`}>
+          <option value="" disabled>Select a budget range...</option>
+          {BUDGET_OPTIONS.map((option) => <option key={option} value={option}>{option}</option>)}
+        </select>
+        {fieldErrors.budget ? <p className="mt-1 text-xs text-red-700">{fieldErrors.budget}</p> : null}
+      </div>
+
+      <label className="flex items-center gap-2 text-left text-xs text-on-surface-variant">
         <input type="checkbox" checked={consent} onChange={(event) => setConsent(event.target.checked)}
-          className="mt-0.5 h-4 w-4 shrink-0 accent-primary" />
-        <span>I agree for Aluminium Designs to contact me about my project. <span className="text-on-tertiary-container">*</span></span>
+          className="h-4 w-4 shrink-0 accent-primary" />
+        <span>I agree to be contacted about my project.</span>
       </label>
 
       {message ? (
@@ -155,29 +139,20 @@ export default function LeadCaptureForm({ source, variant = "modal", onCancel }:
         </p>
       ) : null}
 
-      <div className={variant === "modal" ? "flex flex-col gap-3 sm:flex-row" : "flex flex-col items-center gap-4 sm:flex-row sm:justify-between"}>
-        {onCancel ? (
-          <button
-            type="button"
-            onClick={onCancel}
-            className="inline-flex items-center justify-center rounded-full border border-outline-variant px-6 py-3 font-mono text-[11px] font-bold uppercase tracking-widest text-secondary transition-colors hover:bg-surface-container"
-          >
-            Cancel
-          </button>
-        ) : null}
-        <button
-          type="submit"
-          disabled={isSubmitting}
-          className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#25D366] px-6 py-3 font-mono text-[11px] font-bold uppercase tracking-widest text-white transition-colors hover:bg-[#20ba5a] disabled:cursor-wait disabled:opacity-70"
-        >
-          {isSubmitting ? <LoaderCircle className="h-4 w-4 animate-spin" /> : <MessageCircle className="h-4 w-4" />}
-          {isSubmitting ? "Sending..." : "Continue on WhatsApp"}
-        </button>
-      </div>
+      <button
+        type="submit"
+        disabled={isSubmitting}
+        className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#25D366] px-6 py-3 font-mono text-[11px] font-bold uppercase tracking-widest text-white transition-colors hover:bg-[#20ba5a] disabled:cursor-wait disabled:opacity-70"
+      >
+        {isSubmitting ? <LoaderCircle className="h-4 w-4 animate-spin" /> : <MessageCircle className="h-4 w-4" />}
+        {isSubmitting ? "Sending..." : "Continue on WhatsApp"}
+      </button>
 
-      <p className="text-center text-[11px] text-outline">
-        Your details are used only to prepare your quotation and are never shared.
-      </p>
+      {onCancel ? (
+        <button type="button" onClick={onCancel} className="w-full text-center text-xs text-secondary transition-colors hover:text-primary">
+          Cancel
+        </button>
+      ) : null}
     </form>
   );
 }

@@ -85,7 +85,7 @@ export default function LeadGate() {
         if (event.target === event.currentTarget) close();
       }}
     >
-      <div className="relative w-full max-w-lg border border-outline-variant bg-surface-container-lowest p-6 shadow-2xl sm:p-8">
+      <div className="relative w-full max-w-md border border-outline-variant bg-surface-container-lowest p-6 shadow-2xl sm:p-7">
         <button
           type="button"
           onClick={close}
@@ -95,21 +95,18 @@ export default function LeadGate() {
           <X className="h-4 w-4" />
         </button>
 
-        <p className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
-          Quick enquiry
-        </p>
         <h2
           id="lead-gate-title"
-          className="mt-2 pr-8 text-left font-sans text-2xl font-bold uppercase leading-tight tracking-tight text-primary"
+          className="pr-8 text-left font-sans text-2xl font-bold uppercase leading-tight tracking-tight text-primary"
         >
           Get your free quote
         </h2>
-        <p className="mt-3 text-sm leading-relaxed text-on-surface-variant">
-          Share a few details and continue straight to WhatsApp, where our team will prepare your quote.
+        <p className="mt-2 text-sm leading-relaxed text-on-surface-variant">
+          A few quick details and you&apos;re on WhatsApp.
         </p>
 
-        <div className="mt-6">
-          <LeadCaptureForm source={source} variant="modal" onCancel={close} />
+        <div className="mt-5">
+          <LeadCaptureForm source={source} onCancel={close} />
         </div>
       </div>
     </div>

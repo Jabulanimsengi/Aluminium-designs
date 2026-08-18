@@ -18,11 +18,6 @@ function isValidPhone(value: string) {
   return /^(\+27|0)[0-9\s-]{8,15}$/.test(value);
 }
 
-function isValidEmail(value: string) {
-  if (!value) return true;
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
-}
-
 export async function POST(request: Request) {
   const ipAddress = extractClientIp(request.headers);
 
@@ -48,10 +43,8 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: false, message: "Invalid request." }, { status: 400 });
   }
 
-  const firstName = clean(body.firstName, 80);
-  const surname = clean(body.surname, 80);
+  const name = clean(body.name, 120);
   const phone = clean(body.phone, 40);
-  const email = clean(body.email, 120);
   const location = clean(body.location, 120);
   const budget = clean(body.budget, 40);
   const source = clean(body.source, 20);
@@ -61,10 +54,8 @@ export async function POST(request: Request) {
   const visitorId = clean(body.visitorId, 80);
 
   const errors: Record<string, string> = {};
-  if (firstName.length < 2) errors.firstName = "Enter your first name.";
-  if (surname.length < 2) errors.surname = "Enter your surname.";
+  if (name.length < 2) errors.name = "Enter your name.";
   if (!isValidPhone(phone)) errors.phone = "Enter a valid South African phone number.";
-  if (!isValidEmail(email)) errors.email = "Enter a valid email address.";
   if (location.length < 2) errors.location = "Enter your location or suburb.";
   if (!(BUDGET_OPTIONS as readonly string[]).includes(budget)) {
     errors.budget = "Select a budget range.";
@@ -75,10 +66,8 @@ export async function POST(request: Request) {
   }
 
   const lead: Lead = {
-    firstName,
-    surname,
+    name,
     phone,
-    email,
     location,
     budget,
     source: source || "whatsapp",

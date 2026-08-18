@@ -594,14 +594,12 @@ export default async function AdminMonitoringPage({
               />
               {leads.length ? (
                 <div className="overflow-x-auto">
-                  <table className="w-full min-w-[1080px] text-left text-xs">
+                  <table className="w-full min-w-[860px] text-left text-xs">
                     <thead className="bg-surface-container text-[10px] uppercase tracking-wider text-secondary">
                       <tr>
                         <th className="p-3">Date</th>
                         <th className="p-3">Name</th>
-                        <th className="p-3">Surname</th>
                         <th className="p-3">Phone</th>
-                        <th className="p-3">Email</th>
                         <th className="p-3">Location</th>
                         <th className="p-3">Budget</th>
                         <th className="p-3">Source</th>
@@ -612,10 +610,8 @@ export default async function AdminMonitoringPage({
                       {leads.map((lead, index) => (
                         <tr key={`${lead.timestamp}-${index}`}>
                           <td className="whitespace-nowrap p-3 text-outline">{zaDateTime(lead.timestamp)}</td>
-                          <td className="p-3 font-bold text-primary">{lead.firstName}</td>
-                          <td className="p-3 text-primary">{lead.surname}</td>
+                          <td className="p-3 font-bold text-primary">{lead.name}</td>
                           <td className="whitespace-nowrap p-3 font-mono text-on-surface-variant">{lead.phone}</td>
-                          <td className="p-3 text-on-surface-variant">{lead.email || "—"}</td>
                           <td className="p-3 text-on-surface-variant">{lead.location}</td>
                           <td className="p-3 text-on-surface-variant">{lead.budget}</td>
                           <td className="p-3">

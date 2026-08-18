@@ -3,10 +3,8 @@ import path from "node:path";
 import { getDataDir } from "@/lib/monitoring";
 
 export type Lead = {
-  firstName: string;
-  surname: string;
+  name: string;
   phone: string;
-  email: string;
   location: string;
   budget: string;
   source: string;
@@ -45,12 +43,10 @@ export async function readLeads(): Promise<Lead[]> {
         .flatMap((line) => {
           try {
             const lead = JSON.parse(line) as Partial<Lead>;
-            if (!lead.firstName || !lead.timestamp) return [];
+            if (!lead.name || !lead.timestamp) return [];
             return [{
-              firstName: lead.firstName || "",
-              surname: lead.surname || "",
+              name: lead.name || "",
               phone: lead.phone || "",
-              email: lead.email || "",
               location: lead.location || "",
               budget: lead.budget || "",
               source: lead.source || "",

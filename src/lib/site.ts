@@ -32,25 +32,19 @@ export const whatsappQuoteUrl = getWhatsAppQuoteUrl(
 );
 
 export function getWhatsAppLeadUrl(lead: {
-  firstName: string;
-  surname: string;
+  name: string;
   phone: string;
-  email: string;
   location: string;
   budget: string;
 }) {
-  const name = [lead.firstName, lead.surname].filter(Boolean).join(" ");
   const message = [
     "Hi Aluminium Designs, I'd like a quote.",
     "",
-    `Name: ${name}`,
+    `Name: ${lead.name}`,
     `Phone: ${lead.phone}`,
-    lead.email ? `Email: ${lead.email}` : "",
     `Location: ${lead.location}`,
     `Budget: ${lead.budget}`,
-  ]
-    .filter(Boolean)
-    .join("\n");
+  ].join("\n");
   return `https://wa.me/${whatsappPhone}?text=${encodeURIComponent(message)}`;
 }
 

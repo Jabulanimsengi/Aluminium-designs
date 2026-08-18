@@ -24,7 +24,7 @@ export default function QuotePage() {
         </p>
 
         <div className="mt-8">
-          <LeadCaptureForm source="quote" variant="page" />
+          <LeadCaptureForm source="quote" />
         </div>
       </div>
     </div>
