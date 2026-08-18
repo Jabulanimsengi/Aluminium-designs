@@ -1,4 +1,5 @@
-import { open, stat } from "node:fs/promises";
+import { appendFile, mkdir, open, stat } from "node:fs/promises";
+import { isIP } from "node:net";
 import path from "node:path";
 
 export type MonitoringEvent = {
@@ -13,14 +14,17 @@ export type MonitoringEvent = {
   referrer: string;
   metric: string;
   value: number | null;
+  detail: string;
 };
 
 const MAX_READ_BYTES = 5 * 1024 * 1024;
 
+export function getDataDir() {
+  return process.env.MONITORING_EVENTS_PATH?.trim() || path.join(process.cwd(), "data");
+}
+
 export function getMonitoringEventsPath() {
-  const eventsDirectory =
-    process.env.MONITORING_EVENTS_PATH?.trim() || path.join(process.cwd(), "data");
-  return path.join(eventsDirectory, "monitoring-events.ndjson");
+  return path.join(getDataDir(), "monitoring-events.ndjson");
 }
 
 export function monitoringWindowStart(milliseconds: number) {
@@ -61,6 +65,7 @@ export async function readMonitoringEvents(): Promise<MonitoringEvent[]> {
               referrer: event.referrer || "",
               metric: event.metric || "",
               value: typeof event.value === "number" ? event.value : null,
+              detail: event.detail || "",
             }];
           } catch {
             return [];
@@ -75,4 +80,30 @@ export async function readMonitoringEvents(): Promise<MonitoringEvent[]> {
     console.error("Unable to read monitoring events", error);
     return [];
   }
+}
+
+function validIp(value: string | null) {
+  if (!value) return "";
+  const candidate = value.trim().replace(/^"|"$/g, "");
+  if (isIP(candidate)) return candidate;
+
+  const ipv4WithPort = candidate.match(/^(.+):(\d+)$/)?.[1] || "";
+  return isIP(ipv4WithPort) === 4 ? ipv4WithPort : "";
+}
+
+export function extractClientIp(headers: Headers) {
+  const realIp = validIp(headers.get("x-real-ip"));
+  if (realIp) return realIp;
+
+  const cloudflareIp = validIp(headers.get("cf-connecting-ip"));
+  if (cloudflareIp) return cloudflareIp;
+
+  const forwardedFor = headers.get("x-forwarded-for");
+  return validIp(forwardedFor?.split(",")[0] || null);
+}
+
+export async function appendMonitoringEvent(event: MonitoringEvent) {
+  const eventsPath = getMonitoringEventsPath();
+  await mkdir(path.dirname(eventsPath), { recursive: true });
+  await appendFile(eventsPath, `${JSON.stringify(event)}\n`, "utf8");
 }

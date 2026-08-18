@@ -3,13 +3,18 @@ import { Fragment } from "react";
 import { cookies } from "next/headers";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import type { LucideIcon } from "lucide-react";
 import {
   Activity,
   ArrowUpRight,
   ChevronDown,
+  Clock,
+  FileText,
   Gauge,
+  Globe,
   LogOut,
   Mail,
+  MapPin,
   MessageCircle,
   MousePointerClick,
   Search,
@@ -25,6 +30,7 @@ import {
   type MonitoringEvent,
 } from "@/lib/monitoring";
 import { absoluteUrl } from "@/lib/site";
+import { readLeads } from "@/lib/leads";
 
 export const metadata: Metadata = {
   title: "Site Monitoring",
@@ -32,12 +38,22 @@ export const metadata: Metadata = {
 };
 
 type RangeKey = "24h" | "7d" | "30d" | "all";
+type ViewKey = "overview" | "whatsapp" | "quotes" | "leads" | "activity" | "performance";
 
 const ranges: Record<RangeKey, { label: string; milliseconds: number }> = {
   "24h": { label: "24 hours", milliseconds: 86_400_000 },
   "7d": { label: "7 days", milliseconds: 7 * 86_400_000 },
   "30d": { label: "30 days", milliseconds: 30 * 86_400_000 },
   all: { label: "All time", milliseconds: Number.POSITIVE_INFINITY },
+};
+
+const views: Record<ViewKey, string> = {
+  overview: "Overview",
+  whatsapp: "WhatsApp",
+  quotes: "Quotes",
+  leads: "Leads",
+  activity: "Activity",
+  performance: "Performance",
 };
 
 const conversionEvents = new Set([
@@ -55,6 +71,17 @@ function countBy(events: MonitoringEvent[], key: "page" | "event" | "referrer" |
     counts.set(value, (counts.get(value) || 0) + 1);
   }
   return [...counts.entries()].sort((a, b) => b[1] - a[1]);
+}
+
+function groupByIp(events: MonitoringEvent[]) {
+  const groups = new Map<string, MonitoringEvent[]>();
+  for (const event of events) {
+    const key = event.ipAddress || "Unknown";
+    groups.set(key, [...(groups.get(key) || []), event]);
+  }
+  return [...groups.entries()].sort(
+    (a, b) => Date.parse(b[1][0].timestamp) - Date.parse(a[1][0].timestamp),
+  );
 }
 
 function formatMetric(metric: string, value: number) {
@@ -106,6 +133,19 @@ function groupActivityByDate(events: MonitoringEvent[]) {
   return groups;
 }
 
+function zaDateTime(timestamp: string) {
+  return new Date(timestamp).toLocaleString("en-ZA", { timeZone: "Africa/Johannesburg" });
+}
+
+function zaTime(timestamp: string) {
+  return new Date(timestamp).toLocaleTimeString("en-ZA", {
+    timeZone: "Africa/Johannesburg",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+  });
+}
+
 function isAdminPath(value: string) {
   if (!value) return false;
   try {
@@ -115,10 +155,36 @@ function isAdminPath(value: string) {
   }
 }
 
+function StatCard({ label, value, icon: Icon }: { label: string; value: string; icon: LucideIcon }) {
+  return (
+    <article className="border border-outline-variant bg-white p-5 shadow-sm">
+      <div className="flex items-center justify-between text-secondary">
+        <p className="font-mono text-[10px] font-bold uppercase tracking-widest">{label}</p>
+        <Icon className="h-4 w-4" />
+      </div>
+      <p className="mt-4 text-3xl font-bold text-primary">{value}</p>
+    </article>
+  );
+}
+
+function SectionHeading({ icon: Icon, title, hint }: { icon: LucideIcon; title: string; hint?: string }) {
+  return (
+    <div className="flex items-start justify-between gap-4 border-b border-outline-variant p-5 sm:p-6">
+      <div>
+        <div className="flex items-center gap-2">
+          <Icon className="h-5 w-5 text-secondary" />
+          <h2 className="text-left text-lg font-bold uppercase tracking-tight text-primary">{title}</h2>
+        </div>
+        {hint ? <p className="mt-1 text-xs text-on-surface-variant">{hint}</p> : null}
+      </div>
+    </div>
+  );
+}
+
 export default async function AdminMonitoringPage({
   searchParams,
 }: {
-  searchParams: Promise<{ range?: string }>;
+  searchParams: Promise<{ range?: string; view?: string }>;
 }) {
   const session = (await cookies()).get(ADMIN_SESSION_COOKIE)?.value;
   if (!verifyAdminSessionToken(session)) redirect("/admin/login");
@@ -126,17 +192,23 @@ export default async function AdminMonitoringPage({
   const params = await searchParams;
   const requestedRange = params.range as RangeKey | undefined;
   const range = requestedRange && requestedRange in ranges ? requestedRange : "7d";
+  const requestedView = params.view as ViewKey | undefined;
+  const view = requestedView && requestedView in views ? requestedView : "overview";
+
   const cutoff = monitoringWindowStart(ranges[range].milliseconds);
   const allEvents = await readMonitoringEvents();
   const events = allEvents
     .filter((event) => range === "all" || new Date(event.timestamp).getTime() >= cutoff)
     .filter((event) => !isAdminPath(event.page) && !isAdminPath(event.destination))
     .sort((a, b) => Date.parse(b.timestamp) - Date.parse(a.timestamp));
+
   const pageViews = events.filter((event) => event.event === "page_view");
   const conversions = events.filter((event) => conversionEvents.has(event.event));
   const clickEvents = events.filter((event) => event.event.endsWith("_click"));
   const whatsappEvents = events.filter((event) => event.event === "whatsapp_click");
   const emailEvents = events.filter((event) => event.event === "email_click");
+  const quoteClickEvents = events.filter((event) => event.event === "quote_request_click");
+
   const uniqueSessions = new Set(events.map((event) => event.sessionId).filter(Boolean)).size;
   const uniqueVisitors = new Set(
     events
@@ -158,10 +230,23 @@ export default async function AdminMonitoringPage({
     clickEvents.filter((event) => event.destination),
     "destination",
   ).slice(0, 8);
-  const whatsappPages = countBy(whatsappEvents, "page").slice(0, 3);
-  const latestWhatsappEvent = whatsappEvents[0];
+
+  const whatsappByIp = groupByIp(whatsappEvents);
+  const whatsappUniqueIps = new Set(whatsappEvents.map((event) => event.ipAddress).filter(Boolean)).size;
+  const quoteByIp = groupByIp(quoteClickEvents);
+  const quoteUniqueIps = new Set(quoteClickEvents.map((event) => event.ipAddress).filter(Boolean)).size;
+
+  const allLeads = await readLeads();
+  const leads = allLeads
+    .filter((lead) => range === "all" || new Date(lead.timestamp).getTime() >= cutoff)
+    .sort((a, b) => Date.parse(b.timestamp) - Date.parse(a.timestamp));
+  const leadsUniqueIps = new Set(leads.map((lead) => lead.ipAddress).filter(Boolean)).size;
+  const whatsappLeads = leads.filter((lead) => lead.source === "whatsapp").length;
+  const quoteLeads = leads.filter((lead) => lead.source === "quote").length;
+
   const emailPages = countBy(emailEvents, "page").slice(0, 3);
   const latestEmailEvent = emailEvents[0];
+
   const now = new Date();
   const todayKey = activityDateKey(now.toISOString());
   const yesterday = new Date(now.getTime() - 86_400_000);
@@ -171,6 +256,7 @@ export default async function AdminMonitoringPage({
     const ipAddress = event.ipAddress || "Unknown";
     activityGroups.set(ipAddress, [...(activityGroups.get(ipAddress) || []), event]);
   }
+
   const metricGroups = new Map<string, number[]>();
   const journeyMap = new Map<string, {
     sessionId: string;
@@ -227,6 +313,9 @@ export default async function AdminMonitoringPage({
   }));
   const sitemapCount = 9 + services.length + gautengLocations.length + getAllLocationServiceRoutes().length;
 
+  const latestWhatsappEvent = whatsappEvents[0];
+  const latestQuoteClick = quoteClickEvents[0];
+
   return (
     <div className="min-h-screen bg-surface-container-low py-10 sm:py-16">
       <div className="mx-auto max-w-7xl space-y-8 px-4 sm:px-6 lg:px-8">
@@ -240,7 +329,7 @@ export default async function AdminMonitoringPage({
             {(Object.keys(ranges) as RangeKey[]).map((key) => (
               <Link
                 key={key}
-                href={`/admin?range=${key}`}
+                href={`/admin?range=${key}&view=${view}`}
                 className={`rounded-full border px-4 py-2 font-mono text-[10px] font-bold uppercase tracking-wider ${range === key ? "border-primary bg-primary text-white" : "border-outline-variant bg-white text-secondary"}`}
               >
                 {ranges[key].label}
@@ -257,293 +346,465 @@ export default async function AdminMonitoringPage({
           </div>
         </header>
 
-        <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
-          {[
-            ["Page views", pageViews.length.toLocaleString(), Activity],
-            ["Visitors", uniqueVisitors.toLocaleString(), Users],
-            ["Sessions", uniqueSessions.toLocaleString(), Users],
-            ["Engaged IPs", uniqueEngagedIps.toLocaleString(), MousePointerClick],
-            ["Enquiry actions", conversions.length.toLocaleString(), MousePointerClick],
-            ["Action rate", `${conversionRate.toFixed(1)}%`, Gauge],
-          ].map(([label, value, Icon]) => (
-            <article key={String(label)} className="border border-outline-variant bg-white p-5 shadow-sm">
-              <div className="flex items-center justify-between text-secondary">
-                <p className="font-mono text-[10px] font-bold uppercase tracking-widest">{String(label)}</p>
-                <Icon className="h-4 w-4" />
-              </div>
-              <p className="mt-4 text-3xl font-bold text-primary">{String(value)}</p>
-            </article>
+        <nav className="flex flex-wrap gap-2 border-b border-outline-variant pb-px">
+          {(Object.keys(views) as ViewKey[]).map((key) => (
+            <Link
+              key={key}
+              href={`/admin?range=${range}&view=${key}`}
+              className={`border-b-2 px-4 py-2 font-mono text-[11px] font-bold uppercase tracking-wider transition-colors ${view === key ? "border-primary text-primary" : "border-transparent text-secondary hover:text-primary"}`}
+            >
+              {views[key]}
+            </Link>
           ))}
-        </section>
+        </nav>
 
-        <section className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-          <div className="border border-outline-variant bg-white p-6">
-            <h2 className="text-left text-lg font-bold uppercase tracking-tight text-primary">Most viewed pages</h2>
-            <div className="mt-5 space-y-3">
-              {topPages.length ? topPages.map(([page, count]) => (
-                <div key={page} className="flex items-center justify-between gap-4 border-b border-outline-variant pb-3 text-sm">
-                  <span className="truncate text-on-surface-variant">{page}</span>
-                  <span className="font-mono font-bold text-primary">{count}</span>
-                </div>
-              )) : <p className="text-sm text-on-surface-variant">No page views recorded in this period.</p>}
-            </div>
-          </div>
+        {view === "overview" ? (
+          <>
+            <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
+              <StatCard label="Page views" value={pageViews.length.toLocaleString()} icon={Activity} />
+              <StatCard label="Visitors" value={uniqueVisitors.toLocaleString()} icon={Users} />
+              <StatCard label="Sessions" value={uniqueSessions.toLocaleString()} icon={Users} />
+              <StatCard label="Engaged IPs" value={uniqueEngagedIps.toLocaleString()} icon={MousePointerClick} />
+              <StatCard label="Enquiry actions" value={conversions.length.toLocaleString()} icon={MousePointerClick} />
+              <StatCard label="Action rate" value={`${conversionRate.toFixed(1)}%`} icon={Gauge} />
+            </section>
 
-          <div className="border border-outline-variant bg-white p-6">
-            <h2 className="text-left text-lg font-bold uppercase tracking-tight text-primary">Enquiry actions</h2>
-            <div className="mt-5 space-y-3">
-              {topActions.length ? topActions.map(([event, count]) => (
-                <div key={event} className="flex items-center justify-between gap-4 border-b border-outline-variant pb-3 text-sm">
-                  <span className="text-on-surface-variant">{event.replaceAll("_", " ")}</span>
-                  <span className="font-mono font-bold text-primary">{count}</span>
-                </div>
-              )) : <p className="text-sm text-on-surface-variant">No enquiry actions recorded in this period.</p>}
-            </div>
-          </div>
-
-          <div className="border border-outline-variant bg-white p-6">
-            <h2 className="text-left text-lg font-bold uppercase tracking-tight text-primary">Most clicked destinations</h2>
-            <div className="mt-5 space-y-3">
-              {topClickedDestinations.length ? topClickedDestinations.map(([destination, count]) => (
-                <div key={destination} className="flex items-center justify-between gap-4 border-b border-outline-variant pb-3 text-sm">
-                  <span className="truncate text-on-surface-variant">{destination}</span>
-                  <span className="font-mono font-bold text-primary">{count}</span>
-                </div>
-              )) : <p className="text-sm text-on-surface-variant">Clicked links and page destinations will appear here.</p>}
-            </div>
-          </div>
-
-          <div className="border border-outline-variant bg-white p-6">
-            <h2 className="text-left text-lg font-bold uppercase tracking-tight text-primary">Traffic sources</h2>
-            <div className="mt-5 space-y-3">
-              {topReferrers.length ? topReferrers.map(([referrer, count]) => (
-                <div key={referrer} className="flex items-center justify-between gap-4 border-b border-outline-variant pb-3 text-sm">
-                  <span className="truncate text-on-surface-variant">{referrer}</span>
-                  <span className="font-mono font-bold text-primary">{count}</span>
-                </div>
-              )) : <p className="text-sm text-on-surface-variant">Visitor sources will appear here.</p>}
-            </div>
-          </div>
-        </section>
-
-        <section className="overflow-hidden border border-outline-variant bg-white">
-          <div className="border-b border-outline-variant p-5 sm:p-6">
-            <p className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">End-to-end behaviour</p>
-            <h2 className="mt-2 text-left text-lg font-bold uppercase tracking-tight text-primary">Recent visitor journeys</h2>
-            <p className="mt-1 text-xs text-on-surface-variant">Anonymous session paths from entry page through clicks and enquiry actions.</p>
-          </div>
-          <div className="overflow-x-auto">
-            <table className="w-full min-w-[1000px] text-left text-xs">
-              <thead className="bg-surface-container text-[10px] uppercase tracking-wider text-secondary">
-                <tr><th className="p-3">Visitor</th><th className="p-3">IP address</th><th className="p-3">Started</th><th className="p-3">Page journey</th><th className="p-3">Views</th><th className="p-3">Clicks</th><th className="p-3">Outcome</th></tr>
-              </thead>
-              <tbody className="divide-y divide-outline-variant">
-                {recentJourneys.length ? recentJourneys.map((journey) => (
-                  <tr key={journey.sessionId}>
-                    <td className="p-3 font-mono font-bold text-primary">{journey.visitorId ? journey.visitorId.slice(0, 8) : "Legacy"}</td>
-                    <td className="whitespace-nowrap p-3 font-mono text-on-surface-variant">{journey.ipAddress || "Unknown"}</td>
-                    <td className="whitespace-nowrap p-3 text-outline">{new Date(journey.startedAt).toLocaleString("en-ZA")}</td>
-                    <td className="max-w-md p-3 text-on-surface-variant">{journey.pages.length ? journey.pages.join(" > ") : "No page view recorded"}</td>
-                    <td className="p-3 font-mono font-bold text-primary">{journey.pageViews}</td>
-                    <td className="p-3 font-mono font-bold text-primary">{journey.clicks}</td>
-                    <td className="p-3 text-on-surface-variant">{journey.outcomes.length ? journey.outcomes.map((outcome) => outcome.replaceAll("_", " ")).join(", ") : "Browsing"}</td>
-                  </tr>
-                )) : (
-                  <tr><td colSpan={7} className="p-6 text-center text-on-surface-variant">Visitor journeys will appear after public-site activity is recorded.</td></tr>
-                )}
-              </tbody>
-            </table>
-          </div>
-        </section>
-
-        <section className="border border-outline-variant bg-white p-6">
-          <div className="flex items-center gap-2">
-            <Gauge className="h-5 w-5 text-secondary" />
-            <h2 className="text-left text-lg font-bold uppercase tracking-tight text-primary">Page performance</h2>
-          </div>
-          <p className="mt-1 text-xs text-on-surface-variant">Average real-user measurements for the selected period.</p>
-          <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
-            {metrics.length ? metrics.map((metric) => {
-              const rating = metricRating(metric.name, metric.average);
-              return (
-                <article key={metric.name} className="border border-outline-variant p-4">
-                  <div className="flex items-center justify-between gap-2">
-                    <span className="font-mono text-xs font-bold text-primary">{metric.name}</span>
-                    <span className={`rounded-full px-2 py-1 text-[9px] font-bold uppercase ${rating.className}`}>{rating.label}</span>
-                  </div>
-                  <p className="mt-3 text-xl font-bold text-primary">{formatMetric(metric.name, metric.average)}</p>
-                  <p className="mt-1 text-[10px] text-outline">{metric.samples} samples</p>
-                </article>
-              );
-            }) : <p className="text-sm text-on-surface-variant">Performance data will appear after visitors load the updated site.</p>}
-          </div>
-        </section>
-
-        <section className="grid items-start gap-6 lg:grid-cols-[minmax(16rem,0.85fr)_minmax(0,2fr)]">
-          <div className="space-y-6">
-            <div className="self-start border border-outline-variant bg-primary p-6 text-white">
-              <Search className="h-6 w-6" />
-              <h2 className="mt-4 text-left text-xl font-bold uppercase">Search indexing</h2>
-              <p className="mt-3 text-sm text-white/70">{sitemapCount.toLocaleString()} canonical public URLs are listed in one sitemap.</p>
-              <a href={absoluteUrl("/sitemap.xml")} target="_blank" rel="noreferrer" className="mt-5 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider underline">
-                Open sitemap <ArrowUpRight className="h-4 w-4" />
-              </a>
-            </div>
-
-            <div className="self-start border border-outline-variant bg-white p-6 shadow-sm">
-              <p className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">Conversion monitoring</p>
-              <h2 className="mt-2 text-left text-xl font-bold uppercase tracking-tight text-primary">Engaged IP addresses</h2>
-              <p className="mt-2 text-xs leading-relaxed text-on-surface-variant">Raw server-observed IPs for WhatsApp, phone, email, quote, and directions clicks.</p>
-              <div className="mt-5 space-y-3">
-                {engagedIps.length ? engagedIps.map(([ipAddress, count]) => (
-                  <div key={ipAddress} className="flex items-center justify-between gap-4 border-b border-outline-variant pb-3 text-xs">
-                    <span className="font-mono text-primary">{ipAddress}</span>
-                    <span className="font-mono font-bold text-secondary">{count} {count === 1 ? "action" : "actions"}</span>
-                  </div>
-                )) : <p className="text-xs text-on-surface-variant">IP addresses will appear after visitors use an enquiry button.</p>}
-              </div>
-            </div>
-
-            <div className="self-start border border-outline-variant bg-white p-6 shadow-sm">
-              <div className="flex items-start justify-between gap-4">
-                <div>
-                  <p className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">Conversion tracking</p>
-                  <h2 className="mt-2 text-left text-xl font-bold uppercase tracking-tight text-primary">WhatsApp monitoring</h2>
-                </div>
-                <MessageCircle className="h-6 w-6 shrink-0 text-emerald-600" />
-              </div>
-              <div className="mt-5 grid grid-cols-2 gap-3 border-y border-outline-variant py-4">
-                <div>
-                  <p className="font-mono text-[9px] font-bold uppercase tracking-wider text-outline">Clicks</p>
-                  <p className="mt-1 text-2xl font-bold text-primary">{whatsappEvents.length.toLocaleString()}</p>
-                </div>
-                <div>
-                  <p className="font-mono text-[9px] font-bold uppercase tracking-wider text-outline">Sessions</p>
-                  <p className="mt-1 text-2xl font-bold text-primary">{whatsappSessions.toLocaleString()}</p>
-                </div>
-              </div>
-              <div className="mt-4">
-                <p className="font-mono text-[9px] font-bold uppercase tracking-wider text-outline">Where visitors clicked</p>
-                <div className="mt-2 space-y-2">
-                  {whatsappPages.length ? whatsappPages.map(([page, count]) => (
-                    <div key={page} className="flex items-center justify-between gap-3 text-xs">
+            <section className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+              <div className="border border-outline-variant bg-white p-6">
+                <h2 className="text-left text-lg font-bold uppercase tracking-tight text-primary">Most viewed pages</h2>
+                <div className="mt-5 space-y-3">
+                  {topPages.length ? topPages.map(([page, count]) => (
+                    <div key={page} className="flex items-center justify-between gap-4 border-b border-outline-variant pb-3 text-sm">
                       <span className="truncate text-on-surface-variant">{page}</span>
                       <span className="font-mono font-bold text-primary">{count}</span>
                     </div>
-                  )) : <p className="text-xs leading-relaxed text-on-surface-variant">WhatsApp clicks will appear here after visitors use a WhatsApp button.</p>}
+                  )) : <p className="text-sm text-on-surface-variant">No page views recorded in this period.</p>}
                 </div>
               </div>
-              {latestWhatsappEvent ? (
-                <p className="mt-4 border-t border-outline-variant pt-3 text-[10px] text-outline">
-                  Latest click: {new Date(latestWhatsappEvent.timestamp).toLocaleString("en-ZA")} · IP: {latestWhatsappEvent.ipAddress || "Unknown"}
-                </p>
-              ) : null}
-            </div>
 
-            <div className="self-start border border-outline-variant bg-white p-6 shadow-sm">
-              <div className="flex items-start justify-between gap-4">
-                <div>
-                  <p className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">Conversion tracking</p>
-                  <h2 className="mt-2 text-left text-xl font-bold uppercase tracking-tight text-primary">Email monitoring</h2>
-                </div>
-                <Mail className="h-6 w-6 shrink-0 text-secondary" />
-              </div>
-              <div className="mt-5 grid grid-cols-2 gap-3 border-y border-outline-variant py-4">
-                <div>
-                  <p className="font-mono text-[9px] font-bold uppercase tracking-wider text-outline">Clicks</p>
-                  <p className="mt-1 text-2xl font-bold text-primary">{emailEvents.length.toLocaleString()}</p>
-                </div>
-                <div>
-                  <p className="font-mono text-[9px] font-bold uppercase tracking-wider text-outline">Sessions</p>
-                  <p className="mt-1 text-2xl font-bold text-primary">{emailSessions.toLocaleString()}</p>
-                </div>
-              </div>
-              <div className="mt-4">
-                <p className="font-mono text-[9px] font-bold uppercase tracking-wider text-outline">Where visitors clicked</p>
-                <div className="mt-2 space-y-2">
-                  {emailPages.length ? emailPages.map(([page, count]) => (
-                    <div key={page} className="flex items-center justify-between gap-3 text-xs">
-                      <span className="truncate text-on-surface-variant">{page}</span>
+              <div className="border border-outline-variant bg-white p-6">
+                <h2 className="text-left text-lg font-bold uppercase tracking-tight text-primary">Enquiry actions</h2>
+                <div className="mt-5 space-y-3">
+                  {topActions.length ? topActions.map(([event, count]) => (
+                    <div key={event} className="flex items-center justify-between gap-4 border-b border-outline-variant pb-3 text-sm">
+                      <span className="text-on-surface-variant">{event.replaceAll("_", " ")}</span>
                       <span className="font-mono font-bold text-primary">{count}</span>
                     </div>
-                  )) : <p className="text-xs leading-relaxed text-on-surface-variant">Email clicks will appear here after visitors use an email link.</p>}
+                  )) : <p className="text-sm text-on-surface-variant">No enquiry actions recorded in this period.</p>}
                 </div>
               </div>
-              {latestEmailEvent ? (
-                <p className="mt-4 border-t border-outline-variant pt-3 text-[10px] text-outline">
-                  Latest click: {new Date(latestEmailEvent.timestamp).toLocaleString("en-ZA")} · IP: {latestEmailEvent.ipAddress || "Unknown"}
-                </p>
-              ) : null}
-            </div>
-          </div>
 
-          <div className="overflow-hidden border border-outline-variant bg-white">
-            <div className="flex flex-wrap items-center justify-between gap-3 border-b border-outline-variant p-5">
-              <div>
-                <h2 className="text-left text-lg font-bold uppercase tracking-tight text-primary">Recent activity</h2>
-                <p className="mt-1 text-xs text-on-surface-variant">
-                  Showing all {activityGroups.size} IP {activityGroups.size === 1 ? "address" : "addresses"} and {events.length} recorded {events.length === 1 ? "event" : "events"}.
-                </p>
+              <div className="border border-outline-variant bg-white p-6">
+                <h2 className="text-left text-lg font-bold uppercase tracking-tight text-primary">Most clicked destinations</h2>
+                <div className="mt-5 space-y-3">
+                  {topClickedDestinations.length ? topClickedDestinations.map(([destination, count]) => (
+                    <div key={destination} className="flex items-center justify-between gap-4 border-b border-outline-variant pb-3 text-sm">
+                      <span className="truncate text-on-surface-variant">{destination}</span>
+                      <span className="font-mono font-bold text-primary">{count}</span>
+                    </div>
+                  )) : <p className="text-sm text-on-surface-variant">Clicked links and page destinations will appear here.</p>}
+                </div>
               </div>
-            </div>
-            <div className="divide-y divide-outline-variant">
-              {[...activityGroups.entries()].map(([ipAddress, activity]) => {
-                const dateGroups = groupActivityByDate(activity);
-                const sessionCount = new Set(activity.map((event) => event.sessionId).filter(Boolean)).size;
-                const latestEvent = activity[0];
 
-                return (
-                  <details key={ipAddress} className="group">
-                    <summary className="flex cursor-pointer list-none items-center justify-between gap-4 bg-white px-4 py-4 transition-colors hover:bg-surface-container-low [&::-webkit-details-marker]:hidden">
-                      <div className="min-w-0">
-                        <p className="break-all font-mono text-xs font-bold text-primary">{ipAddress}</p>
-                        <p className="mt-1 text-[10px] text-outline">
-                          Latest activity: {latestEvent ? new Date(latestEvent.timestamp).toLocaleString("en-ZA", { timeZone: "Africa/Johannesburg" }) : "Unknown"}
-                        </p>
-                      </div>
-                      <div className="flex shrink-0 items-center gap-3">
-                        <div className="text-right font-mono text-[9px] font-bold uppercase tracking-wider text-outline">
-                          <p>{activity.length} {activity.length === 1 ? "event" : "events"}</p>
-                          <p>{sessionCount} {sessionCount === 1 ? "session" : "sessions"}</p>
-                        </div>
-                        <ChevronDown className="h-4 w-4 text-secondary transition-transform group-open:rotate-180" aria-hidden="true" />
-                      </div>
-                    </summary>
-                    <div className="overflow-x-auto border-t border-outline-variant">
-                      <table className="w-full min-w-[760px] text-left text-xs">
-                        <thead className="bg-surface-container text-[10px] uppercase tracking-wider text-secondary">
-                          <tr><th className="p-3">Time</th><th className="p-3">Event</th><th className="p-3">Page</th><th className="p-3">Detail</th></tr>
-                        </thead>
-                        <tbody>
-                          {[...dateGroups.entries()].map(([dateKey, datedActivity]) => (
-                            <Fragment key={dateKey}>
-                              <tr className="border-y border-outline-variant bg-surface-container-low">
-                                <th colSpan={4} className="px-3 py-2 font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
-                                  {activityDateLabel(dateKey, todayKey, yesterdayKey)}
-                                </th>
-                              </tr>
-                              {datedActivity.map((event, index) => (
-                                <tr key={`${event.timestamp}-${index}`} className="border-b border-outline-variant last:border-b-0">
-                                  <td className="whitespace-nowrap p-3 text-outline">{new Date(event.timestamp).toLocaleTimeString("en-ZA", { timeZone: "Africa/Johannesburg", hour: "2-digit", minute: "2-digit", second: "2-digit" })}</td>
-                                  <td className="p-3 font-mono font-bold text-primary">{event.event}</td>
+              <div className="border border-outline-variant bg-white p-6">
+                <h2 className="text-left text-lg font-bold uppercase tracking-tight text-primary">Traffic sources</h2>
+                <div className="mt-5 space-y-3">
+                  {topReferrers.length ? topReferrers.map(([referrer, count]) => (
+                    <div key={referrer} className="flex items-center justify-between gap-4 border-b border-outline-variant pb-3 text-sm">
+                      <span className="truncate text-on-surface-variant">{referrer}</span>
+                      <span className="font-mono font-bold text-primary">{count}</span>
+                    </div>
+                  )) : <p className="text-sm text-on-surface-variant">Visitor sources will appear here.</p>}
+                </div>
+              </div>
+            </section>
+
+            <section className="overflow-hidden border border-outline-variant bg-white">
+              <SectionHeading icon={Users} title="Recent visitor journeys" hint="Anonymous session paths from entry page through clicks and enquiry actions." />
+              <div className="overflow-x-auto">
+                <table className="w-full min-w-[1000px] text-left text-xs">
+                  <thead className="bg-surface-container text-[10px] uppercase tracking-wider text-secondary">
+                    <tr><th className="p-3">Visitor</th><th className="p-3">IP address</th><th className="p-3">Started</th><th className="p-3">Page journey</th><th className="p-3">Views</th><th className="p-3">Clicks</th><th className="p-3">Outcome</th></tr>
+                  </thead>
+                  <tbody className="divide-y divide-outline-variant">
+                    {recentJourneys.length ? recentJourneys.map((journey) => (
+                      <tr key={journey.sessionId}>
+                        <td className="p-3 font-mono font-bold text-primary">{journey.visitorId ? journey.visitorId.slice(0, 8) : "Legacy"}</td>
+                        <td className="whitespace-nowrap p-3 font-mono text-on-surface-variant">{journey.ipAddress || "Unknown"}</td>
+                        <td className="whitespace-nowrap p-3 text-outline">{new Date(journey.startedAt).toLocaleString("en-ZA")}</td>
+                        <td className="max-w-md p-3 text-on-surface-variant">{journey.pages.length ? journey.pages.join(" > ") : "No page view recorded"}</td>
+                        <td className="p-3 font-mono font-bold text-primary">{journey.pageViews}</td>
+                        <td className="p-3 font-mono font-bold text-primary">{journey.clicks}</td>
+                        <td className="p-3 text-on-surface-variant">{journey.outcomes.length ? journey.outcomes.map((outcome) => outcome.replaceAll("_", " ")).join(", ") : "Browsing"}</td>
+                      </tr>
+                    )) : (
+                      <tr><td colSpan={7} className="p-6 text-center text-on-surface-variant">Visitor journeys will appear after public-site activity is recorded.</td></tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            </section>
+          </>
+        ) : null}
+
+        {view === "whatsapp" ? (
+          <>
+            <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              <StatCard label="WhatsApp clicks" value={whatsappEvents.length.toLocaleString()} icon={MessageCircle} />
+              <StatCard label="Unique IPs" value={whatsappUniqueIps.toLocaleString()} icon={Globe} />
+              <StatCard label="Sessions" value={whatsappSessions.toLocaleString()} icon={Users} />
+              <StatCard label="Latest click" value={latestWhatsappEvent ? zaDateTime(latestWhatsappEvent.timestamp) : "—"} icon={Clock} />
+            </section>
+
+            <section className="overflow-hidden border border-outline-variant bg-white">
+              <SectionHeading
+                icon={MessageCircle}
+                title="WhatsApp monitoring"
+                hint={`${whatsappByIp.length} IP ${whatsappByIp.length === 1 ? "address" : "addresses"} with ${whatsappEvents.length} click${whatsappEvents.length === 1 ? "" : "s"}. Expand an entry to see the full click detail.`}
+              />
+              {whatsappByIp.length ? (
+                <div className="divide-y divide-outline-variant">
+                  {whatsappByIp.map(([ip, list]) => {
+                    const latest = list[0];
+                    const pageCount = new Set(list.map((event) => event.page).filter(Boolean)).size;
+                    return (
+                      <details key={ip} className="group">
+                        <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-4 py-4 transition-colors hover:bg-surface-container-low [&::-webkit-details-marker]:hidden">
+                          <div className="min-w-0">
+                            <p className="break-all font-mono text-xs font-bold text-primary">{ip}</p>
+                            <p className="mt-1 text-[10px] text-outline">
+                              Latest click: {zaDateTime(latest.timestamp)}
+                            </p>
+                          </div>
+                          <div className="flex shrink-0 items-center gap-3">
+                            <div className="text-right font-mono text-[9px] font-bold uppercase tracking-wider text-outline">
+                              <p>{pageCount} {pageCount === 1 ? "page" : "pages"}</p>
+                              <p>{list.length} {list.length === 1 ? "click" : "clicks"}</p>
+                            </div>
+                            <ChevronDown className="h-4 w-4 text-secondary transition-transform group-open:rotate-180" aria-hidden="true" />
+                          </div>
+                        </summary>
+                        <div className="overflow-x-auto border-t border-outline-variant">
+                          <table className="w-full min-w-[720px] text-left text-xs">
+                            <thead className="bg-surface-container text-[10px] uppercase tracking-wider text-secondary">
+                              <tr><th className="p-3">Time</th><th className="p-3">Page</th><th className="p-3">Clicked</th><th className="p-3">Referrer</th></tr>
+                            </thead>
+                            <tbody className="divide-y divide-outline-variant">
+                              {list.map((event, index) => (
+                                <tr key={`${event.timestamp}-${index}`}>
+                                  <td className="whitespace-nowrap p-3 text-outline">{zaTime(event.timestamp)}</td>
                                   <td className="max-w-52 truncate p-3 text-on-surface-variant">{event.page}</td>
-                                  <td className="max-w-64 truncate p-3 text-on-surface-variant">{event.metric ? `${event.metric}: ${event.value}` : event.label || event.destination || "—"}</td>
+                                  <td className="max-w-64 truncate p-3 text-primary">{event.label || event.destination || "—"}</td>
+                                  <td className="max-w-52 truncate p-3 text-on-surface-variant">{event.referrer || "—"}</td>
                                 </tr>
                               ))}
-                            </Fragment>
-                          ))}
-                        </tbody>
-                      </table>
+                            </tbody>
+                          </table>
+                        </div>
+                      </details>
+                    );
+                  })}
+                </div>
+              ) : (
+                <p className="p-6 text-center text-xs text-on-surface-variant">WhatsApp clicks will appear here after visitors use a WhatsApp button.</p>
+              )}
+            </section>
+          </>
+        ) : null}
+
+        {view === "quotes" ? (
+          <>
+            <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              <StatCard label="Quote requests" value={quoteClickEvents.length.toLocaleString()} icon={MousePointerClick} />
+              <StatCard label="Unique IPs" value={quoteUniqueIps.toLocaleString()} icon={Globe} />
+              <StatCard label="Latest request" value={latestQuoteClick ? zaDateTime(latestQuoteClick.timestamp) : "—"} icon={Clock} />
+              <StatCard label="Captured leads" value={quoteLeads.toLocaleString()} icon={FileText} />
+            </section>
+
+            <section className="overflow-hidden border border-outline-variant bg-white">
+              <SectionHeading
+                icon={FileText}
+                title="Quote monitoring"
+                hint={`${quoteByIp.length} IP ${quoteByIp.length === 1 ? "address" : "addresses"} across ${quoteClickEvents.length} quote request${quoteClickEvents.length === 1 ? "" : "s"}. Captured contact details are shown under the Leads tab.`}
+              />
+              {quoteByIp.length ? (
+                <div className="divide-y divide-outline-variant">
+                  {quoteByIp.map(([ip, list]) => {
+                    const latest = list[0];
+                    const pageCount = new Set(list.map((event) => event.page).filter(Boolean)).size;
+                    return (
+                      <details key={ip} className="group">
+                        <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-4 py-4 transition-colors hover:bg-surface-container-low [&::-webkit-details-marker]:hidden">
+                          <div className="min-w-0">
+                            <p className="break-all font-mono text-xs font-bold text-primary">{ip}</p>
+                            <p className="mt-1 text-[10px] text-outline">
+                              Latest request: {zaDateTime(latest.timestamp)}
+                            </p>
+                          </div>
+                          <div className="flex shrink-0 items-center gap-3">
+                            <div className="text-right font-mono text-[9px] font-bold uppercase tracking-wider text-outline">
+                              <p>{pageCount} {pageCount === 1 ? "page" : "pages"}</p>
+                              <p>{list.length} {list.length === 1 ? "request" : "requests"}</p>
+                            </div>
+                            <ChevronDown className="h-4 w-4 text-secondary transition-transform group-open:rotate-180" aria-hidden="true" />
+                          </div>
+                        </summary>
+                        <div className="overflow-x-auto border-t border-outline-variant">
+                          <table className="w-full min-w-[720px] text-left text-xs">
+                            <thead className="bg-surface-container text-[10px] uppercase tracking-wider text-secondary">
+                              <tr><th className="p-3">Time</th><th className="p-3">Page</th><th className="p-3">Clicked</th><th className="p-3">Referrer</th></tr>
+                            </thead>
+                            <tbody className="divide-y divide-outline-variant">
+                              {list.map((event, index) => (
+                                <tr key={`${event.timestamp}-${index}`}>
+                                  <td className="whitespace-nowrap p-3 text-outline">{zaTime(event.timestamp)}</td>
+                                  <td className="max-w-52 truncate p-3 text-on-surface-variant">{event.page}</td>
+                                  <td className="max-w-64 truncate p-3 text-primary">{event.label || event.destination || "—"}</td>
+                                  <td className="max-w-52 truncate p-3 text-on-surface-variant">{event.referrer || "—"}</td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                      </details>
+                    );
+                  })}
+                </div>
+              ) : (
+                <p className="p-6 text-center text-xs text-on-surface-variant">Quote activity will appear here after visitors request a quotation.</p>
+              )}
+            </section>
+          </>
+        ) : null}
+
+        {view === "leads" ? (
+          <>
+            <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              <StatCard label="Total leads" value={leads.length.toLocaleString()} icon={Users} />
+              <StatCard label="Unique IPs" value={leadsUniqueIps.toLocaleString()} icon={Globe} />
+              <StatCard label="From WhatsApp" value={whatsappLeads.toLocaleString()} icon={MessageCircle} />
+              <StatCard label="From quote" value={quoteLeads.toLocaleString()} icon={FileText} />
+            </section>
+
+            <section className="overflow-hidden border border-outline-variant bg-white">
+              <SectionHeading
+                icon={FileText}
+                title="Client details"
+                hint="Captured contact and project details from visitors who requested a quote. Stored privately for your team."
+              />
+              {leads.length ? (
+                <div className="overflow-x-auto">
+                  <table className="w-full min-w-[1080px] text-left text-xs">
+                    <thead className="bg-surface-container text-[10px] uppercase tracking-wider text-secondary">
+                      <tr>
+                        <th className="p-3">Date</th>
+                        <th className="p-3">Name</th>
+                        <th className="p-3">Surname</th>
+                        <th className="p-3">Phone</th>
+                        <th className="p-3">Email</th>
+                        <th className="p-3">Location</th>
+                        <th className="p-3">Budget</th>
+                        <th className="p-3">Source</th>
+                        <th className="p-3">IP</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-outline-variant">
+                      {leads.map((lead, index) => (
+                        <tr key={`${lead.timestamp}-${index}`}>
+                          <td className="whitespace-nowrap p-3 text-outline">{zaDateTime(lead.timestamp)}</td>
+                          <td className="p-3 font-bold text-primary">{lead.firstName}</td>
+                          <td className="p-3 text-primary">{lead.surname}</td>
+                          <td className="whitespace-nowrap p-3 font-mono text-on-surface-variant">{lead.phone}</td>
+                          <td className="p-3 text-on-surface-variant">{lead.email || "—"}</td>
+                          <td className="p-3 text-on-surface-variant">{lead.location}</td>
+                          <td className="p-3 text-on-surface-variant">{lead.budget}</td>
+                          <td className="p-3">
+                            <span className={`rounded-full px-2 py-1 font-mono text-[9px] font-bold uppercase ${lead.source === "quote" ? "bg-surface-container text-secondary" : "bg-emerald-50 text-emerald-700"}`}>
+                              {lead.source}
+                            </span>
+                          </td>
+                          <td className="whitespace-nowrap p-3 font-mono text-outline">{lead.ipAddress || "Unknown"}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              ) : (
+                <p className="p-6 text-center text-xs text-on-surface-variant">Client details will appear here after visitors complete the quote form.</p>
+              )}
+            </section>
+          </>
+        ) : null}
+
+        {view === "activity" ? (
+          <section className="grid items-start gap-6 lg:grid-cols-[minmax(16rem,0.85fr)_minmax(0,2fr)]">
+            <div className="space-y-6">
+              <div className="self-start border border-outline-variant bg-white p-6 shadow-sm">
+                <p className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">Conversion monitoring</p>
+                <h2 className="mt-2 text-left text-xl font-bold uppercase tracking-tight text-primary">Engaged IP addresses</h2>
+                <p className="mt-2 text-xs leading-relaxed text-on-surface-variant">Raw server-observed IPs for WhatsApp, phone, email, quote, and directions clicks.</p>
+                <div className="mt-5 space-y-3">
+                  {engagedIps.length ? engagedIps.map(([ipAddress, count]) => (
+                    <div key={ipAddress} className="flex items-center justify-between gap-4 border-b border-outline-variant pb-3 text-xs">
+                      <span className="font-mono text-primary">{ipAddress}</span>
+                      <span className="font-mono font-bold text-secondary">{count} {count === 1 ? "action" : "actions"}</span>
                     </div>
-                  </details>
-                );
-              })}
-              {!activityGroups.size ? (
-                <p className="p-6 text-center text-xs text-on-surface-variant">No activity was recorded in this period.</p>
-              ) : null}
+                  )) : <p className="text-xs text-on-surface-variant">IP addresses will appear after visitors use an enquiry button.</p>}
+                </div>
+              </div>
+
+              <div className="self-start border border-outline-variant bg-white p-6 shadow-sm">
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <p className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">Conversion tracking</p>
+                    <h2 className="mt-2 text-left text-xl font-bold uppercase tracking-tight text-primary">Email monitoring</h2>
+                  </div>
+                  <Mail className="h-6 w-6 shrink-0 text-secondary" />
+                </div>
+                <div className="mt-5 grid grid-cols-2 gap-3 border-y border-outline-variant py-4">
+                  <div>
+                    <p className="font-mono text-[9px] font-bold uppercase tracking-wider text-outline">Clicks</p>
+                    <p className="mt-1 text-2xl font-bold text-primary">{emailEvents.length.toLocaleString()}</p>
+                  </div>
+                  <div>
+                    <p className="font-mono text-[9px] font-bold uppercase tracking-wider text-outline">Sessions</p>
+                    <p className="mt-1 text-2xl font-bold text-primary">{emailSessions.toLocaleString()}</p>
+                  </div>
+                </div>
+                <div className="mt-4">
+                  <p className="font-mono text-[9px] font-bold uppercase tracking-wider text-outline">Where visitors clicked</p>
+                  <div className="mt-2 space-y-2">
+                    {emailPages.length ? emailPages.map(([page, count]) => (
+                      <div key={page} className="flex items-center justify-between gap-3 text-xs">
+                        <span className="truncate text-on-surface-variant">{page}</span>
+                        <span className="font-mono font-bold text-primary">{count}</span>
+                      </div>
+                    )) : <p className="text-xs leading-relaxed text-on-surface-variant">Email clicks will appear here after visitors use an email link.</p>}
+                  </div>
+                </div>
+                {latestEmailEvent ? (
+                  <p className="mt-4 border-t border-outline-variant pt-3 text-[10px] text-outline">
+                    Latest click: {zaDateTime(latestEmailEvent.timestamp)} · IP: {latestEmailEvent.ipAddress || "Unknown"}
+                  </p>
+                ) : null}
+              </div>
             </div>
-          </div>
-        </section>
+
+            <div className="overflow-hidden border border-outline-variant bg-white">
+              <SectionHeading
+                icon={Activity}
+                title="Recent activity"
+                hint={`Showing all ${activityGroups.size} IP ${activityGroups.size === 1 ? "address" : "addresses"} and ${events.length} recorded ${events.length === 1 ? "event" : "events"}.`}
+              />
+              <div className="divide-y divide-outline-variant">
+                {[...activityGroups.entries()].map(([ipAddress, activity]) => {
+                  const dateGroups = groupActivityByDate(activity);
+                  const sessionCount = new Set(activity.map((event) => event.sessionId).filter(Boolean)).size;
+                  const latestEvent = activity[0];
+
+                  return (
+                    <details key={ipAddress} className="group">
+                      <summary className="flex cursor-pointer list-none items-center justify-between gap-4 bg-white px-4 py-4 transition-colors hover:bg-surface-container-low [&::-webkit-details-marker]:hidden">
+                        <div className="min-w-0">
+                          <p className="break-all font-mono text-xs font-bold text-primary">{ipAddress}</p>
+                          <p className="mt-1 text-[10px] text-outline">
+                            Latest activity: {latestEvent ? zaDateTime(latestEvent.timestamp) : "Unknown"}
+                          </p>
+                        </div>
+                        <div className="flex shrink-0 items-center gap-3">
+                          <div className="text-right font-mono text-[9px] font-bold uppercase tracking-wider text-outline">
+                            <p>{activity.length} {activity.length === 1 ? "event" : "events"}</p>
+                            <p>{sessionCount} {sessionCount === 1 ? "session" : "sessions"}</p>
+                          </div>
+                          <ChevronDown className="h-4 w-4 text-secondary transition-transform group-open:rotate-180" aria-hidden="true" />
+                        </div>
+                      </summary>
+                      <div className="overflow-x-auto border-t border-outline-variant">
+                        <table className="w-full min-w-[760px] text-left text-xs">
+                          <thead className="bg-surface-container text-[10px] uppercase tracking-wider text-secondary">
+                            <tr><th className="p-3">Time</th><th className="p-3">Event</th><th className="p-3">Page</th><th className="p-3">Detail</th></tr>
+                          </thead>
+                          <tbody>
+                            {[...dateGroups.entries()].map(([dateKey, datedActivity]) => (
+                              <Fragment key={dateKey}>
+                                <tr className="border-y border-outline-variant bg-surface-container-low">
+                                  <th colSpan={4} className="px-3 py-2 font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
+                                    {activityDateLabel(dateKey, todayKey, yesterdayKey)}
+                                  </th>
+                                </tr>
+                                {datedActivity.map((event, index) => (
+                                  <tr key={`${event.timestamp}-${index}`} className="border-b border-outline-variant last:border-b-0">
+                                    <td className="whitespace-nowrap p-3 text-outline">{zaTime(event.timestamp)}</td>
+                                    <td className="p-3 font-mono font-bold text-primary">{event.event}</td>
+                                    <td className="max-w-52 truncate p-3 text-on-surface-variant">{event.page}</td>
+                                    <td className="max-w-64 truncate p-3 text-on-surface-variant">{event.metric ? `${event.metric}: ${event.value}` : event.label || event.destination || "—"}</td>
+                                  </tr>
+                                ))}
+                              </Fragment>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </details>
+                  );
+                })}
+                {!activityGroups.size ? (
+                  <p className="p-6 text-center text-xs text-on-surface-variant">No activity was recorded in this period.</p>
+                ) : null}
+              </div>
+            </div>
+          </section>
+        ) : null}
+
+        {view === "performance" ? (
+          <>
+            <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+              {metrics.length ? metrics.map((metric) => {
+                const rating = metricRating(metric.name, metric.average);
+                return (
+                  <article key={metric.name} className="border border-outline-variant bg-white p-4">
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="font-mono text-xs font-bold text-primary">{metric.name}</span>
+                      <span className={`rounded-full px-2 py-1 text-[9px] font-bold uppercase ${rating.className}`}>{rating.label}</span>
+                    </div>
+                    <p className="mt-3 text-xl font-bold text-primary">{formatMetric(metric.name, metric.average)}</p>
+                    <p className="mt-1 text-[10px] text-outline">{metric.samples} samples</p>
+                  </article>
+                );
+              }) : <p className="text-sm text-on-surface-variant">Performance data will appear after visitors load the updated site.</p>}
+            </section>
+
+            <section className="grid items-start gap-6 md:grid-cols-2">
+              <div className="border border-outline-variant bg-primary p-6 text-white">
+                <Search className="h-6 w-6" />
+                <h2 className="mt-4 text-left text-xl font-bold uppercase">Search indexing</h2>
+                <p className="mt-3 text-sm text-white/70">{sitemapCount.toLocaleString()} canonical public URLs are listed in one sitemap.</p>
+                <a href={absoluteUrl("/sitemap.xml")} target="_blank" rel="noreferrer" className="mt-5 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider underline">
+                  Open sitemap <ArrowUpRight className="h-4 w-4" />
+                </a>
+              </div>
+              <div className="border border-outline-variant bg-white p-6">
+                <div className="flex items-center gap-2">
+                  <MapPin className="h-5 w-5 text-secondary" />
+                  <h2 className="text-left text-lg font-bold uppercase tracking-tight text-primary">Coverage</h2>
+                </div>
+                <p className="mt-3 text-sm leading-relaxed text-on-surface-variant">
+                  Monitoring is served from this dashboard with a private, expiring session. Contact clicks are captured server-side so visitor IPs remain visible to the administrator only.
+                </p>
+                <div className="mt-5 grid grid-cols-2 gap-4 border-t border-outline-variant pt-5">
+                  <div>
+                    <p className="font-mono text-[9px] font-bold uppercase tracking-wider text-outline">Phone clicks</p>
+                    <p className="mt-1 text-2xl font-bold text-primary">{events.filter((event) => event.event === "phone_call_click").length.toLocaleString()}</p>
+                  </div>
+                  <div>
+                    <p className="font-mono text-[9px] font-bold uppercase tracking-wider text-outline">Maps clicks</p>
+                    <p className="mt-1 text-2xl font-bold text-primary">{events.filter((event) => event.event === "maps_directions_click").length.toLocaleString()}</p>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </>
+        ) : null}
       </div>
     </div>
   );

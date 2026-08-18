@@ -1,8 +1,9 @@
-import { mkdir, appendFile } from "node:fs/promises";
-import { isIP } from "node:net";
-import path from "node:path";
 import { NextRequest, NextResponse } from "next/server";
-import { getMonitoringEventsPath } from "@/lib/monitoring";
+import {
+  appendMonitoringEvent,
+  extractClientIp,
+  type MonitoringEvent,
+} from "@/lib/monitoring";
 
 export const runtime = "nodejs";
 
@@ -10,7 +11,7 @@ const MAX_EVENT_SIZE = 2_000;
 const MAX_EVENTS_PER_MINUTE = 60;
 const rateLimits = new Map<string, { count: number; resetAt: number }>();
 
-type MonitoringEvent = {
+type IncomingEvent = {
   event: string;
   page?: string;
   label?: string;
@@ -21,30 +22,11 @@ type MonitoringEvent = {
   referrer?: string;
   metric?: string;
   value?: number;
+  detail?: string;
 };
 
 function safeValue(value: unknown, maxLength: number) {
   return typeof value === "string" ? value.trim().slice(0, maxLength) : "";
-}
-
-function validIp(value: string | null) {
-  if (!value) return "";
-  const candidate = value.trim().replace(/^"|"$/g, "");
-  if (isIP(candidate)) return candidate;
-
-  const ipv4WithPort = candidate.match(/^(.+):(\d+)$/)?.[1] || "";
-  return isIP(ipv4WithPort) === 4 ? ipv4WithPort : "";
-}
-
-function requestIp(request: NextRequest) {
-  const realIp = validIp(request.headers.get("x-real-ip"));
-  if (realIp) return realIp;
-
-  const cloudflareIp = validIp(request.headers.get("cf-connecting-ip"));
-  if (cloudflareIp) return cloudflareIp;
-
-  const forwardedFor = request.headers.get("x-forwarded-for");
-  return validIp(forwardedFor?.split(",")[0] || null);
 }
 
 function isAdminPath(value: string) {
@@ -71,13 +53,13 @@ function isAllowed(clientId: string) {
 }
 
 export async function POST(request: NextRequest) {
-  const ipAddress = requestIp(request);
+  const ipAddress = extractClientIp(request.headers);
   const contentLength = Number(request.headers.get("content-length") || 0);
   if (contentLength > MAX_EVENT_SIZE || !isAllowed(ipAddress || "unknown")) {
     return new NextResponse(null, { status: 204 });
   }
 
-  let body: MonitoringEvent;
+  let body: IncomingEvent;
   try {
     body = await request.json();
   } catch {
@@ -95,7 +77,7 @@ export async function POST(request: NextRequest) {
     return new NextResponse(null, { status: 204 });
   }
 
-  const entry = {
+  const entry: MonitoringEvent = {
     event,
     ipAddress,
     page,
@@ -110,16 +92,11 @@ export async function POST(request: NextRequest) {
       typeof body.value === "number" && Number.isFinite(body.value)
         ? Math.round(body.value * 100) / 100
         : null,
+    detail: safeValue(body.detail, 2_000),
   };
 
   try {
-    const eventsPath = getMonitoringEventsPath();
-    await mkdir(path.dirname(eventsPath), { recursive: true });
-    await appendFile(
-      eventsPath,
-      `${JSON.stringify(entry)}\n`,
-      "utf8",
-    );
+    await appendMonitoringEvent(entry);
   } catch (error) {
     console.error("Unable to store monitoring event", error);
   }

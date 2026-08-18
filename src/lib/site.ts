@@ -31,6 +31,29 @@ export const whatsappQuoteUrl = getWhatsAppQuoteUrl(
   "Hi Aluminium Designs, I'd like to request a quotation for an aluminium installation at my property."
 );
 
+export function getWhatsAppLeadUrl(lead: {
+  firstName: string;
+  surname: string;
+  phone: string;
+  email: string;
+  location: string;
+  budget: string;
+}) {
+  const name = [lead.firstName, lead.surname].filter(Boolean).join(" ");
+  const message = [
+    "Hi Aluminium Designs, I'd like a quote.",
+    "",
+    `Name: ${name}`,
+    `Phone: ${lead.phone}`,
+    lead.email ? `Email: ${lead.email}` : "",
+    `Location: ${lead.location}`,
+    `Budget: ${lead.budget}`,
+  ]
+    .filter(Boolean)
+    .join("\n");
+  return `https://wa.me/${whatsappPhone}?text=${encodeURIComponent(message)}`;
+}
+
 export function absoluteUrl(path: string) {
   return `${siteUrl}${path.startsWith("/") ? path : `/${path}`}`;
 }

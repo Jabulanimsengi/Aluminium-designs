@@ -20,10 +20,12 @@
 # production
 /build
 /data/monitoring-events.ndjson
+/data/leads.ndjson
 
 # misc
 .DS_Store
 *.pem
+*.log
 
 # debug
 npm-debug.log*
