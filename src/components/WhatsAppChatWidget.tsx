@@ -107,7 +107,6 @@ export default function WhatsAppChatWidget() {
                   href={buildUrl(qr.message)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  data-lead-gate="false"
                   className="flex w-full items-center justify-between border border-outline-variant bg-white px-4 py-3 text-left text-xs font-sans font-medium text-primary hover:border-primary hover:bg-surface-container-lowest transition-colors rounded-full"
                 >
                   <span>{qr.label}</span>
@@ -131,7 +130,6 @@ export default function WhatsAppChatWidget() {
               href={buildUrl("Hi Aluminium Designs, I'm visiting your website.")}
               target="_blank"
               rel="noopener noreferrer"
-              data-lead-gate="false"
               className="flex h-8 w-8 items-center justify-center bg-[#25D366] text-white hover:bg-[#20ba5a] transition-colors rounded-full"
               aria-label="Open WhatsApp"
             >
