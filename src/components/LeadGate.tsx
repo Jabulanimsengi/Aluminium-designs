@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { X } from "lucide-react";
 import LeadCaptureForm from "./LeadCaptureForm";
 
@@ -18,7 +19,7 @@ function classify(link: HTMLAnchorElement | null, element: Element): GateSource 
   ).replace(/\s+/g, " ").trim();
 
   const isQuote = /^\/quote(?:$|[?#])/i.test(href) || /quote|quotation|estimate/i.test(label);
-  const isWhatsApp = /wa\.me|whatsapp/i.test(href);
+  const isWhatsApp = /wa\.me\/|whatsapp\.com/i.test(href);
 
   if (isQuote) return "quote";
   if (isWhatsApp) return "whatsapp";
@@ -26,10 +27,14 @@ function classify(link: HTMLAnchorElement | null, element: Element): GateSource 
 }
 
 export default function LeadGate() {
+  const pathname = usePathname();
+  const isAdmin = pathname.startsWith("/admin");
   const [open, setOpen] = useState(false);
   const [source, setSource] = useState<GateSource>("quote");
 
   useEffect(() => {
+    if (isAdmin) return;
+
     function handleClick(event: MouseEvent) {
       if (event.defaultPrevented) return;
       if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
@@ -49,7 +54,7 @@ export default function LeadGate() {
 
     document.addEventListener("click", handleClick, { capture: true });
     return () => document.removeEventListener("click", handleClick, { capture: true });
-  }, []);
+  }, [isAdmin]);
 
   useEffect(() => {
     if (!open) return;
@@ -68,7 +73,7 @@ export default function LeadGate() {
 
   const close = useCallback(() => setOpen(false), []);
 
-  if (!open) return null;
+  if (!open || isAdmin) return null;
 
   return (
     <div
