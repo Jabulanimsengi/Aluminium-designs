@@ -11,7 +11,7 @@ import Image from "next/image";
 import { ArrowRight, MapPin, Phone, Mail, Star, CheckCircle2 } from "lucide-react";
 import CTASection from "@/components/CTASection";
 import FAQAccordion from "@/components/FAQAccordion";
-import { whatsappQuoteUrl } from "@/lib/site";
+import { whatsappQuoteUrl, slugify } from "@/lib/site";
 
 export async function generateStaticParams() {
   return getAllLocationServiceRoutes();
@@ -60,6 +60,10 @@ export default async function LocationServicePage({ params }: { params: Promise<
     imagePath: "/images/window_detail.png",
     iconName: "Sparkles",
   };
+
+  const relatedAreas = gautengLocations
+    .filter((l) => (l.type === "city" || l.type === "town") && l.id !== location.id)
+    .slice(0, 4);
 
   return (
     <div className="bg-surface text-on-surface">
@@ -358,6 +362,58 @@ export default async function LocationServicePage({ params }: { params: Promise<
             </h2>
           </div>
           <FAQAccordion items={content.localFaqs} />
+        </div>
+      </section>
+
+      {/* EXPLORE MORE */}
+      <section className="py-20 bg-surface-container-low border-t border-outline-variant">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="mb-10 text-center">
+            <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
+              Explore More
+            </span>
+            <h2 className="mt-2 font-sans font-bold uppercase tracking-tight text-3xl sm:text-4xl text-primary">
+              More {service.title} &amp; Service Areas
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <Link
+              href={service.slug}
+              className="group flex items-center justify-between gap-3 border border-outline-variant bg-surface-container-lowest px-5 py-4 transition-colors hover:border-primary"
+            >
+              <div>
+                <p className="font-mono text-[9px] font-bold uppercase tracking-widest text-secondary">All Products</p>
+                <p className="mt-1 text-sm font-bold text-primary">{service.title}</p>
+              </div>
+              <ArrowRight className="h-4 w-4 shrink-0 text-secondary transition-colors group-hover:text-primary" />
+            </Link>
+
+            <Link
+              href={`/locations/${location.id}`}
+              className="group flex items-center justify-between gap-3 border border-outline-variant bg-surface-container-lowest px-5 py-4 transition-colors hover:border-primary"
+            >
+              <div>
+                <p className="font-mono text-[9px] font-bold uppercase tracking-widest text-secondary">All Services</p>
+                <p className="mt-1 text-sm font-bold text-primary">{location.name}</p>
+              </div>
+              <ArrowRight className="h-4 w-4 shrink-0 text-secondary transition-colors group-hover:text-primary" />
+            </Link>
+
+            {relatedAreas.map((area) => (
+              <Link
+                key={area.id}
+                href={`/locations/${area.id}/${slugify(service.title)}-in-${area.id}`}
+                className="group flex items-center justify-between gap-3 border border-outline-variant bg-surface-container-lowest px-5 py-4 transition-colors hover:border-primary"
+              >
+                <div>
+                  <p className="font-mono text-[9px] font-bold uppercase tracking-widest text-secondary">Also in</p>
+                  <p className="mt-1 text-sm font-bold text-primary">{service.title} in {area.name}</p>
+                </div>
+                <ArrowRight className="h-4 w-4 shrink-0 text-secondary transition-colors group-hover:text-primary" />
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
 

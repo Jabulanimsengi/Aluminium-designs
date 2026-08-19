@@ -44,9 +44,10 @@ import {
 } from "lucide-react";
 import { services } from "@/data/services";
 import { servicePages } from "@/data/service-pages";
+import { gautengLocations } from "@/data/locations";
 import CTASection from "@/components/CTASection";
 import FAQAccordion from "@/components/FAQAccordion";
-import { absoluteUrl, siteUrl, whatsappQuoteUrl } from "@/lib/site";
+import { absoluteUrl, siteUrl, slugify, whatsappQuoteUrl } from "@/lib/site";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -135,6 +136,9 @@ export default async function ServiceDetailPage({ params }: Props) {
   if (!content) notFound();
 
   const otherServices = services.filter((s) => s.id !== service.id);
+  const majorAreas = gautengLocations
+    .filter((location) => location.type === "city" || location.type === "town")
+    .slice(0, 12);
 
   return (
     <div className="relative bg-surface text-on-surface">
@@ -500,6 +504,46 @@ export default async function ServiceDetailPage({ params }: Props) {
               className="inline-flex items-center gap-2 rounded-full border border-outline-variant bg-surface px-5 py-3 font-mono text-[10px] font-bold uppercase tracking-widest text-primary transition-colors hover:border-primary hover:bg-primary hover:text-on-primary"
             >
               View All Products
+              <ArrowUpRight className="h-4 w-4" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* AREAS WE SERVE */}
+      <section className="py-20 bg-surface-container-low border-b border-outline-variant">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="mb-10 text-center">
+            <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
+              Local Service Areas
+            </span>
+            <h2 className="mt-2 font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
+              {service.title} Across Gauteng
+            </h2>
+            <p className="mt-3 max-w-2xl mx-auto text-sm text-on-surface-variant leading-relaxed">
+              We manufacture and install in every major Gauteng area. Select your area for local details.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+            {majorAreas.map((area) => (
+              <Link
+                key={area.id}
+                href={`/locations/${area.id}/${slugify(service.title)}-in-${area.id}`}
+                className="group flex items-center justify-between gap-2 border border-outline-variant bg-surface-container-lowest px-4 py-3 text-xs font-medium text-on-surface transition-colors hover:border-primary"
+              >
+                <span className="truncate">{service.title} in {area.name}</span>
+                <ArrowUpRight className="h-3.5 w-3.5 shrink-0 text-secondary transition-colors group-hover:text-primary" />
+              </Link>
+            ))}
+          </div>
+
+          <div className="mt-6 flex justify-center">
+            <Link
+              href="/locations"
+              className="inline-flex items-center gap-2 rounded-full border border-outline-variant bg-surface px-5 py-3 font-mono text-[10px] font-bold uppercase tracking-widest text-primary transition-colors hover:border-primary hover:bg-primary hover:text-on-primary"
+            >
+              View All Service Areas
               <ArrowUpRight className="h-4 w-4" />
             </Link>
           </div>
