@@ -167,6 +167,19 @@ function StatCard({ label, value, icon: Icon }: { label: string; value: string; 
   );
 }
 
+function sourceBadgeClass(source: string) {
+  switch (source) {
+    case "quote":
+      return "bg-surface-container text-secondary";
+    case "phone":
+      return "bg-blue-50 text-blue-700";
+    case "email":
+      return "bg-amber-50 text-amber-700";
+    default:
+      return "bg-emerald-50 text-emerald-700";
+  }
+}
+
 function SectionHeading({ icon: Icon, title, hint }: { icon: LucideIcon; title: string; hint?: string }) {
   return (
     <div className="flex items-start justify-between gap-4 border-b border-outline-variant p-5 sm:p-6">
@@ -615,7 +628,7 @@ export default async function AdminMonitoringPage({
                           <td className="p-3 text-on-surface-variant">{lead.location}</td>
                           <td className="p-3 text-on-surface-variant">{lead.budget}</td>
                           <td className="p-3">
-                            <span className={`rounded-full px-2 py-1 font-mono text-[9px] font-bold uppercase ${lead.source === "quote" ? "bg-surface-container text-secondary" : "bg-emerald-50 text-emerald-700"}`}>
+                            <span className={`rounded-full px-2 py-1 font-mono text-[9px] font-bold uppercase ${sourceBadgeClass(lead.source)}`}>
                               {lead.source}
                             </span>
                           </td>

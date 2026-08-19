@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { X } from "lucide-react";
 import LeadCaptureForm from "./LeadCaptureForm";
 
-type GateSource = "whatsapp" | "quote";
+type GateSource = "whatsapp" | "quote" | "phone" | "email";
 
 function classify(link: HTMLAnchorElement | null, element: Element): GateSource | null {
   if (!link) return null;
@@ -20,9 +20,13 @@ function classify(link: HTMLAnchorElement | null, element: Element): GateSource 
 
   const isQuote = /^\/quote(?:$|[?#])/i.test(href) || /quote|quotation|estimate/i.test(label);
   const isWhatsApp = /wa\.me\/|whatsapp\.com/i.test(href);
+  const isPhone = /^tel:/i.test(href);
+  const isEmail = /^mailto:/i.test(href);
 
   if (isQuote) return "quote";
   if (isWhatsApp) return "whatsapp";
+  if (isPhone) return "phone";
+  if (isEmail) return "email";
   return null;
 }
 

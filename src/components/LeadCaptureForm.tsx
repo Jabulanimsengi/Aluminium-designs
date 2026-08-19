@@ -5,7 +5,7 @@ import { AlertCircle, LoaderCircle, MessageCircle } from "lucide-react";
 import { BUDGET_OPTIONS } from "@/lib/lead-options";
 
 type LeadCaptureFormProps = {
-  source: "whatsapp" | "quote";
+  source: "whatsapp" | "quote" | "phone" | "email";
   onCancel?: () => void;
 };
 
