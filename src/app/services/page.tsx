@@ -6,9 +6,9 @@ import CTASection from "@/components/CTASection";
 import { PenTool } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Aluminium Windows, Doors & Security",
+  title: "Aluminium & Steel Windows, Doors, Gates & Security",
   description:
-    "Explore our full range of home products: aluminium windows, sliding patio doors, security gates, burglar bars, and patio enclosures.",
+    "Explore our full range of home products: aluminium windows, sliding patio doors, steel carports, security gates, burglar bars, palisade fencing, and patio enclosures.",
   alternates: { canonical: "/services" },
 };
 

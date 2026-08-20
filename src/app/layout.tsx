@@ -29,19 +29,22 @@ const socialImageUrl = absoluteUrl("/images/hero_exterior.png");
 export const metadata: Metadata = {
   metadataBase: siteUrl ? new URL(siteUrl) : undefined,
   title: {
-    default: "Aluminium Designs | Premium Windows & Doors",
+    default: "Aluminium Designs | Custom Aluminium Doors, Windows & Steel Works Gauteng",
     template: "%s | Aluminium Designs"
   },
   description:
-    "Premium custom aluminium windows, doors, shopfronts, and partitions. Measured, designed, fabricated, and installed to last. Request a free quote.",
+    "Top-rated custom aluminium doors, sliding windows, folding stackers, security gates, burglar bars, steel carports & glass balustrades across Gauteng, South Africa. SABS certified. Request your free quote today.",
   keywords: [
-    "aluminium windows",
-    "aluminium doors",
-    "aluminium fabrication",
-    "custom aluminium",
-    "aluminium shopfronts",
-    "sliding doors",
-    "aluminium installers",
+    "aluminium designs",
+    "aluminium doors gauteng",
+    "aluminium windows johannesburg",
+    "pretoria aluminium",
+    "security gates",
+    "burglar bars",
+    "steel carports",
+    "glass shopfronts",
+    "folding stacker doors",
+    "sabs approved",
   ],
   authors: [{ name: "Aluminium Designs" }],
   formatDetection: { email: false, address: false, telephone: false },
@@ -51,18 +54,18 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     siteName: "Aluminium Designs",
-    title: "Aluminium Designs | Premium Windows & Doors",
+    title: "Aluminium Designs | Custom Aluminium Doors, Windows & Steel Works Gauteng",
     description:
-      "Premium custom aluminium windows, doors, shopfronts, and partitions, manufactured and installed in Gauteng.",
+      "Custom manufacturing and professional installation of SABS & AAAMSA certified aluminium doors, windows, security gates, and steel structures across Gauteng.",
     ...(socialImageUrl
       ? { images: [{ url: socialImageUrl, alt: "Aluminium Designs installation" }] }
       : {}),
   },
   twitter: {
     card: "summary_large_image",
-    title: "Aluminium Designs | Premium Windows & Doors",
+    title: "Aluminium Designs | Custom Aluminium Doors, Windows & Steel Works Gauteng",
     description:
-      "Custom aluminium windows, doors, security systems, and glass installations in Gauteng.",
+      "Custom-tailored SABS approved aluminium and steel fabrication with free on-site measuring in Johannesburg, Pretoria, and Gauteng.",
     ...(socialImageUrl ? { images: [socialImageUrl] } : {}),
   },
 };

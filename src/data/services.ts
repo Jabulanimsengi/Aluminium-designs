@@ -1,3 +1,5 @@
+import { extraServices } from "@/data/extra-services";
+
 export interface Service {
   id: string;
   title: string;
@@ -320,5 +322,6 @@ export const services: Service[] = [
     ],
     imagePath: "/images/shopfront_facade.png",
     iconName: "Sparkles"
-  }
+  },
+  ...extraServices,
 ];

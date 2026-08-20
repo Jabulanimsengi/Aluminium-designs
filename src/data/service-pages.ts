@@ -1,4 +1,5 @@
 import { siteUrl } from "@/lib/site";
+import { extraServicePages } from "@/data/extra-services";
 
 export interface ServicePageSeo {
   titleTag: string;
@@ -5032,5 +5033,6 @@ export const servicePages: Record<string, ServicePageContent> = {
   "frameless-glass": publishServicePage("frameless-glass", framelessGlassSystems),
   "garage-doors": publishServicePage("garage-doors", aluminiumGarageDoors),
   "mirrors-glass": publishServicePage("mirrors-glass", mirrorsAndCustomGlass),
+  ...extraServicePages,
 };
 
