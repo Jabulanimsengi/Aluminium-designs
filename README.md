@@ -31,7 +31,7 @@ The site records page views, navigation and enquiry clicks, visitor sessions, se
 For Docker deployments, `/app/data` is the default event directory and is declared as a volume. Mount it to persistent host or volume storage so analytics survive a container replacement:
 
 ```bash
-docker run -v apex-monitoring:/app/data --env-file .env -p 3000:3000 apex-aluminium
+docker run -v ad-monitoring:/app/data --env-file .env -p 3000:3000 aluminium-designs
 ```
 
 Monitoring uses random anonymous browser and session identifiers to connect page views and clicks into visitor journeys. No names, personal contact details, form contents, or full referring query strings are collected.

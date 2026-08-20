@@ -506,7 +506,7 @@ export function getLocationServicePage(area: string, routeServiceId: string): Lo
   return base;
 }
 
-/** Returns every valid location x service route for static generation. */
+/** Returns every valid location x service route for full sitemap generation (19,476 routes). */
 export function getAllLocationServiceRoutes(): { area: string; serviceId: string }[] {
   const routes: { area: string; serviceId: string }[] = [];
   for (const location of gautengLocations) {
@@ -519,3 +519,23 @@ export function getAllLocationServiceRoutes(): { area: string; serviceId: string
   }
   return routes;
 }
+
+/** Returns priority location x service routes for build-time pre-rendering (~1,800 routes). */
+export function getPrerenderLocationServiceRoutes(): { area: string; serviceId: string }[] {
+  // Prerender primary cities, high-volume suburbs, and flagship malls at build-time
+  const priorityLocations = gautengLocations.filter(
+    (loc) => loc.type === "city" || loc.type === "mall" || ["sandton", "fourways", "midrand", "centurion", "bedfordview", "roodepoort", "kempton-park", "alberton", "benoni", "boksburg", "soweto", "menlyn"].some(prefix => loc.id.includes(prefix))
+  ).slice(0, 50);
+
+  const routes: { area: string; serviceId: string }[] = [];
+  for (const location of priorityLocations) {
+    for (const service of services) {
+      routes.push({
+        area: location.id,
+        serviceId: `${slugify(service.title)}-in-${location.id}`,
+      });
+    }
+  }
+  return routes;
+}
+

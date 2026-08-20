@@ -224,7 +224,7 @@ export const projects: Project[] = [
     id: "proj-18",
     title: "Metropolitan Business Park Facade",
     category: "shopfronts",
-    client: "Apex Developments",
+    client: "Metropolitan Property Group",
     location: "Umhlanga, Durban",
     description: "Installation of heavy-duty double-glazed commercial shopfronts, frameless entry doors, and integrated automatic motion-sensing sliders.",
     imagePath: "/images/shopfront_facade.png",

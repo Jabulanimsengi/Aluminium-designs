@@ -37,6 +37,8 @@ function deterministicShuffle<T>(array: T[], seed: string): T[] {
   return shuffled;
 }
 
+export const dynamicParams = true;
+
 export async function generateStaticParams() {
   return gautengLocations.map((location) => ({
     area: location.id,

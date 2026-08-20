@@ -1,6 +1,6 @@
 import { createHash, createHmac, timingSafeEqual } from "node:crypto";
 
-export const ADMIN_SESSION_COOKIE = "apex_admin_session";
+export const ADMIN_SESSION_COOKIE = "ad_admin_session";
 export const ADMIN_SESSION_MAX_AGE = 8 * 60 * 60;
 
 function safeEqual(left: string, right: string) {

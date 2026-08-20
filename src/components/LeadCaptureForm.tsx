@@ -31,8 +31,8 @@ export default function LeadCaptureForm({ source, onCancel }: LeadCaptureFormPro
   function monitoringIds() {
     try {
       return {
-        visitorId: window.localStorage.getItem("apex-monitoring-visitor") || "",
-        sessionId: window.sessionStorage.getItem("apex-monitoring-session") || "",
+        visitorId: window.localStorage.getItem("ad-monitoring-visitor") || "",
+        sessionId: window.sessionStorage.getItem("ad-monitoring-session") || "",
       };
     } catch {
       return { visitorId: "", sessionId: "" };

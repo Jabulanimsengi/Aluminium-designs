@@ -9,7 +9,7 @@ type MonitoringEvent = {
 };
 
 function visitorId() {
-  const key = "apex-monitoring-visitor";
+  const key = "ad-monitoring-visitor";
   try {
     const existing = window.localStorage.getItem(key);
     if (existing) return existing;
@@ -22,7 +22,7 @@ function visitorId() {
 }
 
 function sessionId() {
-  const key = "apex-monitoring-session";
+  const key = "ad-monitoring-session";
   try {
     const existing = window.sessionStorage.getItem(key);
     if (existing) return existing;

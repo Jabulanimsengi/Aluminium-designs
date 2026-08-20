@@ -3,7 +3,7 @@ import { gautengLocations } from "@/data/locations";
 import { services } from "@/data/services";
 import {
   getLocationServicePage,
-  getAllLocationServiceRoutes,
+  getPrerenderLocationServiceRoutes,
 } from "@/data/location-service-pages";
 import { notFound } from "next/navigation";
 import Link from "next/link";
@@ -13,8 +13,10 @@ import CTASection from "@/components/CTASection";
 import FAQAccordion from "@/components/FAQAccordion";
 import { whatsappQuoteUrl, slugify } from "@/lib/site";
 
+export const dynamicParams = true;
+
 export async function generateStaticParams() {
-  return getAllLocationServiceRoutes();
+  return getPrerenderLocationServiceRoutes();
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ area: string; serviceId: string }> }) {
