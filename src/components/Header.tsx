@@ -1,353 +1,141 @@
-"use client";
+import { useState } from 'react';
+import { Menu, X, Home, Info, Hammer, Layers, Tag, Phone, ClipboardCheck } from 'lucide-react';
+import { ActiveTab } from '../types';
 
-import React, { useState, useRef, useEffect } from "react";
-import Link from "next/link";
-import Image from "next/image";
-import { usePathname } from "next/navigation";
-import { Menu, X, Phone, ChevronDown, ArrowRight } from "lucide-react";
-import { services } from "@/data/services";
-import { whatsappQuoteUrl } from "@/lib/site";
+interface HeaderProps {
+  activeTab?: ActiveTab;
+  onNavigate: (tab: ActiveTab) => void;
+}
 
-export default function Header() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [servicesDropdownOpen, setServicesDropdownOpen] = useState(false);
-  const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
-  const [mobileServicesCount, setMobileServicesCount] = useState(5);
-  const pathname = usePathname();
-  const dropdownTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const mobileMenuButtonRef = useRef<HTMLButtonElement>(null);
-  const mobilePanelRef = useRef<HTMLDivElement>(null);
-  const servicesMenuRef = useRef<HTMLDivElement>(null);
-  const servicesButtonRef = useRef<HTMLButtonElement>(null);
+export default function Header({ activeTab, onNavigate }: HeaderProps) {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const handleDropdownEnter = () => {
-    if (dropdownTimer.current) {
-      clearTimeout(dropdownTimer.current);
-      dropdownTimer.current = null;
-    }
-    setServicesDropdownOpen(true);
+  const handleLinkClick = (tab: ActiveTab) => {
+    setIsMenuOpen(false);
+    onNavigate(tab);
   };
 
-  const handleDropdownLeave = () => {
-    dropdownTimer.current = setTimeout(() => {
-      setServicesDropdownOpen(false);
-    }, 150);
-  };
-
-  useEffect(() => {
-    return () => {
-      if (dropdownTimer.current) clearTimeout(dropdownTimer.current);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (!mobileMenuOpen) return;
-
-    const previousOverflow = document.body.style.overflow;
-    const menuButton = mobileMenuButtonRef.current;
-    document.body.style.overflow = "hidden";
-
-    const panel = mobilePanelRef.current;
-    const focusableSelector =
-      'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
-    const focusableElements = panel?.querySelectorAll<HTMLElement>(focusableSelector);
-    focusableElements?.[0]?.focus();
-
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setMobileMenuOpen(false);
-        return;
-      }
-
-      if (event.key !== "Tab" || !focusableElements?.length) return;
-      const first = focusableElements[0];
-      const last = focusableElements[focusableElements.length - 1];
-
-      if (event.shiftKey && document.activeElement === first) {
-        event.preventDefault();
-        last.focus();
-      } else if (!event.shiftKey && document.activeElement === last) {
-        event.preventDefault();
-        first.focus();
-      }
-    };
-
-    document.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      document.body.style.overflow = previousOverflow;
-      document.removeEventListener("keydown", handleKeyDown);
-      menuButton?.focus();
-    };
-  }, [mobileMenuOpen]);
-
-  useEffect(() => {
-    if (!servicesDropdownOpen) return;
-
-    const handlePointerDown = (event: PointerEvent) => {
-      if (!servicesMenuRef.current?.contains(event.target as Node)) {
-        setServicesDropdownOpen(false);
-      }
-    };
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setServicesDropdownOpen(false);
-        servicesButtonRef.current?.focus();
-      }
-    };
-
-    document.addEventListener("pointerdown", handlePointerDown);
-    document.addEventListener("keydown", handleKeyDown);
-    return () => {
-      document.removeEventListener("pointerdown", handlePointerDown);
-      document.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [servicesDropdownOpen]);
-
-  const navLinks = [
-    { name: "Home", href: "/" },
-    { name: "About Us", href: "/about" },
-    { name: "Services", href: "/services", hasDropdown: true },
-    { name: "Gallery", href: "/gallery" },
-    { name: "Prices", href: "/prices" },
-    { name: "FAQ", href: "/faq" },
-    { name: "Contact", href: "/contact" },
-  ];
+  const navItems = [
+    { id: 'home', label: 'Home', icon: Home },
+    { id: 'about', label: 'About Us', icon: Info },
+    { id: 'services', label: 'Services', icon: Hammer },
+    { id: 'projects', label: 'Gallery', icon: Layers },
+    { id: 'catalogue', label: 'Prices', icon: Tag },
+    { id: 'contact', label: 'Contact Us', icon: Phone },
+  ] as const;
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-surface border-b border-outline-variant h-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
-        <div className="relative flex items-center justify-between h-full lg:grid lg:grid-cols-[154px_minmax(0,1fr)_auto]">
-          {/* Left: hamburger on mobile */}
-            <button
-              ref={mobileMenuButtonRef}
-              type="button"
-              onClick={() => { setMobileServicesOpen(false); setMobileServicesCount(5); setMobileMenuOpen(!mobileMenuOpen); }}
-              className="lg:hidden p-1.5 -ml-1.5 hover:bg-surface-container transition-colors text-primary rounded-lg"
-            aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+    <>
+      <header className="fixed top-0 left-0 w-full z-50 bg-surface border-b border-outline-variant flex justify-between items-center px-4 md:px-12 h-16">
+        {/* Left Side: Logo & Mobile Hamburger */}
+        <div className="flex items-center gap-3 z-10">
+          <button 
+            onClick={() => setIsMenuOpen(true)}
+            className="p-1.5 hover:bg-surface-container transition-colors duration-150 rounded-none cursor-pointer text-primary md:hidden"
+            aria-label="Open Navigation Menu"
           >
-            {mobileMenuOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
+            <Menu className="w-6 h-6" />
           </button>
-
-          {/* Logo: aligned to the page content edge on desktop */}
-          <Link
-            href="/"
-            className="relative flex h-12 w-[148px] shrink-0 items-center overflow-hidden select-none sm:h-[52px] sm:w-[162px] lg:h-12 lg:w-[154px] lg:justify-self-start"
+          
+          <span 
+            onClick={() => handleLinkClick('home')}
+            className="font-sans text-lg md:text-xl font-bold tracking-wider text-primary cursor-pointer select-none"
           >
-            <Image
-              src="/images/real_images/logo/logo.png"
-              alt="Aluminium Designs"
-              fill
-              sizes="(max-width: 640px) 148px, 162px"
-              className="object-cover"
-              unoptimized
-              preload
-            />
-          </Link>
-
-          {/* Right spacer: balances the hamburger to keep logo centered on mobile */}
-          <div className="lg:hidden w-10" />
-
-          <nav className="hidden lg:flex items-center justify-self-center gap-4 xl:gap-5">
-            {navLinks.map((link) =>
-              link.hasDropdown ? (
-                <div
-                  ref={servicesMenuRef}
-                  key={link.name}
-                  className="relative"
-                  onMouseEnter={handleDropdownEnter}
-                  onMouseLeave={handleDropdownLeave}
-                >
-                  <button
-                    ref={servicesButtonRef}
-                    type="button"
-                    aria-haspopup="true"
-                    aria-expanded={servicesDropdownOpen}
-                    aria-controls="desktop-services-menu"
-                    onClick={() => setServicesDropdownOpen((isOpen) => !isOpen)}
-                    className={`relative flex items-center gap-1 text-[11px] font-mono font-bold tracking-widest uppercase transition-colors pb-1 cursor-pointer ${
-                      pathname.startsWith("/services")
-                        ? "text-primary after:scale-x-100"
-                        : "text-secondary hover:text-primary after:scale-x-0 hover:after:scale-x-100"
-                    } after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:origin-left after:scale-x-0 after:bg-on-tertiary-container after:transition-transform after:duration-300 after:ease-out`}
-                  >
-                    {link.name}
-                    <ChevronDown className={`w-3.5 h-3.5 transition-transform ${servicesDropdownOpen ? "rotate-180" : ""}`} />
-                  </button>
-
-                  <div
-                    id="desktop-services-menu"
-                    aria-hidden={!servicesDropdownOpen}
-                    className={`absolute left-0 top-full w-72 bg-surface border border-outline-variant transition-all duration-200 origin-top-left ${
-                      servicesDropdownOpen
-                        ? "opacity-100 translate-y-0 scale-100 pointer-events-auto"
-                        : "opacity-0 -translate-y-1 scale-95 pointer-events-none"
-                    }`}
-                  >
-                    <div className="p-2 flex flex-col gap-0.5">
-                      {services.slice(0, 6).map((s) => (
-                        <Link
-                          key={s.id}
-                          href={s.slug}
-                          tabIndex={servicesDropdownOpen ? 0 : -1}
-                          className="flex items-center gap-3 p-3 hover:bg-surface-container transition-colors rounded-lg"
-                        >
-                          <span className="text-xs font-sans font-semibold text-primary">{s.title}</span>
-                        </Link>
-                      ))}
-                      <div className="border-t border-outline-variant my-1" />
-                      <Link
-                        href="/services"
-                        tabIndex={servicesDropdownOpen ? 0 : -1}
-                        className="flex items-center justify-center gap-2 p-3 hover:bg-surface-container transition-colors rounded-lg text-xs font-mono font-bold uppercase tracking-wider text-secondary hover:text-primary"
-                      >
-                        View All {services.length} Services
-                        <ChevronDown className="w-3.5 h-3.5 -rotate-90" />
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              ) : (
-                <Link
-                  key={link.name}
-                  href={link.href}
-                  className={`relative text-[11px] font-mono font-bold tracking-widest uppercase transition-colors pb-1 ${
-                    pathname === link.href
-                      ? "text-primary after:scale-x-100"
-                      : "text-secondary hover:text-primary after:scale-x-0 hover:after:scale-x-100"
-                  } after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:origin-left after:scale-x-0 after:bg-on-tertiary-container after:transition-transform after:duration-300 after:ease-out`}
-                >
-                  {link.name}
-                </Link>
-              )
-            )}
-          </nav>
-
-          {/* Desktop CTAs */}
-          <div className="hidden lg:flex items-center justify-self-end gap-4">
-            <a
-              href="tel:+27716122439"
-              className="hidden 2xl:flex items-center gap-2 text-secondary hover:text-primary transition-colors"
-            >
-              <Phone className="w-4 h-4" />
-              <span className="font-mono text-[11px] font-medium tracking-wider">071 612 2439</span>
-            </a>
-            <Link
-              href={whatsappQuoteUrl}
-              className="bg-primary hover:bg-secondary text-on-primary px-5 py-2 rounded-full font-mono text-[11px] font-bold tracking-widest uppercase transition-colors inline-flex items-center gap-1.5"
-            >
-              Free Quote
-              <ArrowRight className="w-3.5 h-3.5" />
-            </Link>
-          </div>
+            Aluminium Designs
+          </span>
         </div>
-      </div>
 
-      {mobileMenuOpen && (
-        <div className="fixed inset-0 z-[100] flex lg:hidden">
-          <button
-            type="button"
-            className="fixed inset-0 bg-black/50"
-            onClick={() => setMobileMenuOpen(false)}
-            aria-label="Close navigation menu"
-            tabIndex={-1}
-          />
-          <div
-            ref={mobilePanelRef}
-            role="dialog"
-            aria-modal="true"
-            aria-label="Main navigation"
-            className="relative flex h-full w-full max-w-xs flex-col space-y-6 overflow-y-auto border-r border-outline-variant bg-surface p-6 shadow-xl animate-slide-in-left"
+        {/* Desktop Centered Navigation */}
+        <nav className="hidden md:flex absolute left-1/2 transform -translate-x-1/2 items-center gap-6">
+          {navItems.map((item) => (
+            <button
+              key={item.id}
+              onClick={() => handleLinkClick(item.id)}
+              className={`text-[11px] font-mono font-bold tracking-widest uppercase transition-colors py-1 px-1.5 cursor-pointer border-b-2 hover:text-primary ${
+                activeTab === item.id 
+                  ? 'text-primary border-primary' 
+                  : 'text-secondary border-transparent'
+              }`}
+            >
+              {item.label}
+            </button>
+          ))}
+        </nav>
+        
+        {/* Right Side: Primary Call To Action */}
+        <div className="z-10">
+          <button 
+            onClick={() => handleLinkClick('inquiry')}
+            className="bg-primary text-on-primary hover:bg-secondary border border-primary hover:border-secondary px-5 py-2 font-mono text-xs font-semibold tracking-wider transition-all duration-150 rounded-none active:opacity-80 cursor-pointer"
           >
-            <div className="flex items-center justify-between pb-4 border-b border-outline-variant">
-              <span className="font-sans text-sm font-black tracking-wider text-primary">MENU</span>
-              <button type="button" aria-label="Close menu" onClick={() => setMobileMenuOpen(false)} className="p-1 hover:bg-surface-container text-primary rounded-lg">
-                <X className="w-5 h-5" />
+            QUOTATION
+          </button>
+        </div>
+      </header>
+
+      {/* Mobile Navigation Sidebar Drawer */}
+      {isMenuOpen && (
+        <div className="fixed inset-0 z-[100] flex">
+          {/* Backdrop */}
+          <div 
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm transition-opacity"
+            onClick={() => setIsMenuOpen(false)}
+          />
+
+          {/* Sidebar Drawer Panel */}
+          <div className="relative flex flex-col w-full max-w-xs bg-surface border-r border-outline-variant h-full p-6 space-y-8 z-10 shadow-2xl animate-slide-in">
+            <div className="flex justify-between items-center pb-4 border-b border-outline-variant">
+              <span className="font-sans text-base font-black tracking-wider text-primary">Aluminium Designs Menu</span>
+              <button
+                onClick={() => setIsMenuOpen(false)}
+                className="p-1 hover:bg-surface-container text-primary transition-colors cursor-pointer"
+                aria-label="Close menu"
+              >
+                <X className="w-6 h-6" />
               </button>
             </div>
 
-            <nav className="flex flex-col gap-1">
-              {navLinks.map((link) =>
-                link.hasDropdown ? (
-                  <div key={link.name}>
-                    <button
-                      type="button"
-                      aria-expanded={mobileServicesOpen}
-                      aria-controls="mobile-services-menu"
-                      onClick={() => setMobileServicesOpen((o) => !o)}
-                      className="flex w-full items-center justify-between px-4 py-3 text-xs font-bold uppercase tracking-wider text-secondary hover:bg-surface-container transition-colors rounded-lg"
-                    >
-                      {link.name}
-                      <ChevronDown className={`w-4 h-4 transition-transform ${mobileServicesOpen ? "rotate-180" : ""}`} />
-                    </button>
-                    {mobileServicesOpen && (
-                      <div id="mobile-services-menu" className="border-l-2 border-outline-variant ml-4 pl-4 space-y-0.5">
-                        <Link
-                          href="/services"
-                          onClick={() => setMobileMenuOpen(false)}
-                          className="block px-3 py-2 rounded-lg text-xs font-medium text-on-surface-variant hover:text-primary hover:bg-surface-container"
-                        >
-                          All Services
-                        </Link>
-                        {services.slice(0, mobileServicesCount).map((s) => (
-                          <Link
-                            key={s.id}
-                            href={s.slug}
-                            onClick={() => setMobileMenuOpen(false)}
-                            className="block px-3 py-2 rounded-lg text-[11px] text-on-surface-variant hover:text-primary hover:bg-surface-container"
-                          >
-                            {s.title}
-                          </Link>
-                        ))}
-                        {mobileServicesCount < services.length && (
-                          <button
-                            type="button"
-                            onClick={() => setMobileServicesCount((c) => c + 5)}
-                            className="w-full px-3 py-2 rounded-lg text-[10px] font-mono font-bold uppercase tracking-wider text-secondary hover:text-primary hover:bg-surface-container transition-colors text-center"
-                          >
-                            View More Services ({services.length - mobileServicesCount} remaining)
-                          </button>
-                        )}
-                      </div>
-                    )}
-                  </div>
-                ) : (
-                  <Link
-                    key={link.name}
-                    href={link.href}
-                    onClick={() => setMobileMenuOpen(false)}
-                    className={`px-4 py-3 text-xs font-bold uppercase tracking-wider transition-colors border-l-2 rounded-r-lg ${
-                      pathname === link.href
-                        ? "text-primary border-primary bg-surface-container"
-                        : "text-secondary border-transparent hover:bg-surface-container"
+            <nav className="flex flex-col space-y-1">
+              {navItems.map((item) => {
+                const Icon = item.icon;
+                const isSelected = activeTab === item.id;
+                return (
+                  <button
+                    key={item.id}
+                    onClick={() => handleLinkClick(item.id)}
+                    className={`flex items-center gap-4 px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider transition-colors rounded-none cursor-pointer ${
+                      isSelected 
+                        ? 'bg-primary/5 text-primary border-l-2 border-primary' 
+                        : 'text-secondary hover:bg-surface-container'
                     }`}
                   >
-                    {link.name}
-                  </Link>
-                )
-              )}
+                    <Icon className="w-4 h-4 shrink-0 text-secondary" />
+                    {item.label}
+                  </button>
+                );
+              })}
+              
+              {/* Extra Quotation Button in mobile navigation */}
+              <button
+                onClick={() => handleLinkClick('inquiry')}
+                className={`flex items-center gap-4 px-4 py-3 text-left text-xs font-bold uppercase tracking-wider transition-colors rounded-none cursor-pointer bg-primary/10 text-primary border-l-2 border-primary mt-2`}
+              >
+                <ClipboardCheck className="w-4 h-4 shrink-0 text-primary" />
+                Get Custom Quote
+              </button>
             </nav>
 
-            <div className="border-t border-outline-variant pt-6 space-y-4">
-              <a
-                href="tel:+27716122439"
-                className="flex items-center gap-3 px-4 py-3 border border-outline-variant bg-surface-container-low text-sm font-mono font-medium text-primary"
-              >
-                <Phone className="w-4 h-4 text-secondary" />
-                071 612 2439
-              </a>
-              <Link
-                href={whatsappQuoteUrl}
-                onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center justify-center w-full py-3.5 rounded-full bg-primary hover:bg-secondary text-on-primary font-mono text-xs font-bold uppercase tracking-widest transition-colors"
-              >
-                Request Free Quote
-                <ArrowRight className="w-4 h-4 ml-2" />
-              </Link>
+            <div className="pt-8 border-t border-outline-variant space-y-4 text-xs text-on-surface-variant">
+              <p className="font-mono text-[10px] uppercase tracking-wider text-secondary font-bold">
+                Quality Conformance
+              </p>
+              <p className="leading-relaxed text-[11px]">
+                Our luxury residential systems are SABS & AAAMSA storm-tested to guarantee safety and beauty for your South African home.
+              </p>
             </div>
           </div>
         </div>
       )}
-    </header>
+    </>
   );
 }
