@@ -64,7 +64,7 @@ export default async function LocationServicePage({ params }: { params: Promise<
   };
 
   const relatedAreas = gautengLocations
-    .filter((l) => (l.type === "city" || l.type === "town") && l.id !== location.id)
+    .filter((l) => (l.type === "city" || l.type === "suburb") && l.id !== location.id)
     .slice(0, 4);
 
   return (

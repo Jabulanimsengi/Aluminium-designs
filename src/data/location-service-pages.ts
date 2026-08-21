@@ -117,7 +117,7 @@ function specValue(page: ServicePageContent, label: string): string | undefined 
 
 function getLocalSuburbs(location: LocationArea): string[] {
   const sameMunicipality = gautengLocations.filter(
-    (l) => l.municipality === location.municipality && l.id !== location.id,
+    (l) => l.municipality === location.municipality && l.slug !== location.slug,
   );
   if (sameMunicipality.length === 0) return [];
   const rng = seededRandom(`${location.id}:suburbs`);
@@ -469,11 +469,11 @@ function buildStructuredData(
  * Content is composed deterministically from verified service and location data.
  */
 export function getLocationServicePage(area: string, routeServiceId: string): LocationServiceObject | null {
-  const location = gautengLocations.find((loc) => loc.id === area);
+  const location = gautengLocations.find((loc) => loc.slug === area);
   if (!location) return null;
 
   const service = services.find(
-    (s) => `${slugify(s.title)}-in-${location.id}` === routeServiceId,
+    (s) => `${slugify(s.title)}-in-${location.slug}` === routeServiceId,
   );
   if (!service) return null;
 
@@ -488,10 +488,10 @@ export function getLocationServicePage(area: string, routeServiceId: string): Lo
   const localFaqs = buildFaqs(location, service, page, suburbs);
 
   const base: LocationServiceObject = {
-    id: `loc-srv-${location.id}-${service.id}`,
+    id: `loc-srv-${location.slug}-${service.id}`,
     serviceId: service.id,
-    locationSlug: location.id,
-    fullPageUrl: `${siteUrl}/locations/${location.id}/${routeServiceId}`,
+    locationSlug: location.slug,
+    fullPageUrl: `${siteUrl}/locations/${location.slug}/${routeServiceId}`,
     hero,
     localizedStory,
     localNAP,
@@ -512,8 +512,8 @@ export function getAllLocationServiceRoutes(): { area: string; serviceId: string
   for (const location of gautengLocations) {
     for (const service of services) {
       routes.push({
-        area: location.id,
-        serviceId: `${slugify(service.title)}-in-${location.id}`,
+        area: location.slug,
+        serviceId: `${slugify(service.title)}-in-${location.slug}`,
       });
     }
   }

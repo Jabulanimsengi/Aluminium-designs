@@ -137,7 +137,7 @@ export default async function ServiceDetailPage({ params }: Props) {
 
   const otherServices = services.filter((s) => s.id !== service.id);
   const majorAreas = gautengLocations
-    .filter((location) => location.type === "city" || location.type === "town")
+    .filter((location) => location.type === "city" || location.type === "suburb")
     .slice(0, 12);
 
   return (

@@ -41,7 +41,7 @@ export const dynamicParams = true;
 
 export async function generateStaticParams() {
   return gautengLocations.map((location) => ({
-    area: location.id,
+    area: location.slug,
   }));
 }
 
@@ -152,7 +152,7 @@ export default async function LocationPage({ params }: { params: Promise<{ area:
       addressRegion: businessContact.addressRegion,
       addressCountry: businessContact.addressCountry,
     },
-    url: `${siteUrl}/locations/${location.id}`,
+    url: `${siteUrl}/locations/${location.slug}`,
   };
 
   return (
@@ -221,7 +221,7 @@ export default async function LocationPage({ params }: { params: Promise<{ area:
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {shuffledServices.map((service) => {
-              const localizedSlug = `/locations/${location.id}/${slugify(service.title)}-in-${location.id}`;
+              const localizedSlug = `/locations/${location.slug}/${slugify(service.title)}-in-${location.slug}`;
               return (
                 <ServiceCard
                   key={service.id}
