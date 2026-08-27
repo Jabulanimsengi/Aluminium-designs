@@ -14,7 +14,7 @@ export const glassReplacementService: ServiceObject = {
     primaryCtaLink: "/contact",
     secondaryCtaText: "Explore Glass Types",
     secondaryCtaLink: "#specs",
-    heroImage: "/images/services/glass-replacement-hero.webp"
+    heroImage: "/images/window_detail.png"
   },
   overview: {
     heading: "Emergency Glass Replacement for Windows & Doors",
@@ -92,14 +92,14 @@ export const glassReplacementService: ServiceObject = {
       title: "Aluminium Window & Door Repairs",
       slug: "aluminium-repairs",
       shortDescription: "Hardware repairs for sliding doors and windows.",
-      thumbnailImage: "/images/services/repairs-thumb.webp"
+      thumbnailImage: "/images/window_repair.png"
     },
     {
       serviceId: "srv-aluminium-windows",
       title: "Aluminium Windows",
       slug: "aluminium-windows",
       shortDescription: "Complete custom window replacements.",
-      thumbnailImage: "/images/services/windows-thumb.webp"
+      thumbnailImage: "/images/real_images/products/windows/window_aluminium_one.jpeg"
     }
   ],
   seo: {

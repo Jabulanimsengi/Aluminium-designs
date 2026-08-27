@@ -14,7 +14,7 @@ export const aluminiumRepairsService: ServiceObject = {
     primaryCtaLink: "/contact",
     secondaryCtaText: "View Repair Services",
     secondaryCtaLink: "#specs",
-    heroImage: "/images/services/aluminium-repairs-hero.webp"
+    heroImage: "/images/window_repair.png"
   },
   overview: {
     heading: "Reliable Maintenance & Hardware Repairs for Aluminium Frames",
@@ -92,14 +92,14 @@ export const aluminiumRepairsService: ServiceObject = {
       title: "Broken Glass Replacement",
       slug: "glass-replacement",
       shortDescription: "Fast emergency replacement for cracked window glass.",
-      thumbnailImage: "/images/services/glass-thumb.webp"
+      thumbnailImage: "/images/window_detail.png"
     },
     {
       serviceId: "srv-aluminium-sliding-doors",
       title: "Aluminium Sliding Doors",
       slug: "aluminium-sliding-doors",
       shortDescription: "New custom sliding patio doors.",
-      thumbnailImage: "/images/services/sliding-thumb.webp"
+      thumbnailImage: "/images/sliding_doors.png"
     }
   ],
   seo: {

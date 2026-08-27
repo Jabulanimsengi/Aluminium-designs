@@ -14,7 +14,7 @@ export const aluminiumSlidingWindowsService: ServiceObject = {
     primaryCtaLink: "/contact",
     secondaryCtaText: "Explore Window Sizes",
     secondaryCtaLink: "#specs",
-    heroImage: "/images/services/aluminium-sliding-windows-hero.webp"
+    heroImage: "/images/real_images/products/windows/window_aluminium_seven.jpeg"
   },
   overview: {
     heading: "Smooth Gliding Horizontal Aluminium Windows",
@@ -92,14 +92,14 @@ export const aluminiumSlidingWindowsService: ServiceObject = {
       title: "Aluminium Windows",
       slug: "aluminium-windows",
       shortDescription: "Custom top-hung and side-hung aluminium windows.",
-      thumbnailImage: "/images/services/windows-thumb.webp"
+      thumbnailImage: "/images/real_images/products/windows/window_aluminium_one.jpeg"
     },
     {
       serviceId: "srv-fly-screens",
       title: "Fly Screens & Bug Screens",
       slug: "fly-screens",
       shortDescription: "Custom mesh screens for windows and doors.",
-      thumbnailImage: "/images/services/screens-thumb.webp"
+      thumbnailImage: "/images/real_images/products/windows/window_aluminium_four.jpeg"
     }
   ],
   seo: {

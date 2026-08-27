@@ -126,6 +126,36 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
+const defaultGlazingOptions = [
+  {
+    name: "Toughened Safety Glass",
+    description:
+      "Heat-treated for 4-5x impact strength. Complies with SANS 10400 safety regulations for low-level windows and doors.",
+  },
+  {
+    name: "Double-Glazed Sealed Units (Low-E)",
+    description:
+      "Dual panes with argon gas thermal break. Drastically reduces winter heat loss, summer heat gain, and street noise.",
+  },
+  {
+    name: "Laminated Acoustic Safety Glass",
+    description:
+      "High-grade PVB interlayer absorbs exterior vibration, blocks UV rays by 99%, and prevents break-ins.",
+  },
+  {
+    name: "Solar-Control Tinted Glass",
+    description:
+      "Reflective tint technology that reduces Highveld solar heat and harsh glare while maintaining clear interior light.",
+  },
+];
+
+const processStepImages = [
+  "/images/sections/process_step1_measure.jpg",
+  "/images/sections/process_step2_manufacture.jpg",
+  "/images/sections/process_step3_install.jpg",
+  "/images/sections/process_step4_inspect.jpg",
+];
+
 export default async function ServiceDetailPage({ params }: Props) {
   const { slug } = await params;
   const service = services.find((s) => s.slug === `/services/${slug}`);
@@ -195,27 +225,52 @@ export default async function ServiceDetailPage({ params }: Props) {
 
       {/* OVERVIEW */}
       <section className="py-20 bg-surface border-b border-outline-variant">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="mb-10 text-center">
-            <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
-              About This Service
-            </span>
-            <h2 className="mt-2 font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
-              {content.overview.heading}
-            </h2>
-          </div>
-          <div className="space-y-4">
-            {content.overview.paragraphs.map((paragraph, i) => (
-              <p key={i} className="text-sm sm:text-base text-on-surface-variant leading-relaxed text-left">
-                {paragraph}
-              </p>
-            ))}
-          </div>
-          <div className="mt-8 border border-outline-variant bg-surface-container-low p-5 flex items-start gap-3">
-            <CheckCircle2 className="w-5 h-5 text-secondary shrink-0 mt-0.5" />
-            <p className="text-sm text-on-surface font-medium leading-relaxed">
-              {content.overview.keyFeaturesNotice}
-            </p>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+            <div className="lg:col-span-7 space-y-6">
+              <div>
+                <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
+                  About This Service
+                </span>
+                <h2 className="mt-2 font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
+                  {content.overview.heading}
+                </h2>
+              </div>
+              <div className="space-y-4">
+                {content.overview.paragraphs.map((paragraph, i) => (
+                  <p key={i} className="text-sm sm:text-base text-on-surface-variant leading-relaxed text-left">
+                    {paragraph}
+                  </p>
+                ))}
+              </div>
+              <div className="border border-outline-variant bg-surface-container-low p-5 flex items-start gap-3">
+                <CheckCircle2 className="w-5 h-5 text-secondary shrink-0 mt-0.5" />
+                <p className="text-sm text-on-surface font-medium leading-relaxed">
+                  {content.overview.keyFeaturesNotice}
+                </p>
+              </div>
+            </div>
+
+            <div className="lg:col-span-5 relative">
+              <div className="relative aspect-[4/3] w-full overflow-hidden border border-outline-variant bg-surface-container shadow-sm group">
+                <Image
+                  src="/images/sections/overview_craftsmanship.jpg"
+                  alt={`${service.title} precision craftsmanship and joinery`}
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 450px"
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between">
+                  <span className="inline-block bg-black/70 backdrop-blur-md px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-widest text-white border border-white/20 rounded-full">
+                    Precision Fit &amp; Weather Seals
+                  </span>
+                  <span className="font-mono text-[10px] text-white/80 uppercase">
+                    SANS 10400
+                  </span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -299,7 +354,7 @@ export default async function ServiceDetailPage({ params }: Props) {
 
       {/* GLAZING OPTIONS */}
       <section className="py-20 bg-surface-container-low border-b border-outline-variant">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-12 text-center">
             <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
               Glass &amp; Performance
@@ -312,30 +367,53 @@ export default async function ServiceDetailPage({ params }: Props) {
             </p>
           </div>
 
-          <div className="space-y-4">
-            {content.glazingOptions.options.map((option) => (
-              <div
-                key={option.name}
-                className="border border-outline-variant bg-surface-container-lowest p-5 flex gap-4"
-              >
-                <div className="w-8 h-8 border border-outline-variant bg-surface-container flex items-center justify-center text-secondary shrink-0 mt-0.5">
-                  <CheckCircle2 className="w-4 h-4" />
-                </div>
-                <div className="min-w-0">
-                  <h3 className="font-sans text-sm font-bold text-primary">{option.name}</h3>
-                  <p className="mt-1 text-xs text-on-surface-variant leading-relaxed">
-                    {option.description}
-                  </p>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            <div className="lg:col-span-5 relative">
+              <div className="relative aspect-[4/3] w-full overflow-hidden border border-outline-variant bg-surface-container shadow-sm group">
+                <Image
+                  src="/images/sections/glazing_technology.jpg"
+                  alt="Architectural double glazing thermal spacer and acoustic glass technology"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 450px"
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                <div className="absolute bottom-4 left-4 right-4">
+                  <span className="inline-block bg-black/70 backdrop-blur-md px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-widest text-white border border-white/20 rounded-full">
+                    Double-Glazing &amp; Thermal Break
+                  </span>
                 </div>
               </div>
-            ))}
+            </div>
+
+            <div className="lg:col-span-7 space-y-4">
+              {(content.glazingOptions.options.length > 0
+                ? content.glazingOptions.options
+                : defaultGlazingOptions
+              ).map((option) => (
+                <div
+                  key={option.name}
+                  className="border border-outline-variant bg-surface-container-lowest p-5 flex gap-4 hover:border-primary transition-colors shadow-sm"
+                >
+                  <div className="w-8 h-8 border border-outline-variant bg-surface-container flex items-center justify-center text-secondary shrink-0 mt-0.5">
+                    <CheckCircle2 className="w-4 h-4" />
+                  </div>
+                  <div className="min-w-0">
+                    <h3 className="font-sans text-sm font-bold text-primary">{option.name}</h3>
+                    <p className="mt-1 text-xs text-on-surface-variant leading-relaxed">
+                      {option.description}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
       {/* SPECIFICATIONS */}
       <section className="py-20 bg-surface border-b border-outline-variant">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-12 text-center">
             <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
               Built to Spec
@@ -343,55 +421,98 @@ export default async function ServiceDetailPage({ params }: Props) {
             <h2 className="mt-2 font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
               {content.specifications.title}
             </h2>
+            <p className="mt-3 max-w-2xl mx-auto text-sm text-on-surface-variant leading-relaxed">
+              Engineered with architectural-grade aluminium profiles, durable powder-coated colors, and heavy-duty security hardware.
+            </p>
           </div>
 
-          <div className="border border-outline-variant bg-surface-container-lowest divide-y divide-outline-variant">
-            {content.specifications.items.map((spec) => (
-              <div
-                key={spec.label}
-                className="grid grid-cols-1 sm:grid-cols-[220px_1fr] gap-1 sm:gap-6 p-4 sm:p-5"
-              >
-                <dt className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary pt-0.5">
-                  {spec.label}
-                </dt>
-                <dd className="text-sm text-on-surface leading-relaxed">{spec.value}</dd>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            <div className="lg:col-span-7 border border-outline-variant bg-surface-container-lowest divide-y divide-outline-variant shadow-sm">
+              {content.specifications.items.map((spec) => (
+                <div
+                  key={spec.label}
+                  className="grid grid-cols-1 sm:grid-cols-[220px_1fr] gap-1 sm:gap-6 p-4 sm:p-5"
+                >
+                  <dt className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary pt-0.5">
+                    {spec.label}
+                  </dt>
+                  <dd className="text-sm text-on-surface leading-relaxed font-medium">{spec.value}</dd>
+                </div>
+              ))}
+            </div>
+
+            <div className="lg:col-span-5 space-y-4">
+              <div className="relative aspect-[16/9] w-full overflow-hidden border border-outline-variant bg-surface-container shadow-sm group">
+                <Image
+                  src="/images/sections/finishes_hardware.jpg"
+                  alt="Architectural powder coating finishes and multi-point lock hardware"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 450px"
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                <div className="absolute bottom-4 left-4 right-4">
+                  <span className="inline-block bg-black/70 backdrop-blur-md px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-widest text-white border border-white/20 rounded-full">
+                    Architectural Finishes &amp; Hardware
+                  </span>
+                </div>
               </div>
-            ))}
+              <div className="border border-outline-variant bg-surface-container-low p-4 text-xs text-on-surface-variant leading-relaxed">
+                <span className="font-mono font-bold uppercase tracking-wider text-primary block mb-1">Standard Finishes:</span>
+                Available in Matte Black, Charcoal Grey, Satin Silver, and Bronze powder coat with 15-year UV color fastness warranty.
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* INSTALLATION PROCESS */}
       <section className="py-20 bg-surface-container-low border-b border-outline-variant">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="mb-12 text-center">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="mb-14 text-center">
             <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
               How It Works
             </span>
             <h2 className="mt-2 font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
               {content.installationProcess.title}
             </h2>
+            <p className="mt-3 text-sm text-on-surface-variant max-w-xl mx-auto leading-relaxed">
+              From free on-site measuring to factory fabrication and spotless installation.
+            </p>
           </div>
 
-          <div className="space-y-6">
-            {content.installationProcess.steps.map((step) => (
-              <div key={step.stepNumber} className="flex gap-5">
-                <div className="flex flex-col items-center">
-                  <div className="w-12 h-12 shrink-0 bg-primary text-on-primary flex items-center justify-center font-mono text-sm font-bold">
-                    {step.stepNumber}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {content.installationProcess.steps.map((step, index) => {
+              const stepImage = processStepImages[index % processStepImages.length];
+              return (
+                <div
+                  key={step.stepNumber}
+                  className="border border-outline-variant bg-surface-container-lowest overflow-hidden flex flex-col hover:border-primary transition-all duration-300 shadow-sm group"
+                >
+                  <div className="relative aspect-[4/3] w-full overflow-hidden bg-surface-container">
+                    <Image
+                      src={stepImage}
+                      alt={step.title}
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                    <div className="absolute top-3 left-3 bg-primary text-on-primary font-mono text-xs font-bold w-8 h-8 flex items-center justify-center rounded-full shadow-md">
+                      {step.stepNumber}
+                    </div>
                   </div>
-                  {step.stepNumber !==
-                    content.installationProcess.steps[content.installationProcess.steps.length - 1]
-                      .stepNumber && <div className="w-px flex-1 bg-outline-variant mt-3" />}
+                  <div className="p-5 flex-1 flex flex-col">
+                    <h3 className="font-sans font-bold text-base text-primary uppercase tracking-tight">
+                      {step.title}
+                    </h3>
+                    <p className="mt-2 text-xs text-on-surface-variant leading-relaxed">
+                      {step.description}
+                    </p>
+                  </div>
                 </div>
-                <div className="pb-8 min-w-0">
-                  <h3 className="font-sans font-bold text-lg text-primary">{step.title}</h3>
-                  <p className="mt-2 text-sm text-on-surface-variant leading-relaxed">
-                    {step.description}
-                  </p>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>

@@ -14,7 +14,7 @@ export const steelBalustradesService: ServiceObject = {
     primaryCtaLink: "/contact",
     secondaryCtaText: "Explore Steel Designs",
     secondaryCtaLink: "#specs",
-    heroImage: "/images/services/steel-balustrades-hero.webp"
+    heroImage: "/images/glass_balustrade.png"
   },
   overview: {
     heading: "Sturdy Steel Railings & Handrails Built to Last",
@@ -92,14 +92,14 @@ export const steelBalustradesService: ServiceObject = {
       title: "Steel Staircases",
       slug: "steel-staircases",
       shortDescription: "Custom steel internal and external staircases.",
-      thumbnailImage: "/images/services/stairs-thumb.webp"
+      thumbnailImage: "/images/glass_balustrade.png"
     },
     {
       serviceId: "srv-glass-balustrades",
       title: "Glass Balustrades",
       slug: "glass-balustrades",
       shortDescription: "Frameless glass railings and pool fencing.",
-      thumbnailImage: "/images/services/glass-balustrades-thumb.webp"
+      thumbnailImage: "/images/glass_balustrade.png"
     }
   ],
   seo: {

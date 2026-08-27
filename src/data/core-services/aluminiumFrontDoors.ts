@@ -14,7 +14,7 @@ export const aluminiumFrontDoorsService: ServiceObject = {
     primaryCtaLink: "/contact",
     secondaryCtaText: "Explore Front Door Designs",
     secondaryCtaLink: "#specs",
-    heroImage: "/images/services/aluminium-front-doors-hero.webp"
+    heroImage: "/images/cards/card_aluminium_front_doors.jpg"
   },
   overview: {
     heading: "Grand Aluminium Entrance Doors Built for Security & Style",
@@ -92,14 +92,14 @@ export const aluminiumFrontDoorsService: ServiceObject = {
       title: "Aluminium Sliding Doors",
       slug: "aluminium-sliding-doors",
       shortDescription: "Smooth sliding glass patio doors.",
-      thumbnailImage: "/images/services/sliding-thumb.webp"
+      thumbnailImage: "/images/sliding_doors.png"
     },
     {
       serviceId: "srv-security-gates",
       title: "Security Gates",
       slug: "security-gates",
       shortDescription: "Strong steel security gates for front entrances.",
-      thumbnailImage: "/images/services/gates-thumb.webp"
+      thumbnailImage: "/images/real_images/products/gates/aluminium_gate_one.jpeg"
     }
   ],
   seo: {

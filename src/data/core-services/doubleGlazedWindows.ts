@@ -14,7 +14,7 @@ export const doubleGlazedWindowsService: ServiceObject = {
     primaryCtaLink: "/contact",
     secondaryCtaText: "Explore Glass Benefits",
     secondaryCtaLink: "#specs",
-    heroImage: "/images/services/double-glazed-windows-hero.webp"
+    heroImage: "/images/real_images/products/windows/window_aluminium_two.jpeg"
   },
   overview: {
     heading: "Energy-Efficient Double Glazing for South African Homes",
@@ -92,14 +92,14 @@ export const doubleGlazedWindowsService: ServiceObject = {
       title: "Aluminium Windows",
       slug: "aluminium-windows",
       shortDescription: "Custom aluminium window frames and installation.",
-      thumbnailImage: "/images/services/windows-thumb.webp"
+      thumbnailImage: "/images/real_images/products/windows/window_aluminium_one.jpeg"
     },
     {
       serviceId: "srv-patio-enclosures",
       title: "Patio Enclosures & Sunrooms",
       slug: "patio-enclosures",
       shortDescription: "Insulated glass patio and sunroom enclosures.",
-      thumbnailImage: "/images/services/patio-thumb.webp"
+      thumbnailImage: "/images/patio_enclosure.png"
     }
   ],
   seo: {

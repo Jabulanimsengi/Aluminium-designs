@@ -14,7 +14,7 @@ export const customWeldingService: ServiceObject = {
     primaryCtaLink: "/contact",
     secondaryCtaText: "Explore Fabrication Work",
     secondaryCtaLink: "#specs",
-    heroImage: "/images/services/custom-welding-hero.webp"
+    heroImage: "/images/slatted_gate.png"
   },
   overview: {
     heading: "Precision Metal Fabrication & Mobile On-Site Welding",
@@ -92,14 +92,14 @@ export const customWeldingService: ServiceObject = {
       title: "Steel Gate & Fence Repairs",
       slug: "steel-repairs",
       shortDescription: "On-site rust treatment and welding fixes.",
-      thumbnailImage: "/images/services/repairs-thumb.webp"
+      thumbnailImage: "/images/window_repair.png"
     },
     {
       serviceId: "srv-driveway-gates",
       title: "Driveway Gates",
       slug: "driveway-gates",
       shortDescription: "Custom fabricated steel driveway gates.",
-      thumbnailImage: "/images/services/driveway-thumb.webp"
+      thumbnailImage: "/images/real_images/products/gates/aluminium_gate_two.jpeg"
     }
   ],
   seo: {

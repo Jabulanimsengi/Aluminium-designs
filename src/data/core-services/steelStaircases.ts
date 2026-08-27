@@ -14,7 +14,7 @@ export const steelStaircasesService: ServiceObject = {
     primaryCtaLink: "/contact",
     secondaryCtaText: "View Staircase Styles",
     secondaryCtaLink: "#specs",
-    heroImage: "/images/services/steel-staircases-hero.webp"
+    heroImage: "/images/glass_balustrade.png"
   },
   overview: {
     heading: "Engineered Steel Stairs for Homes, Lofts & Commercial Properties",
@@ -92,14 +92,14 @@ export const steelStaircasesService: ServiceObject = {
       title: "Steel Balustrades & Handrails",
       slug: "steel-balustrades",
       shortDescription: "Custom matching steel handrails.",
-      thumbnailImage: "/images/services/balustrades-thumb.webp"
+      thumbnailImage: "/images/glass_balustrade.png"
     },
     {
       serviceId: "srv-custom-welding",
       title: "Custom Welding & Steel Fabrication",
       slug: "custom-welding",
       shortDescription: "Custom steel beams and structural welding.",
-      thumbnailImage: "/images/services/welding-thumb.webp"
+      thumbnailImage: "/images/slatted_gate.png"
     }
   ],
   seo: {

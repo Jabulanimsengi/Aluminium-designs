@@ -14,7 +14,7 @@ export const palisadeFencingService: ServiceObject = {
     primaryCtaLink: "/contact",
     secondaryCtaText: "Explore Palisade Specs",
     secondaryCtaLink: "#specs",
-    heroImage: "/images/services/palisade-fencing-hero.webp"
+    heroImage: "/images/slatted_gate.png"
   },
   overview: {
     heading: "Strong Steel Palisade Boundaries Built to Deter Intruders",
@@ -92,14 +92,14 @@ export const palisadeFencingService: ServiceObject = {
       title: "Driveway Gates",
       slug: "driveway-gates",
       shortDescription: "Matching steel sliding and swing driveway gates.",
-      thumbnailImage: "/images/services/driveway-thumb.webp"
+      thumbnailImage: "/images/real_images/products/gates/aluminium_gate_two.jpeg"
     },
     {
       serviceId: "srv-mesh-fencing",
       title: "Mesh Security Fencing",
       slug: "mesh-fencing",
       shortDescription: "Anti-climb ClearVu wire mesh perimeter fencing.",
-      thumbnailImage: "/images/services/mesh-thumb.webp"
+      thumbnailImage: "/images/real_images/products/security/security_burglar-doors_two.jpeg"
     }
   ],
   seo: {

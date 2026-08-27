@@ -14,7 +14,7 @@ export const aluminiumStackingDoorsService: ServiceObject = {
     primaryCtaLink: "/contact",
     secondaryCtaText: "View Folding Options",
     secondaryCtaLink: "#specs",
-    heroImage: "/images/services/aluminium-stacking-doors-hero.webp"
+    heroImage: "/images/cards/card_aluminium_stacking_doors.jpg"
   },
   overview: {
     heading: "Custom Folding Stacking Doors for Seamless Indoor-Outdoor Living",
@@ -92,14 +92,14 @@ export const aluminiumStackingDoorsService: ServiceObject = {
       title: "Aluminium Sliding Doors",
       slug: "aluminium-sliding-doors",
       shortDescription: "Smooth sliding glass patio doors.",
-      thumbnailImage: "/images/services/sliding-thumb.webp"
+      thumbnailImage: "/images/sliding_doors.png"
     },
     {
       serviceId: "srv-patio-enclosures",
       title: "Patio Enclosures & Sunrooms",
       slug: "patio-enclosures",
       shortDescription: "Custom glass and aluminium patio enclosures.",
-      thumbnailImage: "/images/services/patio-thumb.webp"
+      thumbnailImage: "/images/patio_enclosure.png"
     }
   ],
   seo: {

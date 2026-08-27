@@ -14,7 +14,7 @@ export const gateMotorsService: ServiceObject = {
     primaryCtaLink: "/contact",
     secondaryCtaText: "Explore Motor Options",
     secondaryCtaLink: "#specs",
-    heroImage: "/images/services/gate-motors-hero.webp"
+    heroImage: "/images/real_images/products/gates/aluminium_gate_three.jpeg"
   },
   overview: {
     heading: "Electric Gate Motor Automation, Servicing & Emergency Fixes",
@@ -92,14 +92,14 @@ export const gateMotorsService: ServiceObject = {
       title: "Driveway Gates",
       slug: "driveway-gates",
       shortDescription: "Custom steel sliding and swing driveway gates.",
-      thumbnailImage: "/images/services/driveway-thumb.webp"
+      thumbnailImage: "/images/real_images/products/gates/aluminium_gate_two.jpeg"
     },
     {
       serviceId: "srv-steel-repairs",
       title: "Steel Gate & Fence Repairs",
       slug: "steel-repairs",
       shortDescription: "Track wheel replacement and gate welding fixes.",
-      thumbnailImage: "/images/services/repairs-thumb.webp"
+      thumbnailImage: "/images/window_repair.png"
     }
   ],
   seo: {

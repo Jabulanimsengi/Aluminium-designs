@@ -14,7 +14,7 @@ export const aluminiumPergolasService: ServiceObject = {
     primaryCtaLink: "/contact",
     secondaryCtaText: "View Pergola Options",
     secondaryCtaLink: "#specs",
-    heroImage: "/images/services/aluminium-pergolas-hero.webp"
+    heroImage: "/images/patio_enclosure.png"
   },
   overview: {
     heading: "Sleek, Rustproof Aluminium Pergolas for Outdoor Living",
@@ -92,14 +92,14 @@ export const aluminiumPergolasService: ServiceObject = {
       title: "Patio Enclosures & Sunrooms",
       slug: "patio-enclosures",
       shortDescription: "Custom glass and aluminium patio enclosures.",
-      thumbnailImage: "/images/services/patio-thumb.webp"
+      thumbnailImage: "/images/patio_enclosure.png"
     },
     {
       serviceId: "srv-aluminium-awnings",
       title: "Aluminium Awnings & Canopies",
       slug: "aluminium-awnings",
       shortDescription: "Door and window sun canopies.",
-      thumbnailImage: "/images/services/awnings-thumb.webp"
+      thumbnailImage: "/images/real_images/products/windows/window_aluminium_six.jpeg"
     }
   ],
   seo: {

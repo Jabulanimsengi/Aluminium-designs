@@ -14,7 +14,7 @@ export const aluminiumSlidingDoorsService: ServiceObject = {
     primaryCtaLink: "/contact",
     secondaryCtaText: "View Door Options",
     secondaryCtaLink: "#specs",
-    heroImage: "/images/services/aluminium-sliding-doors-hero.webp"
+    heroImage: "/images/cards/card_aluminium_sliding_doors.jpg"
   },
   overview: {
     heading: "Custom Aluminium Sliding Doors for Patios & Living Spaces",
@@ -92,14 +92,14 @@ export const aluminiumSlidingDoorsService: ServiceObject = {
       title: "Aluminium Stacking Doors",
       slug: "aluminium-stacking-doors",
       shortDescription: "Folding glass doors that open up entire wall spaces.",
-      thumbnailImage: "/images/services/stacking-thumb.webp"
+      thumbnailImage: "/images/real_images/products/doors/aluminium_door_three.jpeg"
     },
     {
       serviceId: "srv-aluminium-windows",
       title: "Aluminium Windows",
       slug: "aluminium-windows",
       shortDescription: "Custom energy-saving aluminium windows.",
-      thumbnailImage: "/images/services/windows-thumb.webp"
+      thumbnailImage: "/images/real_images/products/windows/window_aluminium_one.jpeg"
     }
   ],
   seo: {

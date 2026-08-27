@@ -14,7 +14,7 @@ export const drivewayGatesService: ServiceObject = {
     primaryCtaLink: "/contact",
     secondaryCtaText: "View Gate Designs",
     secondaryCtaLink: "#specs",
-    heroImage: "/images/services/driveway-gates-hero.webp"
+    heroImage: "/images/real_images/products/gates/aluminium_gate_two.jpeg"
   },
   overview: {
     heading: "Durable Steel Driveway Gates for Maximum Perimeter Security",
@@ -92,14 +92,14 @@ export const drivewayGatesService: ServiceObject = {
       title: "Gate Motor Installation & Repairs",
       slug: "gate-motors",
       shortDescription: "Electric gate motors with battery backup.",
-      thumbnailImage: "/images/services/motors-thumb.webp"
+      thumbnailImage: "/images/real_images/products/gates/aluminium_gate_three.jpeg"
     },
     {
       serviceId: "srv-palisade-fencing",
       title: "Palisade Fencing",
       slug: "palisade-fencing",
       shortDescription: "Matching steel palisade perimeter security fencing.",
-      thumbnailImage: "/images/services/palisade-thumb.webp"
+      thumbnailImage: "/images/slatted_gate.png"
     }
   ],
   seo: {

@@ -14,7 +14,7 @@ export const glassBalustradesService: ServiceObject = {
     primaryCtaLink: "/contact",
     secondaryCtaText: "View Balustrade Styles",
     secondaryCtaLink: "#specs",
-    heroImage: "/images/services/glass-balustrades-hero.webp"
+    heroImage: "/images/glass_balustrade.png"
   },
   overview: {
     heading: "Sleek Glass Railings for Homes & Commercial Buildings",
@@ -92,14 +92,14 @@ export const glassBalustradesService: ServiceObject = {
       title: "Steel Balustrades & Handrails",
       slug: "steel-balustrades",
       shortDescription: "Custom steel handrails and stair railings.",
-      thumbnailImage: "/images/services/balustrades-thumb.webp"
+      thumbnailImage: "/images/glass_balustrade.png"
     },
     {
       serviceId: "srv-patio-enclosures",
       title: "Patio Enclosures & Sunrooms",
       slug: "patio-enclosures",
       shortDescription: "Custom glass and aluminium patio enclosures.",
-      thumbnailImage: "/images/services/patio-thumb.webp"
+      thumbnailImage: "/images/patio_enclosure.png"
     }
   ],
   seo: {

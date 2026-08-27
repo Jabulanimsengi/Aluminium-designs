@@ -14,7 +14,7 @@ export const aluminiumAwningsService: ServiceObject = {
     primaryCtaLink: "/contact",
     secondaryCtaText: "View Awning Designs",
     secondaryCtaLink: "#specs",
-    heroImage: "/images/services/aluminium-awnings-hero.webp"
+    heroImage: "/images/real_images/products/windows/window_aluminium_six.jpeg"
   },
   overview: {
     heading: "Weatherproof Aluminium Canopies & Overhangs",
@@ -92,14 +92,14 @@ export const aluminiumAwningsService: ServiceObject = {
       title: "Aluminium Pergolas",
       slug: "aluminium-pergolas",
       shortDescription: "Custom shaded pergolas and deck covers.",
-      thumbnailImage: "/images/services/pergolas-thumb.webp"
+      thumbnailImage: "/images/patio_enclosure.png"
     },
     {
       serviceId: "srv-steel-carports",
       title: "Steel Carports & Shadeports",
       slug: "steel-carports",
       shortDescription: "Heavy-duty vehicle shade and hail protection.",
-      thumbnailImage: "/images/services/carports-thumb.webp"
+      thumbnailImage: "/images/patio_enclosure.png"
     }
   ],
   seo: {

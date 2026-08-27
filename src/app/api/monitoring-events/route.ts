@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import {
   appendMonitoringEvent,
+  classifyUserAgent,
   extractClientIp,
   type MonitoringEvent,
 } from "@/lib/monitoring";
@@ -77,6 +78,8 @@ export async function POST(request: NextRequest) {
     return new NextResponse(null, { status: 204 });
   }
 
+  const { isBot, deviceType } = classifyUserAgent(request.headers.get("user-agent"));
+
   const entry: MonitoringEvent = {
     event,
     ipAddress,
@@ -93,6 +96,8 @@ export async function POST(request: NextRequest) {
         ? Math.round(body.value * 100) / 100
         : null,
     detail: safeValue(body.detail, 2_000),
+    isBot,
+    deviceType,
   };
 
   try {

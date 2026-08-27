@@ -14,7 +14,7 @@ export const securityGatesService: ServiceObject = {
     primaryCtaLink: "/contact",
     secondaryCtaText: "Explore Gate Styles",
     secondaryCtaLink: "#specs",
-    heroImage: "/images/services/security-gates-hero.webp"
+    heroImage: "/images/real_images/products/security/security_burglar-doors_one.jpeg"
   },
   overview: {
     heading: "High-Security Steel Gates for Front Entrances & Patios",
@@ -92,14 +92,14 @@ export const securityGatesService: ServiceObject = {
       title: "Burglar Bars",
       slug: "burglar-bars",
       shortDescription: "Custom steel window security bars.",
-      thumbnailImage: "/images/services/bars-thumb.webp"
+      thumbnailImage: "/images/real_images/products/security/security_burglar-doors_three.jpeg"
     },
     {
       serviceId: "srv-driveway-gates",
       title: "Driveway Gates",
       slug: "driveway-gates",
       shortDescription: "Automated steel sliding driveway gates.",
-      thumbnailImage: "/images/services/driveway-thumb.webp"
+      thumbnailImage: "/images/real_images/products/gates/aluminium_gate_two.jpeg"
     }
   ],
   seo: {

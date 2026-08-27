@@ -14,7 +14,7 @@ export const patioEnclosuresService: ServiceObject = {
     primaryCtaLink: "/contact",
     secondaryCtaText: "Explore Enclosure Ideas",
     secondaryCtaLink: "#specs",
-    heroImage: "/images/services/patio-enclosures-hero.webp"
+    heroImage: "/images/patio_enclosure.png"
   },
   overview: {
     heading: "All-Weather Glass Patio Enclosures for South African Homes",
@@ -92,14 +92,14 @@ export const patioEnclosuresService: ServiceObject = {
       title: "Aluminium Stacking Doors",
       slug: "aluminium-stacking-doors",
       shortDescription: "Folding doors for seamless patio openings.",
-      thumbnailImage: "/images/services/stacking-thumb.webp"
+      thumbnailImage: "/images/real_images/products/doors/aluminium_door_three.jpeg"
     },
     {
       serviceId: "srv-aluminium-pergolas",
       title: "Aluminium Pergolas",
       slug: "aluminium-pergolas",
       shortDescription: "Modern shaded pergolas and deck covers.",
-      thumbnailImage: "/images/services/pergolas-thumb.webp"
+      thumbnailImage: "/images/patio_enclosure.png"
     }
   ],
   seo: {

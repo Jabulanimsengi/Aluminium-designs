@@ -14,7 +14,7 @@ export const steelRepairsService: ServiceObject = {
     primaryCtaLink: "/contact",
     secondaryCtaText: "View Repair Services",
     secondaryCtaLink: "#specs",
-    heroImage: "/images/services/steel-repairs-hero.webp"
+    heroImage: "/images/window_repair.png"
   },
   overview: {
     heading: "Emergency Steel Repairs, Rust Treatment & Re-Welding",
@@ -92,14 +92,14 @@ export const steelRepairsService: ServiceObject = {
       title: "Gate Motor Installation & Repairs",
       slug: "gate-motors",
       shortDescription: "Electric gate motor servicing and battery fixes.",
-      thumbnailImage: "/images/services/motors-thumb.webp"
+      thumbnailImage: "/images/real_images/products/gates/aluminium_gate_three.jpeg"
     },
     {
       serviceId: "srv-custom-welding",
       title: "Custom Welding & Steel Fabrication",
       slug: "custom-welding",
       shortDescription: "Custom steel fabrication and mobile welding.",
-      thumbnailImage: "/images/services/welding-thumb.webp"
+      thumbnailImage: "/images/slatted_gate.png"
     }
   ],
   seo: {

@@ -14,7 +14,7 @@ export const flyScreensService: ServiceObject = {
     primaryCtaLink: "/contact",
     secondaryCtaText: "Explore Screen Types",
     secondaryCtaLink: "#specs",
-    heroImage: "/images/services/fly-screens-hero.webp"
+    heroImage: "/images/real_images/products/windows/window_aluminium_four.jpeg"
   },
   overview: {
     heading: "Durable Insect & Mosquito Screens for Windows and Doors",
@@ -92,14 +92,14 @@ export const flyScreensService: ServiceObject = {
       title: "Aluminium Sliding Windows",
       slug: "aluminium-sliding-windows",
       shortDescription: "Custom horizontal sliding windows.",
-      thumbnailImage: "/images/services/sliding-windows-thumb.webp"
+      thumbnailImage: "/images/real_images/products/windows/window_aluminium_seven.jpeg"
     },
     {
       serviceId: "srv-aluminium-sliding-doors",
       title: "Aluminium Sliding Doors",
       slug: "aluminium-sliding-doors",
       shortDescription: "Patio sliding doors with matching screen doors.",
-      thumbnailImage: "/images/services/sliding-thumb.webp"
+      thumbnailImage: "/images/sliding_doors.png"
     }
   ],
   seo: {

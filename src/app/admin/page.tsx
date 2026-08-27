@@ -1,14 +1,16 @@
 import type { Metadata } from "next";
-import { Fragment } from "react";
+import { Fragment, type ReactNode } from "react";
 import { cookies } from "next/headers";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import type { LucideIcon } from "lucide-react";
 import {
   Activity,
+  AlertTriangle,
   ArrowUpRight,
   ChevronDown,
   Clock,
+  Download,
   FileText,
   Gauge,
   Globe,
@@ -16,6 +18,7 @@ import {
   Mail,
   MapPin,
   MessageCircle,
+  MonitorSmartphone,
   MousePointerClick,
   Search,
   Users,
@@ -31,6 +34,7 @@ import {
 } from "@/lib/monitoring";
 import { absoluteUrl } from "@/lib/site";
 import { readLeads } from "@/lib/leads";
+import { RefreshControls } from "@/components/admin/RefreshControls";
 
 export const metadata: Metadata = {
   title: "Site Monitoring",
@@ -38,7 +42,7 @@ export const metadata: Metadata = {
 };
 
 type RangeKey = "24h" | "7d" | "30d" | "all";
-type ViewKey = "overview" | "whatsapp" | "quotes" | "leads" | "activity" | "performance";
+type ViewKey = "overview" | "whatsapp" | "quotes" | "leads" | "errors" | "activity" | "performance";
 
 const ranges: Record<RangeKey, { label: string; milliseconds: number }> = {
   "24h": { label: "24 hours", milliseconds: 86_400_000 },
@@ -52,9 +56,12 @@ const views: Record<ViewKey, string> = {
   whatsapp: "WhatsApp",
   quotes: "Quotes",
   leads: "Leads",
+  errors: "Errors",
   activity: "Activity",
   performance: "Performance",
 };
+
+const LEADS_PAGE_SIZE = 25;
 
 const conversionEvents = new Set([
   "quote_request_click",
@@ -180,15 +187,124 @@ function sourceBadgeClass(source: string) {
   }
 }
 
-function SectionHeading({ icon: Icon, title, hint }: { icon: LucideIcon; title: string; hint?: string }) {
+function SectionHeading({
+  icon: Icon,
+  title,
+  hint,
+  action,
+}: {
+  icon: LucideIcon;
+  title: string;
+  hint?: string;
+  action?: ReactNode;
+}) {
   return (
-    <div className="flex items-start justify-between gap-4 border-b border-outline-variant p-5 sm:p-6">
+    <div className="flex flex-wrap items-start justify-between gap-4 border-b border-outline-variant p-5 sm:p-6">
       <div>
         <div className="flex items-center gap-2">
           <Icon className="h-5 w-5 text-secondary" />
           <h2 className="text-left text-lg font-bold uppercase tracking-tight text-primary">{title}</h2>
         </div>
         {hint ? <p className="mt-1 text-xs text-on-surface-variant">{hint}</p> : null}
+      </div>
+      {action ? <div className="flex flex-wrap items-center gap-2">{action}</div> : null}
+    </div>
+  );
+}
+
+const hourFormatter = new Intl.DateTimeFormat("en-ZA", {
+  timeZone: "Africa/Johannesburg",
+  hour: "2-digit",
+  minute: "2-digit",
+});
+
+const dayFormatter = new Intl.DateTimeFormat("en-ZA", {
+  timeZone: "Africa/Johannesburg",
+  day: "numeric",
+  month: "short",
+});
+
+type TrendBucket = { label: string; views: number; conversions: number };
+
+function buildTrend(range: RangeKey, pageViewEvents: MonitoringEvent[], conversionEventsList: MonitoringEvent[]): TrendBucket[] | null {
+  const HOUR = 3_600_000;
+  const DAY = 86_400_000;
+  const now = Date.now();
+
+  let bucketMilliseconds = DAY;
+  let bucketCount = range === "7d" ? 7 : range === "30d" ? 30 : 90;
+
+  if (range === "24h") {
+    bucketMilliseconds = HOUR;
+    bucketCount = 24;
+  } else if (range === "all") {
+    const timestamps = [...pageViewEvents, ...conversionEventsList].map((event) =>
+      Date.parse(event.timestamp),
+    );
+    if (!timestamps.length) return null;
+    const earliest = Math.min(...timestamps);
+    bucketCount = Math.min(90, Math.max(1, Math.ceil((now - earliest) / DAY)));
+  }
+
+  const windowStart =
+    range === "24h"
+      ? Math.floor(now / HOUR) * HOUR - (bucketCount - 1) * HOUR
+      : Math.floor(now / DAY) * DAY - (bucketCount - 1) * DAY;
+
+  const buckets: TrendBucket[] = Array.from({ length: bucketCount }, (_, index) => ({
+    label:
+      bucketMilliseconds === HOUR
+        ? hourFormatter.format(windowStart + index * HOUR)
+        : dayFormatter.format(windowStart + index * DAY),
+    views: 0,
+    conversions: 0,
+  }));
+
+  for (const event of pageViewEvents) {
+    const index = Math.floor((Date.parse(event.timestamp) - windowStart) / bucketMilliseconds);
+    if (index >= 0 && index < bucketCount) buckets[index].views += 1;
+  }
+  for (const event of conversionEventsList) {
+    const index = Math.floor((Date.parse(event.timestamp) - windowStart) / bucketMilliseconds);
+    if (index >= 0 && index < bucketCount) buckets[index].conversions += 1;
+  }
+
+  return buckets;
+}
+
+function TrendChart({ buckets }: { buckets: TrendBucket[] }) {
+  const max = Math.max(1, ...buckets.map((bucket) => Math.max(bucket.views, bucket.conversions)));
+
+  return (
+    <div className="p-5 sm:p-6">
+      <div className="flex items-end gap-[3px]">
+        {buckets.map((bucket, index) => (
+          <div
+            key={index}
+            title={`${bucket.label} · ${bucket.views} ${bucket.views === 1 ? "view" : "views"} · ${bucket.conversions} ${bucket.conversions === 1 ? "action" : "actions"}`}
+            className="flex h-44 flex-1 items-end justify-center gap-[2px]"
+          >
+            <div
+              className="w-full max-w-7 rounded-t bg-primary"
+              style={{ height: `${Math.max(bucket.views ? 2 : 0, (bucket.views / max) * 100)}%` }}
+            />
+            <div
+              className="w-full max-w-7 rounded-t bg-emerald-500"
+              style={{
+                height: `${Math.max(bucket.conversions ? 2 : 0, (bucket.conversions / max) * 100)}%`,
+              }}
+            />
+          </div>
+        ))}
+      </div>
+      <div className="mt-3 flex justify-between font-mono text-[10px] uppercase tracking-wider text-outline">
+        <span>{buckets[0]?.label}</span>
+        <span>{buckets[Math.floor(buckets.length / 2)]?.label}</span>
+        <span>{buckets.at(-1)?.label}</span>
+      </div>
+      <div className="mt-4 flex items-center gap-5 border-t border-outline-variant pt-3 font-mono text-[9px] font-bold uppercase tracking-wider text-secondary">
+        <span className="flex items-center gap-2"><span className="h-2.5 w-2.5 rounded-sm bg-primary" /> Page views</span>
+        <span className="flex items-center gap-2"><span className="h-2.5 w-2.5 rounded-sm bg-emerald-500" /> Enquiry actions</span>
       </div>
     </div>
   );
@@ -197,7 +313,7 @@ function SectionHeading({ icon: Icon, title, hint }: { icon: LucideIcon; title: 
 export default async function AdminMonitoringPage({
   searchParams,
 }: {
-  searchParams: Promise<{ range?: string; view?: string }>;
+  searchParams: Promise<{ range?: string; view?: string; q?: string; page?: string }>;
 }) {
   const session = (await cookies()).get(ADMIN_SESSION_COOKIE)?.value;
   if (!verifyAdminSessionToken(session)) redirect("/admin/login");
@@ -207,6 +323,8 @@ export default async function AdminMonitoringPage({
   const range = requestedRange && requestedRange in ranges ? requestedRange : "7d";
   const requestedView = params.view as ViewKey | undefined;
   const view = requestedView && requestedView in views ? requestedView : "overview";
+  const leadQuery = (params.q || "").trim();
+  const leadQueryLower = leadQuery.toLowerCase();
 
   const cutoff = monitoringWindowStart(ranges[range].milliseconds);
   const allEvents = await readMonitoringEvents();
@@ -215,16 +333,20 @@ export default async function AdminMonitoringPage({
     .filter((event) => !isAdminPath(event.page) && !isAdminPath(event.destination))
     .sort((a, b) => Date.parse(b.timestamp) - Date.parse(a.timestamp));
 
-  const pageViews = events.filter((event) => event.event === "page_view");
-  const conversions = events.filter((event) => conversionEvents.has(event.event));
-  const clickEvents = events.filter((event) => event.event.endsWith("_click"));
-  const whatsappEvents = events.filter((event) => event.event === "whatsapp_click");
-  const emailEvents = events.filter((event) => event.event === "email_click");
-  const quoteClickEvents = events.filter((event) => event.event === "quote_request_click");
+  const humanEvents = events.filter((event) => !event.isBot);
+  const botEventCount = events.length - humanEvents.length;
 
-  const uniqueSessions = new Set(events.map((event) => event.sessionId).filter(Boolean)).size;
+  const pageViews = humanEvents.filter((event) => event.event === "page_view");
+  const conversions = humanEvents.filter((event) => conversionEvents.has(event.event));
+  const clickEvents = humanEvents.filter((event) => event.event.endsWith("_click"));
+  const whatsappEvents = humanEvents.filter((event) => event.event === "whatsapp_click");
+  const emailEvents = humanEvents.filter((event) => event.event === "email_click");
+  const quoteClickEvents = humanEvents.filter((event) => event.event === "quote_request_click");
+  const errorEvents = humanEvents.filter((event) => event.event === "js_error");
+
+  const uniqueSessions = new Set(humanEvents.map((event) => event.sessionId).filter(Boolean)).size;
   const uniqueVisitors = new Set(
-    events
+    humanEvents
       .map((event) => event.visitorId || (event.sessionId ? `legacy:${event.sessionId}` : ""))
       .filter(Boolean),
   ).size;
@@ -244,15 +366,69 @@ export default async function AdminMonitoringPage({
     "destination",
   ).slice(0, 8);
 
+  const deviceSessions = new Map<string, Set<string>>();
+  for (const event of humanEvents) {
+    if (!event.sessionId) continue;
+    const key = event.deviceType || "unknown";
+    const sessions = deviceSessions.get(key) || new Set<string>();
+    sessions.add(event.sessionId);
+    deviceSessions.set(key, sessions);
+  }
+  const deviceBreakdown = [...deviceSessions.entries()]
+    .map(([device, sessions]) => ({ device, count: sessions.size }))
+    .sort((a, b) => b.count - a.count);
+
+  const errorGroups = new Map<string, {
+    message: string;
+    page: string;
+    count: number;
+    firstSeen: string;
+    lastSeen: string;
+    sample: string;
+  }>();
+  for (const event of [...errorEvents].reverse()) {
+    const key = `${event.label}|${event.page}`;
+    const group = errorGroups.get(key) || {
+      message: event.label || "(no message)",
+      page: event.page,
+      count: 0,
+      firstSeen: event.timestamp,
+      lastSeen: event.timestamp,
+      sample: "",
+    };
+    group.count += 1;
+    group.lastSeen = event.timestamp;
+    if (!group.sample && event.detail) group.sample = event.detail;
+    errorGroups.set(key, group);
+  }
+  const topErrors = [...errorGroups.values()].sort((a, b) => b.count - a.count).slice(0, 20);
+  const recentErrors = errorEvents.slice(0, 50);
+  const errorSessions = new Set(errorEvents.map((event) => event.sessionId).filter(Boolean)).size;
+
   const whatsappByIp = groupByIp(whatsappEvents);
   const whatsappUniqueIps = new Set(whatsappEvents.map((event) => event.ipAddress).filter(Boolean)).size;
   const quoteByIp = groupByIp(quoteClickEvents);
   const quoteUniqueIps = new Set(quoteClickEvents.map((event) => event.ipAddress).filter(Boolean)).size;
 
   const allLeads = await readLeads();
-  const leads = allLeads
+  const searchedLeads = leadQueryLower
+    ? allLeads.filter((lead) =>
+        [lead.name, lead.phone, lead.location, lead.budget, lead.source].some((value) =>
+          value.toLowerCase().includes(leadQueryLower),
+        ),
+      )
+    : allLeads;
+  const leads = searchedLeads
     .filter((lead) => range === "all" || new Date(lead.timestamp).getTime() >= cutoff)
     .sort((a, b) => Date.parse(b.timestamp) - Date.parse(a.timestamp));
+  const leadsTotalPages = Math.max(1, Math.ceil(leads.length / LEADS_PAGE_SIZE));
+  const leadsCurrentPage = Math.min(Math.max(1, Number(params.page) || 1), leadsTotalPages);
+  const visibleLeads = leads.slice(
+    (leadsCurrentPage - 1) * LEADS_PAGE_SIZE,
+    leadsCurrentPage * LEADS_PAGE_SIZE,
+  );
+  const leadsHref = (page: number) =>
+    `/admin?view=leads&range=${range}&page=${page}${leadQuery ? `&q=${encodeURIComponent(leadQuery)}` : ""}`;
   const leadsUniqueIps = new Set(leads.map((lead) => lead.ipAddress).filter(Boolean)).size;
   const whatsappLeads = leads.filter((lead) => lead.source === "whatsapp").length;
   const quoteLeads = leads.filter((lead) => lead.source === "quote").length;
@@ -265,10 +441,12 @@ export default async function AdminMonitoringPage({
   const yesterday = new Date(now.getTime() - 86_400_000);
   const yesterdayKey = activityDateKey(yesterday.toISOString());
   const activityGroups = new Map<string, MonitoringEvent[]>();
-  for (const event of events) {
+  for (const event of humanEvents) {
     const ipAddress = event.ipAddress || "Unknown";
     activityGroups.set(ipAddress, [...(activityGroups.get(ipAddress) || []), event]);
   }
+
+  const trendBuckets = buildTrend(range, pageViews, conversions);
 
   const metricGroups = new Map<string, number[]>();
   const journeyMap = new Map<string, {
@@ -314,7 +492,7 @@ export default async function AdminMonitoringPage({
     .sort((a, b) => Date.parse(b.endedAt) - Date.parse(a.endedAt))
     .slice(0, 10);
 
-  for (const event of events) {
+  for (const event of humanEvents) {
     if (event.event !== "web_vital" || !event.metric || event.value === null) continue;
     metricGroups.set(event.metric, [...(metricGroups.get(event.metric) || []), event.value]);
   }
@@ -337,8 +515,14 @@ export default async function AdminMonitoringPage({
             <p className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">Private dashboard</p>
             <h1 className="mt-2 text-left font-sans text-3xl font-bold uppercase tracking-tight text-primary">Site monitoring</h1>
             <p className="mt-2 text-sm text-on-surface-variant">Traffic, enquiries, visitor actions, and real-user page speed.</p>
+            {botEventCount > 0 ? (
+              <p className="mt-1 font-mono text-[10px] uppercase tracking-wider text-outline">
+                {botEventCount.toLocaleString()} bot/crawler {botEventCount === 1 ? "request" : "requests"} hidden from these stats
+              </p>
+            ) : null}
           </div>
           <div className="flex flex-wrap items-center gap-2">
+            <RefreshControls />
             {(Object.keys(ranges) as RangeKey[]).map((key) => (
               <Link
                 key={key}
@@ -382,6 +566,17 @@ export default async function AdminMonitoringPage({
               <StatCard label="Action rate" value={`${conversionRate.toFixed(1)}%`} icon={Gauge} />
             </section>
 
+            {trendBuckets ? (
+              <section className="overflow-hidden border border-outline-variant bg-white">
+                <SectionHeading
+                  icon={Activity}
+                  title="Traffic trend"
+                  hint={range === "24h" ? "Page views and enquiry actions per hour." : "Page views and enquiry actions per day."}
+                />
+                <TrendChart buckets={trendBuckets} />
+              </section>
+            ) : null}
+
             <section className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
               <div className="border border-outline-variant bg-white p-6">
                 <h2 className="text-left text-lg font-bold uppercase tracking-tight text-primary">Most viewed pages</h2>
@@ -416,6 +611,22 @@ export default async function AdminMonitoringPage({
                       <span className="font-mono font-bold text-primary">{count}</span>
                     </div>
                   )) : <p className="text-sm text-on-surface-variant">Clicked links and page destinations will appear here.</p>}
+                </div>
+              </div>
+
+              <div className="border border-outline-variant bg-white p-6">
+                <div className="flex items-center gap-2">
+                  <MonitorSmartphone className="h-5 w-5 text-secondary" />
+                  <h2 className="text-left text-lg font-bold uppercase tracking-tight text-primary">Devices</h2>
+                </div>
+                <div className="mt-5 space-y-3">
+                  {deviceBreakdown.length ? deviceBreakdown.map(({ device, count }) => (
+                    <div key={device} className="flex items-center justify-between gap-4 border-b border-outline-variant pb-3 text-sm">
+                      <span className="capitalize text-on-surface-variant">{device}</span>
+                      <span className="font-mono font-bold text-primary">{count}</span>
+                    </div>
+                  )) : <p className="text-sm text-on-surface-variant">Device breakdown will appear once sessions are recorded.</p>}
+                  <p className="pt-1 text-[10px] text-outline">Unique sessions per device type.</p>
                 </div>
               </div>
 
@@ -604,42 +815,176 @@ export default async function AdminMonitoringPage({
                 icon={FileText}
                 title="Client details"
                 hint="Captured contact and project details from visitors who requested a quote. Stored privately for your team."
+                action={(
+                  <>
+                    <form action="/admin" className="flex items-center gap-2">
+                      <input type="hidden" name="view" value="leads" />
+                      <input type="hidden" name="range" value={range} />
+                      <input
+                        type="search"
+                        name="q"
+                        defaultValue={leadQuery}
+                        placeholder="Search name, phone, location…"
+                        aria-label="Search leads"
+                        className="w-52 border border-outline-variant bg-white px-3 py-2 text-xs text-primary placeholder:text-outline focus:border-secondary focus:outline-none"
+                      />
+                      <button
+                        type="submit"
+                        className="inline-flex items-center gap-1.5 rounded-full border border-outline-variant bg-white px-3 py-2 font-mono text-[10px] font-bold uppercase tracking-wider text-secondary"
+                      >
+                        <Search className="h-3 w-3" /> Search
+                      </button>
+                      {leadQuery ? (
+                        <Link
+                          href={`/admin?view=leads&range=${range}`}
+                          className="rounded-full border border-outline-variant bg-white px-3 py-2 font-mono text-[10px] font-bold uppercase tracking-wider text-secondary"
+                        >
+                          Clear
+                        </Link>
+                      ) : null}
+                    </form>
+                    <a
+                      href="/api/admin/leads/export"
+                      className="inline-flex items-center gap-1.5 rounded-full border border-outline-variant bg-white px-3 py-2 font-mono text-[10px] font-bold uppercase tracking-wider text-secondary"
+                    >
+                      <Download className="h-3 w-3" /> Export CSV
+                    </a>
+                  </>
+                )}
               />
               {leads.length ? (
+                <>
+                  <div className="overflow-x-auto">
+                    <table className="w-full min-w-[860px] text-left text-xs">
+                      <thead className="bg-surface-container text-[10px] uppercase tracking-wider text-secondary">
+                        <tr>
+                          <th className="p-3">Date</th>
+                          <th className="p-3">Name</th>
+                          <th className="p-3">Phone</th>
+                          <th className="p-3">Location</th>
+                          <th className="p-3">Budget</th>
+                          <th className="p-3">Source</th>
+                          <th className="p-3">IP</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-outline-variant">
+                        {visibleLeads.map((lead, index) => (
+                          <tr key={`${lead.timestamp}-${index}`}>
+                            <td className="whitespace-nowrap p-3 text-outline">{zaDateTime(lead.timestamp)}</td>
+                            <td className="p-3 font-bold text-primary">{lead.name}</td>
+                            <td className="whitespace-nowrap p-3 font-mono text-on-surface-variant">{lead.phone}</td>
+                            <td className="p-3 text-on-surface-variant">{lead.location}</td>
+                            <td className="p-3 text-on-surface-variant">{lead.budget}</td>
+                            <td className="p-3">
+                              <span className={`rounded-full px-2 py-1 font-mono text-[9px] font-bold uppercase ${sourceBadgeClass(lead.source)}`}>
+                                {lead.source}
+                              </span>
+                            </td>
+                            <td className="whitespace-nowrap p-3 font-mono text-outline">{lead.ipAddress || "Unknown"}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                  {leadsTotalPages > 1 ? (
+                    <div className="flex flex-wrap items-center justify-between gap-3 border-t border-outline-variant px-4 py-3 text-xs">
+                      <span className="text-on-surface-variant">
+                        Page {leadsCurrentPage} of {leadsTotalPages} · {leads.length.toLocaleString()} matching {leads.length === 1 ? "lead" : "leads"}
+                      </span>
+                      <div className="flex items-center gap-2">
+                        {leadsCurrentPage > 1 ? (
+                          <Link href={leadsHref(leadsCurrentPage - 1)} className="rounded-full border border-outline-variant bg-white px-4 py-2 font-mono text-[10px] font-bold uppercase tracking-wider text-secondary">
+                            Previous
+                          </Link>
+                        ) : null}
+                        {leadsCurrentPage < leadsTotalPages ? (
+                          <Link href={leadsHref(leadsCurrentPage + 1)} className="rounded-full border border-outline-variant bg-white px-4 py-2 font-mono text-[10px] font-bold uppercase tracking-wider text-secondary">
+                            Next
+                          </Link>
+                        ) : null}
+                      </div>
+                    </div>
+                  ) : null}
+                </>
+              ) : (
+                <p className="p-6 text-center text-xs text-on-surface-variant">
+                  {leadQuery ? "No client details match this search." : "Client details will appear here after visitors complete the quote form."}
+                </p>
+              )}
+            </section>
+          </>
+        ) : null}
+
+        {view === "errors" ? (
+          <>
+            <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              <StatCard label="JS errors" value={errorEvents.length.toLocaleString()} icon={AlertTriangle} />
+              <StatCard label="Distinct issues" value={errorGroups.size.toLocaleString()} icon={Activity} />
+              <StatCard label="Affected sessions" value={errorSessions.toLocaleString()} icon={Users} />
+              <StatCard label="Latest error" value={errorEvents[0] ? zaDateTime(errorEvents[0].timestamp) : "—"} icon={Clock} />
+            </section>
+
+            <section className="overflow-hidden border border-outline-variant bg-white">
+              <SectionHeading
+                icon={AlertTriangle}
+                title="Top issues"
+                hint="Client-side JavaScript errors grouped by message and page, ranked by frequency."
+              />
+              {topErrors.length ? (
                 <div className="overflow-x-auto">
-                  <table className="w-full min-w-[860px] text-left text-xs">
+                  <table className="w-full min-w-[760px] text-left text-xs">
                     <thead className="bg-surface-container text-[10px] uppercase tracking-wider text-secondary">
-                      <tr>
-                        <th className="p-3">Date</th>
-                        <th className="p-3">Name</th>
-                        <th className="p-3">Phone</th>
-                        <th className="p-3">Location</th>
-                        <th className="p-3">Budget</th>
-                        <th className="p-3">Source</th>
-                        <th className="p-3">IP</th>
-                      </tr>
+                      <tr><th className="p-3">Error</th><th className="p-3">Page</th><th className="p-3">Count</th><th className="p-3">First seen</th><th className="p-3">Last seen</th></tr>
                     </thead>
                     <tbody className="divide-y divide-outline-variant">
-                      {leads.map((lead, index) => (
-                        <tr key={`${lead.timestamp}-${index}`}>
-                          <td className="whitespace-nowrap p-3 text-outline">{zaDateTime(lead.timestamp)}</td>
-                          <td className="p-3 font-bold text-primary">{lead.name}</td>
-                          <td className="whitespace-nowrap p-3 font-mono text-on-surface-variant">{lead.phone}</td>
-                          <td className="p-3 text-on-surface-variant">{lead.location}</td>
-                          <td className="p-3 text-on-surface-variant">{lead.budget}</td>
-                          <td className="p-3">
-                            <span className={`rounded-full px-2 py-1 font-mono text-[9px] font-bold uppercase ${sourceBadgeClass(lead.source)}`}>
-                              {lead.source}
-                            </span>
-                          </td>
-                          <td className="whitespace-nowrap p-3 font-mono text-outline">{lead.ipAddress || "Unknown"}</td>
+                      {topErrors.map((group) => (
+                        <tr key={`${group.message}-${group.page}`}>
+                          <td className="max-w-md p-3 font-mono font-bold text-primary">{group.message}</td>
+                          <td className="max-w-52 truncate p-3 text-on-surface-variant">{group.page}</td>
+                          <td className="p-3 font-mono font-bold text-primary">{group.count}</td>
+                          <td className="whitespace-nowrap p-3 text-outline">{zaDateTime(group.firstSeen)}</td>
+                          <td className="whitespace-nowrap p-3 text-outline">{zaDateTime(group.lastSeen)}</td>
                         </tr>
                       ))}
                     </tbody>
                   </table>
                 </div>
               ) : (
-                <p className="p-6 text-center text-xs text-on-surface-variant">Client details will appear here after visitors complete the quote form.</p>
+                <p className="p-6 text-center text-xs text-on-surface-variant">No JavaScript errors were recorded in this period.</p>
+              )}
+            </section>
+
+            <section className="overflow-hidden border border-outline-variant bg-white">
+              <SectionHeading
+                icon={Activity}
+                title="Recent error reports"
+                hint={`Showing the ${recentErrors.length} most recent of ${errorEvents.length} recorded ${errorEvents.length === 1 ? "report" : "reports"}, including stack snippets.`}
+              />
+              {recentErrors.length ? (
+                <div className="overflow-x-auto">
+                  <table className="w-full min-w-[820px] text-left text-xs">
+                    <thead className="bg-surface-container text-[10px] uppercase tracking-wider text-secondary">
+                      <tr><th className="p-3">Time</th><th className="p-3">Page</th><th className="p-3">Session</th><th className="p-3">Error & stack</th></tr>
+                    </thead>
+                    <tbody className="divide-y divide-outline-variant">
+                      {recentErrors.map((event, index) => (
+                        <tr key={`${event.timestamp}-${index}`}>
+                          <td className="whitespace-nowrap p-3 text-outline">{zaTime(event.timestamp)}</td>
+                          <td className="max-w-44 truncate p-3 text-on-surface-variant">{event.page}</td>
+                          <td className="p-3 font-mono text-outline">{event.sessionId ? event.sessionId.slice(0, 8) : "—"}</td>
+                          <td className="max-w-lg p-3">
+                            <p className="font-mono font-bold text-primary">{event.label}</p>
+                            {event.detail ? (
+                              <pre className="mt-1 overflow-x-auto whitespace-pre-wrap break-all font-mono text-[10px] leading-relaxed text-outline">{event.detail}</pre>
+                            ) : null}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              ) : (
+                <p className="p-6 text-center text-xs text-on-surface-variant">Error reports will appear here when visitors hit client-side errors.</p>
               )}
             </section>
           </>
@@ -703,7 +1048,7 @@ export default async function AdminMonitoringPage({
               <SectionHeading
                 icon={Activity}
                 title="Recent activity"
-                hint={`Showing all ${activityGroups.size} IP ${activityGroups.size === 1 ? "address" : "addresses"} and ${events.length} recorded ${events.length === 1 ? "event" : "events"}.`}
+                hint={`Showing all ${activityGroups.size} IP ${activityGroups.size === 1 ? "address" : "addresses"} and ${humanEvents.length.toLocaleString()} recorded ${humanEvents.length === 1 ? "event" : "events"}.`}
               />
               <div className="divide-y divide-outline-variant">
                 {[...activityGroups.entries()].map(([ipAddress, activity]) => {
@@ -803,11 +1148,11 @@ export default async function AdminMonitoringPage({
                 <div className="mt-5 grid grid-cols-2 gap-4 border-t border-outline-variant pt-5">
                   <div>
                     <p className="font-mono text-[9px] font-bold uppercase tracking-wider text-outline">Phone clicks</p>
-                    <p className="mt-1 text-2xl font-bold text-primary">{events.filter((event) => event.event === "phone_call_click").length.toLocaleString()}</p>
+                    <p className="mt-1 text-2xl font-bold text-primary">{humanEvents.filter((event) => event.event === "phone_call_click").length.toLocaleString()}</p>
                   </div>
                   <div>
                     <p className="font-mono text-[9px] font-bold uppercase tracking-wider text-outline">Maps clicks</p>
-                    <p className="mt-1 text-2xl font-bold text-primary">{events.filter((event) => event.event === "maps_directions_click").length.toLocaleString()}</p>
+                    <p className="mt-1 text-2xl font-bold text-primary">{humanEvents.filter((event) => event.event === "maps_directions_click").length.toLocaleString()}</p>
                   </div>
                 </div>
               </div>

@@ -14,7 +14,7 @@ export const aluminiumFrenchDoorsService: ServiceObject = {
     primaryCtaLink: "/contact",
     secondaryCtaText: "See Door Styles",
     secondaryCtaLink: "#specs",
-    heroImage: "/images/services/aluminium-french-doors-hero.webp"
+    heroImage: "/images/cards/card_aluminium_french_doors.jpg"
   },
   overview: {
     heading: "Timeless Aluminium French Doors for Homes & Verandas",
@@ -92,14 +92,14 @@ export const aluminiumFrenchDoorsService: ServiceObject = {
       title: "Aluminium Sliding Doors",
       slug: "aluminium-sliding-doors",
       shortDescription: "Smooth sliding patio doors.",
-      thumbnailImage: "/images/services/sliding-thumb.webp"
+      thumbnailImage: "/images/sliding_doors.png"
     },
     {
       serviceId: "srv-security-gates",
       title: "Security Gates",
       slug: "security-gates",
       shortDescription: "Matching steel security gates for double doors.",
-      thumbnailImage: "/images/services/gates-thumb.webp"
+      thumbnailImage: "/images/real_images/products/gates/aluminium_gate_one.jpeg"
     }
   ],
   seo: {

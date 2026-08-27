@@ -6,6 +6,7 @@ type MonitoringEvent = {
   metric?: string;
   value?: number;
   referrer?: string;
+  detail?: string;
 };
 
 function visitorId() {
@@ -118,6 +119,35 @@ function clickEvents(element: Element) {
 
 if (typeof window !== "undefined") {
   report({ event: "page_view", referrer: cleanDestination(document.referrer) });
+
+  const MAX_ERROR_REPORTS = 10;
+  let reportedErrors = 0;
+
+  function reportError(message: string, stack?: string) {
+    if (!message || reportedErrors >= MAX_ERROR_REPORTS) return;
+    reportedErrors += 1;
+    const detail = [
+      message.slice(0, 200),
+      (stack || "").split("\n").slice(0, 3).join("\n").slice(0, 600),
+    ]
+      .filter(Boolean)
+      .join("\n");
+    report({ event: "js_error", label: message.slice(0, 160), detail });
+  }
+
+  window.addEventListener("error", (event) => {
+    if (!(event instanceof ErrorEvent) || !event.message) return;
+    reportError(event.message, event.error instanceof Error ? event.error.stack : undefined);
+  });
+
+  window.addEventListener("unhandledrejection", (event) => {
+    if (!("reason" in event)) return;
+    const reason = (event as PromiseRejectionEvent).reason;
+    reportError(
+      reason instanceof Error ? reason.message : String(reason).slice(0, 160),
+      reason instanceof Error ? reason.stack : undefined,
+    );
+  });
 
   window.addEventListener("load", () => {
     const navigation = performance.getEntriesByType("navigation")[0] as

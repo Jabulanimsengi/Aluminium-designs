@@ -14,7 +14,7 @@ export const burglarBarsService: ServiceObject = {
     primaryCtaLink: "/contact",
     secondaryCtaText: "View Burglar Bar Styles",
     secondaryCtaLink: "#specs",
-    heroImage: "/images/services/burglar-bars-hero.webp"
+    heroImage: "/images/real_images/products/security/security_burglar-doors_three.jpeg"
   },
   overview: {
     heading: "Strong Steel Window Security Bars for Maximum Protection",
@@ -92,14 +92,14 @@ export const burglarBarsService: ServiceObject = {
       title: "Security Gates",
       slug: "security-gates",
       shortDescription: "Heavy-duty steel security gates for doors.",
-      thumbnailImage: "/images/services/gates-thumb.webp"
+      thumbnailImage: "/images/real_images/products/gates/aluminium_gate_one.jpeg"
     },
     {
       serviceId: "srv-aluminium-windows",
       title: "Aluminium Windows",
       slug: "aluminium-windows",
       shortDescription: "Custom energy-saving aluminium windows.",
-      thumbnailImage: "/images/services/windows-thumb.webp"
+      thumbnailImage: "/images/real_images/products/windows/window_aluminium_one.jpeg"
     }
   ],
   seo: {

@@ -14,7 +14,7 @@ export const steelShedsService: ServiceObject = {
     primaryCtaLink: "/contact",
     secondaryCtaText: "View Shed Sizes",
     secondaryCtaLink: "#specs",
-    heroImage: "/images/services/steel-sheds-hero.webp"
+    heroImage: "/images/patio_enclosure.png"
   },
   overview: {
     heading: "Durable Steel Outdoor Storage Rooms & Tool Sheds",
@@ -92,14 +92,14 @@ export const steelShedsService: ServiceObject = {
       title: "Steel Carports & Shadeports",
       slug: "steel-carports",
       shortDescription: "Custom vehicle shade and hail protection.",
-      thumbnailImage: "/images/services/carports-thumb.webp"
+      thumbnailImage: "/images/patio_enclosure.png"
     },
     {
       serviceId: "srv-custom-welding",
       title: "Custom Welding & Steel Fabrication",
       slug: "custom-welding",
       shortDescription: "Custom steel welding and metal fabrication.",
-      thumbnailImage: "/images/services/welding-thumb.webp"
+      thumbnailImage: "/images/slatted_gate.png"
     }
   ],
   seo: {

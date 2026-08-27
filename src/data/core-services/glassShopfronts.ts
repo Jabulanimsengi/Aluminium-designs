@@ -14,7 +14,7 @@ export const glassShopfrontsService: ServiceObject = {
     primaryCtaLink: "/contact",
     secondaryCtaText: "Explore Shopfront Options",
     secondaryCtaLink: "#specs",
-    heroImage: "/images/services/glass-shopfronts-hero.webp"
+    heroImage: "/images/shopfront_facade.png"
   },
   overview: {
     heading: "Commercial Glass Shopfronts for Retail Stores & Offices",
@@ -92,14 +92,14 @@ export const glassShopfrontsService: ServiceObject = {
       title: "Office Glass Partitions",
       slug: "office-glass-partitions",
       shortDescription: "Interior glass office dividers and walls.",
-      thumbnailImage: "/images/services/partitions-thumb.webp"
+      thumbnailImage: "/images/office_partitions.png"
     },
     {
       serviceId: "srv-aluminium-sliding-doors",
       title: "Aluminium Sliding Doors",
       slug: "aluminium-sliding-doors",
       shortDescription: "Commercial sliding doors and glass entrances.",
-      thumbnailImage: "/images/services/sliding-thumb.webp"
+      thumbnailImage: "/images/sliding_doors.png"
     }
   ],
   seo: {

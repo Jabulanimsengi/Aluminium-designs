@@ -14,7 +14,7 @@ export const aluminiumWindowsService: ServiceObject = {
     primaryCtaLink: "/contact",
     secondaryCtaText: "Explore Window Styles",
     secondaryCtaLink: "#specs",
-    heroImage: "/images/services/aluminium-windows-hero.webp"
+    heroImage: "/images/cards/card_aluminium_windows.jpg"
   },
   overview: {
     heading: "Custom Aluminium Windows for Homes & Businesses",
@@ -92,14 +92,14 @@ export const aluminiumWindowsService: ServiceObject = {
       title: "Aluminium Front Doors",
       slug: "aluminium-front-doors",
       shortDescription: "High-security aluminium front doors for your home.",
-      thumbnailImage: "/images/services/doors-thumb.webp"
+      thumbnailImage: "/images/real_images/products/doors/aluminium_door_one.jpeg"
     },
     {
       serviceId: "srv-aluminium-sliding-doors",
       title: "Aluminium Sliding Doors",
       slug: "aluminium-sliding-doors",
       shortDescription: "Smooth sliding glass doors for patios and gardens.",
-      thumbnailImage: "/images/services/sliding-thumb.webp"
+      thumbnailImage: "/images/sliding_doors.png"
     }
   ],
   seo: {

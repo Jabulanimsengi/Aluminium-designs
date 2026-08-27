@@ -1,6 +1,6 @@
-import { appendFile, mkdir, open, stat } from "node:fs/promises";
+import { open, stat } from "node:fs/promises";
 import path from "node:path";
-import { getDataDir } from "@/lib/monitoring";
+import { appendNdjsonLine, getDataDir } from "@/lib/monitoring";
 
 export type Lead = {
   name: string;
@@ -73,7 +73,5 @@ export async function readLeads(): Promise<Lead[]> {
 }
 
 export async function appendLead(lead: Lead) {
-  const filePath = getLeadsPath();
-  await mkdir(path.dirname(filePath), { recursive: true });
-  await appendFile(filePath, `${JSON.stringify(lead)}\n`, "utf8");
+  await appendNdjsonLine(getLeadsPath(), `${JSON.stringify(lead)}\n`);
 }

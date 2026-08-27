@@ -14,7 +14,7 @@ export const officeGlassPartitionsService: ServiceObject = {
     primaryCtaLink: "/contact",
     secondaryCtaText: "View Partition Options",
     secondaryCtaLink: "#specs",
-    heroImage: "/images/services/office-glass-partitions-hero.webp"
+    heroImage: "/images/office_partitions.png"
   },
   overview: {
     heading: "Sleek Glass Office Dividers & Boardroom Walls",
@@ -92,14 +92,14 @@ export const officeGlassPartitionsService: ServiceObject = {
       title: "Glass Shopfronts",
       slug: "glass-shopfronts",
       shortDescription: "Retail storefronts and commercial entrance doors.",
-      thumbnailImage: "/images/services/shopfront-thumb.webp"
+      thumbnailImage: "/images/shopfront_facade.png"
     },
     {
       serviceId: "srv-glass-balustrades",
       title: "Glass Balustrades",
       slug: "glass-balustrades",
       shortDescription: "Modern glass balustrades for office stairs and balconies.",
-      thumbnailImage: "/images/services/balustrades-thumb.webp"
+      thumbnailImage: "/images/glass_balustrade.png"
     }
   ],
   seo: {

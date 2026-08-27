@@ -14,7 +14,7 @@ export const meshFencingService: ServiceObject = {
     primaryCtaLink: "/contact",
     secondaryCtaText: "Explore Mesh Specs",
     secondaryCtaLink: "#specs",
-    heroImage: "/images/services/mesh-fencing-hero.webp"
+    heroImage: "/images/real_images/products/security/security_burglar-doors_two.jpeg"
   },
   overview: {
     heading: "Anti-Climb & Anti-Cut High-Security Steel Mesh Fencing",
@@ -92,14 +92,14 @@ export const meshFencingService: ServiceObject = {
       title: "Palisade Fencing",
       slug: "palisade-fencing",
       shortDescription: "Traditional steel palisade fencing.",
-      thumbnailImage: "/images/services/palisade-thumb.webp"
+      thumbnailImage: "/images/slatted_gate.png"
     },
     {
       serviceId: "srv-driveway-gates",
       title: "Driveway Gates",
       slug: "driveway-gates",
       shortDescription: "Matching mesh and steel driveway gates.",
-      thumbnailImage: "/images/services/driveway-thumb.webp"
+      thumbnailImage: "/images/real_images/products/gates/aluminium_gate_two.jpeg"
     }
   ],
   seo: {

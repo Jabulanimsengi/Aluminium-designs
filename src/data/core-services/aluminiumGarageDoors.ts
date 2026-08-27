@@ -14,7 +14,7 @@ export const aluminiumGarageDoorsService: ServiceObject = {
     primaryCtaLink: "/contact",
     secondaryCtaText: "View Panel Styles",
     secondaryCtaLink: "#specs",
-    heroImage: "/images/services/aluminium-garage-doors-hero.webp"
+    heroImage: "/images/cards/card_aluminium_garage_doors.jpg"
   },
   overview: {
     heading: "Lightweight & Long-Lasting Aluminium Garage Doors",
@@ -92,14 +92,14 @@ export const aluminiumGarageDoorsService: ServiceObject = {
       title: "Gate Motor Installation & Repairs",
       slug: "gate-motors",
       shortDescription: "Automated gate motors with battery backup.",
-      thumbnailImage: "/images/services/motors-thumb.webp"
+      thumbnailImage: "/images/real_images/products/gates/aluminium_gate_three.jpeg"
     },
     {
       serviceId: "srv-aluminium-front-doors",
       title: "Aluminium Front Doors",
       slug: "aluminium-front-doors",
       shortDescription: "Matching modern aluminium entrance doors.",
-      thumbnailImage: "/images/services/front-doors-thumb.webp"
+      thumbnailImage: "/images/real_images/products/doors/aluminium_door_one.jpeg"
     }
   ],
   seo: {

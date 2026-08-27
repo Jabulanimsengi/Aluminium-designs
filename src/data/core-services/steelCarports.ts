@@ -14,7 +14,7 @@ export const steelCarportsService: ServiceObject = {
     primaryCtaLink: "/contact",
     secondaryCtaText: "View Carport Styles",
     secondaryCtaLink: "#specs",
-    heroImage: "/images/services/steel-carports-hero.webp"
+    heroImage: "/images/patio_enclosure.png"
   },
   overview: {
     heading: "Durable Steel Carport Structures Built to Withstand All Weather",
@@ -92,14 +92,14 @@ export const steelCarportsService: ServiceObject = {
       title: "Aluminium Awnings & Canopies",
       slug: "aluminium-awnings",
       shortDescription: "Custom door and walkway canopies.",
-      thumbnailImage: "/images/services/awnings-thumb.webp"
+      thumbnailImage: "/images/real_images/products/windows/window_aluminium_six.jpeg"
     },
     {
       serviceId: "srv-steel-sheds",
       title: "Steel Sheds & Storage Units",
       slug: "steel-sheds",
       shortDescription: "Custom outdoor steel storage sheds.",
-      thumbnailImage: "/images/services/sheds-thumb.webp"
+      thumbnailImage: "/images/patio_enclosure.png"
     }
   ],
   seo: {
