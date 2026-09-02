@@ -37,12 +37,51 @@ export interface ServiceSEO {
   openGraphImage: string;
 }
 
+export interface ServicePricingGuide {
+  estimatedStartingPrice: string;
+  priceUnit: string;
+  priceFactors: string[];
+}
+
+export interface ServicePriceMatrixItem {
+  itemName: string;
+  standardDimensions: string;
+  estimatedPriceRange: string;
+  idealFor?: string;
+  idealApplication?: string;
+}
+
+export interface GlassSpecItem {
+  materialName: string;
+  securityRating: string;
+  soundReduction: string;
+  thermalControl: string;
+  recommendedUse: string;
+}
+
+export interface FinishOption {
+  code: string;
+  name: string;
+  finishType: string;
+  description: string;
+}
+
+export interface UseCaseScenario {
+  title: string;
+  subtitle: string;
+  description: string;
+  icon: string;
+}
+
 export interface ServiceObject {
   id: string;
   slug: string;
   serviceName: string;
   tagline: string;
   category: string;
+  isCommercialOnly?: boolean;
+  isCommercial?: boolean;
+  pricingGuide?: ServicePricingGuide;
   hero: {
     badge: string;
     headline: string;
@@ -69,3 +108,4 @@ export interface ServiceObject {
   seo: ServiceSEO;
   structuredDataJsonLd: Record<string, any>;
 }
+

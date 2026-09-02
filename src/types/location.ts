@@ -10,12 +10,21 @@ export type SouthAfricanProvince =
   | 'Northern Cape';
 
 export type LocationType =
+  | 'province'
+  | 'region'
   | 'metropolitan'
   | 'city'
   | 'town'
   | 'suburb'
   | 'township'
   | 'village';
+
+export type LocationArchetype =
+  | 'luxury-estate'
+  | 'heritage-suburb'
+  | 'commercial-hub'
+  | 'industrial-node'
+  | 'general-residential';
 
 export interface LocationGeoCoordinates {
   latitude: number;
@@ -27,6 +36,7 @@ export interface SALocationObject {
   slug: string;
   name: string;
   type: LocationType;
+  archetype?: LocationArchetype;
   province: SouthAfricanProvince;
   provinceAbbr: 'GP' | 'WC' | 'KZN' | 'EC' | 'FS' | 'LP' | 'MP' | 'NW' | 'NC';
   metroOrDistrict?: string;
