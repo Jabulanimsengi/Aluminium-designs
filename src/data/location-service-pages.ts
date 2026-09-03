@@ -312,11 +312,16 @@ export const katlehongAluminiumWindows: LocationServiceObject = {
 // Composed (generated) content
 // ---------------------------------------------------------------------------
 
-function buildHero(location: LocationArea, service: Service, page: ServicePageContent) {
+function buildHero(location: LocationArea, service: Service, page: ServicePageContent, isNear: boolean) {
+  const isSteel = service.category === "steel";
+  const preposition = isNear ? "Near" : "in";
+  const prefix = isSteel ? "Custom Steel" : "Architectural";
   return {
-    headline: `Architectural ${service.title} in ${location.name}`,
+    headline: `${prefix} ${service.title} ${preposition} ${location.name}`,
     subheadline: page.hero.subheadline,
-    localBadgeText: `${location.municipality} Service Area · Built to Applicable SANS Standards`,
+    localBadgeText: isSteel
+      ? `${location.municipality} Service Area · SANS Physical Barrier Security & Free Quotes`
+      : `${location.municipality} Service Area · Built to Applicable SANS Standards`,
   };
 }
 
@@ -328,9 +333,29 @@ function cleanStandards(value: string | undefined): string {
     .replace(/\s*$/, "");
 }
 
-function buildStory(location: LocationArea, service: Service, page: ServicePageContent, suburbs: string[]) {
-  const rng = seededRandom(`${location.id}:story`);
+function buildStory(
+  location: LocationArea,
+  service: Service,
+  page: ServicePageContent,
+  suburbs: string[],
+  isNear: boolean,
+) {
+  const rng = seededRandom(`${location.id}:${service.id}:story`);
   const [a, b, c, d] = [...suburbs, "the surrounding area", "newer developments", "neighbouring suburbs", "established estates"];
+
+  if (service.category === "steel") {
+    const benefit = pick(page.benefits.items, rng);
+    return {
+      heading: `Heavy-Duty Steel & Physical Security Solutions Near ${location.name}`,
+      uniqueParagraphs: [
+        `Homeowners and commercial property managers across ${location.name}—from established properties in ${a} and ${b} to business premises in ${c} and ${d}—require dependable physical security barriers to protect perimeter gates, driveways, and window openings against break-ins.`,
+        `Our ${location.name} custom steel ${service.title.toLowerCase()} are manufactured in our Gauteng workshop using solid mild steel square bar, heavy-gauge structural tubing, and industrial cold-rolled sections. Every fixture receives comprehensive anti-rust protection: multi-stage zinc phosphate primer and UV-stabilized baked epoxy powder coating, with full hot-dip galvanizing available for long-term outdoor weather resistance.`,
+        `Whether installing custom-welded security gates, burglar bars, or automated driveway access near ${location.name}, ${benefit.title.toLowerCase()} is built into every job. ${benefit.description} Our certified technicians anchor directly into solid brickwork with tamper-proof shear-head security bolts, ensuring maximum structural strength and peace of mind.`,
+      ],
+      localClimateNotice: "Manufactured from solid mild steel and galvanized components with tamper-proof snap-off wall fasteners.",
+    };
+  }
+
   const frameMaterial = specValue(page, "Frame Material") ?? "architectural-grade aluminium alloy (6063-T6)";
   const powderCoating = specValue(page, "Powder Coating") ?? "60–80 micron Qualicoat powder-coated finish";
   const safetyStandards = cleanStandards(specValue(page, "Safety Standards") ?? specValue(page, "Safety Compliance"));
@@ -358,19 +383,34 @@ function buildNap(location: LocationArea, suburbs: string[]): LocationServiceNap
   };
 }
 
-function buildFaqs(location: LocationArea, service: Service, page: ServicePageContent, suburbs: string[]) {
+function buildFaqs(
+  location: LocationArea,
+  service: Service,
+  page: ServicePageContent,
+  suburbs: string[],
+  isNear: boolean,
+) {
   const suburbList = suburbs.slice(0, 4).join(", ");
   const serviceFaqs = page.faqs.map((f) => ({ question: f.question, answer: f.answer }));
+  const isSteel = service.category === "steel";
 
   return [
-    ...serviceFaqs.slice(0, 4),
+    ...serviceFaqs.slice(0, 3),
     {
-      question: `How long does ${service.title.toLowerCase()} manufacturing and installation take in ${location.name}?`,
-      answer: `After final measurements are taken onsite, custom fabrication in our factory takes 7 to 12 working days. Onsite removal of old frames and installation of the new ${service.title.toLowerCase()} usually takes 1 to 2 days depending on the size of the property.`,
+      question: `Do you provide ${service.title.toLowerCase()} and steel services near me in ${location.name}?`,
+      answer: `Yes. Our mobile measurement and installation team operates directly in ${location.name} and neighbouring areas like ${suburbList || location.name}. We conduct laser on-site measurements, provide itemized written quotes, and consultation callout fees are credited back 100% against your invoice.`,
     },
     {
-      question: `Do you offer free onsite measurements and quotes across ${location.name}?`,
-      answer: `Yes. We offer free onsite technical measurements, advice, and zero-obligation quotes across all ${location.name} areas, including ${suburbList || location.name}.`,
+      question: `How long does ${service.title.toLowerCase()} manufacturing and installation take in ${location.name}?`,
+      answer: `After final measurements are taken onsite in ${location.name}, custom fabrication in our workshop takes 7 to 12 working days. Onsite installation usually takes 1 to 2 days depending on the property size.`,
+    },
+    {
+      question: isSteel
+        ? `What anti-rust warranty and coatings are included with steel installations in ${location.name}?`
+        : `Do you offer free onsite measurements and quotes across ${location.name}?`,
+      answer: isSteel
+        ? `All steel fixtures receive multi-stage zinc phosphate anti-rust primer and UV-stabilized epoxy powder coating or hot-dip galvanizing, engineered to withstand Johannesburg highveld rains and temperature extremes.`
+        : `Yes. We offer free onsite technical measurements, advice, and zero-obligation quotes across all ${location.name} areas, including ${suburbList || location.name}.`,
     },
   ];
 }
@@ -381,22 +421,39 @@ function buildSeo(
   page: ServicePageContent,
   suburbs: string[],
   routeServiceId: string,
+  isNear: boolean,
 ): LocationServiceSeo {
   const canonical = `${siteUrl}/locations/${location.id}/${routeServiceId}`;
   const firstSuburbs = suburbs.slice(0, 2).join(" & ");
+  const isSteel = service.category === "steel";
+
+  const titleTag = isNear || isSteel
+    ? `${service.title} Near ${location.name} | Local Steel Works & Installers`
+    : `${service.title} ${location.name} | Manufacturer & Local Installers`;
+
+  const metaDescription = isNear || isSteel
+    ? `Looking for ${service.title.toLowerCase()} near ${location.name}? Custom-welded heavy-duty security gates, burglar bars, carports & steel works near you in ${location.name}${firstSuburbs ? ` and ${firstSuburbs}` : ""}. Free quotes & fast installation.`
+    : `Premium custom ${service.title.toLowerCase()} installers in ${location.name}${firstSuburbs ? `, ${firstSuburbs}` : ""}. ${service.shortDescription} SANS certified, high security & free quotes.`;
+
+  const keywords = [
+    `${service.title.toLowerCase()} near me`,
+    `${service.title.toLowerCase()} near ${location.name}`,
+    `steel works near me`,
+    `steel works near ${location.name}`,
+    `${service.title.toLowerCase()} ${location.name}`,
+    `${service.title.toLowerCase()} installers ${firstSuburbs || location.name}`,
+    `custom ${service.title.toLowerCase()} ${location.municipality}`,
+    isSteel ? `welders near ${location.name}` : `glaziers near ${location.name}`,
+    isSteel ? `security gates near ${location.name}` : `window installers near ${location.name}`,
+    isSteel ? `burglar bars near ${location.name}` : `sliding doors near ${location.name}`,
+    `cheap ${service.title.toLowerCase()} ${location.name}`,
+    ...page.seo.keywords.slice(0, 2),
+  ];
 
   return {
-    titleTag: `${service.title} ${location.name} | Manufacturer & Local Installers`,
-    metaDescription: `Premium custom ${service.title.toLowerCase()} installers in ${location.name}${firstSuburbs ? `, ${firstSuburbs}` : ""}. ${service.shortDescription} SANS certified, high security & free quotes.`,
-    keywords: [
-      `${service.title.toLowerCase()} ${location.name}`,
-      `${service.title.toLowerCase()} installers ${firstSuburbs || location.name}`,
-      `custom ${service.title.toLowerCase()} ${location.municipality}`,
-      `${service.title.toLowerCase()} manufacturers Gauteng`,
-      ...page.seo.keywords.slice(0, 3),
-      `SANS compliant ${service.title.toLowerCase()} ${location.name}`,
-      `cheap ${service.title.toLowerCase()} ${location.name}`,
-    ],
+    titleTag,
+    metaDescription,
+    keywords,
     canonicalUrl: canonical,
     openGraphImage: `${siteUrl}${service.imagePath}`,
   };
@@ -408,8 +465,11 @@ function buildStructuredData(
   page: ServicePageContent,
   object: LocationServiceObject,
   suburbs: string[],
+  isNear: boolean,
 ) {
-  const storeName = `${service.title} ${location.name}`;
+  const storeName = isNear
+    ? `${service.title} Near ${location.name}`
+    : `${service.title} ${location.name}`;
   const areaServed = [location.name, ...suburbs];
 
   return {
@@ -467,13 +527,18 @@ function buildStructuredData(
 /**
  * Builds the full page content for a single location x service combination.
  * Content is composed deterministically from verified service and location data.
+ * Supports both "[service]-near-[location]" and legacy "[service]-in-[location]" route patterns.
  */
 export function getLocationServicePage(area: string, routeServiceId: string): LocationServiceObject | null {
   const location = gautengLocations.find((loc) => loc.slug === area);
   if (!location) return null;
 
+  const isNear = routeServiceId.includes("-near-");
+
   const service = services.find(
-    (s) => `${slugify(s.title)}-in-${location.slug}` === routeServiceId,
+    (s) =>
+      `${slugify(s.title)}-near-${location.slug}` === routeServiceId ||
+      `${slugify(s.title)}-in-${location.slug}` === routeServiceId,
   );
   if (!service) return null;
 
@@ -482,10 +547,10 @@ export function getLocationServicePage(area: string, routeServiceId: string): Lo
 
   const suburbs = getLocalSuburbs(location);
 
-  const hero = buildHero(location, service, page);
-  const localizedStory = buildStory(location, service, page, suburbs);
+  const hero = buildHero(location, service, page, isNear);
+  const localizedStory = buildStory(location, service, page, suburbs, isNear);
   const localNAP = buildNap(location, suburbs);
-  const localFaqs = buildFaqs(location, service, page, suburbs);
+  const localFaqs = buildFaqs(location, service, page, suburbs, isNear);
 
   const base: LocationServiceObject = {
     id: `loc-srv-${location.slug}-${service.id}`,
@@ -498,42 +563,58 @@ export function getLocationServicePage(area: string, routeServiceId: string): Lo
     localProjects: [],
     localReviews: [],
     localFaqs,
-    seo: buildSeo(location, service, page, suburbs, routeServiceId),
+    seo: buildSeo(location, service, page, suburbs, routeServiceId, isNear),
     structuredDataJsonLd: {},
   };
 
-  base.structuredDataJsonLd = buildStructuredData(location, service, page, base, suburbs);
+  base.structuredDataJsonLd = buildStructuredData(location, service, page, base, suburbs, isNear);
   return base;
 }
 
-/** Returns every valid location x service route for full sitemap generation (19,476 routes). */
+/** Returns every valid location x service route for full sitemap generation. */
 export function getAllLocationServiceRoutes(): { area: string; serviceId: string }[] {
   const routes: { area: string; serviceId: string }[] = [];
   for (const location of gautengLocations) {
     for (const service of services) {
+      const slug = slugify(service.title);
+      // Legacy -in- pattern
       routes.push({
         area: location.slug,
-        serviceId: `${slugify(service.title)}-in-${location.slug}`,
+        serviceId: `${slug}-in-${location.slug}`,
       });
+      // New -near- pattern for steel & security services
+      if (service.category === "steel") {
+        routes.push({
+          area: location.slug,
+          serviceId: `${slug}-near-${location.slug}`,
+        });
+      }
     }
   }
   return routes;
 }
 
-/** Returns priority location x service routes for build-time pre-rendering (~1,800 routes). */
+/** Returns priority location x service routes for build-time pre-rendering. */
 export function getPrerenderLocationServiceRoutes(): { area: string; serviceId: string }[] {
-  // Prerender primary cities, high-volume suburbs, and flagship malls at build-time
+  // Prerender primary cities, high-volume suburbs, and flagship hubs at build-time
   const priorityLocations = gautengLocations.filter(
-    (loc) => loc.type === "city" || loc.type === "mall" || ["sandton", "fourways", "midrand", "centurion", "bedfordview", "roodepoort", "kempton-park", "alberton", "benoni", "boksburg", "soweto", "menlyn"].some(prefix => loc.id.includes(prefix))
+    (loc) => loc.type === "city" || loc.type === "mall" || ["sandton", "fourways", "midrand", "centurion", "bedfordview", "roodepoort", "kempton-park", "alberton", "benoni", "boksburg", "soweto", "menlyn", "katlehong"].some(prefix => loc.id.includes(prefix))
   ).slice(0, 50);
 
   const routes: { area: string; serviceId: string }[] = [];
   for (const location of priorityLocations) {
     for (const service of services) {
+      const slug = slugify(service.title);
       routes.push({
         area: location.id,
-        serviceId: `${slugify(service.title)}-in-${location.id}`,
+        serviceId: `${slug}-in-${location.id}`,
       });
+      if (service.category === "steel") {
+        routes.push({
+          area: location.id,
+          serviceId: `${slug}-near-${location.id}`,
+        });
+      }
     }
   }
   return routes;

@@ -14,6 +14,7 @@ import {
   Hammer,
   Truck,
   Sparkles,
+  MapPin,
 } from "lucide-react";
 import { steelServices } from "@/data/services";
 import { whatsappQuoteUrl } from "@/lib/site";
@@ -351,6 +352,185 @@ export default function SteelWorksPage() {
                 </p>
               </details>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Localized Steel Services Directory (Service Near Location) */}
+      <section className="py-20 bg-surface-container-low border-b border-outline-variant">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12 space-y-3 max-w-3xl mx-auto">
+            <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
+              Gauteng Service Coverage
+            </span>
+            <h2 className="font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
+              Steel Works Near You in Gauteng
+            </h2>
+            <p className="text-sm text-on-surface-variant leading-relaxed">
+              We manufacture and install custom steel gates, burglar bars, and carports across all major Gauteng regions. Select your area for local service details and fast quotations.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {/* Region 1: Johannesburg Central & North */}
+            <div className="border border-outline-variant bg-surface-container-lowest p-5 space-y-3 shadow-xs">
+              <h3 className="font-sans font-bold text-sm uppercase text-primary border-b border-outline-variant pb-2 flex items-center gap-1.5">
+                <MapPin className="w-3.5 h-3.5 text-secondary" />
+                Johannesburg &amp; North
+              </h3>
+              <ul className="space-y-2 text-xs font-mono">
+                <li>
+                  <Link href="/locations/sandton/steel-works-near-sandton" className="text-secondary hover:text-primary transition-colors flex items-center justify-between">
+                    <span>Steel Works Near Sandton</span>
+                    <span>&rarr;</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/locations/sandton/security-gates-near-sandton" className="text-secondary hover:text-primary transition-colors flex items-center justify-between">
+                    <span>Security Gates Near Sandton</span>
+                    <span>&rarr;</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/locations/johannesburg/burglar-bars-near-johannesburg" className="text-secondary hover:text-primary transition-colors flex items-center justify-between">
+                    <span>Burglar Bars Near JHB CBD</span>
+                    <span>&rarr;</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/locations/randburg/driveway-gates-near-randburg" className="text-secondary hover:text-primary transition-colors flex items-center justify-between">
+                    <span>Driveway Gates Near Randburg</span>
+                    <span>&rarr;</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/locations/fourways/steel-carports-near-fourways" className="text-secondary hover:text-primary transition-colors flex items-center justify-between">
+                    <span>Steel Carports Near Fourways</span>
+                    <span>&rarr;</span>
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
+            {/* Region 2: East Rand & Ekurhuleni */}
+            <div className="border border-outline-variant bg-surface-container-lowest p-5 space-y-3 shadow-xs">
+              <h3 className="font-sans font-bold text-sm uppercase text-primary border-b border-outline-variant pb-2 flex items-center gap-1.5">
+                <MapPin className="w-3.5 h-3.5 text-secondary" />
+                East Rand &amp; Ekurhuleni
+              </h3>
+              <ul className="space-y-2 text-xs font-mono">
+                <li>
+                  <Link href="/locations/katlehong/steel-works-near-katlehong" className="text-secondary hover:text-primary transition-colors flex items-center justify-between">
+                    <span>Steel Works Near Katlehong</span>
+                    <span>&rarr;</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/locations/alberton/security-gates-near-alberton" className="text-secondary hover:text-primary transition-colors flex items-center justify-between">
+                    <span>Security Gates Near Alberton</span>
+                    <span>&rarr;</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/locations/germiston/burglar-bars-near-germiston" className="text-secondary hover:text-primary transition-colors flex items-center justify-between">
+                    <span>Burglar Bars Near Germiston</span>
+                    <span>&rarr;</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/locations/bedfordview/trellis-security-gates-near-bedfordview" className="text-secondary hover:text-primary transition-colors flex items-center justify-between">
+                    <span>Trellis Gates Near Bedfordview</span>
+                    <span>&rarr;</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/locations/boksburg/palisade-fencing-near-boksburg" className="text-secondary hover:text-primary transition-colors flex items-center justify-between">
+                    <span>Palisade Fencing Near Boksburg</span>
+                    <span>&rarr;</span>
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
+            {/* Region 3: Pretoria & Centurion */}
+            <div className="border border-outline-variant bg-surface-container-lowest p-5 space-y-3 shadow-xs">
+              <h3 className="font-sans font-bold text-sm uppercase text-primary border-b border-outline-variant pb-2 flex items-center gap-1.5">
+                <MapPin className="w-3.5 h-3.5 text-secondary" />
+                Pretoria &amp; Centurion
+              </h3>
+              <ul className="space-y-2 text-xs font-mono">
+                <li>
+                  <Link href="/locations/centurion/steel-works-near-centurion" className="text-secondary hover:text-primary transition-colors flex items-center justify-between">
+                    <span>Steel Works Near Centurion</span>
+                    <span>&rarr;</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/locations/centurion/driveway-gates-near-centurion" className="text-secondary hover:text-primary transition-colors flex items-center justify-between">
+                    <span>Driveway Gates Near Centurion</span>
+                    <span>&rarr;</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/locations/pretoria/security-gates-near-pretoria" className="text-secondary hover:text-primary transition-colors flex items-center justify-between">
+                    <span>Security Gates Near Pretoria</span>
+                    <span>&rarr;</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/locations/midrand/steel-carports-near-midrand" className="text-secondary hover:text-primary transition-colors flex items-center justify-between">
+                    <span>Steel Carports Near Midrand</span>
+                    <span>&rarr;</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/locations/midrand/palisade-fencing-near-midrand" className="text-secondary hover:text-primary transition-colors flex items-center justify-between">
+                    <span>Palisade Fencing Near Midrand</span>
+                    <span>&rarr;</span>
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
+            {/* Region 4: West Rand & South */}
+            <div className="border border-outline-variant bg-surface-container-lowest p-5 space-y-3 shadow-xs">
+              <h3 className="font-sans font-bold text-sm uppercase text-primary border-b border-outline-variant pb-2 flex items-center gap-1.5">
+                <MapPin className="w-3.5 h-3.5 text-secondary" />
+                West Rand &amp; South
+              </h3>
+              <ul className="space-y-2 text-xs font-mono">
+                <li>
+                  <Link href="/locations/roodepoort/steel-works-near-roodepoort" className="text-secondary hover:text-primary transition-colors flex items-center justify-between">
+                    <span>Steel Works Near Roodepoort</span>
+                    <span>&rarr;</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/locations/roodepoort/security-gates-near-roodepoort" className="text-secondary hover:text-primary transition-colors flex items-center justify-between">
+                    <span>Security Gates Near Roodepoort</span>
+                    <span>&rarr;</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/locations/krugersdorp/burglar-bars-near-krugersdorp" className="text-secondary hover:text-primary transition-colors flex items-center justify-between">
+                    <span>Burglar Bars Near Krugersdorp</span>
+                    <span>&rarr;</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/locations/soweto/driveway-gates-near-soweto" className="text-secondary hover:text-primary transition-colors flex items-center justify-between">
+                    <span>Driveway Gates Near Soweto</span>
+                    <span>&rarr;</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/locations/alberton/custom-welding-near-alberton" className="text-secondary hover:text-primary transition-colors flex items-center justify-between">
+                    <span>Welding Services Near Alberton</span>
+                    <span>&rarr;</span>
+                  </Link>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </section>

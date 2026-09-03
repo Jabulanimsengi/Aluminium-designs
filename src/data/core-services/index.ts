@@ -39,6 +39,7 @@ import { steelStaircasesService } from './steelStaircases';
 import { steelShedsService } from './steelSheds';
 import { customWeldingService } from './customWelding';
 import { steelRepairsService } from './steelRepairs';
+import { steelWorksService } from './steelWorks';
 
 export const allCoreServices: ServiceObject[] = [
   // Aluminium, Glazing & Conversions (22 distinct services)
@@ -79,7 +80,8 @@ export const allCoreServices: ServiceObject[] = [
   steelStaircasesService,
   steelShedsService,
   customWeldingService,
-  steelRepairsService
+  steelRepairsService,
+  steelWorksService
 ];
 
 export const coreServiceMapBySlug = new Map<string, ServiceObject>(

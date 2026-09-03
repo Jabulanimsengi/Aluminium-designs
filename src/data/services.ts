@@ -28,6 +28,7 @@ export const steelSlugs = new Set([
   "steel-sheds",
   "custom-welding",
   "steel-repairs",
+  "steel-works",
 ]);
 
 export const services: Service[] = allCoreServices.map((srv, index) => {
