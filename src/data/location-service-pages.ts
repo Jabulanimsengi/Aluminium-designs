@@ -314,12 +314,17 @@ export const katlehongAluminiumWindows: LocationServiceObject = {
 
 function buildHero(location: LocationArea, service: Service, page: ServicePageContent, isNear: boolean) {
   const isSteel = service.category === "steel";
-  const preposition = isNear ? "Near" : "in";
+  const isMall = location.type === "mall";
+  const preposition = (isNear || isMall) ? "Near" : "in";
   const prefix = isSteel ? "Custom Steel" : "Architectural";
   return {
     headline: `${prefix} ${service.title} ${preposition} ${location.name}`,
-    subheadline: page.hero.subheadline,
-    localBadgeText: isSteel
+    subheadline: isMall
+      ? `Precision ${service.title.toLowerCase()} manufactured and installed for homes, residential estates, and commercial properties throughout the ${location.name} precinct.`
+      : page.hero.subheadline,
+    localBadgeText: isMall
+      ? `Serving Homes & Businesses in the ${location.name} Precinct · Free Consultations`
+      : isSteel
       ? `${location.municipality} Service Area · SANS Physical Barrier Security & Free Quotes`
       : `${location.municipality} Service Area · Built to Applicable SANS Standards`,
   };
@@ -342,9 +347,27 @@ function buildStory(
 ) {
   const rng = seededRandom(`${location.id}:${service.id}:story`);
   const [a, b, c, d] = [...suburbs, "the surrounding area", "newer developments", "neighbouring suburbs", "established estates"];
+  const isSteel = service.category === "steel";
+  const isMall = location.type === "mall";
+  const benefit = pick(page.benefits.items, rng);
 
-  if (service.category === "steel") {
-    const benefit = pick(page.benefits.items, rng);
+  if (isMall) {
+    return {
+      heading: `${isSteel ? "Heavy-Duty Steel" : "Custom Aluminium"} Solutions Near ${location.name}`,
+      uniqueParagraphs: [
+        `Homeowners, residential security estates, and commercial facilities throughout the precinct surrounding ${location.name} in ${location.region} (${location.municipality}) require dependable physical security and architectural installations. Properties situated near this major retail and commercial landmark benefit from our prompt on-site laser measurements, engineering precision, and full turnkey installation services.`,
+        isSteel
+          ? `Our custom steel ${service.title.toLowerCase()} near ${location.name} are manufactured in our Gauteng workshop using solid mild steel square bar, heavy-wall structural tubing, and industrial cold-rolled sections. Each unit receives multi-stage zinc phosphate anti-rust primer and UV-stabilized baked epoxy powder coating, with full hot-dip galvanizing available for long-term outdoor weather resistance.`
+          : `Our architectural aluminium ${service.title.toLowerCase()} near ${location.name} are crafted from architectural-grade 6063-T6 alloy with a 60–80 micron Qualicoat powder-coated finish. They will never warp, rust, or corrode under Gauteng's harsh Highveld UV glare or summer hailstorms, while precision perimeter EPDM rubber seals ensure total draught and storm-water exclusion.`,
+        `Whether upgrading a residential property near ${location.name} or outfitting commercial tenant facilities, ${benefit.title.toLowerCase()} is at the heart of our craftsmanship. ${benefit.description} All work is carried out in full compliance with national building and safety regulations, with heavy-duty anchors and professional handover.`,
+      ],
+      localClimateNotice: isSteel
+        ? `Manufactured from solid mild steel and galvanized components with tamper-proof security wall fasteners.`
+        : page.overview.keyFeaturesNotice,
+    };
+  }
+
+  if (isSteel) {
     return {
       heading: `Heavy-Duty Steel & Physical Security Solutions Near ${location.name}`,
       uniqueParagraphs: [
@@ -359,7 +382,6 @@ function buildStory(
   const frameMaterial = specValue(page, "Frame Material") ?? "architectural-grade aluminium alloy (6063-T6)";
   const powderCoating = specValue(page, "Powder Coating") ?? "60–80 micron Qualicoat powder-coated finish";
   const safetyStandards = cleanStandards(specValue(page, "Safety Standards") ?? specValue(page, "Safety Compliance"));
-  const benefit = pick(page.benefits.items, rng);
 
   return {
     heading: `Tailored for ${location.name}'s Highveld Climate & Building Requirements`,
@@ -393,6 +415,25 @@ function buildFaqs(
   const suburbList = suburbs.slice(0, 4).join(", ");
   const serviceFaqs = page.faqs.map((f) => ({ question: f.question, answer: f.answer }));
   const isSteel = service.category === "steel";
+  const isMall = location.type === "mall";
+
+  if (isMall) {
+    return [
+      ...serviceFaqs.slice(0, 2),
+      {
+        question: `Do you install ${service.title.toLowerCase()} for residential homes and complexes near ${location.name}?`,
+        answer: `Yes. Our mobile technical teams service private homes, townhouse complexes, and residential estates located near ${location.name} in ${location.region}. We bring material samples, take laser measurements, and supply zero-obligation written quotes.`,
+      },
+      {
+        question: `Can you fabricate custom shopfronts, doors, or security gates for retail tenants at ${location.name}?`,
+        answer: `Yes. We provide commercial aluminium shopfronts, frameless glass entries, heavy-duty slamlock security gates, and emergency repairs for retail stores, restaurants, and commercial offices located in and around ${location.name}.`,
+      },
+      {
+        question: `How quickly can you measure and install near ${location.name}?`,
+        answer: `We offer prompt on-site visits across the ${location.region} area. Once measurements and custom specifications are confirmed, fabrication takes 7 to 12 working days, with on-site installation taking 1 to 2 days.`,
+      },
+    ];
+  }
 
   return [
     ...serviceFaqs.slice(0, 3),
@@ -426,27 +467,30 @@ function buildSeo(
   const canonical = `${siteUrl}/locations/${location.id}/${routeServiceId}`;
   const firstSuburbs = suburbs.slice(0, 2).join(" & ");
   const isSteel = service.category === "steel";
+  const isMall = location.type === "mall";
 
-  const titleTag = isNear || isSteel
-    ? `${service.title} Near ${location.name} | Local Steel Works & Installers`
+  const titleTag = isMall || isNear || isSteel
+    ? `${service.title} Near ${location.name} | Local Installers & Free Quotes`
     : `${service.title} ${location.name} | Manufacturer & Local Installers`;
 
-  const metaDescription = isNear || isSteel
+  const metaDescription = isMall
+    ? `Looking for ${service.title.toLowerCase()} near ${location.name}? Professional custom aluminium and steel installations for homes, estates, and businesses in the ${location.name} precinct (${location.region}). Free quotes.`
+    : isNear || isSteel
     ? `Looking for ${service.title.toLowerCase()} near ${location.name}? Custom-welded heavy-duty security gates, burglar bars, carports & steel works near you in ${location.name}${firstSuburbs ? ` and ${firstSuburbs}` : ""}. Free quotes & fast installation.`
     : `Premium custom ${service.title.toLowerCase()} installers in ${location.name}${firstSuburbs ? `, ${firstSuburbs}` : ""}. ${service.shortDescription} SANS certified, high security & free quotes.`;
 
   const keywords = [
-    `${service.title.toLowerCase()} near me`,
     `${service.title.toLowerCase()} near ${location.name}`,
-    `steel works near me`,
+    `${service.title.toLowerCase()} near me`,
+    isMall ? `custom ${service.title.toLowerCase()} ${location.region}` : `${service.title.toLowerCase()} ${location.name}`,
     `steel works near ${location.name}`,
-    `${service.title.toLowerCase()} ${location.name}`,
-    `${service.title.toLowerCase()} installers ${firstSuburbs || location.name}`,
-    `custom ${service.title.toLowerCase()} ${location.municipality}`,
+    `security gates near ${location.name}`,
+    `burglar bars near ${location.name}`,
+    `aluminium windows near ${location.name}`,
+    `sliding doors near ${location.name}`,
     isSteel ? `welders near ${location.name}` : `glaziers near ${location.name}`,
-    isSteel ? `security gates near ${location.name}` : `window installers near ${location.name}`,
-    isSteel ? `burglar bars near ${location.name}` : `sliding doors near ${location.name}`,
-    `cheap ${service.title.toLowerCase()} ${location.name}`,
+    `best ${service.title.toLowerCase()} near ${location.name}`,
+    `cheap ${service.title.toLowerCase()} near ${location.name}`,
     ...page.seo.keywords.slice(0, 2),
   ];
 
@@ -467,7 +511,7 @@ function buildStructuredData(
   suburbs: string[],
   isNear: boolean,
 ) {
-  const storeName = isNear
+  const storeName = isNear || location.type === "mall"
     ? `${service.title} Near ${location.name}`
     : `${service.title} ${location.name}`;
   const areaServed = [location.name, ...suburbs];
@@ -533,7 +577,7 @@ export function getLocationServicePage(area: string, routeServiceId: string): Lo
   const location = gautengLocations.find((loc) => loc.slug === area);
   if (!location) return null;
 
-  const isNear = routeServiceId.includes("-near-");
+  const isNear = location.type === "mall" || routeServiceId.includes("-near-");
 
   const service = services.find(
     (s) =>
@@ -577,17 +621,28 @@ export function getAllLocationServiceRoutes(): { area: string; serviceId: string
   for (const location of gautengLocations) {
     for (const service of services) {
       const slug = slugify(service.title);
-      // Legacy -in- pattern
-      routes.push({
-        area: location.slug,
-        serviceId: `${slug}-in-${location.slug}`,
-      });
-      // New -near- pattern for steel & security services
-      if (service.category === "steel") {
+      // For malls, the natural user query is always "-near-"
+      if (location.type === "mall") {
         routes.push({
           area: location.slug,
           serviceId: `${slug}-near-${location.slug}`,
         });
+        routes.push({
+          area: location.slug,
+          serviceId: `${slug}-in-${location.slug}`,
+        });
+      } else {
+        // Cities & Suburbs
+        routes.push({
+          area: location.slug,
+          serviceId: `${slug}-in-${location.slug}`,
+        });
+        if (service.category === "steel") {
+          routes.push({
+            area: location.slug,
+            serviceId: `${slug}-near-${location.slug}`,
+          });
+        }
       }
     }
   }
@@ -596,24 +651,41 @@ export function getAllLocationServiceRoutes(): { area: string; serviceId: string
 
 /** Returns priority location x service routes for build-time pre-rendering. */
 export function getPrerenderLocationServiceRoutes(): { area: string; serviceId: string }[] {
-  // Prerender primary cities, high-volume suburbs, and flagship hubs at build-time
+  // Prerender primary cities, flagship malls, and high-volume hubs
   const priorityLocations = gautengLocations.filter(
-    (loc) => loc.type === "city" || loc.type === "mall" || ["sandton", "fourways", "midrand", "centurion", "bedfordview", "roodepoort", "kempton-park", "alberton", "benoni", "boksburg", "soweto", "menlyn", "katlehong"].some(prefix => loc.id.includes(prefix))
-  ).slice(0, 50);
+    (loc) =>
+      loc.type === "city" ||
+      (loc.type === "mall" && [
+        "sandton-city", "mall-of-africa", "menlyn-park", "eastgate", "fourways-mall",
+        "cresta", "clearwater", "the-glen", "east-rand-mall", "centurion-mall",
+        "brooklyn-mall", "woodlands-boulevard", "cradlestone", "rosebank-mall",
+        "hyde-park", "greenstone", "sam-ntuli-mall", "chris-hani-crossing",
+        "maponya-mall", "festival-mall", "carnival", "westgate", "southgate",
+        "wonderpark", "kolonnade", "bedford-centre", "nicolway"
+      ].some(k => loc.slug.includes(k))) ||
+      ["sandton", "fourways", "midrand", "centurion", "bedfordview", "roodepoort", "kempton-park", "alberton", "benoni", "boksburg", "soweto", "menlyn", "katlehong"].some(prefix => loc.id.includes(prefix))
+  ).slice(0, 60);
 
   const routes: { area: string; serviceId: string }[] = [];
   for (const location of priorityLocations) {
     for (const service of services) {
       const slug = slugify(service.title);
-      routes.push({
-        area: location.id,
-        serviceId: `${slug}-in-${location.id}`,
-      });
-      if (service.category === "steel") {
+      if (location.type === "mall") {
         routes.push({
           area: location.id,
           serviceId: `${slug}-near-${location.id}`,
         });
+      } else {
+        routes.push({
+          area: location.id,
+          serviceId: `${slug}-in-${location.id}`,
+        });
+        if (service.category === "steel") {
+          routes.push({
+            area: location.id,
+            serviceId: `${slug}-near-${location.id}`,
+          });
+        }
       }
     }
   }
