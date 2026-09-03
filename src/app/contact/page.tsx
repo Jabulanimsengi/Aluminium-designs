@@ -1,6 +1,6 @@
 import React from "react";
 import { Metadata } from "next";
-import { Phone, Mail, MapPin, Clock, ArrowRight } from "lucide-react";
+import { Phone, Mail, MapPin, Clock, ArrowRight, ExternalLink } from "lucide-react";
 import { businessContact, businessHours } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -14,6 +14,10 @@ export default function ContactPage() {
   const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
     businessContact.fullAddress,
   )}`;
+  const googleMapEmbedUrl = `https://maps.google.com/maps?q=${encodeURIComponent(
+    businessContact.fullAddress,
+  )}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
+
   const contactDetails = [
     {
       title: "Our Address",
@@ -116,60 +120,45 @@ export default function ContactPage() {
             </div>
           </div>
 
-          {/* Styled Map */}
-          <div className="lg:col-span-7">
-            <div className="border border-outline-variant bg-surface-container-lowest h-full min-h-[400px] flex flex-col justify-between p-6 relative overflow-hidden shadow-sm">
-              <div className="absolute inset-0 opacity-[0.06] pointer-events-none">
-                <svg className="w-full h-full text-primary" xmlns="http://www.w3.org/2000/svg">
-                  <defs>
-                    <pattern id="map-grid-2" width="40" height="40" patternUnits="userSpaceOnUse">
-                      <rect width="40" height="40" fill="none" stroke="currentColor" strokeWidth="0.5" />
-                    </pattern>
-                  </defs>
-                  <rect width="100%" height="100%" fill="url(#map-grid-2)" />
-                </svg>
+          {/* Interactive Google Map */}
+          <div className="lg:col-span-7 flex flex-col">
+            <div className="border border-outline-variant bg-surface-container-lowest h-full min-h-[460px] flex flex-col justify-between overflow-hidden shadow-sm">
+              <div className="relative w-full flex-1 min-h-[380px] bg-surface-container">
+                <iframe
+                  title="Google Map showing Aluminium Designs Katlehong Workshop"
+                  src={googleMapEmbedUrl}
+                  className="absolute inset-0 w-full h-full border-0"
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  allowFullScreen
+                />
+                <a
+                  href={directionsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="absolute top-4 right-4 z-10 inline-flex items-center gap-2 bg-on-tertiary-container hover:bg-primary text-white px-4 py-2 font-mono text-[10px] font-bold uppercase tracking-widest shadow-md transition-colors rounded-full"
+                >
+                  Get Directions
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </a>
               </div>
 
-              <div className="absolute inset-0 opacity-10 flex items-center justify-center p-8 pointer-events-none">
-                <svg className="w-full h-full text-primary" viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
-                  <line x1="50" y1="0" x2="50" y2="400" stroke="currentColor" strokeWidth="15" />
-                  <line x1="250" y1="0" x2="250" y2="400" stroke="currentColor" strokeWidth="25" />
-                  <line x1="0" y1="180" x2="600" y2="180" stroke="currentColor" strokeWidth="20" />
-                  <line x1="0" y1="320" x2="600" y2="320" stroke="currentColor" strokeWidth="15" />
-                  <path d="M 450,0 Q 400,200 550,400" fill="none" stroke="currentColor" strokeWidth="40" />
-                  <text x="70" y="50" fill="currentColor" fontSize="12" fontFamily="monospace" fontWeight="bold">
-                    SONTONGA ROAD
-                  </text>
-                  <text x="270" y="220" fill="currentColor" fontSize="12" fontFamily="monospace" fontWeight="bold">
-                    MOLELEKI EXT 1
-                  </text>
-                </svg>
-              </div>
-
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
-                <span className="absolute w-12 h-12 bg-on-tertiary-container/20 animate-ping rounded-full" />
-                <span className="w-6 h-6 bg-on-tertiary-container border-2 border-white flex items-center justify-center relative z-10 rounded-full">
-                  <span className="w-2 h-2 bg-white rounded-full" />
-                </span>
-                <div className="mt-2.5 bg-primary border border-outline-variant font-mono text-[9px] font-bold uppercase tracking-widest px-3 py-1 text-white relative z-10 rounded-full shadow-sm">
-                  Katlehong Workshop
-                </div>
-              </div>
-
-              <div className="mt-auto relative z-10 border border-outline-variant bg-surface p-4 flex items-center justify-between text-xs">
+              <div className="border-t border-outline-variant bg-surface p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
                 <div>
-                  <p className="font-sans font-bold text-primary">755 Sontonga Road, Katlehong</p>
+                  <p className="font-sans font-bold text-primary">
+                    {businessContact.streetAddress}, {businessContact.addressLocality}, {businessContact.addressCity}
+                  </p>
                   <p className="font-mono text-[9px] uppercase tracking-wider text-outline mt-0.5">
-                    Secure visitor parking inside
+                    Secure visitor parking inside &bull; Workshop visits &amp; collections welcome
                   </p>
                 </div>
                 <a
                   href={directionsUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-4 py-2 border border-outline-variant bg-surface-container hover:border-primary font-mono text-[10px] font-bold uppercase tracking-widest text-secondary transition-colors rounded-full"
+                  className="px-4 py-2 border border-outline-variant bg-surface-container hover:border-primary font-mono text-[10px] font-bold uppercase tracking-widest text-secondary transition-colors rounded-full text-center shrink-0"
                 >
-                  View on Maps
+                  Open in Google Maps
                 </a>
               </div>
             </div>

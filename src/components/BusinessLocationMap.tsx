@@ -5,17 +5,11 @@ const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${enco
   businessContact.fullAddress,
 )}`;
 
-const fallbackMapUrl = `https://www.google.com/maps?q=${encodeURIComponent(
+const mapUrl = `https://maps.google.com/maps?q=${encodeURIComponent(
   businessContact.fullAddress,
-)}&output=embed`;
+)}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
 
 export default function BusinessLocationMap() {
-  const apiKey = process.env.MAPS_PLATFORM_API_KEY?.trim();
-  const mapUrl = apiKey
-    ? `https://www.google.com/maps/embed/v1/place?key=${encodeURIComponent(apiKey)}&q=${encodeURIComponent(
-        businessContact.fullAddress,
-      )}`
-    : fallbackMapUrl;
 
   return (
     <section className="border-b border-outline-variant bg-surface-container-low py-10 sm:py-20">
