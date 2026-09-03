@@ -45,13 +45,13 @@ export default function QuotePrompt() {
         </button>
 
         <p className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
-          No-obligation quote
+          Custom Sizing &bull; Factory Direct Rates
         </p>
         <h2 id="quote-prompt-title" className="mt-3 pr-8 font-sans text-2xl font-bold uppercase leading-tight tracking-tight text-primary sm:text-3xl">
-          Planning an aluminium project?
+          Need Custom Windows, Doors, or Conversions?
         </h2>
         <p className="mt-4 text-sm leading-relaxed text-on-surface-variant">
-          Tell us what you need and receive a tailored quotation from our team.
+          Get an accurate, no-obligation estimate for your home or business. We measure, manufacture, and install across all of Gauteng.
         </p>
 
         <div className="mt-6 flex flex-col gap-3 sm:flex-row">
@@ -60,7 +60,7 @@ export default function QuotePrompt() {
             onClick={closePrompt}
             className="inline-flex flex-1 items-center justify-center gap-2 rounded-full bg-primary px-5 py-3 font-mono text-[11px] font-bold uppercase tracking-widest text-on-primary transition-colors hover:bg-on-tertiary-container"
           >
-            Request a quote
+            Get Free Estimate
             <ArrowRight className="h-4 w-4" />
           </Link>
           <button
@@ -68,7 +68,7 @@ export default function QuotePrompt() {
             onClick={closePrompt}
             className="rounded-full border border-outline-variant px-5 py-3 font-mono text-[11px] font-bold uppercase tracking-widest text-primary transition-colors hover:bg-surface-container"
           >
-            Not now
+            Continue Browsing
           </button>
         </div>
       </div>

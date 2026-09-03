@@ -51,14 +51,17 @@ export default function WhatsAppChatWidget() {
               <X className="h-4 w-4" />
             </button>
 
+            <p className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary mb-1.5">
+              Instant Workshop Connection
+            </p>
             <h2
               id="lead-gate-title"
               className="pr-8 text-left font-sans text-2xl font-bold uppercase leading-tight tracking-tight text-primary"
             >
-              Get your free quote
+              Chat Directly With Our Team
             </h2>
             <p className="mt-2 text-sm leading-relaxed text-on-surface-variant">
-              A few quick details and you&apos;re on WhatsApp.
+              Share a few quick project details to connect directly with our technical estimators on WhatsApp.
             </p>
 
             <div className="mt-5">

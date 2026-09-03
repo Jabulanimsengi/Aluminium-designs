@@ -99,14 +99,17 @@ export default function LeadGate() {
           <X className="h-4 w-4" />
         </button>
 
+        <p className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary mb-1.5">
+          Direct Estimator Dispatch
+        </p>
         <h2
           id="lead-gate-title"
           className="pr-8 text-left font-sans text-2xl font-bold uppercase leading-tight tracking-tight text-primary"
         >
-          Get your free quote
+          Request Your Custom Quotation
         </h2>
         <p className="mt-2 text-sm leading-relaxed text-on-surface-variant">
-          A few quick details and you&apos;re on WhatsApp.
+          Share a few project details and connect directly with our technical team for instant sizing advice and pricing.
         </p>
 
         <div className="mt-5">

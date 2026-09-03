@@ -130,7 +130,7 @@ export default function LeadCaptureForm({ source, onCancel }: LeadCaptureFormPro
       <label className="flex items-center gap-2 text-left text-xs text-on-surface-variant">
         <input type="checkbox" checked={consent} onChange={(event) => setConsent(event.target.checked)}
           className="h-4 w-4 shrink-0 accent-primary" />
-        <span>I agree to be contacted about my project.</span>
+        <span>I agree to be contacted regarding my project inquiry.</span>
       </label>
 
       {message ? (
@@ -145,7 +145,7 @@ export default function LeadCaptureForm({ source, onCancel }: LeadCaptureFormPro
         className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#25D366] px-6 py-3 font-mono text-[11px] font-bold uppercase tracking-widest text-white transition-colors hover:bg-[#20ba5a] disabled:cursor-wait disabled:opacity-70"
       >
         {isSubmitting ? <LoaderCircle className="h-4 w-4 animate-spin" /> : <MessageCircle className="h-4 w-4" />}
-        {isSubmitting ? "Sending..." : "Continue on WhatsApp"}
+        {isSubmitting ? "Connecting..." : "Connect on WhatsApp"}
       </button>
 
       {onCancel ? (
