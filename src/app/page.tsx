@@ -119,7 +119,7 @@ export default function Home() {
         }}
       />
       {/* 1. HERO SECTION */}
-      <section className="relative min-h-[60vh] md:min-h-[85vh] flex items-end pb-0 border-b border-outline-variant overflow-hidden">
+      <section className="relative min-h-[65vh] md:min-h-[80vh] flex items-center justify-center border-b border-outline-variant overflow-hidden">
         {/* Background image */}
         <div className="absolute inset-0 z-0 bg-surface-container-highest">
           <Image
@@ -130,11 +130,11 @@ export default function Home() {
             sizes="100vw"
             className="object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/20" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/55 to-black/35" />
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full pb-12 md:pb-20">
-          <div className="max-w-3xl mx-auto space-y-5 text-center">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full py-16 sm:py-20 md:py-24 flex items-center justify-center">
+          <div className="max-w-3xl mx-auto space-y-5 text-center flex flex-col items-center">
             {/* Clean Badge */}
             <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-black/50 px-4 py-1.5 font-mono text-[10px] font-bold uppercase tracking-widest text-white/90 backdrop-blur-md">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
@@ -148,19 +148,19 @@ export default function Home() {
               SABS-certified custom aluminium windows, folding doors, security gates, and steel carports. Measured, manufactured, and neatly installed across Johannesburg, Pretoria &amp; Gauteng.
             </p>
 
-            <div className="flex flex-col sm:flex-row justify-center gap-3 pt-3">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-3 w-full sm:w-auto">
               <Link
                 href={whatsappQuoteUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 rounded-full bg-white hover:bg-white/90 text-primary px-7 py-3.5 font-sans text-xs font-bold uppercase tracking-wider transition-all shadow-lg hover:scale-105 active:scale-95"
+                className="flex items-center justify-center gap-2 rounded-full bg-white hover:bg-white/90 text-primary px-7 py-3.5 font-sans text-xs font-bold uppercase tracking-wider transition-all shadow-lg hover:scale-105 active:scale-95 w-full sm:w-auto"
               >
                 Request Quote
                 <ArrowRight className="w-4 h-4" />
               </Link>
               <Link
                 href="/gallery"
-                className="flex items-center justify-center gap-2 rounded-full bg-white/15 hover:bg-white/25 text-white border border-white/40 px-6 py-3.5 font-sans text-xs font-semibold uppercase tracking-wide transition-colors backdrop-blur-md"
+                className="flex items-center justify-center gap-2 rounded-full bg-white/15 hover:bg-white/25 text-white border border-white/40 px-6 py-3.5 font-sans text-xs font-semibold uppercase tracking-wide transition-colors backdrop-blur-md w-full sm:w-auto"
               >
                 Explore Installations
                 <ArrowRight className="w-4 h-4" />
