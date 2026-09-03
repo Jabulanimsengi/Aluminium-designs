@@ -327,26 +327,26 @@ export default function PricesPage() {
       </section>
 
       {/* Bottom CTA */}
-      <section className="py-20 bg-primary border-b border-outline-variant">
+      <section className="py-20 bg-surface-container-low border-b border-outline-variant">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
-          <ShieldCheck className="w-10 h-10 text-on-tertiary-container mx-auto" />
-          <h2 className="font-sans text-2xl sm:text-3xl font-bold uppercase tracking-tight text-on-primary">
+          <ShieldCheck className="w-10 h-10 text-secondary mx-auto" />
+          <h2 className="font-sans text-2xl sm:text-3xl font-bold uppercase tracking-tight text-primary">
             Every Quote Includes a Professional Home Visit
           </h2>
-          <p className="text-on-primary-container/90 text-sm max-w-xl mx-auto leading-relaxed">
+          <p className="text-on-surface-variant text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
             Our technician comes to your home to take accurate measurements. The R250 (Johannesburg) or R350 (outside Johannesburg) consultation fee is credited back in full against your installation invoice.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
             <Link
               href={whatsappQuoteUrl}
-              className="inline-flex items-center gap-2 bg-on-tertiary-container hover:bg-primary text-white px-6 py-3.5 font-mono text-[11px] font-bold uppercase tracking-widest transition-colors rounded-full shadow-sm"
+              className="inline-flex items-center gap-2 bg-primary hover:bg-secondary text-on-primary border border-primary hover:border-secondary px-6 py-3.5 font-mono text-[11px] font-bold uppercase tracking-widest transition-colors rounded-full shadow-sm"
             >
               Request Free Quote
               <ArrowRight className="w-4 h-4" />
             </Link>
             <a
               href="tel:+27716122439"
-              className="inline-flex items-center gap-2 bg-on-primary hover:bg-surface-container-low text-primary border border-on-primary hover:border-outline-variant px-6 py-3.5 font-mono text-[11px] font-bold uppercase tracking-widest transition-colors rounded-full"
+              className="inline-flex items-center gap-2 border border-outline-variant bg-surface hover:bg-surface-container text-secondary hover:text-primary px-6 py-3.5 font-mono text-[11px] font-bold uppercase tracking-widest transition-colors rounded-full"
             >
               <Phone className="w-4 h-4" />
               071 612 2439
