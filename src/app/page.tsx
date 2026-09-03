@@ -2,14 +2,13 @@ import React from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, Check, ChevronRight, Clock, Lock, Star, Sun, VolumeX, Building2, House, MapPin, Paintbrush, Ruler, Gem, Sparkles, ShieldCheck } from "lucide-react";
+import { ArrowRight, Check, ChevronRight, Lock, Sun, VolumeX, Building2, House, MapPin, Paintbrush, Ruler, Gem } from "lucide-react";
 import { projects } from "@/data/projects";
 import HomeServicesShowcase from "@/components/HomeServicesShowcase";
 import ProcessSteps from "@/components/ProcessSteps";
 import Testimonials from "@/components/Testimonials";
 import FAQAccordion from "@/components/FAQAccordion";
 import CTASection from "@/components/CTASection";
-import WhatsAppIcon from "@/components/WhatsAppIcon";
 import PlanningTools from "@/components/PlanningTools";
 import TrustedBy from "@/components/TrustedBy";
 import BusinessLocationMap from "@/components/BusinessLocationMap";
@@ -136,52 +135,28 @@ export default function Home() {
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full pb-12 md:pb-20">
           <div className="max-w-3xl mx-auto space-y-5 text-center">
-            {/* Dual Badges */}
-            <div className="flex flex-wrap items-center justify-center gap-2">
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-black/70 px-3.5 py-1 font-mono text-[10px] font-bold uppercase tracking-widest text-cyan-300 backdrop-blur-md border border-cyan-400/30">
-                <Sparkles className="h-3 w-3" />
-                Custom Aluminium &amp; Glass
-              </span>
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-black/70 px-3.5 py-1 font-mono text-[10px] font-bold uppercase tracking-widest text-emerald-400 backdrop-blur-md border border-emerald-400/30">
-                <ShieldCheck className="h-3 w-3" />
-                Heavy-Duty Steel Security
-              </span>
+            {/* Clean Badge */}
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-black/50 px-4 py-1.5 font-mono text-[10px] font-bold uppercase tracking-widest text-white/90 backdrop-blur-md">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+              Custom Aluminium &amp; Steel Works
             </div>
 
             <h1 className="font-sans text-4xl sm:text-5xl lg:text-6xl font-bold uppercase leading-[1.05] tracking-tight text-white">
-              Custom Aluminium Doors, Windows &amp; Steel Security Gauteng
+              Custom Aluminium Doors, Windows &amp; Steel
             </h1>
             <p className="text-white/90 max-w-xl mx-auto text-base sm:text-lg leading-relaxed">
               SABS-certified custom aluminium windows, folding doors, security gates, and steel carports. Measured, manufactured, and neatly installed across Johannesburg, Pretoria &amp; Gauteng.
             </p>
-
-            {/* Above-the-fold Social Proof Trust Strip */}
-            <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 pt-1 text-[12px] text-white/90">
-              <span className="flex items-center gap-1.5 font-semibold">
-                <Star className="h-3.5 w-3.5 fill-amber-400 text-amber-400" />
-                4.9/5 Rating <span className="font-normal text-white/70">(120+ Homeowners)</span>
-              </span>
-              <span className="hidden sm:inline text-white/40">&bull;</span>
-              <span className="flex items-center gap-1.5">
-                <ShieldCheck className="h-3.5 w-3.5 text-emerald-400" />
-                SABS &amp; AAAMSA Standards
-              </span>
-              <span className="hidden sm:inline text-white/40">&bull;</span>
-              <span className="flex items-center gap-1.5 font-semibold text-emerald-300">
-                <Clock className="h-3.5 w-3.5" />
-                Free 24h Quotes
-              </span>
-            </div>
 
             <div className="flex flex-col sm:flex-row justify-center gap-3 pt-3">
               <Link
                 href={whatsappQuoteUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-black px-7 py-3.5 font-sans text-xs font-semibold uppercase tracking-wide transition-all shadow-lg hover:scale-105 active:scale-95"
+                className="flex items-center justify-center gap-2 rounded-full bg-white hover:bg-white/90 text-primary px-7 py-3.5 font-sans text-xs font-bold uppercase tracking-wider transition-all shadow-lg hover:scale-105 active:scale-95"
               >
-                <WhatsAppIcon className="h-4 w-4" />
-                Instant WhatsApp Quote
+                Request Quote
+                <ArrowRight className="w-4 h-4" />
               </Link>
               <Link
                 href="/gallery"
