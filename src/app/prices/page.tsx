@@ -1,14 +1,14 @@
 import React from "react";
 import { Metadata } from "next";
-import { Tag, Info, Phone, ArrowRight, ShieldCheck } from "lucide-react";
+import { Tag, Info, Phone, ArrowRight, ShieldCheck, Wrench } from "lucide-react";
 import Link from "next/link";
-import { windowPricing, doorPricing } from "@/data/pricing";
+import { windowPricing, doorPricing, specialtyPricing } from "@/data/pricing";
 import { whatsappQuoteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Aluminium Product Prices",
+  title: "Aluminium Product Prices & Cost Guide",
   description:
-    "Clear, transparent pricing for aluminium windows, doors, and frames in South African Rands (ZAR). Includes professional installation.",
+    "Clear, transparent starting prices for aluminium windows, doors, conversions, and glazing in South African Rands (ZAR). Includes professional installation.",
   alternates: { canonical: "/prices" },
 };
 
@@ -26,7 +26,7 @@ export default function PricesPage() {
             Product Pricing Guide
           </h1>
           <p className="text-on-surface-variant text-base leading-relaxed max-w-2xl mx-auto">
-            All prices in South African Rands (ZAR). Every price includes professional fitting and neat installation by our team.
+            All prices in South African Rands (ZAR). Every guide price represents starting figures including custom fabrication, safety glazing, and neat installation by our team.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
@@ -56,9 +56,9 @@ export default function PricesPage() {
             <div className="space-y-1 text-xs">
               <p className="font-bold text-primary">How our pricing works</p>
               <p className="text-on-surface-variant leading-relaxed">
-                Prices shown are starting guide figures based on standard home sizes with clear safety glass.
-                Final pricing is confirmed after a <strong className="text-primary">professional on-site measurement</strong> (R250 consultation fee in Johannesburg, R350 outside Johannesburg — credited back in full against your installation invoice).
-                Custom colours (Matte Black, Charcoal) and double glass for noise/heat protection can be added to any order.
+                Prices shown are starting guide figures based on standard residential openings with clear SANS 10400 safety glass.
+                Final custom pricing is confirmed after a <strong className="text-primary">professional on-site measurement</strong> (R250 consultation fee in Johannesburg, R350 outside Johannesburg — credited back in full against your installation invoice).
+                Architectural powder-coat finishes (Matte Black, Charcoal Grey) and Low-E double glazing can be tailored to any project.
               </p>
             </div>
           </div>
@@ -76,7 +76,7 @@ export default function PricesPage() {
               Aluminium Windows &amp; Frames
             </h2>
             <p className="mt-3 text-sm text-on-surface-variant max-w-2xl leading-relaxed">
-              Durable aluminium window frames with safety toughened glass. Built to fit your home dimensions.
+              Durable aluminium window frames with safety toughened glass. Custom manufactured to your exact wall openings.
             </p>
           </div>
 
@@ -90,13 +90,13 @@ export default function PricesPage() {
                 Standard Size
               </div>
               <div className="bg-surface-container border-b border-outline-variant p-4 font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
-                Frame
+                Frame (from)
               </div>
               <div className="bg-surface-container border-b border-outline-variant p-4 font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
-                Glass
+                Glass (from)
               </div>
               <div className="bg-surface-container border-b border-outline-variant p-4 font-mono text-[10px] font-bold uppercase tracking-widest text-secondary text-right">
-                Starting From
+                Starting Total
               </div>
             </div>
             {windowPricing.map((p, i) => (
@@ -181,13 +181,13 @@ export default function PricesPage() {
                 Standard Size
               </div>
               <div className="bg-surface-container border-b border-outline-variant p-4 font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
-                Frame
+                Frame (from)
               </div>
               <div className="bg-surface-container border-b border-outline-variant p-4 font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
-                Glass
+                Glass (from)
               </div>
               <div className="bg-surface-container border-b border-outline-variant p-4 font-mono text-[10px] font-bold uppercase tracking-widest text-secondary text-right">
-                Starting From
+                Starting Total
               </div>
             </div>
             {doorPricing.map((p, i) => (
@@ -234,6 +234,85 @@ export default function PricesPage() {
                   <span className="text-primary font-mono">{p.framePrice}</span>
                   <span className="text-outline uppercase font-mono text-[10px]">Glass:</span>
                   <span className="text-primary font-mono">{p.glazingPrice}</span>
+                </div>
+                <div className="border-t border-outline-variant pt-3 flex justify-between items-center">
+                  <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
+                    Starting From
+                  </span>
+                  <span className="font-sans font-bold text-lg text-primary">{p.totalFrom}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Specialty Services & Conversions Section */}
+      <section className="py-20 bg-surface border-b border-outline-variant">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="mb-10">
+            <div className="inline-flex items-center gap-2 bg-surface-container-low border border-outline-variant px-3 py-1 font-mono text-[10px] font-bold tracking-widest uppercase rounded-full text-secondary mb-2">
+              <Wrench className="w-3.5 h-3.5" />
+              Specialty Services &amp; Repairs
+            </div>
+            <h2 className="font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
+              Conversions, Enclosures &amp; Repairs
+            </h2>
+            <p className="mt-3 text-sm text-on-surface-variant max-w-2xl leading-relaxed">
+              Transparent starting guide rates for steel-to-aluminium conversions, glass patio enclosures, frameless showers, and on-site sliding door repairs.
+            </p>
+          </div>
+
+          {/* Desktop table */}
+          <div className="hidden lg:block border border-outline-variant bg-surface-container-lowest overflow-hidden shadow-sm">
+            <div className="grid grid-cols-5 gap-0">
+              <div className="col-span-2 bg-surface-container border-b border-outline-variant p-4 font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
+                Service Category
+              </div>
+              <div className="bg-surface-container border-b border-outline-variant p-4 font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
+                Pricing Scope
+              </div>
+              <div className="bg-surface-container border-b border-outline-variant p-4 font-mono text-[10px] font-bold uppercase tracking-widest text-secondary text-right">
+                Starting Rate
+              </div>
+              <div className="bg-surface-container border-b border-outline-variant p-4 font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
+                Specification Notes
+              </div>
+            </div>
+            {specialtyPricing.map((p, i) => (
+              <div
+                key={p.name}
+                className={`grid grid-cols-5 gap-0 ${
+                  i < specialtyPricing.length - 1 ? "border-b border-outline-variant" : ""
+                }`}
+              >
+                <div className="col-span-2 p-4">
+                  <p className="font-sans font-bold text-sm text-primary">{p.name}</p>
+                </div>
+                <div className="p-4 font-mono text-xs text-on-surface-variant self-center">
+                  {p.unitOrScope}
+                </div>
+                <div className="p-4 font-mono text-sm font-bold text-primary text-right self-center">
+                  {p.totalFrom}
+                </div>
+                <div className="p-4 font-mono text-[11px] text-outline self-center">
+                  {p.note}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Mobile cards */}
+          <div className="lg:hidden space-y-4">
+            {specialtyPricing.map((p) => (
+              <div key={p.name} className="border border-outline-variant bg-surface-container-lowest p-5 space-y-3 shadow-sm">
+                <div>
+                  <h3 className="font-sans font-bold text-sm uppercase text-primary">{p.name}</h3>
+                  <p className="font-mono text-[10px] text-outline uppercase tracking-wider mt-1">{p.note}</p>
+                </div>
+                <div className="grid grid-cols-2 gap-y-2 text-xs">
+                  <span className="text-outline uppercase font-mono text-[10px]">Pricing Scope:</span>
+                  <span className="text-primary font-mono">{p.unitOrScope}</span>
                 </div>
                 <div className="border-t border-outline-variant pt-3 flex justify-between items-center">
                   <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
