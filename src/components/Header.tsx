@@ -4,8 +4,8 @@ import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Menu, X, Phone, ChevronDown, ArrowRight } from "lucide-react";
-import { services } from "@/data/services";
+import { Menu, X, Phone, ChevronDown, ArrowRight, Hammer, Sparkles } from "lucide-react";
+import { services, aluminiumServices, steelServices } from "@/data/services";
 import { whatsappQuoteUrl } from "@/lib/site";
 
 export default function Header() {
@@ -106,10 +106,11 @@ export default function Header() {
 
   const navLinks = [
     { name: "Home", href: "/" },
-    { name: "About Us", href: "/about" },
     { name: "Services", href: "/services", hasDropdown: true },
-    { name: "Gallery", href: "/gallery" },
+    { name: "Steel Works", href: "/steel-works" },
     { name: "Prices", href: "/prices" },
+    { name: "Gallery", href: "/gallery" },
+    { name: "About Us", href: "/about" },
     { name: "FAQ", href: "/faq" },
     { name: "Contact", href: "/contact" },
   ];
@@ -148,7 +149,7 @@ export default function Header() {
           {/* Right spacer: balances the hamburger to keep logo centered on mobile */}
           <div className="lg:hidden w-10" />
 
-          <nav className="hidden lg:flex items-center justify-self-center gap-4 xl:gap-5">
+          <nav className="hidden lg:flex items-center justify-self-center gap-3.5 xl:gap-5">
             {navLinks.map((link) =>
               link.hasDropdown ? (
                 <div
@@ -178,31 +179,68 @@ export default function Header() {
                   <div
                     id="desktop-services-menu"
                     aria-hidden={!servicesDropdownOpen}
-                    className={`absolute left-0 top-full w-72 bg-surface border border-outline-variant transition-all duration-200 origin-top-left ${
+                    className={`absolute -left-16 top-full w-[520px] bg-surface border border-outline-variant shadow-2xl transition-all duration-200 origin-top-left ${
                       servicesDropdownOpen
                         ? "opacity-100 translate-y-0 scale-100 pointer-events-auto"
                         : "opacity-0 -translate-y-1 scale-95 pointer-events-none"
                     }`}
                   >
-                    <div className="p-2 flex flex-col gap-0.5">
-                      {services.slice(0, 6).map((s) => (
-                        <Link
-                          key={s.id}
-                          href={s.slug}
-                          tabIndex={servicesDropdownOpen ? 0 : -1}
-                          className="flex items-center gap-3 p-3 hover:bg-surface-container transition-colors rounded-lg"
-                        >
-                          <span className="text-xs font-sans font-semibold text-primary">{s.title}</span>
-                        </Link>
-                      ))}
-                      <div className="border-t border-outline-variant my-1" />
+                    <div className="p-4 grid grid-cols-2 gap-4">
+                      {/* Column 1: Aluminium & Glass */}
+                      <div className="space-y-1">
+                        <div className="flex items-center gap-1.5 pb-2 border-b border-outline-variant text-[10px] font-mono font-bold uppercase tracking-widest text-secondary">
+                          <Sparkles className="w-3 h-3 text-secondary" />
+                          Aluminium &amp; Glass
+                        </div>
+                        <div className="pt-1 flex flex-col gap-0.5">
+                          {aluminiumServices.slice(0, 5).map((s) => (
+                            <Link
+                              key={s.id}
+                              href={s.slug}
+                              tabIndex={servicesDropdownOpen ? 0 : -1}
+                              className="p-2 hover:bg-surface-container transition-colors rounded-md text-xs font-sans font-semibold text-primary block truncate"
+                            >
+                              {s.title}
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Column 2: Steel & Security */}
+                      <div className="space-y-1">
+                        <div className="flex items-center gap-1.5 pb-2 border-b border-outline-variant text-[10px] font-mono font-bold uppercase tracking-widest text-secondary">
+                          <Hammer className="w-3 h-3 text-secondary" />
+                          Steel Works &amp; Security
+                        </div>
+                        <div className="pt-1 flex flex-col gap-0.5">
+                          {steelServices.slice(0, 5).map((s) => (
+                            <Link
+                              key={s.id}
+                              href={s.slug}
+                              tabIndex={servicesDropdownOpen ? 0 : -1}
+                              className="p-2 hover:bg-surface-container transition-colors rounded-md text-xs font-sans font-semibold text-primary block truncate"
+                            >
+                              {s.title}
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="border-t border-outline-variant bg-surface-container-low p-2.5 flex items-center justify-between text-[11px] font-mono font-bold uppercase tracking-wider">
                       <Link
                         href="/services"
                         tabIndex={servicesDropdownOpen ? 0 : -1}
-                        className="flex items-center justify-center gap-2 p-3 hover:bg-surface-container transition-colors rounded-lg text-xs font-mono font-bold uppercase tracking-wider text-secondary hover:text-primary"
+                        className="text-secondary hover:text-primary transition-colors flex items-center gap-1 px-2 py-1"
                       >
-                        View All {services.length} Services
-                        <ChevronDown className="w-3.5 h-3.5 -rotate-90" />
+                        All 38 Products &rarr;
+                      </Link>
+                      <Link
+                        href="/steel-works"
+                        tabIndex={servicesDropdownOpen ? 0 : -1}
+                        className="text-primary hover:text-secondary font-bold transition-colors flex items-center gap-1 px-2 py-1"
+                      >
+                        Steel Works Hub &rarr;
                       </Link>
                     </div>
                   </div>
@@ -283,11 +321,19 @@ export default function Header() {
                     {mobileServicesOpen && (
                       <div id="mobile-services-menu" className="border-l-2 border-outline-variant ml-4 pl-4 space-y-0.5">
                         <Link
+                          href="/steel-works"
+                          onClick={() => setMobileMenuOpen(false)}
+                          className="flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-bold text-primary bg-surface-container-low hover:bg-surface-container mb-1 border border-outline-variant/60"
+                        >
+                          <Hammer className="w-3.5 h-3.5 text-secondary" />
+                          Steel Works Division Hub
+                        </Link>
+                        <Link
                           href="/services"
                           onClick={() => setMobileMenuOpen(false)}
                           className="block px-3 py-2 rounded-lg text-xs font-medium text-on-surface-variant hover:text-primary hover:bg-surface-container"
                         >
-                          All Services
+                          All 38 Services
                         </Link>
                         {services.slice(0, mobileServicesCount).map((s) => (
                           <Link

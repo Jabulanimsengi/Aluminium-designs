@@ -8,6 +8,7 @@ const coreRoutes = [
   "",
   "/about",
   "/services",
+  "/steel-works",
   "/gallery",
   "/prices",
   "/faq",

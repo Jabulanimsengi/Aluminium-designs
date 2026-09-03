@@ -1,14 +1,14 @@
 import React from "react";
 import { Metadata } from "next";
 import { services } from "@/data/services";
-import ServiceCard from "@/components/ServiceCard";
+import ServicesCatalogue from "@/components/ServicesCatalogue";
 import CTASection from "@/components/CTASection";
 import { PenTool } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Aluminium & Steel Windows, Doors, Gates & Security",
   description:
-    "Explore our full range of home products: aluminium windows, sliding patio doors, steel carports, security gates, burglar bars, palisade fencing, and patio enclosures.",
+    "Explore our full range of products: aluminium windows, sliding patio doors, steel carports, security gates, burglar bars, palisade fencing, and patio enclosures across Gauteng.",
   alternates: { canonical: "/services" },
 };
 
@@ -23,28 +23,18 @@ export default function ServicesPage() {
             <span className="text-secondary">Products &amp; Services</span>
           </div>
           <h1 className="font-sans text-4xl sm:text-5xl font-bold uppercase tracking-tight text-primary">
-            Aluminium Windows, Doors &amp; Security
+            Aluminium Windows, Doors &amp; Steel Works
           </h1>
           <p className="text-on-surface-variant text-base leading-relaxed max-w-2xl mx-auto">
-            Explore our full range of clean, rust-proof aluminium solutions custom-made to elevate your home.
+            Explore our full range of custom aluminium architectural systems and heavy-duty steel security fabrications manufactured in Gauteng.
           </p>
         </div>
       </section>
 
-      {/* Grid */}
+      {/* Grid with Category Filters */}
       <section className="py-16 sm:py-20 lg:py-24 bg-surface border-b border-outline-variant">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {services.map((service) => (
-              <ServiceCard
-                key={service.id}
-                title={service.title}
-                shortDescription={service.shortDescription}
-                slug={service.slug}
-                imagePath={service.imagePath}
-              />
-            ))}
-          </div>
+          <ServicesCatalogue services={services} />
         </div>
       </section>
 

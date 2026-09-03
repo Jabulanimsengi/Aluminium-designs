@@ -1,0 +1,362 @@
+import React from "react";
+import { Metadata } from "next";
+import Link from "next/link";
+import Image from "next/image";
+import {
+  Shield,
+  ShieldCheck,
+  Wrench,
+  Lock,
+  ArrowRight,
+  Phone,
+  Layers,
+  CheckCircle2,
+  Hammer,
+  Truck,
+  Sparkles,
+} from "lucide-react";
+import { steelServices } from "@/data/services";
+import { whatsappQuoteUrl } from "@/lib/site";
+import CTASection from "@/components/CTASection";
+
+export const metadata: Metadata = {
+  title: "Custom Steel Works, Security Gates, Burglar Bars & Carports Gauteng",
+  description:
+    "Professional steel fabrication & security installation in Gauteng. Heavy-duty steel gates, burglar bars, automated driveway gates, palisade fencing, steel carports & mobile welding.",
+  alternates: { canonical: "/steel-works" },
+};
+
+const steelPricingGuide = [
+  {
+    product: "Clear Polycarbonate Burglar Bars",
+    scope: "Per window pane",
+    price: "from R 280",
+    note: "UV-resistant high-tensile transparent bars with tamper-proof fixings.",
+  },
+  {
+    product: "Solid Steel Window Burglar Bars",
+    scope: "Per window opening",
+    price: "from R 350",
+    note: "10mm–12mm solid square bar or cottage pane patterns. Epoxy powder coated.",
+  },
+  {
+    product: "Single Swing Security Gate",
+    scope: "Standard 900×2050mm door",
+    price: "from R 2,100",
+    note: "Heavy-duty mild steel with 5-lever deadlock and anti-jemmy guard plates.",
+  },
+  {
+    product: "Expanding Trellis Slamlock Gate",
+    scope: "Standard 900×2100mm door",
+    price: "from R 2,400",
+    note: "Galvanized slamlock retractable barrier with smooth-glide bottom track.",
+  },
+  {
+    product: "Sliding Driveway Gate (Custom)",
+    scope: "Per 3m–5m span",
+    price: "from R 7,500",
+    note: "Heavy steel framing with anti-lift brackets and ground roller track.",
+  },
+  {
+    product: "Centurion Gate Motor Automation",
+    scope: "D5 Smart motor package",
+    price: "from R 4,800",
+    note: "Includes motor, backup battery, 2 remotes, steel rack, and installation.",
+  },
+  {
+    product: "Steel Palisade Perimeter Fencing",
+    scope: "Per linear metre (1.8m high)",
+    price: "from R 380",
+    note: "7-spike or 3-spike cold-rolled steel pale with hot-dip galvanizing option.",
+  },
+  {
+    product: "Residential Steel Carport",
+    scope: "Single or double vehicle span",
+    price: "from R 6,500",
+    note: "Galvanized IBR / Corrugated sheeting with sturdy square post uprights.",
+  },
+  {
+    product: "On-Site Mobile Welding & Repairs",
+    scope: "Per service visit",
+    price: "from R 850",
+    note: "Gate hinge re-welding, wheel replacement, track realignment, and rust repair.",
+  },
+];
+
+const steelFaqs = [
+  {
+    question: "How do you protect your steel gates and burglar bars from rusting in Gauteng?",
+    answer:
+      "All our steel products receive multi-stage corrosion protection. We apply high-adhesion anti-rust zinc phosphate primers followed by high-temperature industrial epoxy powder coating in Matte Black, Charcoal Grey, Bronze, or White. For outdoor applications exposed to moisture or coastal proximity, we offer full hot-dip galvanizing.",
+  },
+  {
+    question: "Can you manufacture custom gate and burglar bar designs to match my home?",
+    answer:
+      "Yes. Every steel gate, fence, and burglar bar unit is custom manufactured in our Katlehong fabrication workshop to your exact dimensions. Whether you prefer clean modern horizontal slat designs, classic wrought iron scrollwork, or minimalist square tubing, our welders fabricate to your specifications.",
+  },
+  {
+    question: "Do your security gates feature slamlock locking mechanisms?",
+    answer:
+      "Yes. Our expanding trellis gates and security barriers are equipped with instant slamlock technology. In an emergency, simply pulling the gate shut engages the hardened steel deadlock cylinder without needing to insert a key.",
+  },
+  {
+    question: "Do you automate existing manual driveway gates?",
+    answer:
+      "Yes. We supply, fit, and program industry-leading Centurion (D5 Smart, D10) and Gemini gate motor systems, complete with battery backup, safety anti-crush infrared beams, and multi-channel remotes.",
+  },
+  {
+    question: "How does your quoting and measurement process work?",
+    answer:
+      "You can send us your approximate dimensions via WhatsApp for an immediate baseline estimate. For confirmed orders, our technician conducts a professional on-site measurement (consultation fee R250 in Johannesburg / R350 outside Johannesburg, credited back 100% against your invoice).",
+  },
+];
+
+export default function SteelWorksPage() {
+  return (
+    <div className="relative bg-surface text-on-surface">
+      {/* Hero Section */}
+      <section className="py-20 sm:py-24 bg-surface-container-low border-b border-outline-variant">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
+          <div className="inline-flex items-center gap-2 bg-surface border border-outline-variant px-3.5 py-1 font-mono text-[10px] font-bold tracking-widest uppercase rounded-full">
+            <Hammer className="w-3.5 h-3.5 text-secondary" />
+            <span className="text-secondary">Custom Steel Fabrication &bull; Gauteng Workshop</span>
+          </div>
+
+          <h1 className="font-sans text-4xl sm:text-5xl lg:text-6xl font-bold uppercase tracking-tight text-primary">
+            Custom Steel Works &amp; Security
+          </h1>
+
+          <p className="text-on-surface-variant text-base sm:text-lg leading-relaxed max-w-3xl mx-auto">
+            Heavy-duty steel security gates, burglar bars, automated driveway gates, palisade fencing, and steel carports.
+            Custom welded and installed to secure your residential or commercial property across Gauteng.
+          </p>
+
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+            <Link
+              href={whatsappQuoteUrl}
+              className="inline-flex items-center gap-2 bg-primary hover:bg-secondary text-on-primary border border-primary hover:border-secondary px-6 py-3.5 font-mono text-[11px] font-bold uppercase tracking-widest transition-colors rounded-full shadow-sm"
+            >
+              Request Free Steel Quote
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+            <a
+              href="tel:+27716122439"
+              className="inline-flex items-center gap-2 border border-outline-variant bg-surface hover:bg-surface-container px-6 py-3.5 font-mono text-[11px] font-bold uppercase tracking-widest text-secondary transition-colors rounded-full"
+            >
+              <Phone className="w-4 h-4" />
+              071 612 2439
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* Trust & Engineering Highlights */}
+      <section className="py-12 bg-surface border-b border-outline-variant">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="border border-outline-variant bg-surface-container-lowest p-6 space-y-3 shadow-xs">
+              <div className="w-10 h-10 border border-outline-variant bg-surface-container flex items-center justify-center text-secondary">
+                <Shield className="w-5 h-5" />
+              </div>
+              <h3 className="font-sans font-bold text-base uppercase text-primary">High-Tensile Steel</h3>
+              <p className="text-xs text-on-surface-variant leading-relaxed">
+                Fabricated with solid square bar, structural tubing, and reinforced uprights for uncompromising break-in resistance.
+              </p>
+            </div>
+
+            <div className="border border-outline-variant bg-surface-container-lowest p-6 space-y-3 shadow-xs">
+              <div className="w-10 h-10 border border-outline-variant bg-surface-container flex items-center justify-center text-secondary">
+                <Layers className="w-5 h-5" />
+              </div>
+              <h3 className="font-sans font-bold text-base uppercase text-primary">Anti-Rust Finishes</h3>
+              <p className="text-xs text-on-surface-variant leading-relaxed">
+                Hot-dip galvanizing, electroplating, and baked exterior powder coating in Matte Black, Charcoal, Bronze, and White.
+              </p>
+            </div>
+
+            <div className="border border-outline-variant bg-surface-container-lowest p-6 space-y-3 shadow-xs">
+              <div className="w-10 h-10 border border-outline-variant bg-surface-container flex items-center justify-center text-secondary">
+                <Lock className="w-5 h-5" />
+              </div>
+              <h3 className="font-sans font-bold text-base uppercase text-primary">Slamlock &amp; Tamper Proof</h3>
+              <p className="text-xs text-on-surface-variant leading-relaxed">
+                Equipped with instant slamlock cylinders, anti-jemmy track protection, and tamper-proof snap-off wall fasteners.
+              </p>
+            </div>
+
+            <div className="border border-outline-variant bg-surface-container-lowest p-6 space-y-3 shadow-xs">
+              <div className="w-10 h-10 border border-outline-variant bg-surface-container flex items-center justify-center text-secondary">
+                <Wrench className="w-5 h-5" />
+              </div>
+              <h3 className="font-sans font-bold text-base uppercase text-primary">On-Site Measurement</h3>
+              <p className="text-xs text-on-surface-variant leading-relaxed">
+                Our technicians visit your property for precise laser measurements, credited back in full against your installation.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Steel Products & Services Catalogue */}
+      <section className="py-20 bg-surface border-b border-outline-variant">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-3xl mb-12">
+            <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
+              Product Catalogue
+            </span>
+            <h2 className="mt-2 font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
+              Our Custom Steel Services
+            </h2>
+            <p className="mt-3 text-sm text-on-surface-variant leading-relaxed">
+              Explore our complete range of bespoke steel solutions. Every unit is custom-welded to your specifications and fitted by our professional installation crew.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {steelServices.map((service) => (
+              <article
+                key={service.id}
+                className="group border border-outline-variant bg-surface-container-lowest overflow-hidden flex flex-col justify-between shadow-xs hover:border-primary transition-all"
+              >
+                <div>
+                  <div className="relative h-56 w-full overflow-hidden bg-surface-container">
+                    <Image
+                      src={service.imagePath}
+                      alt={service.title}
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <div className="absolute top-3 left-3 bg-primary/90 text-white font-mono text-[9px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full backdrop-blur-xs">
+                      Steel Fabrication
+                    </div>
+                  </div>
+
+                  <div className="p-5 space-y-2.5">
+                    <h3 className="font-sans font-bold text-lg uppercase text-primary group-hover:text-secondary transition-colors">
+                      {service.title}
+                    </h3>
+                    <p className="text-xs text-on-surface-variant line-clamp-3 leading-relaxed">
+                      {service.shortDescription}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="p-5 pt-0 border-t border-outline-variant/60 flex items-center justify-between mt-3">
+                  <Link
+                    href={service.slug}
+                    className="inline-flex items-center gap-1.5 font-mono text-[10px] font-bold uppercase tracking-widest text-secondary group-hover:text-primary transition-colors"
+                  >
+                    View Specs &amp; Options
+                    <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+                  </Link>
+                  <Link
+                    href={whatsappQuoteUrl}
+                    className="rounded-full bg-surface-container hover:bg-primary hover:text-white px-3 py-1 font-mono text-[9px] font-bold uppercase tracking-wider text-secondary transition-colors"
+                  >
+                    Quote
+                  </Link>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Steel Pricing Guide Table */}
+      <section className="py-20 bg-surface-container-low border-b border-outline-variant">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="mb-10 max-w-3xl">
+            <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
+              Transparent Pricing
+            </span>
+            <h2 className="mt-2 font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
+              Steel Works Price Guide
+            </h2>
+            <p className="mt-3 text-sm text-on-surface-variant leading-relaxed">
+              All prices represent starting guide figures in South African Rands (ZAR). Includes custom welding, anti-rust coating, and professional installation.
+            </p>
+          </div>
+
+          {/* Desktop Pricing Table */}
+          <div className="hidden md:block border border-outline-variant bg-surface-container-lowest overflow-hidden shadow-sm">
+            <div className="grid grid-cols-5 gap-0 bg-surface-container border-b border-outline-variant p-4 font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
+              <div className="col-span-2">Steel Product / Service</div>
+              <div>Scope / Size</div>
+              <div className="text-right">Starting From</div>
+              <div className="pl-6">Specification Detail</div>
+            </div>
+            {steelPricingGuide.map((item, index) => (
+              <div
+                key={item.product}
+                className={`grid grid-cols-5 gap-0 p-4 items-center text-xs ${
+                  index < steelPricingGuide.length - 1 ? "border-b border-outline-variant" : ""
+                }`}
+              >
+                <div className="col-span-2 font-sans font-bold text-sm text-primary">
+                  {item.product}
+                </div>
+                <div className="font-mono text-on-surface-variant">{item.scope}</div>
+                <div className="font-mono font-bold text-primary text-right text-sm">{item.price}</div>
+                <div className="font-mono text-[11px] text-outline pl-6">{item.note}</div>
+              </div>
+            ))}
+          </div>
+
+          {/* Mobile Pricing Cards */}
+          <div className="md:hidden space-y-3.5">
+            {steelPricingGuide.map((item) => (
+              <div key={item.product} className="border border-outline-variant bg-surface-container-lowest p-4 space-y-2.5 shadow-xs">
+                <div className="flex items-start justify-between gap-2">
+                  <h3 className="font-sans font-bold text-sm uppercase text-primary">{item.product}</h3>
+                  <span className="font-mono font-bold text-primary text-sm shrink-0">{item.price}</span>
+                </div>
+                <p className="font-mono text-[10px] text-outline uppercase">{item.scope}</p>
+                <p className="text-xs text-on-surface-variant leading-relaxed">{item.note}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Frequently Asked Questions */}
+      <section className="py-20 bg-surface border-b border-outline-variant">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12 space-y-3">
+            <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
+              Security Answers
+            </span>
+            <h2 className="font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
+              Steel Works FAQs
+            </h2>
+            <p className="text-sm text-on-surface-variant leading-relaxed">
+              Common questions about materials, anti-rust treatments, locking mechanisms, and installation timelines.
+            </p>
+          </div>
+
+          <div className="space-y-4">
+            {steelFaqs.map((faq) => (
+              <details
+                key={faq.question}
+                className="group border border-outline-variant bg-surface-container-lowest p-5 transition-colors hover:border-primary shadow-xs"
+              >
+                <summary className="flex cursor-pointer list-none items-center justify-between font-sans font-bold text-sm uppercase text-primary [&::-webkit-details-marker]:hidden">
+                  <span>{faq.question}</span>
+                  <span className="ml-4 flex h-6 w-6 items-center justify-center rounded-full border border-outline-variant text-secondary transition-transform group-open:rotate-180">
+                    &darr;
+                  </span>
+                </summary>
+                <p className="mt-3 text-xs sm:text-sm text-on-surface-variant leading-relaxed border-t border-outline-variant/60 pt-3">
+                  {faq.answer}
+                </p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Bottom CTA Section */}
+      <CTASection />
+    </div>
+  );
+}

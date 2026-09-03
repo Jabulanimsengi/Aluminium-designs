@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
-import { services } from "@/data/services";
+import { aluminiumServices, steelServices } from "@/data/services";
 import { businessContact, businessHours, whatsappQuoteUrl } from "@/lib/site";
 
 export default function Footer() {
@@ -11,6 +11,7 @@ export default function Footer() {
   const companyLinks = [
     { name: "Home", href: "/" },
     { name: "About Us", href: "/about" },
+    { name: "Steel Works Hub", href: "/steel-works" },
     { name: "Service Areas", href: "/locations" },
     { name: "Gallery", href: "/gallery" },
     { name: "Prices", href: "/prices" },
@@ -23,10 +24,10 @@ export default function Footer() {
   return (
     <footer className="bg-black text-white border-t border-white/10 pt-16 pb-8 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 pb-12 border-b border-white/15">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-6 pb-12 border-b border-white/15">
 
           {/* Brand */}
-          <div className="space-y-5">
+          <div className="space-y-5 lg:col-span-1">
             <Link
               href="/"
               className="relative inline-flex h-14 w-[162px] overflow-hidden select-none"
@@ -41,7 +42,7 @@ export default function Footer() {
               />
             </Link>
             <p className="text-xs leading-relaxed text-outline-variant">
-              Specialist designers, manufacturers, and installers of architectural aluminium systems.
+              Specialist designers, manufacturers, and installers of architectural aluminium systems &amp; custom steel security fabrication across Gauteng.
               SABS &amp; AAAMSA conformant.
             </p>
           </div>
@@ -65,13 +66,13 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Products */}
+          {/* Aluminium Products */}
           <div className="space-y-4">
             <h3 className="font-mono text-[10px] font-bold tracking-widest uppercase text-outline">
-              Products
+              Aluminium Systems
             </h3>
             <ul className="space-y-2.5">
-              {services.slice(0, 6).map((s) => (
+              {aluminiumServices.slice(0, 6).map((s) => (
                 <li key={s.id}>
                   <Link
                     href={s.slug}
@@ -81,6 +82,41 @@ export default function Footer() {
                   </Link>
                 </li>
               ))}
+              <li>
+                <Link
+                  href="/services"
+                  className="text-xs font-mono font-bold text-outline hover:text-white transition-colors"
+                >
+                  All Aluminium &rarr;
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Steel Works */}
+          <div className="space-y-4">
+            <h3 className="font-mono text-[10px] font-bold tracking-widest uppercase text-outline">
+              Steel Works
+            </h3>
+            <ul className="space-y-2.5">
+              {steelServices.slice(0, 6).map((s) => (
+                <li key={s.id}>
+                  <Link
+                    href={s.slug}
+                    className="text-xs text-outline-variant hover:text-white transition-colors"
+                  >
+                    {s.title}
+                  </Link>
+                </li>
+              ))}
+              <li>
+                <Link
+                  href="/steel-works"
+                  className="text-xs font-mono font-bold text-outline hover:text-white transition-colors"
+                >
+                  Steel Works Hub &rarr;
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -123,7 +159,7 @@ export default function Footer() {
               Service Areas:
             </Link>
             <span className="text-outline-variant text-xs leading-relaxed">
-              Sandton & Bryanston, Randburg & Fourways, Midrand & Waterfall, Centurion & Pretoria, Johannesburg South, East & West Rand
+              Sandton &amp; Bryanston, Randburg &amp; Fourways, Midrand &amp; Waterfall, Centurion &amp; Pretoria, Johannesburg South, East &amp; West Rand
             </span>
           </div>
           <p className="font-mono text-[10px] uppercase text-outline text-center md:text-right shrink-0 leading-relaxed">
