@@ -8,7 +8,6 @@ import ScrollToTop from "@/components/ScrollToTop";
 import NavigationLoader from "@/components/NavigationLoader";
 import QuotePrompt from "@/components/QuotePrompt";
 import ScrollRevealObserver from "@/components/ScrollRevealObserver";
-import MobileStickyBar from "@/components/MobileStickyBar";
 import LeadGate from "@/components/LeadGate";
 import { absoluteUrl, businessContact, siteUrl } from "@/lib/site";
 
@@ -114,7 +113,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <Header />
         <main className="flex-grow pt-16 md:pt-16">{children}</main>
         <Footer />
-        <MobileStickyBar />
         <WhatsAppChatWidget />
         <QuotePrompt />
         <LeadGate />

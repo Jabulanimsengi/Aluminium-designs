@@ -9,7 +9,7 @@ export default function WhatsAppChatWidget() {
 
   return (
     <>
-      <div className="fixed bottom-24 right-4 z-[110] md:bottom-6 md:right-6 md:z-40">
+      <div className="fixed bottom-6 right-4 z-[110] md:bottom-6 md:right-6 md:z-40">
         <button
           type="button"
           onClick={() => setOpen(true)}
