@@ -200,14 +200,14 @@ export default function SteelWorksPage() {
       {/* Steel Products & Services Catalogue */}
       <section className="py-20 bg-surface border-b border-outline-variant">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mb-12">
+          <div className="max-w-3xl mx-auto text-center mb-12">
             <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
               Product Catalogue
             </span>
             <h2 className="mt-2 font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
               Our Custom Steel Services
             </h2>
-            <p className="mt-3 text-sm text-on-surface-variant leading-relaxed">
+            <p className="mt-3 text-sm text-on-surface-variant leading-relaxed max-w-2xl mx-auto">
               Explore our complete range of bespoke steel solutions. Every unit is custom-welded to your specifications and fitted by our professional installation crew.
             </p>
           </div>
@@ -266,14 +266,14 @@ export default function SteelWorksPage() {
       {/* Steel Pricing Guide Table */}
       <section className="py-20 bg-surface-container-low border-b border-outline-variant">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="mb-10 max-w-3xl">
+          <div className="mb-12 max-w-3xl mx-auto text-center">
             <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
               Transparent Pricing
             </span>
             <h2 className="mt-2 font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
               Steel Works Price Guide
             </h2>
-            <p className="mt-3 text-sm text-on-surface-variant leading-relaxed">
+            <p className="mt-3 text-sm text-on-surface-variant leading-relaxed max-w-2xl mx-auto">
               All prices represent starting guide figures in South African Rands (ZAR). Includes custom welding, anti-rust coating, and professional installation.
             </p>
           </div>

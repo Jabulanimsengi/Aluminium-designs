@@ -32,8 +32,8 @@ export default function ServicesCatalogue({ services }: ServicesCatalogueProps) 
   return (
     <div className="space-y-10">
       {/* Category Filter Tabs */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 border-b border-outline-variant pb-6">
-        <div className="flex items-center gap-2 overflow-x-auto no-scrollbar w-full sm:w-auto pb-1 sm:pb-0">
+      <div className="flex flex-col items-center justify-center gap-4 border-b border-outline-variant pb-6 text-center">
+        <div className="flex items-center justify-center gap-2 overflow-x-auto no-scrollbar max-w-full pb-1 flex-wrap">
           <button
             type="button"
             onClick={() => setActiveCategory("all")}
@@ -71,7 +71,7 @@ export default function ServicesCatalogue({ services }: ServicesCatalogueProps) 
 
         <Link
           href="/steel-works"
-          className="hidden sm:inline-flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-wider text-secondary hover:text-primary transition-colors"
+          className="inline-flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-wider text-secondary hover:text-primary transition-colors"
         >
           <Hammer className="w-3.5 h-3.5" />
           Dedicated Steel Works Hub
@@ -81,7 +81,7 @@ export default function ServicesCatalogue({ services }: ServicesCatalogueProps) 
 
       {/* Steel Highlight Banner */}
       {activeCategory === "steel" && (
-        <div className="border border-outline-variant bg-surface-container-low p-6 sm:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-xs">
+        <div className="border border-outline-variant bg-surface-container-low p-6 sm:p-8 flex flex-col md:flex-row items-center text-center md:text-left justify-between gap-6 shadow-xs max-w-5xl mx-auto">
           <div className="space-y-2 max-w-2xl">
             <div className="inline-flex items-center gap-2 font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
               <ShieldCheck className="w-4 h-4 text-secondary" />

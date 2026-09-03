@@ -10,7 +10,6 @@ import { aluminiumGarageDoorsService } from './aluminiumGarageDoors';
 import { aluminiumSlidingWindowsService } from './aluminiumSlidingWindows';
 import { doubleGlazedWindowsService } from './doubleGlazedWindows';
 import { glassBalustradesService } from './glassBalustrades';
-import { patioEnclosuresService } from './patioEnclosures';
 import { glassPatioEnclosuresService } from './glassPatioEnclosures';
 import { aluminiumAwningsService } from './aluminiumAwnings';
 import { aluminiumPergolasService } from './aluminiumPergolas';
@@ -19,7 +18,6 @@ import { aluminiumSkylightsService } from './aluminiumSkylights';
 import { seamlessAluminiumGuttersService } from './seamlessAluminiumGutters';
 import { officeGlassPartitionsService } from './officeGlassPartitions';
 import { framelessShowerDoorsService } from './framelessShowerDoors';
-import { flyScreensService } from './flyScreens';
 import { aluminiumFlyScreensService } from './aluminiumFlyScreens';
 import { aluminiumRepairsService } from './aluminiumRepairs';
 import { slidingDoorRepairsService } from './slidingDoorRepairs';
@@ -43,7 +41,7 @@ import { customWeldingService } from './customWelding';
 import { steelRepairsService } from './steelRepairs';
 
 export const allCoreServices: ServiceObject[] = [
-  // Aluminium, Glazing & Conversions
+  // Aluminium, Glazing & Conversions (22 distinct services)
   aluminiumWindowsService,
   steelToAluminiumConversionsService,
   aluminiumSlidingDoorsService,
@@ -54,7 +52,6 @@ export const allCoreServices: ServiceObject[] = [
   aluminiumSlidingWindowsService,
   doubleGlazedWindowsService,
   glassBalustradesService,
-  patioEnclosuresService,
   glassPatioEnclosuresService,
   aluminiumSkylightsService,
   aluminiumAwningsService,
@@ -63,13 +60,12 @@ export const allCoreServices: ServiceObject[] = [
   seamlessAluminiumGuttersService,
   officeGlassPartitionsService,
   framelessShowerDoorsService,
-  flyScreensService,
   aluminiumFlyScreensService,
   aluminiumRepairsService,
   slidingDoorRepairsService,
   glassReplacementService,
 
-  // Steel & Security
+  // Steel & Security (14 distinct services)
   burglarBarsService,
   clearBurglarBarsService,
   trellisSecurityGatesService,
@@ -89,6 +85,10 @@ export const allCoreServices: ServiceObject[] = [
 export const coreServiceMapBySlug = new Map<string, ServiceObject>(
   allCoreServices.map(srv => [srv.slug, srv])
 );
+
+// Fallback aliases for legacy slug redirects
+coreServiceMapBySlug.set("patio-enclosures", glassPatioEnclosuresService);
+coreServiceMapBySlug.set("fly-screens", aluminiumFlyScreensService);
 
 export const getServicesByCategory = (category: string): ServiceObject[] => {
   return allCoreServices.filter(

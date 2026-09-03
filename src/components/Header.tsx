@@ -106,11 +106,10 @@ export default function Header() {
 
   const navLinks = [
     { name: "Home", href: "/" },
+    { name: "About Us", href: "/about" },
     { name: "Services", href: "/services", hasDropdown: true },
-    { name: "Steel Works", href: "/steel-works" },
     { name: "Prices", href: "/prices" },
     { name: "Gallery", href: "/gallery" },
-    { name: "About Us", href: "/about" },
     { name: "FAQ", href: "/faq" },
     { name: "Contact", href: "/contact" },
   ];

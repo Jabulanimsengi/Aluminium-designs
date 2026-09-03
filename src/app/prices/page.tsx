@@ -68,14 +68,14 @@ export default function PricesPage() {
       {/* Windows Section */}
       <section className="py-20 bg-surface border-b border-outline-variant">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="mb-10">
+          <div className="mb-12 text-center max-w-3xl mx-auto">
             <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
               Windows Guide
             </span>
             <h2 className="mt-2 font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
               Aluminium Windows &amp; Frames
             </h2>
-            <p className="mt-3 text-sm text-on-surface-variant max-w-2xl leading-relaxed">
+            <p className="mt-3 text-sm text-on-surface-variant max-w-2xl mx-auto leading-relaxed">
               Durable aluminium window frames with safety toughened glass. Custom manufactured to your exact wall openings.
             </p>
           </div>
@@ -159,14 +159,14 @@ export default function PricesPage() {
       {/* Doors Section */}
       <section className="py-20 bg-surface-container-low border-b border-outline-variant">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="mb-10">
+          <div className="mb-12 text-center max-w-3xl mx-auto">
             <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
               Doors Guide
             </span>
             <h2 className="mt-2 font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
               Aluminium Doors &amp; Frames
             </h2>
-            <p className="mt-3 text-sm text-on-surface-variant max-w-2xl leading-relaxed">
+            <p className="mt-3 text-sm text-on-surface-variant max-w-2xl mx-auto leading-relaxed">
               Strong, weatherproof door systems with security locks. Hinge, pivot, sliding, and stacking patio doors.
             </p>
           </div>
@@ -250,7 +250,7 @@ export default function PricesPage() {
       {/* Specialty Services & Conversions Section */}
       <section className="py-20 bg-surface border-b border-outline-variant">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="mb-10">
+          <div className="mb-12 text-center max-w-3xl mx-auto">
             <div className="inline-flex items-center gap-2 bg-surface-container-low border border-outline-variant px-3 py-1 font-mono text-[10px] font-bold tracking-widest uppercase rounded-full text-secondary mb-2">
               <Wrench className="w-3.5 h-3.5" />
               Specialty Services &amp; Repairs
@@ -258,7 +258,7 @@ export default function PricesPage() {
             <h2 className="font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
               Conversions, Enclosures &amp; Repairs
             </h2>
-            <p className="mt-3 text-sm text-on-surface-variant max-w-2xl leading-relaxed">
+            <p className="mt-3 text-sm text-on-surface-variant max-w-2xl mx-auto leading-relaxed">
               Transparent starting guide rates for steel-to-aluminium conversions, glass patio enclosures, frameless showers, and on-site sliding door repairs.
             </p>
           </div>
