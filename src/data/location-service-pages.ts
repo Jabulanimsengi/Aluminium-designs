@@ -136,7 +136,7 @@ export const katlehongAluminiumWindows: LocationServiceObject = {
   fullPageUrl: `${siteUrl}/locations/katlehong/aluminium-windows-in-katlehong`,
 
   hero: {
-    headline: "Architectural Aluminium Windows in Katlehong",
+    headline: "Aluminium Windows in Katlehong",
     subheadline: "Custom-manufactured casement, sliding, and fixed aluminium window systems engineered for long-term thermal comfort, strict home security, and severe Highveld weather resistance.",
     localBadgeText: "Ekurhuleni Certified & SANS 10400-XA Compliant Glazing",
   },
@@ -316,9 +316,8 @@ function buildHero(location: LocationArea, service: Service, page: ServicePageCo
   const isSteel = service.category === "steel";
   const isMall = location.type === "mall";
   const preposition = (isNear || isMall) ? "Near" : "in";
-  const prefix = isSteel ? "Custom Steel" : "Architectural";
   return {
-    headline: `${prefix} ${service.title} ${preposition} ${location.name}`,
+    headline: `${service.title} ${preposition} ${location.name}`,
     subheadline: isMall
       ? `Precision ${service.title.toLowerCase()} manufactured and installed for homes, residential estates, and commercial properties throughout the ${location.name} precinct.`
       : page.hero.subheadline,

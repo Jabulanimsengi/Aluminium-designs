@@ -187,7 +187,8 @@ export default async function LocationPage({ params }: { params: Promise<{ area:
             </div>
 
             <h1 className="font-sans font-bold uppercase tracking-tight text-4xl sm:text-5xl lg:text-6xl text-primary leading-[1.1]">
-              Premium Aluminium Windows & Doors in <span className="text-on-tertiary-container">{location.name}</span>
+              Aluminium Windows, Doors &amp; Steel Works {location.type === "mall" ? "Near" : "in"}{" "}
+              <span className="text-on-tertiary-container">{location.name}</span>
             </h1>
 
             <p className="font-sans text-on-surface-variant text-lg leading-relaxed max-w-2xl">
