@@ -47,7 +47,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: Promise<{ area: string }> }) {
   const { area } = await params;
-  const location = gautengLocations.find((loc) => loc.id === area);
+  const location = gautengLocations.find((loc) => loc.slug === area || loc.id === area);
   
   if (!location) {
     return { title: "Location Not Found" };
@@ -66,13 +66,13 @@ export async function generateMetadata({ params }: { params: Promise<{ area: str
     title: `Aluminium Windows & Doors in ${location.name}`,
     description: desc,
     robots: { index: true, follow: true },
-    alternates: { canonical: `${siteUrl}/locations/${location.id}` },
+    alternates: { canonical: `${siteUrl}/locations/${location.slug}` },
   };
 }
 
 export default async function LocationPage({ params }: { params: Promise<{ area: string }> }) {
   const { area } = await params;
-  const location = gautengLocations.find((loc) => loc.id === area);
+  const location = gautengLocations.find((loc) => loc.slug === area || loc.id === area);
 
   if (!location) {
     notFound();

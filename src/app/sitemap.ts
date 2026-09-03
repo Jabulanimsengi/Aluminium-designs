@@ -31,7 +31,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   }));
 
   const locationEntries: MetadataRoute.Sitemap = gautengLocations.map((location) => ({
-      url: `${siteUrl}/locations/${location.id}`,
+      url: `${siteUrl}/locations/${location.slug}`,
       changeFrequency: "monthly",
       priority: 0.6,
     }));
