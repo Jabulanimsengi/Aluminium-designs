@@ -19,13 +19,37 @@ import {
   Wrench,
 } from "lucide-react";
 import CTASection from "@/components/CTASection";
-import { businessContact, whatsappQuoteUrl } from "@/lib/site";
+import { absoluteUrl, businessContact, siteUrl, whatsappQuoteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "About Aluminium Designs | Gauteng Aluminium Specialists",
   description:
     "Meet Aluminium Designs, a Gauteng team measuring, manufacturing, installing, and repairing custom aluminium windows, doors, glass systems, shopfronts, security products, and outdoor structures.",
-  alternates: { canonical: "/about" },
+  alternates: { canonical: `${siteUrl}/about` },
+  openGraph: {
+    type: "website",
+    locale: "en_ZA",
+    url: `${siteUrl}/about`,
+    siteName: "Aluminium Designs",
+    title: "About Aluminium Designs | Gauteng Aluminium Specialists",
+    description:
+      "Meet Aluminium Designs, measuring, manufacturing, and installing custom aluminium and steel structures across Gauteng.",
+    images: [
+      {
+        url: absoluteUrl("/images/sections/overview_craftsmanship.jpg"),
+        width: 1200,
+        height: 630,
+        alt: "Aluminium Designs Workshop & Craftsmanship",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "About Aluminium Designs | Gauteng Aluminium Specialists",
+    description:
+      "Meet Aluminium Designs, measuring, manufacturing, and installing custom aluminium and steel structures across Gauteng.",
+    images: [absoluteUrl("/images/sections/overview_craftsmanship.jpg")],
+  },
 };
 
 const serviceGroups = [
@@ -35,7 +59,7 @@ const serviceGroups = [
       "Custom aluminium windows, hinged and pivot doors, sliding systems, and stacking doors made to suit new builds, renovations, and replacements.",
     items: ["Aluminium windows", "Entrance and patio doors", "Sliding and stacking systems"],
     icon: DoorOpen,
-    href: "/services/windows",
+    href: "/services/aluminium-windows",
   },
   {
     title: "Glass & Interior Systems",
@@ -43,15 +67,15 @@ const serviceGroups = [
       "Practical glass solutions that bring in light, divide spaces, improve bathrooms, and create clean modern finishes.",
     items: ["Office glass partitions", "Shower enclosures", "Frameless glass and mirrors"],
     icon: GlassWater,
-    href: "/services/partitions",
+    href: "/services/office-glass-partitions",
   },
   {
     title: "Commercial Solutions",
     description:
       "Durable aluminium and glass installations designed for shops, offices, showrooms, developments, and other high-use spaces.",
-    items: ["Commercial shopfronts", "Office fit-outs", "Custom entrances and glazing"],
+    items: ["Commercial shopfronts", "Office dividers", "Custom glass entrances"],
     icon: Store,
-    href: "/services/shopfronts",
+    href: "/services/aluminium-shopfronts",
   },
   {
     title: "Security & Custom Work",
@@ -59,7 +83,7 @@ const serviceGroups = [
       "Made-to-measure security and fabrication work that complements the property instead of looking like an afterthought.",
     items: ["Burglar bars and trellis doors", "Gates, louvres, and screens", "Custom aluminium fabrication"],
     icon: ShieldCheck,
-    href: "/services/custom",
+    href: "/services/security-gates",
   },
   {
     title: "Outdoor Living",
@@ -67,7 +91,7 @@ const serviceGroups = [
       "Weather-ready aluminium and glass systems for patios, balconies, entrances, parking, and entertainment areas.",
     items: ["Patio and glass enclosures", "Pergolas and carports", "Balustrades and skylights"],
     icon: House,
-    href: "/services/enclosures",
+    href: "/services/glass-patio-enclosures",
   },
   {
     title: "Repairs & Replacements",
@@ -75,7 +99,7 @@ const serviceGroups = [
       "Targeted repairs and replacement work to restore existing windows, doors, glass, locks, rollers, tracks, and seals.",
     items: ["Glass replacement", "Roller, lock, and track repairs", "Weather-seal replacement"],
     icon: Wrench,
-    href: "/services/repairs",
+    href: "/services/aluminium-repairs",
   },
 ] as const;
 
@@ -210,7 +234,7 @@ export default function AboutPage() {
               We are not limited to one type of window or door. Our work covers the aluminium, glass, security, and outdoor systems that make a property more useful, secure, weather-ready, and visually complete.
             </p>
             <p className="text-sm leading-relaxed text-on-surface-variant">
-              Homeowners call us for renovations, replacements, patio upgrades, security, bathrooms, and outdoor living projects. Businesses and property teams work with us on shopfronts, office partitions, entrances, glazing, repairs, and custom fabrication.
+              Homeowners call us for renovations, window replacements, patio folding doors, security gates, and modern bathrooms. Businesses trust us for shopfronts, office glass partitions, entrances, glass repairs, and custom steel structures.
             </p>
             <p className="text-sm leading-relaxed text-on-surface-variant">
               Because each opening and project is different, we focus on accurate site information, suitable product choices, and a finished installation that works properly in the real space.

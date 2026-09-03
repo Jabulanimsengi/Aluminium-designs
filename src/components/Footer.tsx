@@ -22,7 +22,7 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="bg-black text-white border-t border-white/10 pt-16 pb-8 relative overflow-hidden">
+    <footer className="bg-brand text-white border-t border-white/10 pt-16 pb-24 md:pb-8 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-6 pb-12 border-b border-white/15">
 
@@ -30,20 +30,20 @@ export default function Footer() {
           <div className="space-y-5 lg:col-span-1">
             <Link
               href="/"
-              className="relative inline-flex h-14 w-[162px] overflow-hidden select-none"
+              aria-label="Aluminium Designs — home"
+              className="relative inline-flex h-14 w-[144px] overflow-hidden select-none"
             >
               <Image
                 src="/images/real_images/logo/logo.png"
                 alt="Aluminium Designs"
                 fill
-                sizes="162px"
-                className="object-cover brightness-0 invert"
+                sizes="144px"
+                className="object-contain brightness-0 invert drop-shadow-sm"
                 unoptimized
               />
             </Link>
             <p className="text-xs leading-relaxed text-outline-variant">
-              Specialist designers, manufacturers, and installers of architectural aluminium systems &amp; custom steel security fabrication across Gauteng.
-              SABS &amp; AAAMSA conformant.
+              Custom manufacturers and installers of quality aluminium windows, sliding doors, and strong steel security gates across Gauteng. Built to SABS standards.
             </p>
           </div>
 

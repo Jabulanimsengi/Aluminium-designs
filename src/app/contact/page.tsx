@@ -1,13 +1,37 @@
 import React from "react";
 import { Metadata } from "next";
 import { Phone, Mail, MapPin, Clock, ArrowRight, ExternalLink } from "lucide-react";
-import { businessContact, businessHours } from "@/lib/site";
+import { absoluteUrl, businessContact, businessHours, siteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Contact Us",
+  title: "Contact Us | Aluminium Designs Gauteng",
   description:
-    "Get in touch for aluminium measurements, quotes, and advice. Call, email, or visit Aluminium Designs at 755 Sontonga Road, Moleleki Ext 1, Katlehong.",
-  alternates: { canonical: "/contact" },
+    "Get in touch for custom aluminium and steel quotes, site visits, and advice. Call 071 612 2439 or visit us in Katlehong, Gauteng.",
+  alternates: { canonical: `${siteUrl}/contact` },
+  openGraph: {
+    type: "website",
+    locale: "en_ZA",
+    url: `${siteUrl}/contact`,
+    siteName: "Aluminium Designs",
+    title: "Contact Us | Aluminium Designs Gauteng",
+    description:
+      "Get in touch for custom aluminium and steel quotes, measurements, and advice across Gauteng.",
+    images: [
+      {
+        url: absoluteUrl("/images/hero_exterior.png"),
+        width: 1200,
+        height: 630,
+        alt: "Contact Aluminium Designs Gauteng",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Contact Us | Aluminium Designs Gauteng",
+    description:
+      "Get in touch for custom aluminium and steel quotes, measurements, and advice across Gauteng.",
+    images: [absoluteUrl("/images/hero_exterior.png")],
+  },
 };
 
 export default function ContactPage() {

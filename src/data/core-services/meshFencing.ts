@@ -106,8 +106,8 @@ export const meshFencingService: ServiceObject = {
     titleTag: "Mesh Security Fencing & ClearVu Style Fencing | South Africa",
     metaDescription: "Anti-climb and anti-cut mesh security fencing. High-tensile steel wire, powder coated finish, and professional installation across South Africa.",
     keywords: ["mesh security fencing", "anti climb fencing", "see through fencing", "ClearVu style fencing SA"],
-    canonicalUrl: "https://example.com/services/mesh-fencing",
-    openGraphImage: "https://example.com/images/og/mesh-fencing.jpg"
+    canonicalUrl: "https://www.aluminiumdesigns.co.za/services/mesh-fencing",
+    openGraphImage: "https://www.aluminiumdesigns.co.za/images/services/mesh-fencing-hero.webp"
   },
   structuredDataJsonLd: {
     "@context": "https://schema.org",
@@ -115,7 +115,7 @@ export const meshFencingService: ServiceObject = {
     "name": "Mesh Security Fencing Installation",
     "provider": {
       "@type": "Organization",
-      "name": "Steel & Security Solutions SA"
+      "name": "Aluminium Designs"
     }
   }
 };

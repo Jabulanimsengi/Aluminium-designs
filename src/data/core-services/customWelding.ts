@@ -14,7 +14,7 @@ export const customWeldingService: ServiceObject = {
     primaryCtaLink: "/contact",
     secondaryCtaText: "Explore Fabrication Work",
     secondaryCtaLink: "#specs",
-    heroImage: "/images/services/custom-welding-hero.webp"
+    heroImage: "/images/services/custom-welding-hero.jpg"
   },
   overview: {
     heading: "Precision Metal Fabrication & Mobile On-Site Welding",
@@ -106,8 +106,8 @@ export const customWeldingService: ServiceObject = {
     titleTag: "Custom Welding & Steel Fabrication | South Africa",
     metaDescription: "Professional custom welding and steel fabrication services. Mobile on-site welding, structural steel beams, custom metalwork across South Africa.",
     keywords: ["custom welding", "steel fabrication", "mobile welder", "metal fabrication SA"],
-    canonicalUrl: "https://example.com/services/custom-welding",
-    openGraphImage: "https://example.com/images/og/custom-welding.jpg"
+    canonicalUrl: "https://www.aluminiumdesigns.co.za/services/custom-welding",
+    openGraphImage: "https://www.aluminiumdesigns.co.za/images/services/custom-welding-hero.jpg"
   },
   structuredDataJsonLd: {
     "@context": "https://schema.org",
@@ -115,7 +115,7 @@ export const customWeldingService: ServiceObject = {
     "name": "Custom Welding & Steel Fabrication",
     "provider": {
       "@type": "Organization",
-      "name": "Steel & Welding Services SA"
+      "name": "Aluminium Designs"
     }
   }
 };

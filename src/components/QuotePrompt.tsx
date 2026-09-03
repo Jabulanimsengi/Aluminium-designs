@@ -2,21 +2,26 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { ArrowRight, X } from "lucide-react";
 
 const dismissalKey = "aluminium-designs-quote-prompt-dismissed";
 
 export default function QuotePrompt() {
+  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
+    if (pathname.startsWith("/quote") || pathname.startsWith("/contact") || pathname.startsWith("/admin")) {
+      return;
+    }
     if (window.localStorage.getItem(dismissalKey)) {
       return;
     }
 
-    const timeoutId = window.setTimeout(() => setIsOpen(true), 10_000);
+    const timeoutId = window.setTimeout(() => setIsOpen(true), 25_000);
     return () => window.clearTimeout(timeoutId);
-  }, []);
+  }, [pathname]);
 
   function closePrompt() {
     window.localStorage.setItem(dismissalKey, "true");

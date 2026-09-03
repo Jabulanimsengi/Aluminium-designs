@@ -132,14 +132,15 @@ export default function Header() {
           {/* Logo: aligned to the page content edge on desktop */}
           <Link
             href="/"
-            className="relative flex h-12 w-[148px] shrink-0 items-center overflow-hidden select-none sm:h-[52px] sm:w-[162px] lg:h-12 lg:w-[154px] lg:justify-self-start"
+            aria-label="Aluminium Designs — home"
+            className="relative flex h-12 w-[124px] shrink-0 items-center overflow-hidden select-none sm:h-[52px] sm:w-[134px] lg:h-12 lg:w-[124px] lg:justify-self-start"
           >
             <Image
               src="/images/real_images/logo/logo.png"
               alt="Aluminium Designs"
               fill
-              sizes="(max-width: 640px) 148px, 162px"
-              className="object-cover"
+              sizes="(max-width: 640px) 124px, 134px"
+              className="object-contain"
               unoptimized
               preload
             />
@@ -165,7 +166,7 @@ export default function Header() {
                     aria-expanded={servicesDropdownOpen}
                     aria-controls="desktop-services-menu"
                     onClick={() => setServicesDropdownOpen((isOpen) => !isOpen)}
-                    className={`relative flex items-center gap-1 text-[11px] font-mono font-bold tracking-widest uppercase transition-colors pb-1 cursor-pointer ${
+                    className={`relative flex items-center gap-1 text-[12px] font-sans font-semibold tracking-wide uppercase transition-colors pb-1 cursor-pointer ${
                       pathname.startsWith("/services")
                         ? "text-primary after:scale-x-100"
                         : "text-secondary hover:text-primary after:scale-x-0 hover:after:scale-x-100"
@@ -178,7 +179,7 @@ export default function Header() {
                   <div
                     id="desktop-services-menu"
                     aria-hidden={!servicesDropdownOpen}
-                    className={`absolute -left-16 top-full w-[520px] bg-surface border border-outline-variant shadow-2xl transition-all duration-200 origin-top-left ${
+                    className={`absolute -left-16 top-full w-[560px] rounded-xl bg-surface border border-outline-variant shadow-2xl transition-all duration-200 origin-top-left ${
                       servicesDropdownOpen
                         ? "opacity-100 translate-y-0 scale-100 pointer-events-auto"
                         : "opacity-0 -translate-y-1 scale-95 pointer-events-none"
@@ -188,18 +189,23 @@ export default function Header() {
                       {/* Column 1: Aluminium & Glass */}
                       <div className="space-y-1">
                         <div className="flex items-center gap-1.5 pb-2 border-b border-outline-variant text-[10px] font-mono font-bold uppercase tracking-widest text-secondary">
-                          <Sparkles className="w-3 h-3 text-secondary" />
+                          <Sparkles className="w-3 h-3 text-brand" />
                           Aluminium &amp; Glass
                         </div>
-                        <div className="pt-1 flex flex-col gap-0.5">
+                        <div className="pt-1 flex flex-col gap-1">
                           {aluminiumServices.slice(0, 5).map((s) => (
                             <Link
                               key={s.id}
                               href={s.slug}
                               tabIndex={servicesDropdownOpen ? 0 : -1}
-                              className="p-2 hover:bg-surface-container transition-colors rounded-md text-xs font-sans font-semibold text-primary block truncate"
+                              className="group rounded-lg p-2.5 transition-colors hover:bg-surface-container hover:shadow-sm focus-visible:outline-2 focus-visible:outline-brand"
                             >
-                              {s.title}
+                              <span className="block truncate text-[13px] font-sans font-semibold text-primary group-hover:text-brand">
+                                {s.title}
+                              </span>
+                              <span className="mt-0.5 block truncate text-[11px] leading-snug text-on-surface-variant">
+                                {s.shortDescription}
+                              </span>
                             </Link>
                           ))}
                         </div>
@@ -208,36 +214,41 @@ export default function Header() {
                       {/* Column 2: Steel & Security */}
                       <div className="space-y-1">
                         <div className="flex items-center gap-1.5 pb-2 border-b border-outline-variant text-[10px] font-mono font-bold uppercase tracking-widest text-secondary">
-                          <Hammer className="w-3 h-3 text-secondary" />
+                          <Hammer className="w-3 h-3 text-brand" />
                           Steel Works &amp; Security
                         </div>
-                        <div className="pt-1 flex flex-col gap-0.5">
+                        <div className="pt-1 flex flex-col gap-1">
                           {steelServices.slice(0, 5).map((s) => (
                             <Link
                               key={s.id}
                               href={s.slug}
                               tabIndex={servicesDropdownOpen ? 0 : -1}
-                              className="p-2 hover:bg-surface-container transition-colors rounded-md text-xs font-sans font-semibold text-primary block truncate"
+                              className="group rounded-lg p-2.5 transition-colors hover:bg-surface-container hover:shadow-sm focus-visible:outline-2 focus-visible:outline-brand"
                             >
-                              {s.title}
+                              <span className="block truncate text-[13px] font-sans font-semibold text-primary group-hover:text-brand">
+                                {s.title}
+                              </span>
+                              <span className="mt-0.5 block truncate text-[11px] leading-snug text-on-surface-variant">
+                                {s.shortDescription}
+                              </span>
                             </Link>
                           ))}
                         </div>
                       </div>
                     </div>
 
-                    <div className="border-t border-outline-variant bg-surface-container-low p-2.5 flex items-center justify-between text-[11px] font-mono font-bold uppercase tracking-wider">
+                    <div className="border-t border-outline-variant bg-surface-container-low rounded-b-xl px-4 py-3 flex items-center justify-between text-[11px] font-sans font-semibold uppercase tracking-wide">
                       <Link
                         href="/services"
                         tabIndex={servicesDropdownOpen ? 0 : -1}
-                        className="text-secondary hover:text-primary transition-colors flex items-center gap-1 px-2 py-1"
+                        className="text-secondary hover:text-brand transition-colors flex items-center gap-1 px-2 py-1.5 rounded-md focus-visible:outline-2 focus-visible:outline-brand"
                       >
-                        All 38 Products &rarr;
+                        All {services.length} Products &rarr;
                       </Link>
                       <Link
                         href="/steel-works"
                         tabIndex={servicesDropdownOpen ? 0 : -1}
-                        className="text-primary hover:text-secondary font-bold transition-colors flex items-center gap-1 px-2 py-1"
+                        className="text-brand hover:text-brand-hover font-bold transition-colors flex items-center gap-1 px-2 py-1.5 rounded-md focus-visible:outline-2 focus-visible:outline-brand"
                       >
                         Steel Works Hub &rarr;
                       </Link>
@@ -248,7 +259,7 @@ export default function Header() {
                 <Link
                   key={link.name}
                   href={link.href}
-                  className={`relative text-[11px] font-mono font-bold tracking-widest uppercase transition-colors pb-1 ${
+                  className={`relative text-[12px] font-sans font-semibold tracking-wide uppercase transition-colors pb-1 ${
                     pathname === link.href
                       ? "text-primary after:scale-x-100"
                       : "text-secondary hover:text-primary after:scale-x-0 hover:after:scale-x-100"
@@ -271,7 +282,7 @@ export default function Header() {
             </a>
             <Link
               href={whatsappQuoteUrl}
-              className="bg-primary hover:bg-secondary text-on-primary px-5 py-2 rounded-full font-mono text-[11px] font-bold tracking-widest uppercase transition-colors inline-flex items-center gap-1.5"
+              className="bg-brand hover:bg-brand-hover text-on-brand px-5 py-2 rounded-full font-sans text-[12px] font-semibold tracking-wide uppercase transition-colors inline-flex items-center gap-1.5"
             >
               Free Quote
               <ArrowRight className="w-3.5 h-3.5" />
@@ -384,7 +395,7 @@ export default function Header() {
               <Link
                 href={whatsappQuoteUrl}
                 onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center justify-center w-full py-3.5 rounded-full bg-primary hover:bg-secondary text-on-primary font-mono text-xs font-bold uppercase tracking-widest transition-colors"
+                className="flex items-center justify-center w-full py-3.5 rounded-full bg-brand hover:bg-brand-hover text-on-brand font-sans text-xs font-semibold uppercase tracking-wide transition-colors"
               >
                 Request Free Quote
                 <ArrowRight className="w-4 h-4 ml-2" />

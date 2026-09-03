@@ -16,6 +16,7 @@ export interface Service {
 export const steelSlugs = new Set([
   "burglar-bars",
   "clear-burglar-bars",
+  "trellis-doors",
   "trellis-security-gates",
   "security-gates",
   "driveway-gates",

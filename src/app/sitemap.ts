@@ -18,29 +18,50 @@ const coreRoutes = [
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const entries: MetadataRoute.Sitemap = coreRoutes.map((path, index) => ({
-    url: `${siteUrl}${path}`,
-    changeFrequency: path === "" ? "weekly" : "monthly",
-    priority: index === 0 ? 1 : 0.7,
-  }));
+  const lastModified = new Date();
+
+  const entries: MetadataRoute.Sitemap = coreRoutes.map((path) => {
+    let priority = 0.6;
+    let changeFrequency: "weekly" | "monthly" = "monthly";
+
+    if (path === "") {
+      priority = 1.0;
+      changeFrequency = "weekly";
+    } else if (path === "/services" || path === "/steel-works") {
+      priority = 0.8;
+      changeFrequency = "weekly";
+    } else if (path === "/prices" || path === "/gallery" || path === "/contact") {
+      priority = 0.7;
+    }
+
+    return {
+      url: `${siteUrl}${path}`,
+      lastModified,
+      changeFrequency,
+      priority,
+    };
+  });
 
   const serviceEntries: MetadataRoute.Sitemap = services.map((service) => ({
     url: `${siteUrl}${service.slug}`,
+    lastModified,
     changeFrequency: "monthly",
     priority: 0.8,
   }));
 
   const locationEntries: MetadataRoute.Sitemap = gautengLocations.map((location) => ({
-      url: `${siteUrl}/locations/${location.slug}`,
-      changeFrequency: "monthly",
-      priority: 0.6,
-    }));
+    url: `${siteUrl}/locations/${location.slug}`,
+    lastModified,
+    changeFrequency: "monthly",
+    priority: 0.6,
+  }));
 
   const locationServiceEntries: MetadataRoute.Sitemap = getAllLocationServiceRoutes().map((route) => ({
-      url: `${siteUrl}/locations/${route.area}/${route.serviceId}`,
-      changeFrequency: "monthly",
-      priority: 0.5,
-    }));
+    url: `${siteUrl}/locations/${route.area}/${route.serviceId}`,
+    lastModified,
+    changeFrequency: "monthly",
+    priority: 0.5,
+  }));
 
   return [...entries, ...serviceEntries, ...locationEntries, ...locationServiceEntries];
 }

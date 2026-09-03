@@ -14,7 +14,7 @@ export const securityGatesService: ServiceObject = {
     primaryCtaLink: "/contact",
     secondaryCtaText: "Explore Gate Styles",
     secondaryCtaLink: "#specs",
-    heroImage: "/images/services/security-gates-hero.webp"
+    heroImage: "/images/services/security-gates-hero.jpg"
   },
   overview: {
     heading: "High-Security Steel Gates for Front Entrances & Patios",
@@ -106,8 +106,8 @@ export const securityGatesService: ServiceObject = {
     titleTag: "Steel Security Gates & Retractable Trellis Gates | South Africa",
     metaDescription: "Custom steel security gates and slamlock retractable trellis doors. Maximum home protection, durable powder coating, and professional local installation.",
     keywords: ["security gates", "trellis security gates", "slamlock gates", "steel security doors SA"],
-    canonicalUrl: "https://example.com/services/security-gates",
-    openGraphImage: "https://example.com/images/og/security-gates.jpg"
+    canonicalUrl: "https://www.aluminiumdesigns.co.za/services/security-gates",
+    openGraphImage: "https://www.aluminiumdesigns.co.za/images/services/security-gates-hero.jpg"
   },
   structuredDataJsonLd: {
     "@context": "https://schema.org",
@@ -115,7 +115,7 @@ export const securityGatesService: ServiceObject = {
     "name": "Security Gates Installation",
     "provider": {
       "@type": "Organization",
-      "name": "Steel & Security Solutions SA"
+      "name": "Aluminium Designs"
     }
   }
 };

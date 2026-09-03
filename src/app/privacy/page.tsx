@@ -1,12 +1,34 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, ShieldCheck } from "lucide-react";
-import { businessContact } from "@/lib/site";
+import { absoluteUrl, businessContact, siteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Privacy Notice",
+  title: "Privacy Notice | Aluminium Designs",
   description: "How Aluminium Designs collects and uses website monitoring and enquiry information.",
-  alternates: { canonical: "/privacy" },
+  alternates: { canonical: `${siteUrl}/privacy` },
+  openGraph: {
+    type: "website",
+    locale: "en_ZA",
+    url: `${siteUrl}/privacy`,
+    siteName: "Aluminium Designs",
+    title: "Privacy Notice | Aluminium Designs",
+    description: "How Aluminium Designs collects and uses website monitoring and enquiry information.",
+    images: [
+      {
+        url: absoluteUrl("/images/hero_exterior.png"),
+        width: 1200,
+        height: 630,
+        alt: "Aluminium Designs Privacy Notice",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Privacy Notice | Aluminium Designs",
+    description: "How Aluminium Designs collects and uses website monitoring and enquiry information.",
+    images: [absoluteUrl("/images/hero_exterior.png")],
+  },
 };
 
 const sections = [

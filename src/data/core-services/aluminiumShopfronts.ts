@@ -130,8 +130,8 @@ export const aluminiumShopfrontsService: ServiceObject = {
       "shop fronts pretoria",
       "shopfronts cape town"
     ],
-    canonicalUrl: "https://aluminiumandsteelsa.co.za/services/aluminium-shopfronts",
-    openGraphImage: "https://aluminiumandsteelsa.co.za/images/og/aluminium-shopfronts.jpg"
+    canonicalUrl: "https://www.aluminiumdesigns.co.za/services/aluminium-shopfronts",
+    openGraphImage: "https://www.aluminiumdesigns.co.za/images/services/aluminium-shopfronts-hero.webp"
   },
   structuredDataJsonLd: {
     "@context": "https://schema.org",
@@ -139,7 +139,7 @@ export const aluminiumShopfrontsService: ServiceObject = {
     "name": "Aluminium Shopfronts & Commercial Glazing Installation",
     "provider": {
       "@type": "Organization",
-      "name": "Aluminium Designs SA"
+      "name": "Aluminium Designs"
     }
   }
 };

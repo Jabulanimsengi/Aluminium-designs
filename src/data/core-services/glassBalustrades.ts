@@ -106,8 +106,8 @@ export const glassBalustradesService: ServiceObject = {
     titleTag: "Glass Balustrades & Frameless Pool Fencing | South Africa",
     metaDescription: "Custom glass balustrades for balconies, staircases, and pool fencing. Frameless safety glass, corrosion-resistant fittings, and expert installation.",
     keywords: ["glass balustrades", "frameless glass railings", "glass pool fencing", "balcony glass balustrade"],
-    canonicalUrl: "https://example.com/services/glass-balustrades",
-    openGraphImage: "https://example.com/images/og/glass-balustrades.jpg"
+    canonicalUrl: "https://www.aluminiumdesigns.co.za/services/glass-balustrades",
+    openGraphImage: "https://www.aluminiumdesigns.co.za/images/services/glass-balustrades-hero.webp"
   },
   structuredDataJsonLd: {
     "@context": "https://schema.org",
@@ -115,7 +115,7 @@ export const glassBalustradesService: ServiceObject = {
     "name": "Glass Balustrades Installation",
     "provider": {
       "@type": "Organization",
-      "name": "Aluminium Windows & Doors SA"
+      "name": "Aluminium Designs"
     }
   }
 };

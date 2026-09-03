@@ -14,7 +14,7 @@ export const palisadeFencingService: ServiceObject = {
     primaryCtaLink: "/contact",
     secondaryCtaText: "Explore Palisade Specs",
     secondaryCtaLink: "#specs",
-    heroImage: "/images/services/palisade-fencing-hero.webp"
+    heroImage: "/images/services/palisade-fencing-hero.jpg"
   },
   overview: {
     heading: "Strong Steel Palisade Boundaries Built to Deter Intruders",
@@ -106,8 +106,8 @@ export const palisadeFencingService: ServiceObject = {
     titleTag: "Steel Palisade Fencing & Security Barriers | South Africa",
     metaDescription: "Professional steel palisade fencing installation. 7-spike & 3-spike options, hot-dip galvanizing, tamper-proof bolts, and expert boundary fencing across South Africa.",
     keywords: ["palisade fencing", "steel palisade gates", "perimeter security fencing", "palisade fencing installers SA"],
-    canonicalUrl: "https://example.com/services/palisade-fencing",
-    openGraphImage: "https://example.com/images/og/palisade-fencing.jpg"
+    canonicalUrl: "https://www.aluminiumdesigns.co.za/services/palisade-fencing",
+    openGraphImage: "https://www.aluminiumdesigns.co.za/images/services/palisade-fencing-hero.jpg"
   },
   structuredDataJsonLd: {
     "@context": "https://schema.org",
@@ -115,7 +115,7 @@ export const palisadeFencingService: ServiceObject = {
     "name": "Palisade Fencing Installation",
     "provider": {
       "@type": "Organization",
-      "name": "Steel & Security Solutions SA"
+      "name": "Aluminium Designs"
     }
   }
 };

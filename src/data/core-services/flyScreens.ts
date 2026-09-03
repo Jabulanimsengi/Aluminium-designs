@@ -106,8 +106,8 @@ export const flyScreensService: ServiceObject = {
     titleTag: "Fly Screens & Bug Screens for Windows and Doors | South Africa",
     metaDescription: "Custom aluminium fly screens and mosquito screens for windows and sliding patio doors. Pet mesh options, easy cleaning, and expert installation.",
     keywords: ["fly screens", "mosquito screens", "insect screens for windows", "sliding fly screen doors SA"],
-    canonicalUrl: "https://example.com/services/fly-screens",
-    openGraphImage: "https://example.com/images/og/fly-screens.jpg"
+    canonicalUrl: "https://www.aluminiumdesigns.co.za/services/fly-screens",
+    openGraphImage: "https://www.aluminiumdesigns.co.za/images/services/fly-screens-hero.webp"
   },
   structuredDataJsonLd: {
     "@context": "https://schema.org",
@@ -115,7 +115,7 @@ export const flyScreensService: ServiceObject = {
     "name": "Fly Screens Installation",
     "provider": {
       "@type": "Organization",
-      "name": "Aluminium Windows & Doors SA"
+      "name": "Aluminium Designs"
     }
   }
 };

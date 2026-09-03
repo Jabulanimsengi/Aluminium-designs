@@ -106,8 +106,8 @@ export const aluminiumPergolasService: ServiceObject = {
     titleTag: "Aluminium Pergolas & Louvred Roofs | South Africa",
     metaDescription: "Custom modern aluminium pergolas and adjustable louvred patio roofs. Zero maintenance outdoor living structures across South Africa.",
     keywords: ["aluminium pergolas", "louvred patio roofs", "modern garden pergolas", "aluminium deck covers SA"],
-    canonicalUrl: "https://example.com/services/aluminium-pergolas",
-    openGraphImage: "https://example.com/images/og/aluminium-pergolas.jpg"
+    canonicalUrl: "https://www.aluminiumdesigns.co.za/services/aluminium-pergolas",
+    openGraphImage: "https://www.aluminiumdesigns.co.za/images/services/aluminium-pergolas-hero.webp"
   },
   structuredDataJsonLd: {
     "@context": "https://schema.org",
@@ -115,7 +115,7 @@ export const aluminiumPergolasService: ServiceObject = {
     "name": "Aluminium Pergolas Installation",
     "provider": {
       "@type": "Organization",
-      "name": "Aluminium Windows & Doors SA"
+      "name": "Aluminium Designs"
     }
   }
 };

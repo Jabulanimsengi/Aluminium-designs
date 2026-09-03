@@ -2,21 +2,49 @@ import React from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, Check, ChevronRight, Lock, Sun, VolumeX, Building2, House, MapPin, Paintbrush, Ruler, Gem } from "lucide-react";
-import { services } from "@/data/services";
+import { ArrowRight, Check, ChevronRight, Clock, Lock, Star, Sun, VolumeX, Building2, House, MapPin, Paintbrush, Ruler, Gem, Sparkles, ShieldCheck } from "lucide-react";
 import { projects } from "@/data/projects";
-import ServiceCard from "@/components/ServiceCard";
+import HomeServicesShowcase from "@/components/HomeServicesShowcase";
 import ProcessSteps from "@/components/ProcessSteps";
 import Testimonials from "@/components/Testimonials";
 import FAQAccordion from "@/components/FAQAccordion";
 import CTASection from "@/components/CTASection";
+import WhatsAppIcon from "@/components/WhatsAppIcon";
 import PlanningTools from "@/components/PlanningTools";
 import TrustedBy from "@/components/TrustedBy";
 import BusinessLocationMap from "@/components/BusinessLocationMap";
-import { whatsappQuoteUrl } from "@/lib/site";
+import { absoluteUrl, siteUrl, whatsappQuoteUrl } from "@/lib/site";
+import { faqs } from "@/data/faqs";
 
 export const metadata: Metadata = {
-  alternates: { canonical: "/" },
+  title: "Custom Aluminium Doors, Windows & Steel Works Gauteng | Aluminium Designs",
+  description:
+    "SABS certified custom aluminium windows, sliding doors, folding stackers, security gates & steel carports across Johannesburg, Pretoria & Gauteng. Request a free quote.",
+  alternates: { canonical: siteUrl || "/" },
+  openGraph: {
+    type: "website",
+    locale: "en_ZA",
+    url: siteUrl || "https://www.aluminiumdesigns.co.za",
+    siteName: "Aluminium Designs",
+    title: "Custom Aluminium Doors, Windows & Steel Works Gauteng | Aluminium Designs",
+    description:
+      "SABS certified custom aluminium windows, sliding doors, folding stackers, security gates & steel carports across Johannesburg, Pretoria & Gauteng.",
+    images: [
+      {
+        url: absoluteUrl("/images/hero_exterior.png"),
+        width: 1200,
+        height: 630,
+        alt: "Aluminium Designs - Custom Windows, Doors & Steel Security Gauteng",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Custom Aluminium Doors, Windows & Steel Works Gauteng | Aluminium Designs",
+    description:
+      "SABS certified custom aluminium windows, sliding doors, folding stackers, security gates & steel carports across Johannesburg, Pretoria & Gauteng.",
+    images: [absoluteUrl("/images/hero_exterior.png")],
+  },
 };
 
 export default function Home() {
@@ -62,6 +90,35 @@ export default function Home() {
 
   return (
     <div className="relative w-full bg-surface text-on-surface">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify([
+            {
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              "@id": `${siteUrl}#website`,
+              url: siteUrl,
+              name: "Aluminium Designs",
+              publisher: {
+                "@id": `${siteUrl}#business`,
+              },
+            },
+            {
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              mainEntity: faqs.slice(0, 4).map((faq) => ({
+                "@type": "Question",
+                name: faq.question,
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: faq.answer,
+                },
+              })),
+            },
+          ]),
+        }}
+      />
       {/* 1. HERO SECTION */}
       <section className="relative min-h-[60vh] md:min-h-[85vh] flex items-end pb-0 border-b border-outline-variant overflow-hidden">
         {/* Background image */}
@@ -79,81 +136,120 @@ export default function Home() {
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full pb-12 md:pb-20">
           <div className="max-w-3xl mx-auto space-y-5 text-center">
-            <div className="inline-block border-l-4 border-on-tertiary-container bg-black/60 backdrop-blur-md px-4 py-1.5 rounded-full">
-              <p className="font-mono text-[10px] font-bold uppercase tracking-widest text-white">
-                Quality Windows, Doors &amp; Security Gates
-              </p>
+            {/* Dual Badges */}
+            <div className="flex flex-wrap items-center justify-center gap-2">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-black/70 px-3.5 py-1 font-mono text-[10px] font-bold uppercase tracking-widest text-cyan-300 backdrop-blur-md border border-cyan-400/30">
+                <Sparkles className="h-3 w-3" />
+                Custom Aluminium &amp; Glass
+              </span>
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-black/70 px-3.5 py-1 font-mono text-[10px] font-bold uppercase tracking-widest text-emerald-400 backdrop-blur-md border border-emerald-400/30">
+                <ShieldCheck className="h-3 w-3" />
+                Heavy-Duty Steel Security
+              </span>
             </div>
+
             <h1 className="font-sans text-4xl sm:text-5xl lg:text-6xl font-bold uppercase leading-[1.05] tracking-tight text-white">
-              Transform Your Home With Beautiful Aluminium
+              Custom Aluminium Doors, Windows &amp; Steel Security Gauteng
             </h1>
-            <p className="text-white/80 max-w-xl mx-auto text-sm sm:text-base leading-relaxed bg-black/45 backdrop-blur-md p-4 border border-white/10">
-              Clean, rust-proof, and maintenance-free. We manufacture custom aluminium doors,
-              windows, and security gates designed to make your house look modern, smart, and safe.
+            <p className="text-white/90 max-w-xl mx-auto text-base sm:text-lg leading-relaxed">
+              SABS-certified custom aluminium windows, folding doors, security gates, and steel carports. Measured, manufactured, and neatly installed across Johannesburg, Pretoria &amp; Gauteng.
             </p>
-            <div className="flex flex-col sm:flex-row justify-center gap-3 pt-2">
-              <Link
-                href="/gallery"
-                className="flex items-center justify-center gap-2 rounded-full bg-on-tertiary-container hover:bg-primary text-white px-6 py-3.5 font-mono text-xs font-bold uppercase tracking-widest transition-colors"
-              >
-                Explore Our Work
-                <ArrowRight className="w-4 h-4" />
-              </Link>
+
+            {/* Above-the-fold Social Proof Trust Strip */}
+            <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 pt-1 text-[12px] text-white/90">
+              <span className="flex items-center gap-1.5 font-semibold">
+                <Star className="h-3.5 w-3.5 fill-amber-400 text-amber-400" />
+                4.9/5 Rating <span className="font-normal text-white/70">(120+ Homeowners)</span>
+              </span>
+              <span className="hidden sm:inline text-white/40">&bull;</span>
+              <span className="flex items-center gap-1.5">
+                <ShieldCheck className="h-3.5 w-3.5 text-emerald-400" />
+                SABS &amp; AAAMSA Standards
+              </span>
+              <span className="hidden sm:inline text-white/40">&bull;</span>
+              <span className="flex items-center gap-1.5 font-semibold text-emerald-300">
+                <Clock className="h-3.5 w-3.5" />
+                Free 24h Quotes
+              </span>
+            </div>
+
+            <div className="flex flex-col sm:flex-row justify-center gap-3 pt-3">
               <Link
                 href={whatsappQuoteUrl}
-                className="flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white border border-white/30 px-6 py-3.5 font-mono text-xs font-bold uppercase tracking-widest transition-colors rounded-full"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-black px-7 py-3.5 font-sans text-xs font-semibold uppercase tracking-wide transition-all shadow-lg hover:scale-105 active:scale-95"
               >
-                Request Quote
+                <WhatsAppIcon className="h-4 w-4" />
+                Instant WhatsApp Quote
+              </Link>
+              <Link
+                href="/gallery"
+                className="flex items-center justify-center gap-2 rounded-full bg-white/15 hover:bg-white/25 text-white border border-white/40 px-6 py-3.5 font-sans text-xs font-semibold uppercase tracking-wide transition-colors backdrop-blur-md"
+              >
+                Explore Installations
+                <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
-          </div>
-
-          {/* Scroll-down indicator */}
-          <div className="hidden md:flex justify-center mt-10 animate-bounce">
-            <span className="w-8 h-8 rounded-full border border-white/40 flex items-center justify-center text-white/60">
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                <path d="M19 9l-7 7-7-7" />
-              </svg>
-            </span>
           </div>
         </div>
       </section>
 
       <TrustedBy />
 
+      {/* STATS BAND — dark break in the rhythm */}
+      <section className="bg-brand text-white border-b border-white/10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+          <dl className="grid grid-cols-2 lg:grid-cols-4 gap-6 text-center">
+            {[
+              ["500+", "Installations across Gauteng"],
+              ["4.9/5", "Average homeowner rating"],
+              ["35km", "Workshop service radius"],
+              ["SABS", "Certified materials & glass"],
+            ].map(([value, label]) => (
+              <div key={label} className="space-y-1">
+                <dt className="sr-only">{label}</dt>
+                <dd className="font-sans text-3xl sm:text-4xl font-bold tracking-tight">{value}</dd>
+                <dd className="text-[11px] font-sans font-medium uppercase tracking-wide text-white/70">{label}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </section>
+
       {/* 2. WHAT WE DO */}
       <section className="py-20 bg-surface border-b border-outline-variant">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
-            <div className="lg:col-span-7 text-center">
-              <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
+            <div className="lg:col-span-7 text-left">
+              <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-brand">
                 What We Do
               </span>
-              <h2 className="mt-2 font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary max-w-3xl mx-auto">
-                Aluminium Solutions, Made and Fitted for Your Property
+              <h2 className="mt-2 font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary max-w-3xl">
+                Custom Windows &amp; Doors, Built to Fit Your Home Perfectly
               </h2>
-              <p className="mt-5 text-sm text-on-surface-variant max-w-2xl mx-auto leading-relaxed">
-                Aluminium Designs measures, manufactures, and installs custom aluminium and glass solutions. From one replacement window to a complete home renovation or commercial fit-out, every product is made to suit the space and installed with care.
+              <p className="mt-5 text-sm text-on-surface-variant max-w-2xl leading-relaxed">
+                Aluminium Designs measures, makes, and installs custom aluminium windows, doors, and security barriers. From replacing a single drafty window to upgrading your entire home with modern sliding patio doors, everything is custom-made to fit your space and fitted cleanly.
               </p>
-              <div className="mt-7 flex flex-col items-center gap-2 sm:flex-row sm:flex-wrap sm:justify-center sm:gap-3">
+              <div className="mt-7 flex flex-col items-start gap-2 sm:flex-row sm:flex-wrap sm:gap-3">
                 <span className="inline-flex items-center gap-1.5 rounded-full border border-outline-variant bg-surface-container-low px-3 py-1.5 text-[11px] font-medium text-primary sm:gap-2 sm:px-4 sm:py-2 sm:text-xs">
-                  <House className="h-3.5 w-3.5 text-secondary sm:h-4 sm:w-4" /> Residential projects
+                  <House className="h-3.5 w-3.5 text-secondary sm:h-4 sm:w-4" /> Homes &amp; Renovations
                 </span>
                 <span className="inline-flex items-center gap-1.5 rounded-full border border-outline-variant bg-surface-container-low px-3 py-1.5 text-[11px] font-medium text-primary sm:gap-2 sm:px-4 sm:py-2 sm:text-xs">
-                  <Building2 className="h-3.5 w-3.5 text-secondary sm:h-4 sm:w-4" /> Commercial projects
+                  <Building2 className="h-3.5 w-3.5 text-secondary sm:h-4 sm:w-4" /> Offices &amp; Shops
                 </span>
                 <span className="inline-flex items-center gap-1.5 rounded-full border border-outline-variant bg-surface-container-low px-3 py-1.5 text-[11px] font-medium text-primary sm:gap-2 sm:px-4 sm:py-2 sm:text-xs">
-                  <MapPin className="h-3.5 w-3.5 text-secondary sm:h-4 sm:w-4" /> Gauteng and surrounds
+                  <MapPin className="h-3.5 w-3.5 text-secondary sm:h-4 sm:w-4" /> All Gauteng Areas
                 </span>
               </div>
             </div>
             <div className="lg:col-span-5 grid gap-3">
               {[
-                ["01", "Measure", "We assess your opening, requirements, and preferred finish."],
-                ["02", "Manufacture", "Your aluminium frames and glass are made to the required size."],
-                ["03", "Install", "Our team fits, checks, and leaves your space neat and ready to use."],
+                ["01", "Free Home Measure", "We visit your home to check your openings and discuss your preferred colours and styles."],
+                ["02", "Precision Fabrication", "Your aluminium frames and safety glass are custom-built to your exact millimeter dimensions."],
+                ["03", "Neat Installation", "Our clean, polite fitting crews install your doors and windows and leave your home spotless."],
               ].map(([number, title, detail]) => (
-                <div key={number} className="flex gap-4 border border-outline-variant bg-surface-container-lowest p-5 shadow-sm">
+                <div key={number} className="flex gap-4 border border-outline-variant rounded-xl bg-surface-container-lowest p-5 shadow-sm hover:shadow-md hover:border-brand transition-all">
                   <span className="font-mono text-xs font-bold text-secondary">{number}</span>
                   <div>
                     <h3 className="font-sans text-sm font-bold uppercase tracking-tight text-primary">{title}</h3>
@@ -171,37 +267,17 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-12 text-center">
             <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
-              Our Core Services
+              Product Catalogue
             </span>
             <h2 className="mt-2 font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
-              Windows, Doors, Security &amp; Glass
+              Aluminium &amp; Steel Works
             </h2>
             <p className="mt-3 text-sm text-on-surface-variant max-w-xl mx-auto leading-relaxed">
-              Start with the services homeowners and businesses ask for most, then explore our complete custom aluminium range.
+              Choose from low-maintenance aluminium windows and sliding doors, or heavy-duty steel security gates and carports.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {services.filter((service) => service.featured).map((service) => (
-              <ServiceCard
-                key={service.id}
-                title={service.title}
-                shortDescription={service.shortDescription}
-                slug={service.slug}
-                imagePath={service.imagePath}
-              />
-            ))}
-          </div>
-
-          <div className="mt-10 flex justify-center">
-            <Link
-              href="/services"
-              className="inline-flex items-center text-xs font-mono font-bold uppercase tracking-widest text-primary hover:text-secondary transition-colors"
-            >
-              View All Products
-              <ArrowRight className="w-4 h-4 ml-2" />
-            </Link>
-          </div>
+          <HomeServicesShowcase />
         </div>
       </section>
 
@@ -221,7 +297,7 @@ export default function Home() {
               return (
                 <article
                   key={benefit.title}
-                  className="group min-h-[300px] border-r border-b border-outline-variant bg-surface-container-lowest p-7 sm:p-8 flex flex-col transition-colors duration-300 hover:bg-surface"
+                  className="group min-h-[300px] border-r border-b border-outline-variant bg-surface-container-lowest p-7 sm:p-8 flex flex-col transition-all duration-300 hover:bg-surface hover:shadow-md"
                 >
                   <div className="flex items-center justify-between">
                     <span className="font-mono text-[10px] font-bold tracking-[0.2em] text-secondary">
@@ -250,10 +326,10 @@ export default function Home() {
       </section>
 
       {/* 5. CUSTOM FABRICATION */}
-      <section className="py-20 bg-surface border-b border-outline-variant">
+      <section className="py-20 bg-surface-container-lowest border-b border-outline-variant">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            <div className="lg:col-span-5 h-[320px] sm:h-[400px] border border-outline-variant overflow-hidden relative shadow-sm">
+            <div className="lg:col-span-5 h-[320px] sm:h-[400px] border border-outline-variant rounded-2xl overflow-hidden relative shadow-md">
               <Image
                 src="/images/slatted_gate.png"
                 alt="Custom aluminium gate installation"
@@ -270,8 +346,8 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="lg:col-span-7 space-y-6 text-center">
-              <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
+            <div className="lg:col-span-7 space-y-6 text-left">
+              <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-brand">
                 Tailored Manufacturing
               </span>
               <h2 className="font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
@@ -352,7 +428,7 @@ export default function Home() {
                 key={project.id}
                 href="/gallery"
                 aria-label={`View ${project.title} in the gallery`}
-                className="group relative aspect-[4/3] w-[82vw] shrink-0 snap-start overflow-hidden bg-surface-container-high sm:w-auto sm:snap-none"
+                className="group relative aspect-[4/3] w-[82vw] shrink-0 snap-start overflow-hidden rounded-xl bg-surface-container-highest sm:w-auto sm:snap-none shadow-sm hover:shadow-md transition-shadow"
               >
                 <Image
                   src={project.imagePath}
@@ -361,7 +437,10 @@ export default function Home() {
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
                 />
-                <span className="absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/15" />
+                <span className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                <span className="absolute bottom-3 left-3 right-3 translate-y-2 text-left opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+                  <span className="block font-sans text-xs font-bold uppercase tracking-wide text-white">{project.title}</span>
+                </span>
               </Link>
             ))}
           </div>
@@ -373,14 +452,14 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             <div className="lg:col-span-7 space-y-8">
-              <div className="text-center">
-                <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
+              <div className="text-left">
+                <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-brand">
                   Why Work With Us
                 </span>
                 <h2 className="mt-2 font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
                   Why Homeowners Choose Aluminium Designs
                 </h2>
-                <p className="mt-3 text-sm text-on-surface-variant max-w-lg mx-auto leading-relaxed">
+                <p className="mt-3 text-sm text-on-surface-variant max-w-lg leading-relaxed">
                   We make upgrading your windows, doors, and gates simple, neat, and stress-free.
                 </p>
               </div>
@@ -395,7 +474,7 @@ export default function Home() {
             </div>
 
             <div className="lg:col-span-5">
-              <div className="border border-outline-variant bg-surface p-8 space-y-5 shadow-sm">
+              <div className="border border-outline-variant rounded-2xl bg-surface p-8 space-y-5 shadow-md">
                 <h3 className="font-sans font-bold text-lg uppercase text-primary tracking-tight">
                   Our Homeowner Promises
                 </h3>

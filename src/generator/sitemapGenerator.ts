@@ -1,4 +1,4 @@
-import { allCoreServices } from '../data/services/index';
+import { allCoreServices } from '../data/core-services/index';
 import { allSouthAfricaLocations } from '../data/locations/index';
 import { ContentSynthesizer } from './contentSynthesizer';
 

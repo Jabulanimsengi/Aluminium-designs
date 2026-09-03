@@ -106,8 +106,8 @@ export const patioEnclosuresService: ServiceObject = {
     titleTag: "Patio Enclosures & Sunrooms | South Africa",
     metaDescription: "Transform your outdoor space with custom aluminium and glass patio enclosures. All-weather braai rooms, sunrooms, and expert local installation.",
     keywords: ["patio enclosures", "glass sunrooms", "braai room enclosures", "aluminium patio enclosures"],
-    canonicalUrl: "https://example.com/services/patio-enclosures",
-    openGraphImage: "https://example.com/images/og/patio-enclosures.jpg"
+    canonicalUrl: "https://www.aluminiumdesigns.co.za/services/patio-enclosures",
+    openGraphImage: "https://www.aluminiumdesigns.co.za/images/services/patio-enclosures-hero.webp"
   },
   structuredDataJsonLd: {
     "@context": "https://schema.org",
@@ -115,7 +115,7 @@ export const patioEnclosuresService: ServiceObject = {
     "name": "Patio Enclosures Installation",
     "provider": {
       "@type": "Organization",
-      "name": "Aluminium Windows & Doors SA"
+      "name": "Aluminium Designs"
     }
   }
 };

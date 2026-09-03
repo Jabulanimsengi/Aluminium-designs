@@ -14,7 +14,7 @@ export class ServiceFaqRegistry {
     'aluminium-windows': [
       {
         question: 'What is the difference between standard 28mm and heavy-duty 38mm aluminium window profiles?',
-        answerTemplate: 'The 28mm casing is the standard residential profile ideal for small to medium openings (up to 1.5m), offering sleek sightlines and reliable everyday durability. The 38mm architectural system is engineered for large glass spans, multi-story buildings, and high-wind zones near {areaName}, supporting heavier laminated safety glass and double-glazed units without profile deflection.'
+        answerTemplate: 'The 28mm casing is the standard residential profile ideal for small to medium openings (up to 1.5m), offering sleek sightlines and reliable everyday durability. The heavy-duty 38mm system is engineered for large glass spans, multi-story homes, and high-wind zones near {areaName}, supporting heavier laminated safety glass and double-glazed units without profile deflection.'
       },
       {
         question: 'Can you replace old steel window frames with aluminium without damaging interior wall tiles or plaster near {areaName}?',
@@ -82,7 +82,7 @@ export class ServiceFaqRegistry {
       },
       {
         question: 'Can an aluminium pivot entrance door be custom-manufactured for an extra-wide opening near {areaName}?',
-        answerTemplate: 'Absolutely. We custom manufacture grand pivot entrance doors up to 1.5 metres wide and 2.7 metres high. Pivot doors operate on heavy-duty top and bottom pivot hinges and can include matching side-lights and horizontal slatted or full-glass architectural designs.'
+        answerTemplate: 'Absolutely. We custom manufacture grand pivot entrance doors up to 1.5 metres wide and 2.7 metres high. Pivot doors operate on heavy-duty top and bottom pivot hinges and can include matching side-lights and horizontal slatted or full-glass modern designs.'
       },
       {
         question: 'What is the lifespan and warranty on sliding door rollers and bottom tracks?',
@@ -98,7 +98,7 @@ export class ServiceFaqRegistry {
     'glass-patio-enclosures': [
       {
         question: 'What is the difference between frameless glass patio curtains and framed stacking doors near {areaName}?',
-        answerTemplate: 'Frameless glass patio curtains use heavy 10mm or 12mm toughened glass panels without vertical aluminium frames, providing a 100% unobstructed panoramic view. Framed folding stacking doors use robust architectural aluminium profiles with double-weather seals, offering maximum thermal insulation and airtight storm resistance.'
+        answerTemplate: 'Frameless glass patio curtains use heavy 10mm or 12mm toughened glass panels without vertical aluminium frames, providing a 100% unobstructed panoramic view. Framed folding stacking doors use robust heavy-duty aluminium profiles with double-weather seals, offering maximum thermal insulation and airtight storm resistance.'
       },
       {
         question: 'Do I need municipal plans to enclose an existing covered patio or braai veranda in {areaName}?',
@@ -134,7 +134,7 @@ export class ServiceFaqRegistry {
       },
       {
         question: 'Can you supply fluted, reeded, or frosted privacy glass shower panels in {areaName}?',
-        answerTemplate: 'Yes. We supply on-trend architectural fluted (reeded) glass, acid-etched frosted privacy panels, and ultra-clear low-iron crystal glass paired with matte black, brushed brass, or chrome hardware.'
+        answerTemplate: 'Yes. We supply modern fluted (reeded) glass, acid-etched frosted privacy panels, and ultra-clear low-iron crystal glass paired with matte black, brushed brass, or chrome hardware.'
       },
       {
         question: 'Can you cut and fit custom mirrors for bathrooms and home gyms near {areaName}?',
@@ -246,7 +246,7 @@ export class ServiceFaqRegistry {
       },
       {
         question: 'Are expanding trellis doors corrosion-resistant for exterior patio installations in Gauteng?',
-        answerTemplate: 'Yes. Our trellis gates are fabricated from double-upright electro-galvanized steel flight lattices and finished with multi-stage architectural polyester powder coating. This prevents rust, peeling, and corrosion even when exposed to outdoor weather conditions near {areaName}.'
+        answerTemplate: 'Yes. Our trellis gates are fabricated from double-upright electro-galvanized steel flight lattices and finished with durable weather-resistant powder coating. This prevents rust, peeling, and corrosion even when exposed to outdoor weather conditions near {areaName}.'
       },
       {
         question: 'Can multiple trellis security gates be keyed-alike for my home near {areaName}?',
@@ -338,7 +338,7 @@ export class ServiceFaqRegistry {
       },
       {
         question: 'Do you supply Glazing Certificates of Compliance (Form 4) for council occupancy sign-off?',
-        answerTemplate: 'Yes. Upon completion of every commercial shopfront and architectural glazing installation near {areaName}, we issue a certified SANS 10400 Form 4 Glazing Compliance Certificate required for municipal occupancy approval and commercial building insurance.'
+        answerTemplate: 'Yes. Upon completion of every commercial shopfront and safety glass installation near {areaName}, we issue a certified SANS 10400 Form 4 Glazing Compliance Certificate required for municipal occupancy approval and commercial building insurance.'
       },
       {
         question: 'What is the turnaround time for retail store shopfront fitouts near {areaName}?',
@@ -381,7 +381,7 @@ export class ServiceFaqRegistry {
   private static defaultFaqTemplate: RawServiceFAQTemplate[] = [
     {
       question: 'What makes custom {serviceName} superior to off-the-shelf units near {areaName}?',
-      answerTemplate: 'Custom-manufactured {serviceName} is built to the exact millimeter of your opening reveals, eliminating unsightly filler gaps, structural drafts, and plaster chipping. Every unit uses premium architectural-grade materials engineered for long-term durability in {areaName}.'
+      answerTemplate: 'Custom-manufactured {serviceName} is built to the exact millimeter of your opening reveals, eliminating unsightly filler gaps, structural drafts, and plaster chipping. Every unit uses premium heavy-duty materials engineered for long-term durability in {areaName}.'
     },
     {
       question: 'Are your {serviceName} installations compliant with South African SANS building standards?',

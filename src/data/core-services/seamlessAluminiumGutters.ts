@@ -128,8 +128,8 @@ export const seamlessAluminiumGuttersService: ServiceObject = {
       "custom gutters pretoria",
       "fascia and gutter installers"
     ],
-    canonicalUrl: "https://aluminiumandsteelsa.co.za/services/seamless-aluminium-gutters",
-    openGraphImage: "https://aluminiumandsteelsa.co.za/images/og/seamless-gutters.jpg"
+    canonicalUrl: "https://www.aluminiumdesigns.co.za/services/seamless-aluminium-gutters",
+    openGraphImage: "https://www.aluminiumdesigns.co.za/images/services/seamless-gutters-hero.webp"
   },
   structuredDataJsonLd: {
     "@context": "https://schema.org",
@@ -137,7 +137,7 @@ export const seamlessAluminiumGuttersService: ServiceObject = {
     "name": "Seamless Aluminium Gutters Installation",
     "provider": {
       "@type": "Organization",
-      "name": "Aluminium Designs SA"
+      "name": "Aluminium Designs"
     }
   }
 };

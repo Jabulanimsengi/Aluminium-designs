@@ -27,6 +27,13 @@
   --color-tertiary-fixed: #e5e7eb;
   --color-on-tertiary-fixed: #111827;
 
+  /* Brand accents — deep navy + safety amber */
+  --color-brand: #0f2a43;
+  --color-brand-hover: #1a3a5c;
+  --color-on-brand: #ffffff;
+  --color-accent: #d97706;
+  --color-accent-soft: #fef3c7;
+
   --color-surface-container: #eceef1;
   --color-surface-container-low: #f2f4f7;
   --color-surface-container-lowest: #ffffff;
@@ -72,6 +79,14 @@
 :root {
   --background: #f7f9fc;
   --foreground: #191c1e;
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #101416;
+    --foreground: #e8eaed;
+  }
 }
 
 body {
@@ -83,8 +98,11 @@ body {
 
 @layer base {
   :where(h1, h2, h3, h4, h5, h6) {
-    text-align: center;
     text-wrap: balance;
+  }
+  /* Opt-in centering — apply .text-center per section instead of globally */
+  p {
+    text-wrap: pretty;
   }
 }
 

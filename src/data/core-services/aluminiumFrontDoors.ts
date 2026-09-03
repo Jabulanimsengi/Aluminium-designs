@@ -106,8 +106,8 @@ export const aluminiumFrontDoorsService: ServiceObject = {
     titleTag: "Aluminium Front Doors & Pivot Doors | South Africa",
     metaDescription: "Upgrade to modern aluminium front doors and pivot doors. Custom designs, stainless steel pull handles, high security, and expert installation.",
     keywords: ["aluminium front doors", "aluminium pivot doors", "modern entrance doors", "aluminium front doors SA"],
-    canonicalUrl: "https://example.com/services/aluminium-front-doors",
-    openGraphImage: "https://example.com/images/og/aluminium-front-doors.jpg"
+    canonicalUrl: "https://www.aluminiumdesigns.co.za/services/aluminium-front-doors",
+    openGraphImage: "https://www.aluminiumdesigns.co.za/images/services/aluminium-front-doors-hero.webp"
   },
   structuredDataJsonLd: {
     "@context": "https://schema.org",
@@ -115,7 +115,7 @@ export const aluminiumFrontDoorsService: ServiceObject = {
     "name": "Aluminium Front Doors Installation",
     "provider": {
       "@type": "Organization",
-      "name": "Aluminium Windows & Doors SA"
+      "name": "Aluminium Designs"
     }
   }
 };

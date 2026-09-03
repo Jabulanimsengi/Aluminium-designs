@@ -106,8 +106,8 @@ export const doubleGlazedWindowsService: ServiceObject = {
     titleTag: "Double Glazed Windows & Insulated Glass | South Africa",
     metaDescription: "Install energy-saving double glazed aluminium windows. Superior soundproofing, lower electricity bills, and professional installation across South Africa.",
     keywords: ["double glazed windows", "soundproof windows", "energy efficient windows", "insulated glass SA"],
-    canonicalUrl: "https://example.com/services/double-glazed-windows",
-    openGraphImage: "https://example.com/images/og/double-glazed-windows.jpg"
+    canonicalUrl: "https://www.aluminiumdesigns.co.za/services/double-glazed-windows",
+    openGraphImage: "https://www.aluminiumdesigns.co.za/images/services/double-glazed-windows-hero.webp"
   },
   structuredDataJsonLd: {
     "@context": "https://schema.org",
@@ -115,7 +115,7 @@ export const doubleGlazedWindowsService: ServiceObject = {
     "name": "Double Glazed Windows Installation",
     "provider": {
       "@type": "Organization",
-      "name": "Aluminium Windows & Doors SA"
+      "name": "Aluminium Designs"
     }
   }
 };

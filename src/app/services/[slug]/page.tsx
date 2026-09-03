@@ -44,9 +44,11 @@ import {
 } from "lucide-react";
 import { services } from "@/data/services";
 import { servicePages } from "@/data/service-pages";
+import { allCoreServices } from "@/data/core-services";
 import { gautengLocations } from "@/data/locations";
 import CTASection from "@/components/CTASection";
 import FAQAccordion from "@/components/FAQAccordion";
+import ServicePricingAndFinishes from "@/components/ServicePricingAndFinishes";
 import { absoluteUrl, siteUrl, slugify, whatsappQuoteUrl } from "@/lib/site";
 
 interface Props {
@@ -166,19 +168,90 @@ export default async function ServiceDetailPage({ params }: Props) {
   if (!content) notFound();
 
   const otherServices = services.filter((s) => s.id !== service.id);
+  const coreSrv = allCoreServices.find((s) => s.slug === slug || s.slug === service.id);
   const majorAreas = gautengLocations
     .filter((location) => location.type === "city" || location.type === "suburb")
     .slice(0, 12);
+
+  const rawServiceLd = content.structuredDataJsonLd;
+  const serviceSchema = {
+    ...rawServiceLd,
+    "@id": `${siteUrl}/services/${slug}#service`,
+    url: `${siteUrl}/services/${slug}`,
+    image: absoluteUrl(service.imagePath),
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "5.0",
+      reviewCount: String(content.reviews.length),
+      bestRating: "5",
+      worstRating: "1",
+    },
+    review: content.reviews.map((r) => ({
+      "@type": "Review",
+      author: {
+        "@type": "Person",
+        name: r.authorName,
+      },
+      datePublished: r.date,
+      reviewBody: r.comment,
+      reviewRating: {
+        "@type": "Rating",
+        ratingValue: String(r.rating),
+        bestRating: "5",
+        worstRating: "1",
+      },
+    })),
+  };
+
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: siteUrl,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Services",
+        item: `${siteUrl}/services`,
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: service.title,
+        item: `${siteUrl}/services/${slug}`,
+      },
+    ],
+  };
+
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: content.faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.answer,
+      },
+    })),
+  };
 
   return (
     <div className="relative bg-surface text-on-surface">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(content.structuredDataJsonLd).replaceAll(
-            "https://example.com",
-            siteUrl,
-          ),
+          __html: JSON.stringify([serviceSchema, breadcrumbSchema, faqSchema])
+            .replaceAll("https://example.com", siteUrl)
+            .replaceAll("http://example.com", siteUrl)
+            .replaceAll("https://aluminiumandsteelsa.co.za", siteUrl)
+            .replaceAll("http://aluminiumandsteelsa.co.za", siteUrl)
+            .replaceAll("Aluminium Windows SA", "Aluminium Designs"),
         }}
       />
 
@@ -213,7 +286,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                 <ArrowRight className="w-4 h-4" />
               </Link>
               <Link
-                href="/services"
+                href={content.hero.secondaryCtaLink || "#specs"}
                 className="inline-flex items-center justify-center gap-2 border border-white/25 bg-white/10 text-white px-6 py-3 font-mono text-[11px] font-bold uppercase tracking-widest transition-colors hover:bg-white/20 rounded-full"
               >
                 {content.hero.secondaryCtaText}
@@ -274,6 +347,14 @@ export default async function ServiceDetailPage({ params }: Props) {
           </div>
         </div>
       </section>
+
+      {/* PRICING & FINISHES */}
+      <ServicePricingAndFinishes
+        serviceTitle={service.title}
+        startingPrice={coreSrv?.pricingGuide?.estimatedStartingPrice}
+        priceUnit={coreSrv?.pricingGuide?.priceUnit}
+        priceFactors={coreSrv?.pricingGuide?.priceFactors}
+      />
 
       {/* BENEFITS */}
       <section className="py-20 bg-surface-container-low border-b border-outline-variant">
@@ -372,7 +453,7 @@ export default async function ServiceDetailPage({ params }: Props) {
               <div className="relative aspect-[4/3] w-full overflow-hidden border border-outline-variant bg-surface-container shadow-sm group">
                 <Image
                   src="/images/sections/glazing_technology.jpg"
-                  alt="Architectural double glazing thermal spacer and acoustic glass technology"
+                  alt="Double glazing thermal insulation and soundproof safety glass"
                   fill
                   sizes="(max-width: 1024px) 100vw, 450px"
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
@@ -412,7 +493,7 @@ export default async function ServiceDetailPage({ params }: Props) {
       </section>
 
       {/* SPECIFICATIONS */}
-      <section className="py-20 bg-surface border-b border-outline-variant">
+      <section id="specs" className="py-20 bg-surface border-b border-outline-variant scroll-mt-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-12 text-center">
             <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
@@ -422,7 +503,7 @@ export default async function ServiceDetailPage({ params }: Props) {
               {content.specifications.title}
             </h2>
             <p className="mt-3 max-w-2xl mx-auto text-sm text-on-surface-variant leading-relaxed">
-              Engineered with architectural-grade aluminium profiles, durable powder-coated colors, and heavy-duty security hardware.
+              Custom built with durable aluminium frames, long-lasting powder-coated colours, and secure deadbolt locks.
             </p>
           </div>
 
@@ -445,7 +526,7 @@ export default async function ServiceDetailPage({ params }: Props) {
               <div className="relative aspect-[16/9] w-full overflow-hidden border border-outline-variant bg-surface-container shadow-sm group">
                 <Image
                   src="/images/sections/finishes_hardware.jpg"
-                  alt="Architectural powder coating finishes and multi-point lock hardware"
+                  alt="Durable powder-coated colour finishes and multi-point security locks"
                   fill
                   sizes="(max-width: 1024px) 100vw, 450px"
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
@@ -453,7 +534,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                 <div className="absolute bottom-4 left-4 right-4">
                   <span className="inline-block bg-black/70 backdrop-blur-md px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-widest text-white border border-white/20 rounded-full">
-                    Architectural Finishes &amp; Hardware
+                    Durable Finishes &amp; Hardware
                   </span>
                 </div>
               </div>

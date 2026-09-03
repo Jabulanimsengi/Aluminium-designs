@@ -14,7 +14,7 @@ export const steelStaircasesService: ServiceObject = {
     primaryCtaLink: "/contact",
     secondaryCtaText: "View Staircase Styles",
     secondaryCtaLink: "#specs",
-    heroImage: "/images/services/steel-staircases-hero.webp"
+    heroImage: "/images/services/steel-staircases-hero.jpg"
   },
   overview: {
     heading: "Engineered Steel Stairs for Homes, Lofts & Commercial Properties",
@@ -106,8 +106,8 @@ export const steelStaircasesService: ServiceObject = {
     titleTag: "Steel Staircases & Spiral Stairs | South Africa",
     metaDescription: "Custom steel staircases, spiral stairs, and external fire escapes. Solid welded steel construction, non-slip treads, and professional installation across South Africa.",
     keywords: ["steel staircases", "spiral stairs", "external steel stairs", "staircase builders SA"],
-    canonicalUrl: "https://example.com/services/steel-staircases",
-    openGraphImage: "https://example.com/images/og/steel-staircases.jpg"
+    canonicalUrl: "https://www.aluminiumdesigns.co.za/services/steel-staircases",
+    openGraphImage: "https://www.aluminiumdesigns.co.za/images/services/steel-staircases-hero.jpg"
   },
   structuredDataJsonLd: {
     "@context": "https://schema.org",
@@ -115,7 +115,7 @@ export const steelStaircasesService: ServiceObject = {
     "name": "Steel Staircases Installation",
     "provider": {
       "@type": "Organization",
-      "name": "Steel Structures SA"
+      "name": "Aluminium Designs"
     }
   }
 };

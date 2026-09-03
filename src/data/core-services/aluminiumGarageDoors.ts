@@ -106,8 +106,8 @@ export const aluminiumGarageDoorsService: ServiceObject = {
     titleTag: "Aluminium Garage Doors & Automation | South Africa",
     metaDescription: "Custom sectional aluminium garage doors. Rustproof, lightweight, automated with battery backup, and installed professionally across South Africa.",
     keywords: ["aluminium garage doors", "sectional garage doors", "automated garage doors", "custom garage doors SA"],
-    canonicalUrl: "https://example.com/services/aluminium-garage-doors",
-    openGraphImage: "https://example.com/images/og/aluminium-garage-doors.jpg"
+    canonicalUrl: "https://www.aluminiumdesigns.co.za/services/aluminium-garage-doors",
+    openGraphImage: "https://www.aluminiumdesigns.co.za/images/services/aluminium-garage-doors-hero.webp"
   },
   structuredDataJsonLd: {
     "@context": "https://schema.org",
@@ -115,7 +115,7 @@ export const aluminiumGarageDoorsService: ServiceObject = {
     "name": "Aluminium Garage Doors Installation",
     "provider": {
       "@type": "Organization",
-      "name": "Aluminium Windows & Doors SA"
+      "name": "Aluminium Designs"
     }
   }
 };

@@ -106,8 +106,8 @@ export const glassShopfrontsService: ServiceObject = {
     titleTag: "Glass Shopfronts & Commercial Doors | South Africa",
     metaDescription: "Custom commercial glass shopfronts and retail entrance doors. Heavy-duty aluminium frames, laminated safety glass, and fast professional installation.",
     keywords: ["glass shopfronts", "commercial glass doors", "retail storefronts", "aluminium shopfronts SA"],
-    canonicalUrl: "https://example.com/services/glass-shopfronts",
-    openGraphImage: "https://example.com/images/og/glass-shopfronts.jpg"
+    canonicalUrl: "https://www.aluminiumdesigns.co.za/services/glass-shopfronts",
+    openGraphImage: "https://www.aluminiumdesigns.co.za/images/services/glass-shopfronts-hero.webp"
   },
   structuredDataJsonLd: {
     "@context": "https://schema.org",
@@ -115,7 +115,7 @@ export const glassShopfrontsService: ServiceObject = {
     "name": "Glass Shopfronts Installation",
     "provider": {
       "@type": "Organization",
-      "name": "Aluminium Windows & Doors SA"
+      "name": "Aluminium Designs"
     }
   }
 };

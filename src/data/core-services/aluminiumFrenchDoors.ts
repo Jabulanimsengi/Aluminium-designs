@@ -106,8 +106,8 @@ export const aluminiumFrenchDoorsService: ServiceObject = {
     titleTag: "Aluminium French Doors & Installation | South Africa",
     metaDescription: "Get custom aluminium French doors. Double hinged glass doors, safety glass, durable weather seals, and expert installation across South Africa.",
     keywords: ["aluminium french doors", "double glass doors", "hinged patio doors", "aluminium double doors"],
-    canonicalUrl: "https://example.com/services/aluminium-french-doors",
-    openGraphImage: "https://example.com/images/og/aluminium-french-doors.jpg"
+    canonicalUrl: "https://www.aluminiumdesigns.co.za/services/aluminium-french-doors",
+    openGraphImage: "https://www.aluminiumdesigns.co.za/images/services/aluminium-french-doors-hero.webp"
   },
   structuredDataJsonLd: {
     "@context": "https://schema.org",
@@ -115,7 +115,7 @@ export const aluminiumFrenchDoorsService: ServiceObject = {
     "name": "Aluminium French Doors Installation",
     "provider": {
       "@type": "Organization",
-      "name": "Aluminium Windows & Doors SA"
+      "name": "Aluminium Designs"
     }
   }
 };

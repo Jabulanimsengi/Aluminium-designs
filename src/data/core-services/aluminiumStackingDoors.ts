@@ -106,8 +106,8 @@ export const aluminiumStackingDoorsService: ServiceObject = {
     titleTag: "Aluminium Stacking Doors & Bifold Installation | South Africa",
     metaDescription: "Custom aluminium stacking doors and folding patio doors. Seamless indoor-outdoor flow, safety glass, smooth rollers, and professional installation.",
     keywords: ["aluminium stacking doors", "folding glass doors", "bifold patio doors", "folding stacking doors SA"],
-    canonicalUrl: "https://example.com/services/aluminium-stacking-doors",
-    openGraphImage: "https://example.com/images/og/aluminium-stacking-doors.jpg"
+    canonicalUrl: "https://www.aluminiumdesigns.co.za/services/aluminium-stacking-doors",
+    openGraphImage: "https://www.aluminiumdesigns.co.za/images/services/aluminium-stacking-doors-hero.webp"
   },
   structuredDataJsonLd: {
     "@context": "https://schema.org",
@@ -115,7 +115,7 @@ export const aluminiumStackingDoorsService: ServiceObject = {
     "name": "Aluminium Stacking Doors Installation",
     "provider": {
       "@type": "Organization",
-      "name": "Aluminium Windows & Doors SA"
+      "name": "Aluminium Designs"
     }
   }
 };

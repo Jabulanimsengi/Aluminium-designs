@@ -61,12 +61,35 @@ export async function generateMetadata({ params }: { params: Promise<{ area: str
   
   const random = seededRandom(location.id);
   const desc = variations[Math.floor(random() * variations.length)];
+  const socialImg = absoluteUrl("/images/hero_exterior.png");
 
   return {
-    title: `Aluminium Windows & Doors in ${location.name}`,
+    title: `Aluminium Windows & Doors in ${location.name} | Aluminium Designs`,
     description: desc,
     robots: { index: true, follow: true },
     alternates: { canonical: `${siteUrl}/locations/${location.slug}` },
+    openGraph: {
+      type: "website",
+      locale: "en_ZA",
+      url: `${siteUrl}/locations/${location.slug}`,
+      siteName: "Aluminium Designs",
+      title: `Aluminium Windows & Doors in ${location.name} | Aluminium Designs`,
+      description: desc,
+      images: [
+        {
+          url: socialImg,
+          width: 1200,
+          height: 630,
+          alt: `Aluminium Designs in ${location.name}`,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `Aluminium Windows & Doors in ${location.name} | Aluminium Designs`,
+      description: desc,
+      images: [socialImg],
+    },
   };
 }
 
@@ -80,9 +103,9 @@ export default async function LocationPage({ params }: { params: Promise<{ area:
 
   // Rotating Hero Paragraphs
   const heroVariations = [
-    `Elevate your home's aesthetics with our clean, minimalist aluminium glazing solutions. We design, manufacture, and install high-quality aluminium frames for residential homes and estates across ${location.name}.`,
-    `Looking for premium aluminium installations in ${location.name}? We provide custom-tailored windows, doors, and patio enclosures designed specifically for modern homes and commercial spaces in your area.`,
-    `Aluminium Designs brings smart, durable, and beautiful aluminium solutions to ${location.name} residents. Explore our range of custom architectural solutions tailored for your exact building specifications.`
+    `Brighten your home with clean, modern aluminium windows and smooth-sliding doors. We measure, make, and install high-quality aluminium frames for homes and residential estates across ${location.name}.`,
+    `Looking for quality aluminium doors or windows in ${location.name}? We provide custom-made sliding doors, folding stackers, and window frames designed to fit your home and lifestyle.`,
+    `Aluminium Designs brings durable, easy-to-clean aluminium windows, doors, and security gates to ${location.name} homeowners. Explore our range of custom designs made to fit your property perfectly.`
   ];
   const random = seededRandom(location.id);
   const heroDescription = heroVariations[Math.floor(random() * heroVariations.length)];
@@ -109,7 +132,7 @@ export default async function LocationPage({ params }: { params: Promise<{ area:
     },
     {
       title: "Sleek Colour Finishes",
-      description: "Choose from premium architectural powder-coat finishes including Matte Black, Charcoal Grey, and Satin Silver that never rust.",
+      description: "Choose from durable powder-coated colours including Matte Black, Charcoal Grey, and Satin Silver that never rust or need painting.",
       icon: Sparkles,
     },
   ];
@@ -130,29 +153,55 @@ export default async function LocationPage({ params }: { params: Promise<{ area:
   // Schema generation
   const localBusinessJsonLd = {
     "@context": "https://schema.org",
-    "@type": "LocalBusiness",
+    "@type": "HomeAndConstructionBusiness",
+    "@id": `${siteUrl}#business`,
     name: businessContact.name,
     ...(absoluteUrl("/images/hero_exterior.png")
       ? { image: absoluteUrl("/images/hero_exterior.png") }
       : {}),
-    telephone: businessContact.phone,
+    telephone: businessContact.phoneE164,
     email: businessContact.email,
     areaServed: {
       "@type": "Place",
       name: location.name,
       containedInPlace: {
         "@type": "Place",
-        name: location.municipality
-      }
+        name: location.municipality,
+      },
     },
     address: {
       "@type": "PostalAddress",
       streetAddress: businessContact.streetAddress,
-      addressLocality: `${businessContact.addressLocality}, ${businessContact.addressCity}`,
+      addressLocality: businessContact.addressCity,
       addressRegion: businessContact.addressRegion,
       addressCountry: businessContact.addressCountry,
     },
     url: `${siteUrl}/locations/${location.slug}`,
+  };
+
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: siteUrl,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Locations",
+        item: `${siteUrl}/locations`,
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: location.name,
+        item: `${siteUrl}/locations/${location.slug}`,
+      },
+    ],
   };
 
   return (
@@ -160,7 +209,7 @@ export default async function LocationPage({ params }: { params: Promise<{ area:
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(localBusinessJsonLd),
+          __html: JSON.stringify([localBusinessJsonLd, breadcrumbJsonLd]),
         }}
       />
       

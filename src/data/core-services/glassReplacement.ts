@@ -106,8 +106,8 @@ export const glassReplacementService: ServiceObject = {
     titleTag: "Broken Glass Replacement & Glazier Services | South Africa",
     metaDescription: "Fast broken glass replacement for windows, doors, and shopfronts. Certified safety glass, fast mobile glazier service across South Africa.",
     keywords: ["broken glass replacement", "window glass repair", "emergency glazier", "safety glass replacement SA"],
-    canonicalUrl: "https://example.com/services/glass-replacement",
-    openGraphImage: "https://example.com/images/og/glass-replacement.jpg"
+    canonicalUrl: "https://www.aluminiumdesigns.co.za/services/glass-replacement",
+    openGraphImage: "https://www.aluminiumdesigns.co.za/images/services/glass-replacement-hero.webp"
   },
   structuredDataJsonLd: {
     "@context": "https://schema.org",
@@ -115,7 +115,7 @@ export const glassReplacementService: ServiceObject = {
     "name": "Broken Glass Replacement",
     "provider": {
       "@type": "Organization",
-      "name": "Aluminium Windows & Doors SA"
+      "name": "Aluminium Designs"
     }
   }
 };

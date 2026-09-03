@@ -1,7 +1,7 @@
 import { ServiceObject } from '../types/service';
 import { SALocationObject } from '../types/location';
 import { InternalLinkItem } from '../types/page';
-import { allCoreServices } from '../data/services/index';
+import { allCoreServices } from '../data/core-services/index';
 
 export class InternalLinkingEngine {
   private static slugify(text: string): string {

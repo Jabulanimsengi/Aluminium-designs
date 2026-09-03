@@ -3,12 +3,37 @@ import { Metadata } from "next";
 import { Layers } from "lucide-react";
 import GalleryGrid from "@/components/GalleryGrid";
 import CTASection from "@/components/CTASection";
+import { absoluteUrl, siteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Aluminium Installation Portfolio",
   description:
-    "Browse our completed residential, commercial, and retail projects. Precision fabrication and installation gallery.",
-  alternates: { canonical: "/gallery" },
+    "Browse our completed residential, commercial, and retail projects. Precision fabrication and installation gallery across Gauteng.",
+  alternates: { canonical: `${siteUrl}/gallery` },
+  openGraph: {
+    type: "website",
+    locale: "en_ZA",
+    url: `${siteUrl}/gallery`,
+    siteName: "Aluminium Designs",
+    title: "Aluminium Installation Portfolio | Aluminium Designs",
+    description:
+      "Browse our completed residential, commercial, and retail aluminium & steel installations across Gauteng.",
+    images: [
+      {
+        url: absoluteUrl("/images/hero_exterior.png"),
+        width: 1200,
+        height: 630,
+        alt: "Aluminium Designs Installation Portfolio",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Aluminium Installation Portfolio | Aluminium Designs",
+    description:
+      "Browse our completed residential, commercial, and retail aluminium & steel installations across Gauteng.",
+    images: [absoluteUrl("/images/hero_exterior.png")],
+  },
 };
 
 export default function GalleryPage() {

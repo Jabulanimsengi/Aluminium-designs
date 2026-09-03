@@ -4,10 +4,38 @@ import { MapPin, ChevronRight, Map } from "lucide-react";
 import { gautengLocations } from "@/data/locations";
 import CTASection from "@/components/CTASection";
 
-export const metadata = {
-  title: "Service Areas in Gauteng",
-  description: "View our list of service areas across Gauteng. We manufacture and install custom aluminium windows, doors, and security gates in Johannesburg, Pretoria, and surrounding areas.",
-  alternates: { canonical: "/locations" },
+import type { Metadata } from "next";
+import { absoluteUrl, siteUrl } from "@/lib/site";
+
+export const metadata: Metadata = {
+  title: "Service Areas in Gauteng | Aluminium Designs",
+  description:
+    "View our list of service areas across Gauteng. We manufacture and install custom aluminium windows, doors, and security gates in Johannesburg, Pretoria, and surrounding areas.",
+  alternates: { canonical: `${siteUrl}/locations` },
+  openGraph: {
+    type: "website",
+    locale: "en_ZA",
+    url: `${siteUrl}/locations`,
+    siteName: "Aluminium Designs",
+    title: "Service Areas in Gauteng | Aluminium Designs",
+    description:
+      "Custom aluminium windows, sliding doors, and security gates across Johannesburg, Pretoria, East Rand, and West Rand.",
+    images: [
+      {
+        url: absoluteUrl("/images/hero_exterior.png"),
+        width: 1200,
+        height: 630,
+        alt: "Aluminium Designs Gauteng Service Locations",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Service Areas in Gauteng | Aluminium Designs",
+    description:
+      "Custom aluminium windows, sliding doors, and security gates across Johannesburg, Pretoria, East Rand, and West Rand.",
+    images: [absoluteUrl("/images/hero_exterior.png")],
+  },
 };
 
 export default function LocationsDirectory() {

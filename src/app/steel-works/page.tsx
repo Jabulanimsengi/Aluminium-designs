@@ -1,7 +1,6 @@
 import React from "react";
 import { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
 import {
   Shield,
   ShieldCheck,
@@ -16,15 +15,39 @@ import {
   Sparkles,
   MapPin,
 } from "lucide-react";
-import { steelServices } from "@/data/services";
-import { whatsappQuoteUrl } from "@/lib/site";
+import { absoluteUrl, siteUrl, whatsappQuoteUrl } from "@/lib/site";
 import CTASection from "@/components/CTASection";
+import SteelCatalogueFilter from "@/components/SteelCatalogueFilter";
 
 export const metadata: Metadata = {
   title: "Custom Steel Works, Security Gates, Burglar Bars & Carports Gauteng",
   description:
     "Professional steel fabrication & security installation in Gauteng. Heavy-duty steel gates, burglar bars, automated driveway gates, palisade fencing, steel carports & mobile welding.",
-  alternates: { canonical: "/steel-works" },
+  alternates: { canonical: `${siteUrl}/steel-works` },
+  openGraph: {
+    type: "website",
+    locale: "en_ZA",
+    url: `${siteUrl}/steel-works`,
+    siteName: "Aluminium Designs",
+    title: "Custom Steel Works, Security Gates, Burglar Bars & Carports Gauteng",
+    description:
+      "Professional steel fabrication & security installation in Gauteng. Heavy-duty steel gates, burglar bars, automated driveway gates, palisade fencing, steel carports & mobile welding.",
+    images: [
+      {
+        url: absoluteUrl("/images/services/steel-works-hero.jpg"),
+        width: 1200,
+        height: 630,
+        alt: "Aluminium Designs Steel Works Division",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Custom Steel Works, Security Gates, Burglar Bars & Carports Gauteng",
+    description:
+      "Professional steel fabrication & security installation in Gauteng. Heavy-duty steel gates, burglar bars, automated driveway gates, palisade fencing, steel carports & mobile welding.",
+    images: [absoluteUrl("/images/services/steel-works-hero.jpg")],
+  },
 };
 
 const steelPricingGuide = [
@@ -209,58 +232,11 @@ export default function SteelWorksPage() {
               Our Custom Steel Services
             </h2>
             <p className="mt-3 text-sm text-on-surface-variant leading-relaxed max-w-2xl mx-auto">
-              Explore our complete range of bespoke steel solutions. Every unit is custom-welded to your specifications and fitted by our professional installation crew.
+              Explore our complete range of custom steel security products. Every gate, burglar bar, and carport is measured and welded to protect your property and fitted with care.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {steelServices.map((service) => (
-              <article
-                key={service.id}
-                className="group border border-outline-variant bg-surface-container-lowest overflow-hidden flex flex-col justify-between shadow-xs hover:border-primary transition-all"
-              >
-                <div>
-                  <div className="relative h-56 w-full overflow-hidden bg-surface-container">
-                    <Image
-                      src={service.imagePath}
-                      alt={service.title}
-                      fill
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                    <div className="absolute top-3 left-3 bg-primary/90 text-white font-mono text-[9px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full backdrop-blur-xs">
-                      Steel Fabrication
-                    </div>
-                  </div>
-
-                  <div className="p-5 space-y-2.5">
-                    <h3 className="font-sans font-bold text-lg uppercase text-primary group-hover:text-secondary transition-colors">
-                      {service.title}
-                    </h3>
-                    <p className="text-xs text-on-surface-variant line-clamp-3 leading-relaxed">
-                      {service.shortDescription}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="p-5 pt-0 border-t border-outline-variant/60 flex items-center justify-between mt-3">
-                  <Link
-                    href={service.slug}
-                    className="inline-flex items-center gap-1.5 font-mono text-[10px] font-bold uppercase tracking-widest text-secondary group-hover:text-primary transition-colors"
-                  >
-                    View Specs &amp; Options
-                    <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
-                  </Link>
-                  <Link
-                    href={whatsappQuoteUrl}
-                    className="rounded-full bg-surface-container hover:bg-primary hover:text-white px-3 py-1 font-mono text-[9px] font-bold uppercase tracking-wider text-secondary transition-colors"
-                  >
-                    Quote
-                  </Link>
-                </div>
-              </article>
-            ))}
-          </div>
+          <SteelCatalogueFilter />
         </div>
       </section>
 

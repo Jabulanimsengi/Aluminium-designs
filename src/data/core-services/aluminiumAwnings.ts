@@ -106,8 +106,8 @@ export const aluminiumAwningsService: ServiceObject = {
     titleTag: "Aluminium Awnings & Door Canopies | South Africa",
     metaDescription: "Custom aluminium awnings and door canopies. Hail-proof sun and rain protection for windows and doorways across South Africa.",
     keywords: ["aluminium awnings", "door canopies", "window awnings", "aluminium canopies SA"],
-    canonicalUrl: "https://example.com/services/aluminium-awnings",
-    openGraphImage: "https://example.com/images/og/aluminium-awnings.jpg"
+    canonicalUrl: "https://www.aluminiumdesigns.co.za/services/aluminium-awnings",
+    openGraphImage: "https://www.aluminiumdesigns.co.za/images/services/aluminium-awnings-hero.webp"
   },
   structuredDataJsonLd: {
     "@context": "https://schema.org",
@@ -115,7 +115,7 @@ export const aluminiumAwningsService: ServiceObject = {
     "name": "Aluminium Awnings Installation",
     "provider": {
       "@type": "Organization",
-      "name": "Aluminium Windows & Doors SA"
+      "name": "Aluminium Designs"
     }
   }
 };

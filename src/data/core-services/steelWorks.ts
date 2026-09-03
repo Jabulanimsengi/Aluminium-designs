@@ -24,7 +24,7 @@ export const steelWorksService: ServiceObject = {
     primaryCtaLink: "/contact",
     secondaryCtaText: "Explore Steel Products",
     secondaryCtaLink: "#specs",
-    heroImage: "/images/services/security-gates-hero.webp"
+    heroImage: "/images/services/steel-works-hero.jpg"
   },
   overview: {
     heading: "Precision Steel Fabrication & Security Solutions in Gauteng",
@@ -141,7 +141,7 @@ export const steelWorksService: ServiceObject = {
       "palisade fencing near me"
     ],
     canonicalUrl: "https://www.aluminiumdesigns.co.za/services/steel-works",
-    openGraphImage: "/images/services/security-gates-hero.webp"
+    openGraphImage: "https://www.aluminiumdesigns.co.za/images/services/steel-works-hero.jpg"
   },
   structuredDataJsonLd: {
     "@context": "https://schema.org",
@@ -150,7 +150,7 @@ export const steelWorksService: ServiceObject = {
     "description": "Custom steel security gates, burglar bars, driveway gates, palisade fencing, and carports across Gauteng.",
     "provider": {
       "@type": "LocalBusiness",
-      "name": "Aluminium & Steel Designs"
+      "name": "Aluminium Designs"
     }
   }
 };

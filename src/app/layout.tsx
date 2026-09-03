@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
@@ -8,7 +8,7 @@ import ScrollToTop from "@/components/ScrollToTop";
 import NavigationLoader from "@/components/NavigationLoader";
 import QuotePrompt from "@/components/QuotePrompt";
 import ScrollRevealObserver from "@/components/ScrollRevealObserver";
-import GalleryFloatingButton from "@/components/GalleryFloatingButton";
+import MobileStickyBar from "@/components/MobileStickyBar";
 import LeadGate from "@/components/LeadGate";
 import { absoluteUrl, businessContact, siteUrl } from "@/lib/site";
 
@@ -25,6 +25,12 @@ const jetBrainsMono = JetBrains_Mono({
 });
 
 const socialImageUrl = absoluteUrl("/images/hero_exterior.png");
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#0f2a43",
+};
 
 export const metadata: Metadata = {
   metadataBase: siteUrl ? new URL(siteUrl) : undefined,
@@ -50,6 +56,7 @@ export const metadata: Metadata = {
   formatDetection: { email: false, address: false, telephone: false },
   icons: {
     icon: "/favicon.png",
+    apple: "/favicon.png",
   },
   openGraph: {
     type: "website",
@@ -73,17 +80,18 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "LocalBusiness",
+    "@type": "HomeAndConstructionBusiness",
+    "@id": `${siteUrl}#business`,
     name: businessContact.name,
     ...(absoluteUrl("/images/hero_exterior.png")
       ? { image: absoluteUrl("/images/hero_exterior.png") }
       : {}),
-    telephone: businessContact.phone,
+    telephone: businessContact.phoneE164,
     email: businessContact.email,
     address: {
       "@type": "PostalAddress",
       streetAddress: businessContact.streetAddress,
-      addressLocality: `${businessContact.addressLocality}, ${businessContact.addressCity}`,
+      addressLocality: businessContact.addressCity,
       addressRegion: businessContact.addressRegion,
       addressCountry: businessContact.addressCountry,
     },
@@ -106,7 +114,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <Header />
         <main className="flex-grow pt-16 md:pt-16">{children}</main>
         <Footer />
-        <GalleryFloatingButton />
+        <MobileStickyBar />
         <WhatsAppChatWidget />
         <QuotePrompt />
         <LeadGate />

@@ -106,8 +106,8 @@ export const aluminiumRepairsService: ServiceObject = {
     titleTag: "Aluminium Window & Door Repairs | South Africa",
     metaDescription: "Professional aluminium window and door repairs. Fix stuck sliding doors, broken rollers, worn hinges, and locks quickly across South Africa.",
     keywords: ["aluminium door repairs", "sliding door roller replacement", "aluminium window hinge repair", "door lock repair SA"],
-    canonicalUrl: "https://example.com/services/aluminium-repairs",
-    openGraphImage: "https://example.com/images/og/aluminium-repairs.jpg"
+    canonicalUrl: "https://www.aluminiumdesigns.co.za/services/aluminium-repairs",
+    openGraphImage: "https://www.aluminiumdesigns.co.za/images/services/aluminium-repairs-hero.webp"
   },
   structuredDataJsonLd: {
     "@context": "https://schema.org",
@@ -115,7 +115,7 @@ export const aluminiumRepairsService: ServiceObject = {
     "name": "Aluminium Window & Door Repairs",
     "provider": {
       "@type": "Organization",
-      "name": "Aluminium Windows & Doors SA"
+      "name": "Aluminium Designs"
     }
   }
 };

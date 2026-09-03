@@ -14,7 +14,7 @@ export const steelShedsService: ServiceObject = {
     primaryCtaLink: "/contact",
     secondaryCtaText: "View Shed Sizes",
     secondaryCtaLink: "#specs",
-    heroImage: "/images/services/steel-sheds-hero.webp"
+    heroImage: "/images/services/steel-sheds-hero.jpg"
   },
   overview: {
     heading: "Durable Steel Outdoor Storage Rooms & Tool Sheds",
@@ -106,8 +106,8 @@ export const steelShedsService: ServiceObject = {
     titleTag: "Steel Sheds, Tool Rooms & Wendy House Alternatives | South Africa",
     metaDescription: "Custom steel sheds and garden storage units. Fireproof, termite-proof Chromadek metal tool sheds with professional installation across South Africa.",
     keywords: ["steel sheds", "metal garden sheds", "steel tool rooms", "Chromadek sheds SA"],
-    canonicalUrl: "https://example.com/services/steel-sheds",
-    openGraphImage: "https://example.com/images/og/steel-sheds.jpg"
+    canonicalUrl: "https://www.aluminiumdesigns.co.za/services/steel-sheds",
+    openGraphImage: "https://www.aluminiumdesigns.co.za/images/services/steel-sheds-hero.jpg"
   },
   structuredDataJsonLd: {
     "@context": "https://schema.org",
@@ -115,7 +115,7 @@ export const steelShedsService: ServiceObject = {
     "name": "Steel Sheds Installation",
     "provider": {
       "@type": "Organization",
-      "name": "Steel Structures SA"
+      "name": "Aluminium Designs"
     }
   }
 };

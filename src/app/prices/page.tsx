@@ -3,13 +3,37 @@ import { Metadata } from "next";
 import { Tag, Info, Phone, ArrowRight, ShieldCheck, Wrench } from "lucide-react";
 import Link from "next/link";
 import { windowPricing, doorPricing, specialtyPricing } from "@/data/pricing";
-import { whatsappQuoteUrl } from "@/lib/site";
+import { absoluteUrl, siteUrl, whatsappQuoteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Aluminium Product Prices & Cost Guide",
+  title: "Aluminium Product Prices & Cost Guide | Aluminium Designs",
   description:
-    "Clear, transparent starting prices for aluminium windows, doors, conversions, and glazing in South African Rands (ZAR). Includes professional installation.",
-  alternates: { canonical: "/prices" },
+    "Clear, transparent starting prices for aluminium windows, doors, conversions, and glazing in South African Rands (ZAR). Includes professional installation across Gauteng.",
+  alternates: { canonical: `${siteUrl}/prices` },
+  openGraph: {
+    type: "website",
+    locale: "en_ZA",
+    url: `${siteUrl}/prices`,
+    siteName: "Aluminium Designs",
+    title: "Aluminium Product Prices & Cost Guide | Aluminium Designs",
+    description:
+      "Clear, transparent starting prices for custom aluminium windows, doors, conversions, and glazing across Gauteng.",
+    images: [
+      {
+        url: absoluteUrl("/images/hero_exterior.png"),
+        width: 1200,
+        height: 630,
+        alt: "Aluminium Designs Pricing Guide",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Aluminium Product Prices & Cost Guide | Aluminium Designs",
+    description:
+      "Clear, transparent starting prices for custom aluminium windows, doors, conversions, and glazing across Gauteng.",
+    images: [absoluteUrl("/images/hero_exterior.png")],
+  },
 };
 
 export default function PricesPage() {
@@ -26,7 +50,7 @@ export default function PricesPage() {
             Product Pricing Guide
           </h1>
           <p className="text-on-surface-variant text-base leading-relaxed max-w-2xl mx-auto">
-            All prices in South African Rands (ZAR). Every guide price represents starting figures including custom fabrication, safety glazing, and neat installation by our team.
+            All prices in South African Rands (ZAR). Every guide price represents starting figures including custom manufacturing, certified safety glass, and neat installation by our polite team.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
@@ -58,7 +82,7 @@ export default function PricesPage() {
               <p className="text-on-surface-variant leading-relaxed">
                 Prices shown are starting guide figures based on standard residential openings with clear SANS 10400 safety glass.
                 Final custom pricing is confirmed after a <strong className="text-primary">professional on-site measurement</strong> (R250 consultation fee in Johannesburg, R350 outside Johannesburg — credited back in full against your installation invoice).
-                Architectural powder-coat finishes (Matte Black, Charcoal Grey) and Low-E double glazing can be tailored to any project.
+                Popular powder-coated colours (Matte Black, Charcoal Grey, Bronze, White) and energy-efficient double glazing can be tailored to any home.
               </p>
             </div>
           </div>

@@ -128,8 +128,8 @@ export const trellisSecurityGatesService: ServiceObject = {
       "sliding security gates for patio doors",
       "aluminium trellidor prices"
     ],
-    canonicalUrl: "https://aluminiumandsteelsa.co.za/services/trellis-doors-security-gates",
-    openGraphImage: "https://aluminiumandsteelsa.co.za/images/og/trellis-doors.jpg"
+    canonicalUrl: "https://www.aluminiumdesigns.co.za/services/trellis-doors",
+    openGraphImage: "https://www.aluminiumdesigns.co.za/images/services/trellis-gates-hero.webp"
   },
   structuredDataJsonLd: {
     "@context": "https://schema.org",
@@ -137,7 +137,7 @@ export const trellisSecurityGatesService: ServiceObject = {
     "name": "Trellis Security Gates Installation",
     "provider": {
       "@type": "Organization",
-      "name": "Aluminium Designs SA"
+      "name": "Aluminium Designs"
     }
   }
 };

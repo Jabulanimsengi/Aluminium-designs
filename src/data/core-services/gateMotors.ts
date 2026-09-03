@@ -106,8 +106,8 @@ export const gateMotorsService: ServiceObject = {
     titleTag: "Gate Motor Installation, Repairs & Centurion Motors | South Africa",
     metaDescription: "Professional gate motor installation and repairs. Centurion D5 Smart motors, battery backup, anti-theft cages, and same-day service across South Africa.",
     keywords: ["gate motor installation", "gate motor repairs", "Centurion D5 Smart", "electric gate repairs SA"],
-    canonicalUrl: "https://example.com/services/gate-motors",
-    openGraphImage: "https://example.com/images/og/gate-motors.jpg"
+    canonicalUrl: "https://www.aluminiumdesigns.co.za/services/gate-motors",
+    openGraphImage: "https://www.aluminiumdesigns.co.za/images/services/gate-motors-hero.webp"
   },
   structuredDataJsonLd: {
     "@context": "https://schema.org",
@@ -115,7 +115,7 @@ export const gateMotorsService: ServiceObject = {
     "name": "Gate Motor Installation & Repairs",
     "provider": {
       "@type": "Organization",
-      "name": "Steel & Security Solutions SA"
+      "name": "Aluminium Designs"
     }
   }
 };

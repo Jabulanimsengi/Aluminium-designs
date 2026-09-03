@@ -4,12 +4,37 @@ import { services } from "@/data/services";
 import ServicesCatalogue from "@/components/ServicesCatalogue";
 import CTASection from "@/components/CTASection";
 import { PenTool } from "lucide-react";
+import { absoluteUrl, siteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Aluminium & Steel Windows, Doors, Gates & Security",
   description:
     "Explore our full range of products: aluminium windows, sliding patio doors, steel carports, security gates, burglar bars, palisade fencing, and patio enclosures across Gauteng.",
-  alternates: { canonical: "/services" },
+  alternates: { canonical: `${siteUrl}/services` },
+  openGraph: {
+    type: "website",
+    locale: "en_ZA",
+    url: `${siteUrl}/services`,
+    siteName: "Aluminium Designs",
+    title: "Aluminium & Steel Windows, Doors, Gates & Security | Aluminium Designs",
+    description:
+      "Explore custom aluminium windows, sliding patio doors, steel carports, security gates, burglar bars, and palisade fencing across Gauteng.",
+    images: [
+      {
+        url: absoluteUrl("/images/hero_exterior.png"),
+        width: 1200,
+        height: 630,
+        alt: "Aluminium Designs Products & Services",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Aluminium & Steel Windows, Doors, Gates & Security | Aluminium Designs",
+    description:
+      "Explore custom aluminium windows, sliding patio doors, steel carports, security gates, burglar bars, and palisade fencing across Gauteng.",
+    images: [absoluteUrl("/images/hero_exterior.png")],
+  },
 };
 
 export default function ServicesPage() {
@@ -26,7 +51,7 @@ export default function ServicesPage() {
             Aluminium Windows, Doors &amp; Steel Works
           </h1>
           <p className="text-on-surface-variant text-base leading-relaxed max-w-2xl mx-auto">
-            Explore our full range of custom aluminium architectural systems and heavy-duty steel security fabrications manufactured in Gauteng.
+            Explore our full range of custom aluminium windows, sliding doors, patio enclosures, and strong steel security gates made right here in Gauteng.
           </p>
         </div>
       </section>

@@ -14,7 +14,7 @@ export const drivewayGatesService: ServiceObject = {
     primaryCtaLink: "/contact",
     secondaryCtaText: "View Gate Designs",
     secondaryCtaLink: "#specs",
-    heroImage: "/images/services/driveway-gates-hero.webp"
+    heroImage: "/images/services/driveway-gates-hero.jpg"
   },
   overview: {
     heading: "Durable Steel Driveway Gates for Maximum Perimeter Security",
@@ -106,8 +106,8 @@ export const drivewayGatesService: ServiceObject = {
     titleTag: "Steel Driveway Gates & Sliding Gates | South Africa",
     metaDescription: "Custom steel sliding and swing driveway gates. Heavy-duty construction, anti-lift security brackets, motor-ready, and expert installation across South Africa.",
     keywords: ["driveway gates", "sliding gates", "steel driveway gates", "custom driveway gates SA"],
-    canonicalUrl: "https://example.com/services/driveway-gates",
-    openGraphImage: "https://example.com/images/og/driveway-gates.jpg"
+    canonicalUrl: "https://www.aluminiumdesigns.co.za/services/driveway-gates",
+    openGraphImage: "https://www.aluminiumdesigns.co.za/images/services/driveway-gates-hero.jpg"
   },
   structuredDataJsonLd: {
     "@context": "https://schema.org",
@@ -115,7 +115,7 @@ export const drivewayGatesService: ServiceObject = {
     "name": "Driveway Gates Installation",
     "provider": {
       "@type": "Organization",
-      "name": "Steel & Security Solutions SA"
+      "name": "Aluminium Designs"
     }
   }
 };

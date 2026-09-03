@@ -129,8 +129,8 @@ export const aluminiumSkylightsService: ServiceObject = {
       "custom glass skylight prices",
       "sunroom enclosures"
     ],
-    canonicalUrl: "https://aluminiumandsteelsa.co.za/services/aluminium-skylights",
-    openGraphImage: "https://aluminiumandsteelsa.co.za/images/og/aluminium-skylights.jpg"
+    canonicalUrl: "https://www.aluminiumdesigns.co.za/services/aluminium-skylights",
+    openGraphImage: "https://www.aluminiumdesigns.co.za/images/services/aluminium-skylights-hero.webp"
   },
   structuredDataJsonLd: {
     "@context": "https://schema.org",
@@ -138,7 +138,7 @@ export const aluminiumSkylightsService: ServiceObject = {
     "name": "Aluminium Skylights Installation",
     "provider": {
       "@type": "Organization",
-      "name": "Aluminium Designs SA"
+      "name": "Aluminium Designs"
     }
   }
 };

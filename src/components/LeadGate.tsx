@@ -23,6 +23,15 @@ function classify(link: HTMLAnchorElement | null, element: Element): GateSource 
   const isPhone = /^tel:/i.test(href);
   const isEmail = /^mailto:/i.test(href);
 
+  // Never label-match internal content navigation (e.g. a service card whose
+  // badge text contains the word "Quote"). Only href-based matches count there.
+  const isInternalContentNav =
+    /^\/(services|locations|gallery|about|prices|faq|contact|steel-works|privacy)(?:$|\/|[?#])/i.test(href) ||
+    href.startsWith("#");
+  if (isInternalContentNav && !/^\/quote(?:$|[?#])/i.test(href) && !isWhatsApp && !isPhone && !isEmail) {
+    return null;
+  }
+
   if (isQuote) return "quote";
   if (isWhatsApp) return "whatsapp";
   if (isPhone) return "phone";

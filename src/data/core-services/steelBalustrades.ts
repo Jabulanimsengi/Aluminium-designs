@@ -14,7 +14,7 @@ export const steelBalustradesService: ServiceObject = {
     primaryCtaLink: "/contact",
     secondaryCtaText: "Explore Steel Designs",
     secondaryCtaLink: "#specs",
-    heroImage: "/images/services/steel-balustrades-hero.webp"
+    heroImage: "/images/services/steel-balustrades-hero.jpg"
   },
   overview: {
     heading: "Sturdy Steel Railings & Handrails Built to Last",
@@ -106,8 +106,8 @@ export const steelBalustradesService: ServiceObject = {
     titleTag: "Steel Balustrades & Stair Handrails | South Africa",
     metaDescription: "Custom steel balustrades and handrails for stairs, balconies, and decks. Solid welded steel, modern powder coating, and professional installation across South Africa.",
     keywords: ["steel balustrades", "stair handrails", "balcony steel railings", "wrought iron balustrades SA"],
-    canonicalUrl: "https://example.com/services/steel-balustrades",
-    openGraphImage: "https://example.com/images/og/steel-balustrades.jpg"
+    canonicalUrl: "https://www.aluminiumdesigns.co.za/services/steel-balustrades",
+    openGraphImage: "https://www.aluminiumdesigns.co.za/images/services/steel-balustrades-hero.jpg"
   },
   structuredDataJsonLd: {
     "@context": "https://schema.org",
@@ -115,7 +115,7 @@ export const steelBalustradesService: ServiceObject = {
     "name": "Steel Balustrades Installation",
     "provider": {
       "@type": "Organization",
-      "name": "Steel Structures SA"
+      "name": "Aluminium Designs"
     }
   }
 };

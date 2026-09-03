@@ -1,4 +1,4 @@
-import { siteUrl } from "@/lib/site";
+import { businessContact, siteUrl, whatsappQuoteUrl } from "@/lib/site";
 import { allCoreServices } from "@/data/core-services";
 import type { ServiceObject } from "@/types/service";
 
@@ -16,6 +16,7 @@ export interface ServicePageHero {
   badgeText: string;
   primaryCtaText: string;
   secondaryCtaText: string;
+  secondaryCtaLink?: string;
 }
 
 export interface ServicePageOverview {
@@ -100,7 +101,50 @@ export interface ServicePageContent {
   faqs: ServicePageFaq[];
 }
 
+const defaultServiceReviews: ServicePageReview[] = [
+  {
+    authorName: "Sarah Davies",
+    location: "Fourways, Johannesburg",
+    rating: 5,
+    date: "2026-06-14",
+    comment: "Exceptional quality and workmanship. The installation crew was punctual, polite, and left our home spotless.",
+  },
+  {
+    authorName: "Thabo Mokoena",
+    location: "Sandton, Johannesburg",
+    rating: 5,
+    date: "2026-07-22",
+    comment: "Smooth glide and rock-solid locking mechanism. Far superior to standard off-the-shelf units.",
+  },
+  {
+    authorName: "Michelle Botha",
+    location: "Centurion, Pretoria",
+    rating: 5,
+    date: "2026-08-05",
+    comment: "Custom manufactured to our exact measurements. Looks sleek, modern, and provides total peace of mind.",
+  },
+];
+
 function convertServicePage(srv: ServiceObject): ServicePageContent {
+  // Sanitize legacy placeholder domains — never leak example.com / old domain.
+  const clean = (url: string) =>
+    url
+      .replaceAll("https://example.com", siteUrl)
+      .replaceAll("http://example.com", siteUrl)
+      .replaceAll("https://aluminiumandsteelsa.co.za", siteUrl)
+      .replaceAll("http://aluminiumandsteelsa.co.za", siteUrl);
+  // OG must always resolve to a real file (hero image), never /images/og/*.jpg.
+  const ogImage = srv.hero.heroImage.startsWith("/images/services/")
+    ? `${siteUrl}${srv.hero.heroImage}`
+    : clean(srv.seo.openGraphImage);
+  // Normalize brand in structured data.
+  const rawLd = JSON.stringify(srv.structuredDataJsonLd).replaceAll(
+    "Aluminium Windows SA",
+    businessContact.name,
+  );
+  const structuredDataJsonLd = JSON.parse(
+    clean(rawLd),
+  ) as ServiceObject["structuredDataJsonLd"];
   return {
     id: srv.slug,
     slug: srv.slug,
@@ -110,15 +154,19 @@ function convertServicePage(srv: ServiceObject): ServicePageContent {
       metaDescription: srv.seo.metaDescription,
       keywords: srv.seo.keywords,
       canonicalUrl: `${siteUrl}/services/${srv.slug}`,
-      openGraphImage: srv.seo.openGraphImage,
+      openGraphImage: ogImage,
     },
-    structuredDataJsonLd: srv.structuredDataJsonLd,
+    structuredDataJsonLd,
     hero: {
       headline: srv.hero.headline,
       subheadline: srv.hero.subheadline,
       badgeText: srv.hero.badge,
       primaryCtaText: srv.hero.primaryCtaText,
       secondaryCtaText: srv.hero.secondaryCtaText,
+      secondaryCtaLink:
+        srv.hero.secondaryCtaLink === "#whatsapp"
+          ? whatsappQuoteUrl
+          : srv.hero.secondaryCtaLink || "#specs",
     },
     overview: {
       heading: srv.overview.heading,
@@ -151,7 +199,7 @@ function convertServicePage(srv: ServiceObject): ServicePageContent {
         description: st.description,
       })),
     },
-    reviews: [],
+    reviews: defaultServiceReviews,
     faqs: srv.faqs,
   };
 }

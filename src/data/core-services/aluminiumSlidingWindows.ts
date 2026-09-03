@@ -106,8 +106,8 @@ export const aluminiumSlidingWindowsService: ServiceObject = {
     titleTag: "Aluminium Sliding Windows & Installation | South Africa",
     metaDescription: "Custom aluminium sliding windows. Space-saving horizontal sliders, safety glass, smooth rollers, and expert installation across South Africa.",
     keywords: ["aluminium sliding windows", "horizontal sliding windows", "sliding window frames", "aluminium window installers"],
-    canonicalUrl: "https://example.com/services/aluminium-sliding-windows",
-    openGraphImage: "https://example.com/images/og/aluminium-sliding-windows.jpg"
+    canonicalUrl: "https://www.aluminiumdesigns.co.za/services/aluminium-sliding-windows",
+    openGraphImage: "https://www.aluminiumdesigns.co.za/images/services/aluminium-sliding-windows-hero.webp"
   },
   structuredDataJsonLd: {
     "@context": "https://schema.org",
@@ -115,7 +115,7 @@ export const aluminiumSlidingWindowsService: ServiceObject = {
     "name": "Aluminium Sliding Windows Installation",
     "provider": {
       "@type": "Organization",
-      "name": "Aluminium Windows & Doors SA"
+      "name": "Aluminium Designs"
     }
   }
 };

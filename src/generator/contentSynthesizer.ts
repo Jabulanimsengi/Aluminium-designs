@@ -105,7 +105,7 @@ export class ContentSynthesizer {
     switch (archetype) {
       case 'luxury-estate':
         return {
-          archetypeTitle: `Residential Estate & HOA Architectural Standards`,
+          archetypeTitle: `Residential Estate & HOA Colour Standards`,
           architecturalInsight: `Properties in ${areaName} frequently adhere to strict Homeowners Association (HOA) design manuals requiring uniform powder-coat profiles (standard Charcoal VP7049 or Matte Black) and compliant double-glazed acoustic glass to meet SANS 204 energy efficiency standards.`,
           climateInsight: `Highveld summer hail storms and cold winter mornings near ${areaName} demand high-performance thermal barriers and impact-resistant laminated safety glass.`
         };
@@ -183,7 +183,7 @@ export class ContentSynthesizer {
         { itemName: `Fixed Flat Glass Roof Skylight`, standardDimensions: `600mm x 600mm`, estimatedPriceRange: `R4,500 - R6,800`, idealFor: `Bathrooms, dark hallways, and walk-in closets` },
         { itemName: `Pyramid 4-Sided Glass Skylight`, standardDimensions: `1000mm x 1000mm`, estimatedPriceRange: `R8,500 - R14,500`, idealFor: `Kitchen islands, living rooms, and entrance halls` },
         { itemName: `Ventilating / Manual Opening Roof Window`, standardDimensions: `800mm x 1200mm`, estimatedPriceRange: `R7,800 - R12,500`, idealFor: `Loft rooms, attics, and kitchen heat extraction` },
-        { itemName: `Custom Sunroom Roof Glazing System`, standardDimensions: `Per m² custom span`, estimatedPriceRange: `R3,800 - R6,200 / m²`, idealFor: `Glass patio enclosures and covered verandas` }
+        { itemName: `Custom Sunroom Glass Roof System`, standardDimensions: `Per m² custom span`, estimatedPriceRange: `R3,800 - R6,200 / m²`, idealFor: `Glass patio enclosures and covered verandas` }
       ];
     }
 
@@ -227,7 +227,7 @@ export class ContentSynthesizer {
       return [
         { itemName: `Frameless Walk-in Glass Return Panel`, standardDimensions: `900mm - 1200mm x 2000mm`, estimatedPriceRange: `R3,200 - R4,600`, idealFor: `Modern walk-in open showers` },
         { itemName: `Corner Entry Frameless Shower Enclosure`, standardDimensions: `900mm x 900mm x 2000mm`, estimatedPriceRange: `R5,800 - R8,500`, idealFor: `Compact luxury bathroom layouts` },
-        { itemName: `Fluted / Reeded Architectural Shower Panel`, standardDimensions: `1000mm x 2000mm`, estimatedPriceRange: `R4,800 - R7,200`, idealFor: `Designer textured bathroom privacy` },
+        { itemName: `Fluted / Reeded Glass Shower Panel`, standardDimensions: `1000mm x 2000mm`, estimatedPriceRange: `R4,800 - R7,200`, idealFor: `Designer textured bathroom privacy` },
         { itemName: `Custom Beveled & Backlit Bathroom Mirror`, standardDimensions: `Custom laser cut sizing`, estimatedPriceRange: `R1,450 - R3,800`, idealFor: `Vanities, dressing rooms, and home gyms` }
       ];
     }
@@ -253,7 +253,7 @@ export class ContentSynthesizer {
     // Default universal matrix
     return [
       { itemName: `Standard Custom Residential Unit`, standardDimensions: `Custom measurement`, estimatedPriceRange: `R1,850 - R4,500`, idealFor: `Home renovations and replacements` },
-      { itemName: `Heavy-Duty Architectural Specification`, standardDimensions: `Custom opening span`, estimatedPriceRange: `R4,500 - R9,800`, idealFor: `Estates and luxury residential properties` },
+      { itemName: `Heavy-Duty Security Specification`, standardDimensions: `Custom opening span`, estimatedPriceRange: `R4,500 - R9,800`, idealFor: `Estates and luxury residential properties` },
       { itemName: `Commercial Grade System`, standardDimensions: `High-traffic sizing`, estimatedPriceRange: `R8,500 - R18,000`, idealFor: `Business premises, retail, and office parks` }
     ];
   }
@@ -299,9 +299,9 @@ export class ContentSynthesizer {
    */
   private static generateFinishOptions(): FinishOption[] {
     return [
-      { code: `VP7049`, name: `Matte Charcoal`, finishType: `Architectural Powder Coat`, description: `The #1 requested modern color in Gauteng secure estates and contemporary architectural homes.` },
-      { code: `VP9005`, name: `Matte Black`, finishType: `Architectural Powder Coat`, description: `Bold industrial statement finish popular for modern renovations, French doors, and retail showrooms.` },
-      { code: `VP9010`, name: `Pure White`, finishType: `Architectural Powder Coat`, description: `Timeless, clean finish matching traditional interiors, coastal architectural palettes, and bright spaces.` },
+      { code: `VP7049`, name: `Matte Charcoal`, finishType: `Durable Powder Coat`, description: `The #1 requested modern colour in Gauteng secure estates and contemporary homes.` },
+      { code: `VP9005`, name: `Matte Black`, finishType: `Durable Powder Coat`, description: `Bold modern statement finish popular for renovations, French doors, and retail showrooms.` },
+      { code: `VP9010`, name: `Pure White`, finishType: `Durable Powder Coat`, description: `Timeless, clean finish matching traditional interiors, classic palettes, and bright spaces.` },
       { code: `AN-BRZ`, name: `Bronze Anodised`, finishType: `Electro-Chemical Anodising`, description: `Deep metallic tone with exceptional scratch resistance and long-term surface hardness.` },
       { code: `AN-SLV`, name: `Natural Silver Anodised`, finishType: `Electro-Chemical Anodising`, description: `Sleek metallic aluminium sheen ideal for commercial storefronts, offices, and industrial builds.` },
       { code: `WD-OAK`, name: `Light Oak Woodgrain`, finishType: `Sublimation Heat-Transfer`, description: `The warm aesthetic of natural wood grain with all the maintenance-free benefits of durable aluminium.` }
@@ -438,7 +438,7 @@ export class ContentSynthesizer {
       heading: `Quality Manufacturing & SANS 10400 Safety Standards`,
       points: [
         `100% compliant with SANS 10400-N safety glazing and building regulations`,
-        `Extruded architectural-grade aluminium profiles with premium powder coating`,
+        `Heavy-duty aluminium profiles with premium durable powder coating`,
         `Custom workshop fabrication for residential homes, estates, and commercial developments`,
         `Comprehensive workmanship and material warranty on all installations`
       ]
@@ -670,7 +670,7 @@ export class ContentSynthesizer {
 
     if (isProvince) {
       return [
-        `Looking for trusted manufacturers and certified installers of ${service.serviceName.toLowerCase()} near Gauteng? We fabricate custom-engineered solutions for residential homes, architectural projects, office parks, and commercial properties throughout Johannesburg, Pretoria, the East Rand, West Rand, and the Vaal Triangle.`,
+        `Looking for trusted manufacturers and certified installers of ${service.serviceName.toLowerCase()} near Gauteng? We fabricate custom-engineered solutions for residential homes, home renovations, office parks, and commercial properties throughout Johannesburg, Pretoria, the East Rand, West Rand, and the Vaal Triangle.`,
         `${geoContext.architecturalInsight} Every installation conforms with SANS 10400 safety building regulations, utilizing premium corrosion-resistant materials, precision hardware, and comprehensive warranty coverage.`
       ];
     }
@@ -718,7 +718,7 @@ export class ContentSynthesizer {
     // 2. Hyper-localized FAQs addressing specific buyer dilemmas
     if (archetype === 'luxury-estate') {
       localized.push({
-        question: `Do your installations comply with ${areaName} estate HOA architectural rules?`,
+        question: `Do your installations comply with ${areaName} estate HOA colour and design rules?`,
         answer: `Yes, our profiles, powder-coat color choices (standard Charcoal VP7049 and Matte Black), and glass specifications are fully engineered to comply with residential estate and golf estate design manuals near ${areaName}.`
       });
     } else if (archetype === 'heritage-suburb') {

@@ -133,7 +133,7 @@ export const specialtyPricing: SpecialtyPricingProduct[] = [
     name: "Frameless Glass Shower Doors & Cubicles",
     unitOrScope: "Per custom enclosure",
     totalFrom: "from R 4,200",
-    note: "10mm–12mm toughened safety glass with architectural brass/stainless fittings.",
+    note: "10mm–12mm toughened safety glass with solid brass and stainless steel fittings.",
   },
   {
     name: "Aluminium Fly Screens & Insect Mesh",

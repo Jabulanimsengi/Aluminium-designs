@@ -14,7 +14,7 @@ export const steelRepairsService: ServiceObject = {
     primaryCtaLink: "/contact",
     secondaryCtaText: "View Repair Services",
     secondaryCtaLink: "#specs",
-    heroImage: "/images/services/steel-repairs-hero.webp"
+    heroImage: "/images/services/steel-repairs-hero.jpg"
   },
   overview: {
     heading: "Emergency Steel Repairs, Rust Treatment & Re-Welding",
@@ -106,8 +106,8 @@ export const steelRepairsService: ServiceObject = {
     titleTag: "Steel Gate & Fence Repairs | Mobile Welder South Africa",
     metaDescription: "Fast steel gate and fence repairs. Sliding gate wheel replacement, broken hinge welding, rust treatment, and mobile welding across South Africa.",
     keywords: ["steel gate repairs", "sliding gate wheel replacement", "gate welding repairs", "fence repair welder SA"],
-    canonicalUrl: "https://example.com/services/steel-repairs",
-    openGraphImage: "https://example.com/images/og/steel-repairs.jpg"
+    canonicalUrl: "https://www.aluminiumdesigns.co.za/services/steel-repairs",
+    openGraphImage: "https://www.aluminiumdesigns.co.za/images/services/steel-repairs-hero.jpg"
   },
   structuredDataJsonLd: {
     "@context": "https://schema.org",
@@ -115,7 +115,7 @@ export const steelRepairsService: ServiceObject = {
     "name": "Steel Gate & Fence Repairs",
     "provider": {
       "@type": "Organization",
-      "name": "Steel & Welding Services SA"
+      "name": "Aluminium Designs"
     }
   }
 };

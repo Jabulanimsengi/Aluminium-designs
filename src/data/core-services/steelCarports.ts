@@ -14,7 +14,7 @@ export const steelCarportsService: ServiceObject = {
     primaryCtaLink: "/contact",
     secondaryCtaText: "View Carport Styles",
     secondaryCtaLink: "#specs",
-    heroImage: "/images/services/steel-carports-hero.webp"
+    heroImage: "/images/services/steel-carports-hero.jpg"
   },
   overview: {
     heading: "Durable Steel Carport Structures Built to Withstand All Weather",
@@ -106,8 +106,8 @@ export const steelCarportsService: ServiceObject = {
     titleTag: "Steel Carports, Cantilever Ports & Shadeports | South Africa",
     metaDescription: "Custom steel carports and shadeports. Hail-proof IBR sheeting, Chromadek options, cantilever designs, and expert installation across South Africa.",
     keywords: ["steel carports", "cantilever carports", "shadeports", "carport builders SA"],
-    canonicalUrl: "https://example.com/services/steel-carports",
-    openGraphImage: "https://example.com/images/og/steel-carports.jpg"
+    canonicalUrl: "https://www.aluminiumdesigns.co.za/services/steel-carports",
+    openGraphImage: "https://www.aluminiumdesigns.co.za/images/services/steel-carports-hero.jpg"
   },
   structuredDataJsonLd: {
     "@context": "https://schema.org",
@@ -115,7 +115,7 @@ export const steelCarportsService: ServiceObject = {
     "name": "Steel Carports Installation",
     "provider": {
       "@type": "Organization",
-      "name": "Steel Structures SA"
+      "name": "Aluminium Designs"
     }
   }
 };

@@ -106,8 +106,8 @@ export const officeGlassPartitionsService: ServiceObject = {
     titleTag: "Office Glass Partitions & Dividers | South Africa",
     metaDescription: "Custom office glass partitions, boardroom dividers, and frameless glass walls. Fast fitouts, acoustic glass, and expert installation across South Africa.",
     keywords: ["office glass partitions", "glass boardroom walls", "frameless glass dividers", "office fitouts SA"],
-    canonicalUrl: "https://example.com/services/office-glass-partitions",
-    openGraphImage: "https://example.com/images/og/office-glass-partitions.jpg"
+    canonicalUrl: "https://www.aluminiumdesigns.co.za/services/office-glass-partitions",
+    openGraphImage: "https://www.aluminiumdesigns.co.za/images/services/office-glass-partitions-hero.webp"
   },
   structuredDataJsonLd: {
     "@context": "https://schema.org",
@@ -115,7 +115,7 @@ export const officeGlassPartitionsService: ServiceObject = {
     "name": "Office Glass Partitions Installation",
     "provider": {
       "@type": "Organization",
-      "name": "Aluminium Windows & Doors SA"
+      "name": "Aluminium Designs"
     }
   }
 };

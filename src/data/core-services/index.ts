@@ -91,6 +91,8 @@ export const coreServiceMapBySlug = new Map<string, ServiceObject>(
 // Fallback aliases for legacy slug redirects
 coreServiceMapBySlug.set("patio-enclosures", glassPatioEnclosuresService);
 coreServiceMapBySlug.set("fly-screens", aluminiumFlyScreensService);
+coreServiceMapBySlug.set("trellis-doors-security-gates", trellisSecurityGatesService);
+coreServiceMapBySlug.set("trellis-security-gates", trellisSecurityGatesService);
 
 export const getServicesByCategory = (category: string): ServiceObject[] => {
   return allCoreServices.filter(

@@ -19,6 +19,60 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  async redirects() {
+    return [
+      {
+        source: "/services/trellis-doors-security-gates",
+        destination: "/services/trellis-doors",
+        permanent: true,
+      },
+      {
+        source: "/services/trellis-security-gates",
+        destination: "/services/trellis-doors",
+        permanent: true,
+      },
+      {
+        source: "/services/windows",
+        destination: "/services/aluminium-windows",
+        permanent: true,
+      },
+      {
+        source: "/services/partitions",
+        destination: "/services/office-glass-partitions",
+        permanent: true,
+      },
+      {
+        source: "/services/shopfronts",
+        destination: "/services/aluminium-shopfronts",
+        permanent: true,
+      },
+      {
+        source: "/services/custom",
+        destination: "/services/security-gates",
+        permanent: true,
+      },
+      {
+        source: "/services/enclosures",
+        destination: "/services/glass-patio-enclosures",
+        permanent: true,
+      },
+      {
+        source: "/services/repairs",
+        destination: "/services/aluminium-repairs",
+        permanent: true,
+      },
+      {
+        source: "/services/patio-enclosures",
+        destination: "/services/glass-patio-enclosures",
+        permanent: true,
+      },
+      {
+        source: "/services/fly-screens",
+        destination: "/services/aluminium-fly-screens",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

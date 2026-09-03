@@ -106,8 +106,8 @@ export const aluminiumWindowsService: ServiceObject = {
     titleTag: "Custom Aluminium Windows & Installation | South Africa",
     metaDescription: "Get durable custom aluminium windows for your home or office. Double glazing, heat insulation, slim frames, and expert installation across South Africa.",
     keywords: ["aluminium windows", "custom aluminium window frames", "double glazed aluminium windows", "aluminium window installers"],
-    canonicalUrl: "https://example.com/services/aluminium-windows",
-    openGraphImage: "https://example.com/images/og/aluminium-windows.jpg"
+    canonicalUrl: "https://www.aluminiumdesigns.co.za/services/aluminium-windows",
+    openGraphImage: "https://www.aluminiumdesigns.co.za/images/services/aluminium-windows-hero.webp"
   },
   structuredDataJsonLd: {
     "@context": "https://schema.org",
@@ -115,7 +115,7 @@ export const aluminiumWindowsService: ServiceObject = {
     "name": "Aluminium Windows Installation",
     "provider": {
       "@type": "Organization",
-      "name": "Aluminium Windows SA"
+      "name": "Aluminium Designs"
     }
   }
 };

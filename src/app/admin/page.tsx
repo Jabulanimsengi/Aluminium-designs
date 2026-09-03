@@ -511,7 +511,7 @@ export default async function AdminMonitoringPage({
     average: values.reduce((sum, value) => sum + value, 0) / values.length,
     samples: values.length,
   }));
-  const sitemapCount = 9 + services.length + gautengLocations.length + getAllLocationServiceRoutes().length;
+  const sitemapCount = 10 + services.length + gautengLocations.length + getAllLocationServiceRoutes().length;
 
   const latestWhatsappEvent = whatsappEvents[0];
   const latestQuoteClick = quoteClickEvents[0];

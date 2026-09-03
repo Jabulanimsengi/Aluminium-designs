@@ -106,8 +106,8 @@ export const aluminiumSlidingDoorsService: ServiceObject = {
     titleTag: "Aluminium Sliding Doors & Installation | South Africa",
     metaDescription: "Get premium aluminium sliding patio doors. Custom 2, 3, and 4 panel configurations, safety glass, smooth rollers, and expert installation across South Africa.",
     keywords: ["aluminium sliding doors", "sliding patio doors", "glass sliding doors", "custom aluminium doors"],
-    canonicalUrl: "https://example.com/services/aluminium-sliding-doors",
-    openGraphImage: "https://example.com/images/og/aluminium-sliding-doors.jpg"
+    canonicalUrl: "https://www.aluminiumdesigns.co.za/services/aluminium-sliding-doors",
+    openGraphImage: "https://www.aluminiumdesigns.co.za/images/services/aluminium-sliding-doors-hero.webp"
   },
   structuredDataJsonLd: {
     "@context": "https://schema.org",
@@ -115,7 +115,7 @@ export const aluminiumSlidingDoorsService: ServiceObject = {
     "name": "Aluminium Sliding Doors Installation",
     "provider": {
       "@type": "Organization",
-      "name": "Aluminium Windows & Doors SA"
+      "name": "Aluminium Designs"
     }
   }
 };

@@ -142,10 +142,10 @@ export const katlehongAluminiumWindows: LocationServiceObject = {
   },
 
   localizedStory: {
-    heading: "Tailored for Katlehong's Highveld Climate, Architectural Upgrades & Security Needs",
+    heading: "Built for Katlehong Homes, Weather & Family Security",
     uniqueParagraphs: [
-      "Properties across Katlehong—from established family homes in Spruitview and Siluma View to modern extensions in Ramokonopi, Palm Ridge, and Zonkizizwe—face extreme Highveld weather variance. Freezing winter night drops, intense summer afternoon UV glare, and severe hailstorms place heavy stress on legacy fenestration.",
-      "Our Katlehong aluminium window series utilizes extruded architectural-grade 6063-T6 alloy frames protected by a 60–80 micron Qualicoat powder-coated finish. This guarantees the frames will never warp, rust, swell, or peel under intense sunlight or driving rain. Fitted with perimeter EPDM rubber gaskets and double wool-pile weatherstripping, our windows block cold winter drafts, prevent rain ingress, and cut outside traffic noise down significantly.",
+      "Properties across Katlehong—from established family homes in Spruitview and Siluma View to modern extensions in Ramokonopi, Palm Ridge, and Zonkizizwe—face extreme Highveld weather variance. Freezing winter night drops, intense summer afternoon UV glare, and severe hailstorms place heavy stress on older timber and steel window frames.",
+      "Our Katlehong aluminium window series utilizes extruded heavy-duty 6063-T6 alloy frames protected by a 60–80 micron Qualicoat powder-coated finish. This guarantees the frames will never warp, rust, swell, or peel under intense sunlight or driving rain. Fitted with perimeter EPDM rubber gaskets and double wool-pile weatherstripping, our windows block cold winter drafts, prevent rain ingress, and cut outside traffic noise down significantly.",
       "Whether retrofitting outdated steel casements to eliminate ongoing painting or installing double-glazed Low-E window walls in a new multi-story build, our systems incorporate heavy-duty stainless steel friction stays, anti-tamper corner cleats, and multi-point security locks to protect your home year-round.",
     ],
     localClimateNotice: "All Katlehong installations come standard with grade 304 stainless steel friction hinges, safety-laminated glass, and multi-point key-operated handles.",
@@ -153,7 +153,7 @@ export const katlehongAluminiumWindows: LocationServiceObject = {
 
   localNAP: {
     branchOrServiceArea: "Ekurhuleni Regional Depot & Operations Hub",
-    phone: "+27 11 555 0198",
+    phone: businessContact.phone,
     email: businessContact.email,
     addressString: businessContact.fullAddress,
     serviceRadiusKm: 35,
@@ -174,7 +174,7 @@ export const katlehongAluminiumWindows: LocationServiceObject = {
     },
     {
       question: "Do your aluminium windows comply with South African SANS 10400-XA energy efficiency standards?",
-      answer: "Yes. All our window profiles and glass configurations comply fully with SANS 10400-XA and SANS 10137 building regulations. Upon project completion, we issue an official Fenestration Safety and Energy Compliance Certificate.",
+      answer: "Yes. All our window profiles and glass configurations comply fully with SANS 10400-XA and SANS 10137 building regulations. Upon project completion, we issue an official Glazing Safety and Energy Compliance Certificate (SANS 10400).",
     },
     {
       question: "What maintenance is required to prevent aluminium window frames from deteriorating?",
@@ -219,14 +219,14 @@ export const katlehongAluminiumWindows: LocationServiceObject = {
         "@type": "HomeGoodsStore",
         "@id": `${siteUrl}/locations/katlehong/aluminium-windows-in-katlehong#store`,
         name: "Aluminium Windows Katlehong",
-        description: "Architectural aluminium window manufacturer and installer serving Katlehong, Spruitview, Siluma View, and surrounding Ekurhuleni areas.",
-        telephone: "+27 11 555 0198",
+        description: "Custom aluminium window manufacturer and installer serving Katlehong, Spruitview, Siluma View, and surrounding Ekurhuleni areas.",
+        telephone: businessContact.phone,
         email: businessContact.email,
         url: `${siteUrl}/locations/katlehong/aluminium-windows-in-katlehong`,
         address: {
           "@type": "PostalAddress",
           streetAddress: businessContact.streetAddress,
-          addressLocality: `${businessContact.addressLocality}, ${businessContact.addressCity}`,
+          addressLocality: businessContact.addressCity,
           addressRegion: "Gauteng",
           addressCountry: "ZA",
         },
@@ -267,7 +267,7 @@ export const katlehongAluminiumWindows: LocationServiceObject = {
             name: "Do your aluminium windows comply with South African SANS 10400-XA energy efficiency standards?",
             acceptedAnswer: {
               "@type": "Answer",
-              text: "Yes. All our window profiles and glass configurations comply fully with SANS 10400-XA and SANS 10137 building regulations. Upon project completion, we issue an official Fenestration Safety and Energy Compliance Certificate.",
+              text: "Yes. All our window profiles and glass configurations comply fully with SANS 10400-XA and SANS 10137 building regulations. Upon project completion, we issue an official Glazing Safety and Energy Compliance Certificate (SANS 10400).",
             },
           },
           {
@@ -354,10 +354,10 @@ function buildStory(
     return {
       heading: `${isSteel ? "Heavy-Duty Steel" : "Custom Aluminium"} Solutions Near ${location.name}`,
       uniqueParagraphs: [
-        `Homeowners, residential security estates, and commercial facilities throughout the precinct surrounding ${location.name} in ${location.region} (${location.municipality}) require dependable physical security and architectural installations. Properties situated near this major retail and commercial landmark benefit from our prompt on-site laser measurements, engineering precision, and full turnkey installation services.`,
+        `Homeowners, residential security estates, and commercial facilities throughout the precinct surrounding ${location.name} in ${location.region} (${location.municipality}) require dependable physical security and custom aluminium door & window installations. Properties situated near this major retail and commercial landmark benefit from our prompt on-site laser measurements, engineering precision, and full turnkey installation services.`,
         isSteel
           ? `Our custom steel ${service.title.toLowerCase()} near ${location.name} are manufactured in our Gauteng workshop using solid mild steel square bar, heavy-wall structural tubing, and industrial cold-rolled sections. Each unit receives multi-stage zinc phosphate anti-rust primer and UV-stabilized baked epoxy powder coating, with full hot-dip galvanizing available for long-term outdoor weather resistance.`
-          : `Our architectural aluminium ${service.title.toLowerCase()} near ${location.name} are crafted from architectural-grade 6063-T6 alloy with a 60–80 micron Qualicoat powder-coated finish. They will never warp, rust, or corrode under Gauteng's harsh Highveld UV glare or summer hailstorms, while precision perimeter EPDM rubber seals ensure total draught and storm-water exclusion.`,
+          : `Our custom aluminium ${service.title.toLowerCase()} near ${location.name} are crafted from heavy-duty 6063-T6 aluminium alloy with a durable 60–80 micron powder-coated finish. They will never warp, rust, or corrode under Gauteng's harsh Highveld UV glare or summer hailstorms, while precision perimeter EPDM rubber seals ensure total draught and storm-water exclusion.`,
         `Whether upgrading a residential property near ${location.name} or outfitting commercial tenant facilities, ${benefit.title.toLowerCase()} is at the heart of our craftsmanship. ${benefit.description} All work is carried out in full compliance with national building and safety regulations, with heavy-duty anchors and professional handover.`,
       ],
       localClimateNotice: isSteel
@@ -378,14 +378,14 @@ function buildStory(
     };
   }
 
-  const frameMaterial = specValue(page, "Frame Material") ?? "architectural-grade aluminium alloy (6063-T6)";
+  const frameMaterial = specValue(page, "Frame Material") ?? "durable 6063-T6 aluminium alloy";
   const powderCoating = specValue(page, "Powder Coating") ?? "60–80 micron Qualicoat powder-coated finish";
   const safetyStandards = cleanStandards(specValue(page, "Safety Standards") ?? specValue(page, "Safety Compliance"));
 
   return {
     heading: `Tailored for ${location.name}'s Highveld Climate & Building Requirements`,
     uniqueParagraphs: [
-      `Properties across ${location.name}—from established family homes in ${a} and ${b} to ${c} and ${d}—face Gauteng's demanding Highveld climate. Freezing winter night drops, intense summer UV glare, and severe hailstorms place heavy stress on legacy fenestration and building hardware.`,
+      `Properties across ${location.name}—from established family homes in ${a} and ${b} to ${c} and ${d}—face Gauteng's demanding Highveld climate. Freezing winter night drops, intense summer UV glare, and severe hailstorms place heavy stress on older timber and steel window frames.`,
       `Our ${location.name} ${service.title.toLowerCase()} are manufactured from ${frameMaterial}, protected by a ${powderCoating}. This guarantees the frames will never warp, rust, swell, or peel under intense sunlight or driving rain, while precision weather seals keep winter draughts and storm water out.`,
       `Whether you are renovating a home in ${location.name} or building a new commercial development, ${benefit.title.toLowerCase()} is at the heart of every installation. ${benefit.description} All work is carried out in full compliance with national building standards (${safetyStandards}), from the first on-site measurement to final sign-off, including the removal of old frames.`,
     ],
@@ -529,7 +529,7 @@ function buildStructuredData(
         address: {
           "@type": "PostalAddress",
           streetAddress: businessContact.streetAddress,
-          addressLocality: `${businessContact.addressLocality}, ${businessContact.addressCity}`,
+          addressLocality: businessContact.addressCity,
           addressRegion: businessContact.addressRegion,
           addressCountry: businessContact.addressCountry,
         },

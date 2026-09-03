@@ -113,6 +113,8 @@ export default function ServicesCatalogue({ services }: ServicesCatalogueProps) 
             shortDescription={service.shortDescription}
             slug={service.slug}
             imagePath={service.imagePath}
+            category={service.category}
+            features={service.features}
           />
         ))}
       </div>

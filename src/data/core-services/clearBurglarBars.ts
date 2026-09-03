@@ -128,8 +128,8 @@ export const clearBurglarBarsService: ServiceObject = {
       "see through security bars",
       "diefwering vir aluminium vensters"
     ],
-    canonicalUrl: "https://aluminiumandsteelsa.co.za/services/clear-burglar-bars",
-    openGraphImage: "https://aluminiumandsteelsa.co.za/images/og/clear-burglar-bars.jpg"
+    canonicalUrl: "https://www.aluminiumdesigns.co.za/services/clear-burglar-bars",
+    openGraphImage: "https://www.aluminiumdesigns.co.za/images/services/clear-burglar-bars-hero.webp"
   },
   structuredDataJsonLd: {
     "@context": "https://schema.org",
@@ -137,7 +137,7 @@ export const clearBurglarBarsService: ServiceObject = {
     "name": "Clear Burglar Bars Installation",
     "provider": {
       "@type": "Organization",
-      "name": "Aluminium Designs SA"
+      "name": "Aluminium Designs"
     }
   }
 };

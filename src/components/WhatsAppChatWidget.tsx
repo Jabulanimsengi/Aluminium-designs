@@ -9,17 +9,15 @@ export default function WhatsAppChatWidget() {
 
   return (
     <>
-      <div className="fixed bottom-2 right-4 z-[110] md:bottom-6 md:right-6 md:z-40">
+      <div className="fixed bottom-24 right-4 z-[110] md:bottom-6 md:right-6 md:z-40">
         <button
           type="button"
           onClick={() => setOpen(true)}
-          className="group relative flex h-14 w-14 touch-manipulation items-center justify-center rounded-full bg-[#25D366] hover:bg-[#20ba5a] transition-colors active:scale-95 focus:outline-none focus:ring-2 focus:ring-[#25D366]/30"
+          className="group relative flex h-14 w-14 touch-manipulation items-center justify-center rounded-full bg-[#25D366] shadow-lg transition-transform hover:scale-105 active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#25D366]/50"
           aria-label="Chat with us on WhatsApp"
           title="Chat with us on WhatsApp"
         >
-          <span className="pointer-events-none absolute inset-0 animate-ping rounded-full bg-[#25D366]/30" />
-
-          <span className="pointer-events-none absolute right-full mr-3 hidden w-auto whitespace-nowrap border border-outline-variant bg-surface p-2 font-mono text-[10px] font-bold uppercase tracking-widest text-primary shadow-sm group-hover:block">
+          <span className="pointer-events-none absolute right-full mr-3 hidden w-auto whitespace-nowrap border border-outline-variant bg-surface px-2.5 py-1.5 text-xs font-semibold text-primary shadow-md group-hover:block">
             Chat with us
           </span>
 

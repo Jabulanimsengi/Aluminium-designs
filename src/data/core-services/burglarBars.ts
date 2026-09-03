@@ -24,7 +24,7 @@ export const burglarBarsService: ServiceObject = {
     primaryCtaLink: "/contact",
     secondaryCtaText: "View Burglar Bar Styles",
     secondaryCtaLink: "#specs",
-    heroImage: "/images/services/burglar-bars-hero.webp"
+    heroImage: "/images/services/burglar-bars-hero.jpg"
   },
   overview: {
     heading: "Strong Steel Window Security Bars for Maximum Protection",
@@ -107,7 +107,7 @@ export const burglarBarsService: ServiceObject = {
     {
       serviceId: "srv-trellis-security-gates",
       title: "Trellis Doors & Slamlock Gates",
-      slug: "trellis-doors-security-gates",
+      slug: "trellis-doors",
       shortDescription: "Expanding slamlock security gates for doors.",
       thumbnailImage: "/images/services/trellis-thumb.webp"
     }
@@ -125,8 +125,8 @@ export const burglarBarsService: ServiceObject = {
       "sliding burglar bars for windows",
       "diefwering"
     ],
-    canonicalUrl: "https://aluminiumandsteelsa.co.za/services/burglar-bars",
-    openGraphImage: "https://aluminiumandsteelsa.co.za/images/og/burglar-bars.jpg"
+    canonicalUrl: "https://www.aluminiumdesigns.co.za/services/burglar-bars",
+    openGraphImage: "https://www.aluminiumdesigns.co.za/images/services/burglar-bars-hero.jpg"
   },
   structuredDataJsonLd: {
     "@context": "https://schema.org",
@@ -134,7 +134,7 @@ export const burglarBarsService: ServiceObject = {
     "name": "Burglar Bars Installation",
     "provider": {
       "@type": "Organization",
-      "name": "Steel & Security Solutions SA"
+      "name": "Aluminium Designs"
     }
   }
 };
