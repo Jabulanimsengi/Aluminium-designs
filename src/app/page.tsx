@@ -196,17 +196,17 @@ export default function Home() {
       <section className="py-20 bg-surface border-b border-outline-variant">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
-            <div className="lg:col-span-7 text-left">
+            <div className="lg:col-span-7 text-center">
               <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-accent">
                 What We Do
               </span>
-              <h2 className="mt-2 font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary max-w-3xl">
+              <h2 className="mt-2 font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary max-w-3xl mx-auto">
                 Custom Windows &amp; Doors, Built to Fit Your Home Perfectly
               </h2>
-              <p className="mt-5 text-sm text-on-surface-variant max-w-2xl leading-relaxed">
+              <p className="mt-5 text-sm text-on-surface-variant max-w-2xl mx-auto leading-relaxed">
                 Aluminium Designs measures, makes, and installs custom aluminium windows, doors, and security barriers. From replacing a single drafty window to upgrading your entire home with modern sliding patio doors, everything is custom-made to fit your space and fitted cleanly.
               </p>
-              <div className="mt-7 flex flex-col items-start gap-2 sm:flex-row sm:flex-wrap sm:gap-3">
+              <div className="mt-7 flex flex-wrap justify-center items-center gap-2 sm:gap-3">
                 <span className="inline-flex items-center gap-1.5 rounded-full border border-outline-variant bg-surface-container-low px-3 py-1.5 text-[11px] font-medium text-primary sm:gap-2 sm:px-4 sm:py-2 sm:text-xs">
                   <House className="h-3.5 w-3.5 text-accent sm:h-4 sm:w-4" /> Homes &amp; Renovations
                 </span>
