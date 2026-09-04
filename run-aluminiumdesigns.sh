@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
-RELEASE_DIR="${ALUMINIUM_RELEASE_DIR:-/var/www/aluminiumdesigns-release-latest}"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+RELEASE_DIR="${ALUMINIUM_RELEASE_DIR:-/var/www/aluminiumdesigns-current}"
+if [ ! -d "$RELEASE_DIR" ] && [ -d "$SCRIPT_DIR" ]; then
+  RELEASE_DIR="$SCRIPT_DIR"
+fi
 set -a
 . "$RELEASE_DIR/.env"
 set +a
