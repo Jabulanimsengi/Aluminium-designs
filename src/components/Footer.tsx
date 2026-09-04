@@ -49,7 +49,7 @@ export default function Footer() {
 
           {/* Company Links */}
           <div className="space-y-4">
-            <h3 className="font-mono text-[10px] font-bold tracking-widest uppercase text-outline">
+            <h3 className="font-mono text-[10px] font-bold tracking-widest uppercase text-accent">
               Company
             </h3>
             <ul className="space-y-2.5">
@@ -57,7 +57,7 @@ export default function Footer() {
                 <li key={link.name}>
                   <Link
                     href={link.href}
-                    className="text-xs text-outline-variant hover:text-white transition-colors"
+                    className="text-xs text-outline-variant hover:text-accent transition-colors"
                   >
                     {link.name}
                   </Link>
@@ -68,7 +68,7 @@ export default function Footer() {
 
           {/* Aluminium Products */}
           <div className="space-y-4">
-            <h3 className="font-mono text-[10px] font-bold tracking-widest uppercase text-outline">
+            <h3 className="font-mono text-[10px] font-bold tracking-widest uppercase text-accent">
               Aluminium Systems
             </h3>
             <ul className="space-y-2.5">
@@ -76,7 +76,7 @@ export default function Footer() {
                 <li key={s.id}>
                   <Link
                     href={s.slug}
-                    className="text-xs text-outline-variant hover:text-white transition-colors"
+                    className="text-xs text-outline-variant hover:text-accent transition-colors"
                   >
                     {s.title}
                   </Link>
@@ -85,7 +85,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/services"
-                  className="text-xs font-mono font-bold text-outline hover:text-white transition-colors"
+                  className="text-xs font-mono font-bold text-accent hover:text-accent-hover transition-colors"
                 >
                   All Aluminium &rarr;
                 </Link>
@@ -95,7 +95,7 @@ export default function Footer() {
 
           {/* Steel Works */}
           <div className="space-y-4">
-            <h3 className="font-mono text-[10px] font-bold tracking-widest uppercase text-outline">
+            <h3 className="font-mono text-[10px] font-bold tracking-widest uppercase text-accent">
               Steel Works
             </h3>
             <ul className="space-y-2.5">
@@ -103,7 +103,7 @@ export default function Footer() {
                 <li key={s.id}>
                   <Link
                     href={s.slug}
-                    className="text-xs text-outline-variant hover:text-white transition-colors"
+                    className="text-xs text-outline-variant hover:text-accent transition-colors"
                   >
                     {s.title}
                   </Link>
@@ -112,7 +112,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/steel-works"
-                  className="text-xs font-mono font-bold text-outline hover:text-white transition-colors"
+                  className="text-xs font-mono font-bold text-accent hover:text-accent-hover transition-colors"
                 >
                   Steel Works Hub &rarr;
                 </Link>
@@ -122,30 +122,30 @@ export default function Footer() {
 
           {/* Contact */}
           <div className="space-y-4">
-            <h3 className="font-mono text-[10px] font-bold tracking-widest uppercase text-outline">
+            <h3 className="font-mono text-[10px] font-bold tracking-widest uppercase text-accent">
               Get in Touch
             </h3>
             <ul className="space-y-3 text-xs">
               <li className="flex items-start gap-3">
-                <MapPin className="w-4 h-4 text-outline shrink-0 mt-0.5" />
+                <MapPin className="w-4 h-4 text-accent shrink-0 mt-0.5" />
                 <span className="text-outline-variant leading-relaxed">
                   {businessContact.fullAddress}
                 </span>
               </li>
               <li className="flex items-center gap-3">
-                <Phone className="w-4 h-4 text-outline shrink-0" />
-                <a href="tel:+27716122439" className="text-outline-variant hover:text-white font-mono">
+                <Phone className="w-4 h-4 text-accent shrink-0" />
+                <a href="tel:+27716122439" className="text-outline-variant hover:text-accent font-mono">
                   071 612 2439
                 </a>
               </li>
               <li className="flex items-center gap-3">
-                <Mail className="w-4 h-4 text-outline shrink-0" />
-                <a href="mailto:info@aluminiumdesigns.co.za" className="text-outline-variant hover:text-white font-mono">
+                <Mail className="w-4 h-4 text-accent shrink-0" />
+                <a href="mailto:info@aluminiumdesigns.co.za" className="text-outline-variant hover:text-accent font-mono">
                   info@aluminiumdesigns.co.za
                 </a>
               </li>
               <li className="flex items-start gap-3">
-                <Clock className="w-4 h-4 text-outline shrink-0 mt-0.5" />
+                <Clock className="w-4 h-4 text-accent shrink-0 mt-0.5" />
                 <span className="text-outline-variant">Mon - Fri: {businessHours.weekdays}</span>
               </li>
             </ul>

@@ -28,7 +28,7 @@ export default function ServiceCard({
       href={slug}
       data-lead-gate="false"
       aria-label={`View ${title} specifications`}
-      className="group grid min-h-[280px] grid-cols-1 overflow-hidden border border-outline-variant bg-surface-container-lowest transition-all duration-300 hover:-translate-y-1 hover:border-primary hover:shadow-lg sm:grid-cols-[44%_56%]"
+      className="group grid min-h-[280px] grid-cols-1 overflow-hidden border border-outline-variant bg-surface-container-lowest transition-all duration-300 hover:-translate-y-1 hover:border-accent hover:shadow-lg sm:grid-cols-[44%_56%]"
     >
       <div className="relative min-h-56 overflow-hidden border-b border-outline-variant bg-surface-container-high sm:min-h-full sm:border-b-0 sm:border-r">
         <Image
@@ -66,7 +66,7 @@ export default function ServiceCard({
 
       <div className="flex flex-col p-6 sm:p-7 justify-between">
         <div>
-          <h3 className="font-sans text-lg font-bold uppercase leading-tight tracking-tight text-primary transition-colors group-hover:text-secondary">
+          <h3 className="font-sans text-lg font-bold uppercase leading-tight tracking-tight text-primary transition-colors group-hover:text-accent">
             {title}
           </h3>
           <p className="mt-2.5 text-xs leading-relaxed text-on-surface-variant line-clamp-2">
@@ -88,11 +88,11 @@ export default function ServiceCard({
         </div>
 
         <div className="mt-5 pt-4 border-t border-outline-variant/50 flex items-center justify-between">
-          <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-primary group-hover:text-secondary transition-colors inline-flex items-center gap-1">
+          <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-primary group-hover:text-accent transition-colors inline-flex items-center gap-1">
             Explore Specs
             <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-1" />
           </span>
-          <span className="rounded-full bg-surface-container px-2.5 py-0.5 font-mono text-[9px] font-bold uppercase tracking-wider text-secondary group-hover:bg-primary group-hover:text-white transition-colors">
+          <span className="rounded-full bg-surface-container px-2.5 py-0.5 font-mono text-[9px] font-bold uppercase tracking-wider text-secondary group-hover:bg-accent group-hover:text-white transition-colors">
             Quote &rarr;
           </span>
         </div>

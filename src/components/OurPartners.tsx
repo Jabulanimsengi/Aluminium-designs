@@ -46,7 +46,7 @@ export default function OurPartners() {
   return (
     <section className="border-b border-outline-variant bg-surface-container-lowest py-8 sm:py-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <p className="text-center font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
+        <p className="text-center font-mono text-[10px] font-bold uppercase tracking-widest text-accent">
           Our Partners
         </p>
 

@@ -46,7 +46,7 @@ export default function Testimonials() {
       {testimonials.map((t) => (
         <div
           key={t.id}
-          className="border border-outline-variant bg-surface-container-lowest p-6 sm:p-8 flex flex-col justify-between relative hover:border-primary transition-colors shadow-sm"
+          className="border border-outline-variant bg-surface-container-lowest p-6 sm:p-8 flex flex-col justify-between relative hover:border-accent transition-colors shadow-sm"
         >
           <div className="absolute top-6 right-6 text-surface-container-high opacity-80 pointer-events-none">
             <Quote className="w-10 h-10" />
@@ -55,7 +55,7 @@ export default function Testimonials() {
           <div className="space-y-4">
             <div className="flex items-center gap-1">
               {[...Array(t.rating)].map((_, i) => (
-                <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
+                <Star key={i} className="w-4 h-4 fill-accent text-accent" />
               ))}
             </div>
             <p className="text-sm text-on-surface-variant leading-relaxed italic">
@@ -71,7 +71,7 @@ export default function Testimonials() {
             <div>
               <h4 className="font-sans font-bold text-xs text-primary flex items-center">
                 {t.name}
-                <CheckCircle className="w-3.5 h-3.5 text-emerald-600 ml-1.5 shrink-0" />
+                <CheckCircle className="w-3.5 h-3.5 text-accent ml-1.5 shrink-0" />
               </h4>
               <p className="text-[10px] font-mono text-secondary uppercase tracking-wider">
                 {t.role} | {t.location}

@@ -42,7 +42,7 @@ export default function PlanningTools() {
     <section className="border-b border-outline-variant bg-surface py-16 sm:py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto mb-10 max-w-2xl text-center">
-          <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
+          <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-accent">
             Quote Request Options
           </span>
           <h2 className="mt-3 font-sans text-3xl font-bold uppercase tracking-tight text-primary sm:text-4xl">
@@ -59,22 +59,22 @@ export default function PlanningTools() {
             const Icon = tool.icon;
             const isExternal = tool.href.startsWith("http");
             const className =
-              "border border-outline-variant bg-surface-container-lowest p-6 hover:border-primary hover:-translate-y-0.5 transition-all flex flex-col justify-between";
+              "group border border-outline-variant bg-surface-container-lowest p-6 hover:border-accent hover:-translate-y-0.5 transition-all flex flex-col justify-between";
 
             const content = (
               <>
-                <div className="mb-5 flex h-11 w-11 items-center justify-center border border-outline-variant bg-surface-container text-secondary">
+                <div className="mb-5 flex h-11 w-11 items-center justify-center border border-outline-variant bg-surface-container text-secondary group-hover:border-accent group-hover:text-accent transition-colors">
                   <Icon className="h-5 w-5" />
                 </div>
-                <h3 className="font-sans text-base font-bold uppercase text-primary tracking-tight">
+                <h3 className="font-sans text-base font-bold uppercase text-primary tracking-tight group-hover:text-accent transition-colors">
                   {tool.title}
                 </h3>
                 <p className="mt-2 text-xs leading-relaxed text-on-surface-variant">
                   {tool.description}
                 </p>
-                <span className="mt-5 inline-flex items-center text-[10px] font-mono font-bold uppercase tracking-widest text-secondary">
+                <span className="mt-5 inline-flex items-center text-[10px] font-mono font-bold uppercase tracking-widest text-accent">
                   {tool.action}
-                  <ArrowRight className="ml-2 h-3.5 w-3.5" />
+                  <ArrowRight className="ml-2 h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
                 </span>
               </>
             );

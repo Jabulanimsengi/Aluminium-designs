@@ -5,45 +5,48 @@
   --font-mono: var(--font-jetbrains-mono), monospace;
 
   /* Material 3 design tokens */
-  --color-surface: #f7f9fc;
-  --color-on-surface: #191c1e;
-  --color-on-surface-variant: #44474a;
+  --color-surface: #f8f9fb;
+  --color-on-surface: #14181c;
+  --color-on-surface-variant: #474c54;
 
-  --color-primary: #000101;
+  --color-primary: #121518;
   --color-on-primary: #ffffff;
-  --color-primary-container: #1a1c1e;
-  --color-on-primary-container: #838486;
+  --color-primary-container: #1a1e23;
+  --color-on-primary-container: #888d96;
 
-  --color-secondary: #5b5f63;
+  --color-secondary: #5a6068;
   --color-on-secondary: #ffffff;
-  --color-secondary-container: #e0e2e8;
-  --color-on-secondary-container: #616569;
+  --color-secondary-container: #e4e7ec;
+  --color-on-secondary-container: #5a6068;
 
-  --color-tertiary: #374151;
+  --color-tertiary: #2e343c;
   --color-on-tertiary: #ffffff;
-  --color-tertiary-container: #e5e7eb;
-  --color-on-tertiary-container: #374151;
+  --color-tertiary-container: #e8ebf0;
+  --color-on-tertiary-container: #2e343c;
 
-  --color-tertiary-fixed: #e5e7eb;
-  --color-on-tertiary-fixed: #111827;
+  --color-tertiary-fixed: #e8ebf0;
+  --color-on-tertiary-fixed: #14181c;
 
-  /* Brand accents — deep navy + safety amber */
-  --color-brand: #0f2a43;
-  --color-brand-hover: #1a3a5c;
+  /* Architectural Metalcraft — Charcoal Gunmetal + Burnished Architectural Bronze */
+  --color-brand: #14181c;
+  --color-brand-hover: #1e2329;
   --color-on-brand: #ffffff;
-  --color-accent: #d97706;
-  --color-accent-soft: #fef3c7;
+  --color-accent: #c47d3c;
+  --color-accent-hover: #ad6a2e;
+  --color-on-accent: #ffffff;
+  --color-accent-soft: #fcf5ee;
+  --color-on-accent-soft: #8a4f1d;
 
-  --color-surface-container: #eceef1;
+  --color-surface-container: #ebedf2;
   --color-surface-container-low: #f2f4f7;
   --color-surface-container-lowest: #ffffff;
-  --color-surface-container-high: #e6e8eb;
-  --color-surface-container-highest: #e0e3e6;
+  --color-surface-container-high: #e4e7ed;
+  --color-surface-container-highest: #dce0e7;
 
-  --color-outline: #75777a;
-  --color-outline-variant: #c5c6ca;
-  --color-inverse-surface: #2d3133;
-  --color-inverse-on-surface: #eff1f4;
+  --color-outline: #727780;
+  --color-outline-variant: #d4d8e0;
+  --color-inverse-surface: #14181c;
+  --color-inverse-on-surface: #f2f4f7;
 
   --animate-fade-in: fade-in 0.6s ease-out forwards;
   --animate-fade-in-up: fade-in-up 0.5s ease-out forwards;
@@ -77,8 +80,8 @@
 }
 
 :root {
-  --background: #f7f9fc;
-  --foreground: #191c1e;
+  --background: #f8f9fb;
+  --foreground: #14181c;
   color-scheme: light dark;
 }
 

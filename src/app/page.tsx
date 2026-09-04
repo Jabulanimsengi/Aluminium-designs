@@ -137,7 +137,7 @@ export default function Home() {
           <div className="max-w-3xl mx-auto space-y-5 text-center flex flex-col items-center">
             {/* Clean Badge */}
             <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-black/50 px-4 py-1.5 font-mono text-[10px] font-bold uppercase tracking-widest text-white/90 backdrop-blur-md">
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+              <span className="h-1.5 w-1.5 rounded-full bg-accent" />
               Custom Aluminium &amp; Steel Works
             </div>
 
@@ -184,7 +184,7 @@ export default function Home() {
             ].map(([value, label]) => (
               <div key={label} className="space-y-1">
                 <dt className="sr-only">{label}</dt>
-                <dd className="font-sans text-3xl sm:text-4xl font-bold tracking-tight">{value}</dd>
+                <dd className="font-sans text-3xl sm:text-4xl font-bold tracking-tight text-accent">{value}</dd>
                 <dd className="text-[11px] font-sans font-medium uppercase tracking-wide text-white/70">{label}</dd>
               </div>
             ))}
@@ -197,7 +197,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
             <div className="lg:col-span-7 text-left">
-              <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-brand">
+              <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-accent">
                 What We Do
               </span>
               <h2 className="mt-2 font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary max-w-3xl">
@@ -224,7 +224,7 @@ export default function Home() {
                 ["02", "Precision Fabrication", "Your aluminium frames and safety glass are custom-built to your exact millimeter dimensions."],
                 ["03", "Neat Installation", "Our clean, polite fitting crews install your doors and windows and leave your home spotless."],
               ].map(([number, title, detail]) => (
-                <div key={number} className="flex gap-4 border border-outline-variant rounded-xl bg-surface-container-lowest p-5 shadow-sm hover:shadow-md hover:border-brand transition-all">
+                <div key={number} className="flex gap-4 border border-outline-variant rounded-xl bg-surface-container-lowest p-5 shadow-sm hover:shadow-md hover:border-accent transition-all">
                   <span className="font-mono text-xs font-bold text-secondary">{number}</span>
                   <div>
                     <h3 className="font-sans text-sm font-bold uppercase tracking-tight text-primary">{title}</h3>
@@ -241,7 +241,7 @@ export default function Home() {
       <section className="py-20 bg-surface-container-low border-b border-outline-variant">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-12 text-center">
-            <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
+            <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-accent">
               Product Catalogue
             </span>
             <h2 className="mt-2 font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
@@ -262,7 +262,7 @@ export default function Home() {
       <section className="py-20 bg-surface border-b border-outline-variant">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-12 max-w-2xl mx-auto text-center">
-            <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">Built for Everyday Living</span>
+            <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-accent">Built for Everyday Living</span>
             <h2 className="mt-2 font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">Why Choose Aluminium?</h2>
             <p className="mt-3 text-sm leading-relaxed text-on-surface-variant">A practical, modern finish for homes and commercial spaces that need to look good and perform for years.</p>
           </div>
@@ -278,12 +278,12 @@ export default function Home() {
                     <span className="font-mono text-[10px] font-bold tracking-[0.2em] text-secondary">
                       {String(index + 1).padStart(2, "0")}
                     </span>
-                    <div className="flex h-11 w-11 items-center justify-center rounded-full border border-outline-variant bg-surface-container transition-all duration-300 group-hover:border-primary group-hover:bg-primary group-hover:text-on-primary">
+                    <div className="flex h-11 w-11 items-center justify-center rounded-full border border-outline-variant bg-surface-container transition-all duration-300 group-hover:border-accent group-hover:bg-accent group-hover:text-white">
                       <Icon className="w-5 h-5" />
                     </div>
                   </div>
                   <div className="mt-auto pt-12">
-                    <span className="font-mono text-[9px] font-bold uppercase tracking-[0.16em] text-secondary">
+                    <span className="font-mono text-[9px] font-bold uppercase tracking-[0.16em] text-accent">
                       {benefit.tag}
                     </span>
                     <h3 className="mt-3 font-sans text-lg font-bold uppercase tracking-tight text-primary">
@@ -322,7 +322,7 @@ export default function Home() {
             </div>
 
             <div className="lg:col-span-7 space-y-6 text-left">
-              <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-brand">
+              <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-accent">
                 Tailored Manufacturing
               </span>
               <h2 className="font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
@@ -341,7 +341,7 @@ export default function Home() {
                   "Toughened Safety Glass",
                 ].map((item) => (
                   <div key={item} className="flex items-center gap-3 text-sm text-on-surface font-medium">
-                    <Check className="w-4 h-4 text-emerald-600 shrink-0" />
+                    <Check className="w-4 h-4 text-accent shrink-0" />
                     <span>{item}</span>
                   </div>
                 ))}
@@ -355,7 +355,7 @@ export default function Home() {
       <section className="py-20 bg-surface-container-low border-b border-outline-variant">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-16 text-center">
-            <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
+            <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-accent">
               Easy Steps
             </span>
             <h2 className="mt-2 font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
@@ -374,7 +374,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col items-center gap-6 mb-12 text-center">
             <div>
-              <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
+              <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-accent">
                 Real Home Transformations
               </span>
               <h2 className="mt-2 font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
@@ -386,7 +386,7 @@ export default function Home() {
             </div>
             <Link
               href="/gallery"
-              className="inline-flex items-center px-5 py-3 border border-outline-variant hover:border-primary bg-surface font-mono text-[11px] font-bold uppercase tracking-widest text-primary hover:text-secondary transition-colors shrink-0 rounded-full"
+              className="inline-flex items-center px-5 py-3 border border-outline-variant hover:border-accent bg-surface font-mono text-[11px] font-bold uppercase tracking-widest text-primary hover:text-accent transition-colors shrink-0 rounded-full"
             >
               View Full Gallery
               <ChevronRight className="w-4 h-4 ml-2" />
@@ -428,7 +428,7 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             <div className="lg:col-span-7 space-y-8">
               <div className="text-left">
-                <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-brand">
+                <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-accent">
                   Why Work With Us
                 </span>
                 <h2 className="mt-2 font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
@@ -441,7 +441,7 @@ export default function Home() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {advantages.map((adv, i) => (
                   <div key={i} className="flex items-start gap-3">
-                    <Check className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                    <Check className="w-4 h-4 text-accent shrink-0 mt-0.5" />
                     <span className="text-sm text-on-surface-variant leading-relaxed font-medium">{adv}</span>
                   </div>
                 ))}
@@ -472,10 +472,10 @@ export default function Home() {
                 ].map((item) => {
                   const Icon = item.icon;
                   return (
-                    <div key={item.label} className="border-l-2 border-on-tertiary-container pl-4 space-y-1">
+                    <div key={item.label} className="border-l-2 border-accent pl-4 space-y-1">
                       <div className="flex items-center gap-2">
-                        <Icon className="w-3.5 h-3.5 text-secondary" />
-                        <p className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
+                        <Icon className="w-3.5 h-3.5 text-accent" />
+                        <p className="font-mono text-[10px] font-bold uppercase tracking-widest text-accent">
                           {item.label}
                         </p>
                       </div>
@@ -493,7 +493,7 @@ export default function Home() {
       <section className="py-20 bg-surface border-b border-outline-variant">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-12 text-center">
-            <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
+            <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-accent">
               Client Reviews
             </span>
             <h2 className="mt-2 font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
@@ -511,7 +511,7 @@ export default function Home() {
       <section className="py-20 bg-surface-container-low border-b border-outline-variant">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-12 text-center">
-            <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
+            <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-accent">
               Quick Answers
             </span>
             <h2 className="mt-2 font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
@@ -525,7 +525,7 @@ export default function Home() {
           <div className="mt-10">
             <Link
               href="/faq"
-              className="inline-flex items-center text-xs font-mono font-bold uppercase tracking-widest text-primary hover:text-secondary transition-colors"
+              className="inline-flex items-center text-xs font-mono font-bold uppercase tracking-widest text-accent hover:text-accent-hover transition-colors"
             >
               View All FAQs
               <ArrowRight className="w-4 h-4 ml-2" />

@@ -189,7 +189,7 @@ export default function Header() {
                       {/* Column 1: Aluminium & Glass */}
                       <div className="space-y-1">
                         <div className="flex items-center gap-1.5 pb-2 border-b border-outline-variant text-[10px] font-mono font-bold uppercase tracking-widest text-secondary">
-                          <Sparkles className="w-3 h-3 text-brand" />
+                          <Sparkles className="w-3 h-3 text-accent" />
                           Aluminium &amp; Glass
                         </div>
                         <div className="pt-1 flex flex-col gap-1">
@@ -198,9 +198,9 @@ export default function Header() {
                               key={s.id}
                               href={s.slug}
                               tabIndex={servicesDropdownOpen ? 0 : -1}
-                              className="group rounded-lg p-2.5 transition-colors hover:bg-surface-container hover:shadow-sm focus-visible:outline-2 focus-visible:outline-brand"
+                              className="group rounded-lg p-2.5 transition-colors hover:bg-surface-container hover:shadow-sm focus-visible:outline-2 focus-visible:outline-accent"
                             >
-                              <span className="block truncate text-[13px] font-sans font-semibold text-primary group-hover:text-brand">
+                              <span className="block truncate text-[13px] font-sans font-semibold text-primary group-hover:text-accent">
                                 {s.title}
                               </span>
                               <span className="mt-0.5 block truncate text-[11px] leading-snug text-on-surface-variant">
@@ -214,7 +214,7 @@ export default function Header() {
                       {/* Column 2: Steel & Security */}
                       <div className="space-y-1">
                         <div className="flex items-center gap-1.5 pb-2 border-b border-outline-variant text-[10px] font-mono font-bold uppercase tracking-widest text-secondary">
-                          <Hammer className="w-3 h-3 text-brand" />
+                          <Hammer className="w-3 h-3 text-accent" />
                           Steel Works &amp; Security
                         </div>
                         <div className="pt-1 flex flex-col gap-1">
@@ -223,9 +223,9 @@ export default function Header() {
                               key={s.id}
                               href={s.slug}
                               tabIndex={servicesDropdownOpen ? 0 : -1}
-                              className="group rounded-lg p-2.5 transition-colors hover:bg-surface-container hover:shadow-sm focus-visible:outline-2 focus-visible:outline-brand"
+                              className="group rounded-lg p-2.5 transition-colors hover:bg-surface-container hover:shadow-sm focus-visible:outline-2 focus-visible:outline-accent"
                             >
-                              <span className="block truncate text-[13px] font-sans font-semibold text-primary group-hover:text-brand">
+                              <span className="block truncate text-[13px] font-sans font-semibold text-primary group-hover:text-accent">
                                 {s.title}
                               </span>
                               <span className="mt-0.5 block truncate text-[11px] leading-snug text-on-surface-variant">
@@ -241,14 +241,14 @@ export default function Header() {
                       <Link
                         href="/services"
                         tabIndex={servicesDropdownOpen ? 0 : -1}
-                        className="text-secondary hover:text-brand transition-colors flex items-center gap-1 px-2 py-1.5 rounded-md focus-visible:outline-2 focus-visible:outline-brand"
+                        className="text-secondary hover:text-accent transition-colors flex items-center gap-1 px-2 py-1.5 rounded-md focus-visible:outline-2 focus-visible:outline-accent"
                       >
                         All {services.length} Products &rarr;
                       </Link>
                       <Link
                         href="/steel-works"
                         tabIndex={servicesDropdownOpen ? 0 : -1}
-                        className="text-brand hover:text-brand-hover font-bold transition-colors flex items-center gap-1 px-2 py-1.5 rounded-md focus-visible:outline-2 focus-visible:outline-brand"
+                        className="text-accent hover:text-accent-hover font-bold transition-colors flex items-center gap-1 px-2 py-1.5 rounded-md focus-visible:outline-2 focus-visible:outline-accent"
                       >
                         Steel Works Hub &rarr;
                       </Link>
@@ -263,7 +263,7 @@ export default function Header() {
                     pathname === link.href
                       ? "text-primary after:scale-x-100"
                       : "text-secondary hover:text-primary after:scale-x-0 hover:after:scale-x-100"
-                  } after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:origin-left after:scale-x-0 after:bg-on-tertiary-container after:transition-transform after:duration-300 after:ease-out`}
+                  } after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:origin-left after:scale-x-0 after:bg-accent after:transition-transform after:duration-300 after:ease-out`}
                 >
                   {link.name}
                 </Link>
@@ -282,7 +282,7 @@ export default function Header() {
             </a>
             <Link
               href={whatsappQuoteUrl}
-              className="bg-brand hover:bg-brand-hover text-on-brand px-5 py-2 rounded-full font-sans text-[12px] font-semibold tracking-wide uppercase transition-colors inline-flex items-center gap-1.5"
+              className="bg-accent hover:bg-accent-hover text-white px-5 py-2 rounded-full font-sans text-[12px] font-semibold tracking-wide uppercase transition-all shadow-sm hover:shadow inline-flex items-center gap-1.5"
             >
               Free Quote
               <ArrowRight className="w-3.5 h-3.5" />
@@ -395,7 +395,7 @@ export default function Header() {
               <Link
                 href={whatsappQuoteUrl}
                 onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center justify-center w-full py-3.5 rounded-full bg-brand hover:bg-brand-hover text-on-brand font-sans text-xs font-semibold uppercase tracking-wide transition-colors"
+                className="flex items-center justify-center w-full py-3.5 rounded-full bg-accent hover:bg-accent-hover text-white font-sans text-xs font-semibold uppercase tracking-wide transition-all shadow-sm"
               >
                 Request Free Quote
                 <ArrowRight className="w-4 h-4 ml-2" />
