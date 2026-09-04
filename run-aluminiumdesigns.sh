@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-RELEASE_DIR="/var/www/aluminiumdesigns-release-521aa9a"
+RELEASE_DIR="/var/www/aluminiumdesigns-release-0e316b6"
 set -a
 . "$RELEASE_DIR/.env"
 set +a
@@ -11,9 +11,9 @@ export PORT="${PORT:-3002}"
 if [ -f "$RELEASE_DIR/.next/standalone/server.js" ]; then
   SERVER_JS="$RELEASE_DIR/.next/standalone/server.js"
   SERVER_DIR="$RELEASE_DIR/.next/standalone"
-elif [ -f "$RELEASE_DIR/.next/standalone/aluminiumdesigns-release-521aa9a/server.js" ]; then
-  SERVER_JS="$RELEASE_DIR/.next/standalone/aluminiumdesigns-release-521aa9a/server.js"
-  SERVER_DIR="$RELEASE_DIR/.next/standalone/aluminiumdesigns-release-521aa9a"
+elif [ -f "$RELEASE_DIR/.next/standalone/aluminiumdesigns-release-0e316b6/server.js" ]; then
+  SERVER_JS="$RELEASE_DIR/.next/standalone/aluminiumdesigns-release-0e316b6/server.js"
+  SERVER_DIR="$RELEASE_DIR/.next/standalone/aluminiumdesigns-release-0e316b6"
 else
   SERVER_JS=$(find "$RELEASE_DIR/.next/standalone" -maxdepth 2 -name "server.js" | head -n 1)
   SERVER_DIR=$(dirname "$SERVER_JS")
