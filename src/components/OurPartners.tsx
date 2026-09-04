@@ -44,28 +44,38 @@ const partners: Partner[] = [
 
 export default function OurPartners() {
   return (
-    <section className="border-b border-outline-variant bg-surface-container-lowest py-8 sm:py-10">
+    <section className="border-b border-outline-variant bg-surface-container-lowest py-8 sm:py-10 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <p className="text-center font-mono text-[10px] font-bold uppercase tracking-widest text-accent">
+        <p className="text-center font-mono text-[10px] font-bold uppercase tracking-widest text-accent mb-6">
           Our Partners
         </p>
 
-        <div className="mt-6 grid grid-cols-2 sm:grid-cols-4 items-center justify-items-center gap-8 sm:gap-10 lg:gap-16">
-          {partners.map((partner) => (
-            <div
-              key={partner.name}
-              className="flex h-12 sm:h-14 w-full items-center justify-center transition-transform duration-200 hover:scale-105"
-            >
-              <Image
-                src={partner.logo}
-                alt={partner.name}
-                width={partner.width}
-                height={partner.height}
-                className={partner.className}
-                style={partner.style}
-              />
-            </div>
-          ))}
+        <div className="overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
+          <div className="flex w-max min-w-full animate-trusted-by-marquee items-center hover:[animation-play-state:paused]">
+            {[0, 1].map((copyIndex) => (
+              <div
+                key={copyIndex}
+                aria-hidden={copyIndex > 0}
+                className="flex shrink-0 items-center gap-10 sm:gap-16 lg:gap-20 pr-10 sm:pr-16 lg:pr-20"
+              >
+                {[...partners, ...partners].map((partner, idx) => (
+                  <div
+                    key={`${copyIndex}-${idx}-${partner.name}`}
+                    className="flex h-11 sm:h-13 shrink-0 items-center justify-center transition-transform duration-200 hover:scale-105"
+                  >
+                    <Image
+                      src={partner.logo}
+                      alt={partner.name}
+                      width={partner.width}
+                      height={partner.height}
+                      className={partner.className}
+                      style={partner.style}
+                    />
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

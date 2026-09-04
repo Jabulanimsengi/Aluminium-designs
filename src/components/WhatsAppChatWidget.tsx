@@ -29,7 +29,7 @@ export default function WhatsAppChatWidget() {
 
       {open ? (
         <div
-          className="fixed inset-0 z-[120] flex items-center justify-center overflow-y-auto bg-black/60 p-4"
+          className="fixed inset-0 z-[120] flex items-center justify-center overflow-y-auto bg-black/60 p-3 sm:p-4"
           role="dialog"
           aria-modal="true"
           aria-labelledby="lead-gate-title"
@@ -37,30 +37,30 @@ export default function WhatsAppChatWidget() {
             if (event.target === event.currentTarget) setOpen(false);
           }}
         >
-          <div className="relative w-full max-w-md max-h-[90dvh] overflow-y-auto border border-outline-variant bg-surface-container-lowest p-6 shadow-2xl sm:p-7">
+          <div className="relative w-full max-w-md max-h-[92dvh] overflow-y-auto border border-outline-variant bg-surface-container-lowest p-4 shadow-2xl sm:p-6">
             <button
               type="button"
               onClick={() => setOpen(false)}
               aria-label="Close"
-              className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-full border border-outline-variant text-secondary transition-colors hover:border-accent hover:text-accent"
+              className="absolute right-2.5 top-2.5 flex h-8 w-8 items-center justify-center rounded-full border border-outline-variant text-secondary transition-colors hover:border-accent hover:text-accent"
             >
               <X className="h-4 w-4" />
             </button>
 
-            <p className="font-mono text-[10px] font-bold uppercase tracking-widest text-accent mb-1.5">
+            <p className="font-mono text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-accent mb-1">
               Instant Workshop Connection
             </p>
             <h2
               id="lead-gate-title"
-              className="pr-8 text-left font-sans text-2xl font-bold uppercase leading-tight tracking-tight text-primary"
+              className="pr-8 text-left font-sans text-lg sm:text-xl font-bold uppercase leading-snug tracking-tight text-primary"
             >
               Chat Directly With Our Team
             </h2>
-            <p className="mt-2 text-sm leading-relaxed text-on-surface-variant">
-              Share a few quick project details to connect directly with our technical estimators on WhatsApp.
+            <p className="mt-1 text-xs sm:text-sm leading-normal text-on-surface-variant line-clamp-2 sm:line-clamp-none">
+              Share a few quick details to chat directly with our estimators on WhatsApp.
             </p>
 
-            <div className="mt-5">
+            <div className="mt-3 sm:mt-4">
               <LeadCaptureForm source="whatsapp" onCancel={() => setOpen(false)} />
             </div>
           </div>

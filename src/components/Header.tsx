@@ -308,8 +308,27 @@ export default function Header() {
             className="relative flex h-full w-full max-w-xs flex-col space-y-6 overflow-y-auto border-r border-outline-variant bg-surface p-6 shadow-xl animate-slide-in-left"
           >
             <div className="flex items-center justify-between pb-4 border-b border-outline-variant">
-              <span className="font-sans text-sm font-black tracking-wider text-primary">MENU</span>
-              <button type="button" aria-label="Close menu" onClick={() => setMobileMenuOpen(false)} className="p-1 hover:bg-surface-container text-primary rounded-lg">
+              <Link
+                href="/"
+                onClick={() => setMobileMenuOpen(false)}
+                className="relative flex h-9 w-[115px] items-center overflow-hidden select-none"
+                aria-label="Aluminium Designs — home"
+              >
+                <Image
+                  src="/images/real_images/logo/logo.png"
+                  alt="Aluminium Designs"
+                  fill
+                  sizes="115px"
+                  className="object-contain object-left"
+                  unoptimized
+                />
+              </Link>
+              <button
+                type="button"
+                aria-label="Close menu"
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex h-9 w-9 items-center justify-center rounded-lg text-primary transition-colors hover:bg-surface-container active:bg-surface-container-high"
+              >
                 <X className="w-5 h-5" />
               </button>
             </div>
