@@ -133,16 +133,15 @@ export default function Header() {
           <Link
             href="/"
             aria-label="Aluminium Designs — home"
-            className="relative flex h-12 w-[124px] shrink-0 items-center overflow-hidden select-none sm:h-[52px] sm:w-[134px] lg:h-12 lg:w-[124px] lg:justify-self-start"
+            className="flex shrink-0 items-center select-none lg:justify-self-start"
           >
             <Image
               src="/images/real_images/logo/logo.png"
               alt="Aluminium Designs"
-              fill
-              sizes="(max-width: 640px) 124px, 134px"
-              className="object-contain"
-              unoptimized
-              preload
+              width={134}
+              height={53}
+              priority
+              className="h-10 sm:h-11 md:h-12 w-auto object-contain"
             />
           </Link>
 
@@ -311,16 +310,16 @@ export default function Header() {
               <Link
                 href="/"
                 onClick={() => setMobileMenuOpen(false)}
-                className="relative flex h-9 w-[115px] items-center overflow-hidden select-none"
+                className="flex shrink-0 items-center select-none"
                 aria-label="Aluminium Designs — home"
               >
                 <Image
                   src="/images/real_images/logo/logo.png"
                   alt="Aluminium Designs"
-                  fill
-                  sizes="115px"
-                  className="object-contain object-left"
-                  unoptimized
+                  width={120}
+                  height={48}
+                  priority
+                  className="h-8 sm:h-9 w-auto object-contain"
                 />
               </Link>
               <button
