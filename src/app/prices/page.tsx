@@ -43,8 +43,8 @@ export default function PricesPage() {
       <section className="py-24 bg-surface-container-low border-b border-outline-variant">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-5">
           <div className="inline-flex items-center gap-2 bg-surface border border-outline-variant px-3.5 py-1 font-mono text-[10px] font-bold tracking-widest uppercase rounded-full">
-            <Tag className="w-3.5 h-3.5 text-secondary" />
-            <span className="text-secondary">Transparent Home Pricing</span>
+            <Tag className="w-3.5 h-3.5 text-accent" />
+            <span className="text-accent">Transparent Home Pricing</span>
           </div>
           <h1 className="font-sans text-4xl sm:text-5xl font-bold uppercase tracking-tight text-primary">
             Product Pricing Guide
@@ -53,17 +53,17 @@ export default function PricesPage() {
             All prices in South African Rands (ZAR). Every guide price represents starting figures including custom manufacturing, certified safety glass, and neat installation by our polite team.
           </p>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2 w-full sm:w-auto">
             <Link
               href={whatsappQuoteUrl}
-              className="inline-flex items-center gap-2 bg-primary hover:bg-secondary text-on-primary border border-primary hover:border-secondary px-6 py-3 font-mono text-[11px] font-bold uppercase tracking-widest transition-colors rounded-full shadow-sm"
+              className="inline-flex items-center justify-center gap-2 bg-accent hover:bg-accent-hover text-white border border-accent px-6 py-3 font-mono text-[11px] font-bold uppercase tracking-widest transition-colors rounded-full shadow-sm w-full sm:w-auto"
             >
               Request Free Quote
               <ArrowRight className="w-4 h-4" />
             </Link>
             <a
               href="tel:+27716122439"
-              className="inline-flex items-center gap-2 border border-outline-variant bg-surface hover:bg-surface-container px-6 py-3 font-mono text-[11px] font-bold uppercase tracking-widest text-secondary transition-colors rounded-full"
+              className="inline-flex items-center justify-center gap-2 border border-outline-variant bg-surface hover:bg-surface-container px-6 py-3 font-mono text-[11px] font-bold uppercase tracking-widest text-primary hover:text-accent transition-colors rounded-full w-full sm:w-auto"
             >
               <Phone className="w-4 h-4" />
               071 612 2439
@@ -93,7 +93,7 @@ export default function PricesPage() {
       <section className="py-20 bg-surface border-b border-outline-variant">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-12 text-center max-w-3xl mx-auto">
-            <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
+            <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-accent">
               Windows Guide
             </span>
             <h2 className="mt-2 font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
@@ -169,7 +169,7 @@ export default function PricesPage() {
                   <span className="text-primary font-mono">{p.glazingPrice}</span>
                 </div>
                 <div className="border-t border-outline-variant pt-3 flex justify-between items-center">
-                  <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
+                  <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-accent">
                     Starting From
                   </span>
                   <span className="font-sans font-bold text-lg text-primary">{p.totalFrom}</span>
@@ -184,7 +184,7 @@ export default function PricesPage() {
       <section className="py-20 bg-surface-container-low border-b border-outline-variant">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-12 text-center max-w-3xl mx-auto">
-            <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
+            <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-accent">
               Doors Guide
             </span>
             <h2 className="mt-2 font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
@@ -260,7 +260,7 @@ export default function PricesPage() {
                   <span className="text-primary font-mono">{p.glazingPrice}</span>
                 </div>
                 <div className="border-t border-outline-variant pt-3 flex justify-between items-center">
-                  <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
+                  <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-accent">
                     Starting From
                   </span>
                   <span className="font-sans font-bold text-lg text-primary">{p.totalFrom}</span>
@@ -275,8 +275,8 @@ export default function PricesPage() {
       <section className="py-20 bg-surface border-b border-outline-variant">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-12 text-center max-w-3xl mx-auto">
-            <div className="inline-flex items-center gap-2 bg-surface-container-low border border-outline-variant px-3 py-1 font-mono text-[10px] font-bold tracking-widest uppercase rounded-full text-secondary mb-2">
-              <Wrench className="w-3.5 h-3.5" />
+            <div className="inline-flex items-center gap-2 bg-surface-container-low border border-outline-variant px-3 py-1 font-mono text-[10px] font-bold tracking-widest uppercase rounded-full text-accent mb-2">
+              <Wrench className="w-3.5 h-3.5 text-accent" />
               Specialty Services &amp; Repairs
             </div>
             <h2 className="font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
@@ -339,7 +339,7 @@ export default function PricesPage() {
                   <span className="text-primary font-mono">{p.unitOrScope}</span>
                 </div>
                 <div className="border-t border-outline-variant pt-3 flex justify-between items-center">
-                  <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
+                  <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-accent">
                     Starting From
                   </span>
                   <span className="font-sans font-bold text-lg text-primary">{p.totalFrom}</span>
@@ -353,24 +353,24 @@ export default function PricesPage() {
       {/* Bottom CTA */}
       <section className="py-20 bg-surface-container-low border-b border-outline-variant">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
-          <ShieldCheck className="w-10 h-10 text-secondary mx-auto" />
+          <ShieldCheck className="w-10 h-10 text-accent mx-auto" />
           <h2 className="font-sans text-2xl sm:text-3xl font-bold uppercase tracking-tight text-primary">
             Every Quote Includes a Professional Home Visit
           </h2>
           <p className="text-on-surface-variant text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
             Our technician comes to your home to take accurate measurements. The R250 (Johannesburg) or R350 (outside Johannesburg) consultation fee is credited back in full against your installation invoice.
           </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2 w-full sm:w-auto">
             <Link
               href={whatsappQuoteUrl}
-              className="inline-flex items-center gap-2 bg-primary hover:bg-secondary text-on-primary border border-primary hover:border-secondary px-6 py-3.5 font-mono text-[11px] font-bold uppercase tracking-widest transition-colors rounded-full shadow-sm"
+              className="inline-flex items-center justify-center gap-2 bg-accent hover:bg-accent-hover text-white border border-accent px-6 py-3.5 font-mono text-[11px] font-bold uppercase tracking-widest transition-colors rounded-full shadow-sm w-full sm:w-auto"
             >
               Request Free Quote
               <ArrowRight className="w-4 h-4" />
             </Link>
             <a
               href="tel:+27716122439"
-              className="inline-flex items-center gap-2 border border-outline-variant bg-surface hover:bg-surface-container text-secondary hover:text-primary px-6 py-3.5 font-mono text-[11px] font-bold uppercase tracking-widest transition-colors rounded-full"
+              className="inline-flex items-center justify-center gap-2 border border-outline-variant bg-surface hover:bg-surface-container text-primary hover:text-accent px-6 py-3.5 font-mono text-[11px] font-bold uppercase tracking-widest transition-colors rounded-full w-full sm:w-auto"
             >
               <Phone className="w-4 h-4" />
               071 612 2439

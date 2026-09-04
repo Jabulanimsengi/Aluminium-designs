@@ -89,8 +89,8 @@ export default function FAQPage() {
       <section className="py-24 bg-surface-container-low border-b border-outline-variant">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-5">
           <div className="inline-flex items-center gap-2 bg-surface border border-outline-variant px-3.5 py-1 font-mono text-[10px] font-bold tracking-widest uppercase rounded-full">
-            <HelpCircle className="w-3.5 h-3.5 text-secondary" />
-            <span className="text-secondary">Homeowner Help Centre</span>
+            <HelpCircle className="w-3.5 h-3.5 text-accent" />
+            <span className="text-accent">Homeowner Help Centre</span>
           </div>
           <h1 className="font-sans text-4xl sm:text-5xl font-bold uppercase tracking-tight text-primary">
             Frequently Asked Questions
@@ -112,7 +112,7 @@ export default function FAQPage() {
                 className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start border-b border-outline-variant pb-16 last:border-b-0 last:pb-0"
               >
                 <div className="lg:col-span-4 space-y-4">
-                  <div className="w-10 h-10 border border-outline-variant bg-surface-container flex items-center justify-center text-secondary shadow-sm">
+                  <div className="w-10 h-10 border border-outline-variant bg-surface-container flex items-center justify-center text-accent shadow-sm">
                     <Icon className="w-5 h-5" />
                   </div>
                   <h3 className="font-sans font-bold text-2xl uppercase tracking-tight text-primary">

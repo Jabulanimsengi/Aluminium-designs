@@ -87,7 +87,7 @@ export default function LeadCaptureForm({ source, onCancel }: LeadCaptureFormPro
   }
 
   const inputClass =
-    "w-full border border-outline-variant bg-surface px-4 py-3 text-sm text-primary placeholder-outline font-sans focus:outline-none focus:border-accent transition-colors rounded-none";
+    "w-full border border-outline-variant bg-surface px-4 py-3 text-base sm:text-sm text-primary placeholder-outline font-sans focus:outline-none focus:border-accent transition-colors rounded-none";
   const labelClass =
     "mb-1.5 block font-mono text-[10px] font-bold uppercase tracking-widest text-outline";
 

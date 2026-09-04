@@ -235,7 +235,7 @@ export default function GalleryGrid() {
             id="gallery-category"
             value={activeFilter}
             onChange={(event) => setFilter(event.target.value)}
-            className="h-12 w-full appearance-none border border-outline-variant bg-surface-container-lowest px-4 pr-11 font-mono text-xs font-bold uppercase tracking-wider text-primary outline-none focus:border-accent focus:ring-2 focus:ring-accent/15"
+            className="h-12 w-full appearance-none border border-outline-variant bg-surface-container-lowest px-4 pr-11 font-mono text-base sm:text-xs font-bold uppercase tracking-wider text-primary outline-none focus:border-accent focus:ring-2 focus:ring-accent/15"
           >
             {categories.map((category) => (
               <option key={category.id} value={category.id}>

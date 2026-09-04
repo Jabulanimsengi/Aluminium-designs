@@ -37,7 +37,7 @@ export default function WhatsAppChatWidget() {
             if (event.target === event.currentTarget) setOpen(false);
           }}
         >
-          <div className="relative w-full max-w-md border border-outline-variant bg-surface-container-lowest p-6 shadow-2xl sm:p-7">
+          <div className="relative w-full max-w-md max-h-[90dvh] overflow-y-auto border border-outline-variant bg-surface-container-lowest p-6 shadow-2xl sm:p-7">
             <button
               type="button"
               onClick={() => setOpen(false)}

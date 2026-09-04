@@ -98,7 +98,7 @@ export default function LeadGate() {
         if (event.target === event.currentTarget) close();
       }}
     >
-      <div className="relative w-full max-w-md border border-outline-variant bg-surface-container-lowest p-6 shadow-2xl sm:p-7">
+      <div className="relative w-full max-w-md max-h-[90dvh] overflow-y-auto border border-outline-variant bg-surface-container-lowest p-6 shadow-2xl sm:p-7">
         <button
           type="button"
           onClick={close}

@@ -256,7 +256,7 @@ export default async function ServiceDetailPage({ params }: Props) {
       />
 
       {/* HERO */}
-      <section className="relative w-full h-[50vh] sm:h-[60vh] overflow-hidden border-b border-outline-variant">
+      <section className="relative w-full min-h-[480px] sm:min-h-[520px] md:h-[60vh] flex items-end overflow-hidden border-b border-outline-variant">
         <Image
           src={service.imagePath}
           alt={service.title}
@@ -266,7 +266,7 @@ export default async function ServiceDetailPage({ params }: Props) {
           priority
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/45 to-black/20" />
-        <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-12">
+        <div className="relative z-10 w-full p-6 sm:p-12 pb-8 sm:pb-12">
           <div className="max-w-4xl mx-auto space-y-4">
             <div className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-md border border-white/20 px-3.5 py-1 font-mono text-[10px] font-bold tracking-widest uppercase rounded-full text-white">
               {content.hero.badgeText}
@@ -277,17 +277,17 @@ export default async function ServiceDetailPage({ params }: Props) {
             <p className="text-white/80 text-sm sm:text-base max-w-2xl leading-relaxed">
               {content.hero.subheadline}
             </p>
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 pt-2">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2 w-full sm:w-auto">
               <Link
                 href={whatsappQuoteUrl}
-                className="inline-flex items-center justify-center gap-2 bg-white text-primary px-6 py-3 font-mono text-[11px] font-bold uppercase tracking-widest transition-colors hover:bg-surface-container-low rounded-full"
+                className="inline-flex items-center justify-center gap-2 bg-white text-primary px-6 py-3 font-mono text-[11px] font-bold uppercase tracking-widest transition-colors hover:bg-surface-container-low rounded-full w-full sm:w-auto text-center"
               >
                 {content.hero.primaryCtaText}
                 <ArrowRight className="w-4 h-4" />
               </Link>
               <Link
                 href={content.hero.secondaryCtaLink || "#specs"}
-                className="inline-flex items-center justify-center gap-2 border border-white/25 bg-white/10 text-white px-6 py-3 font-mono text-[11px] font-bold uppercase tracking-widest transition-colors hover:bg-white/20 rounded-full"
+                className="inline-flex items-center justify-center gap-2 border border-white/25 bg-white/10 text-white px-6 py-3 font-mono text-[11px] font-bold uppercase tracking-widest transition-colors hover:bg-white/20 rounded-full w-full sm:w-auto text-center"
               >
                 {content.hero.secondaryCtaText}
               </Link>

@@ -58,7 +58,7 @@ export default function BusinessLocationMap() {
               href={directionsUrl}
               target="_blank"
               rel="noreferrer"
-              className="mt-6 inline-flex w-fit items-center gap-2 rounded-full bg-accent px-5 py-3 font-mono text-[11px] font-bold uppercase tracking-widest text-white transition-colors hover:bg-accent-hover sm:mt-8"
+              className="mt-6 inline-flex w-full sm:w-fit items-center justify-center gap-2 rounded-full bg-accent px-5 py-3.5 font-mono text-[11px] font-bold uppercase tracking-widest text-white transition-colors hover:bg-accent-hover sm:mt-8"
             >
               Get Directions
               <ExternalLink className="h-4 w-4" />
@@ -70,7 +70,7 @@ export default function BusinessLocationMap() {
               href={directionsUrl}
               target="_blank"
               rel="noreferrer"
-              className="absolute right-4 top-4 z-10 inline-flex w-fit items-center gap-2 rounded-full bg-accent px-5 py-3 font-mono text-[11px] font-bold uppercase tracking-widest text-white shadow-lg transition-colors hover:bg-accent-hover"
+              className="absolute right-4 top-4 z-10 hidden sm:inline-flex w-fit items-center gap-2 rounded-full bg-accent px-5 py-3 font-mono text-[11px] font-bold uppercase tracking-widest text-white shadow-lg transition-colors hover:bg-accent-hover"
             >
               Get Directions
               <ExternalLink className="h-4 w-4" />

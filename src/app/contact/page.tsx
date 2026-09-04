@@ -160,7 +160,7 @@ export default function ContactPage() {
                   href={directionsUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="absolute top-4 right-4 z-10 inline-flex items-center gap-2 bg-accent hover:bg-accent-hover text-white px-4 py-2 font-mono text-[10px] font-bold uppercase tracking-widest shadow-md transition-colors rounded-full"
+                  className="absolute top-4 right-4 z-10 hidden sm:inline-flex items-center gap-2 bg-accent hover:bg-accent-hover text-white px-4 py-2 font-mono text-[10px] font-bold uppercase tracking-widest shadow-md transition-colors rounded-full"
                 >
                   Get Directions
                   <ExternalLink className="w-3.5 h-3.5" />
@@ -180,7 +180,7 @@ export default function ContactPage() {
                   href={directionsUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-4 py-2 border border-outline-variant bg-surface-container hover:border-accent hover:text-accent font-mono text-[10px] font-bold uppercase tracking-widest text-secondary transition-colors rounded-full text-center shrink-0"
+                  className="px-4 py-2.5 border border-outline-variant bg-surface-container hover:border-accent hover:text-accent font-mono text-[10px] font-bold uppercase tracking-widest text-secondary transition-colors rounded-full text-center w-full sm:w-auto shrink-0"
                 >
                   Open in Google Maps
                 </a>

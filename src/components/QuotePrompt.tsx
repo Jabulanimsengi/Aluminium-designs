@@ -39,7 +39,7 @@ export default function QuotePrompt() {
       aria-modal="true"
       aria-labelledby="quote-prompt-title"
     >
-      <div className="relative w-full max-w-md bg-surface-container-lowest p-6 shadow-2xl sm:p-8">
+      <div className="relative w-full max-w-md max-h-[90dvh] overflow-y-auto bg-surface-container-lowest p-6 shadow-2xl sm:p-8">
         <button
           type="button"
           onClick={closePrompt}

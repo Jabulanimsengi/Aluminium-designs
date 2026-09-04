@@ -240,7 +240,7 @@ export default function ServicePricingAndFinishes({
                 href={quoteUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex w-full items-center justify-center gap-2 rounded-full border border-accent bg-accent py-3.5 px-6 font-mono text-xs font-bold uppercase tracking-widest text-white transition-all hover:bg-accent-hover"
+                className="flex w-full items-center justify-center gap-2 rounded-full border border-accent bg-accent py-3.5 px-4 sm:px-6 font-mono text-[11px] sm:text-xs font-bold uppercase tracking-wider sm:tracking-widest text-white text-center transition-all hover:bg-accent-hover"
               >
                 Inquire With {selectedFinish.name}
                 <ArrowRight className="h-4 w-4" />

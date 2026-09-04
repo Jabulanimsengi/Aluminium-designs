@@ -123,11 +123,11 @@ export default function Header() {
               ref={mobileMenuButtonRef}
               type="button"
               onClick={() => { setMobileServicesOpen(false); setMobileServicesCount(5); setMobileMenuOpen(!mobileMenuOpen); }}
-              className="lg:hidden p-1.5 -ml-1.5 hover:bg-surface-container transition-colors text-primary rounded-lg"
-            aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
-          >
-            {mobileMenuOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
-          </button>
+              className="lg:hidden flex h-11 w-11 items-center justify-center -ml-2 rounded-lg text-primary transition-colors hover:bg-surface-container active:bg-surface-container-high touch-manipulation"
+              aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+            >
+              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
 
           {/* Logo: aligned to the page content edge on desktop */}
           <Link

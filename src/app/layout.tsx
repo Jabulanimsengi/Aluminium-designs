@@ -28,7 +28,8 @@ const socialImageUrl = absoluteUrl("/images/hero_exterior.png");
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#0f2a43",
+  maximumScale: 5,
+  themeColor: "#14181c",
 };
 
 export const metadata: Metadata = {
