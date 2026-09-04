@@ -29,7 +29,7 @@ export default function Footer() {
           {/* Brand */}
           <div className="space-y-5 lg:col-span-1">
             <Link
-              href="/"
+              href="/#hero"
               aria-label="Aluminium Designs — home"
               className="relative inline-flex h-14 w-[144px] overflow-hidden select-none"
             >

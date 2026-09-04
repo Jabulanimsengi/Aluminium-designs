@@ -119,7 +119,7 @@ export default function Home() {
         }}
       />
       {/* 1. HERO SECTION */}
-      <section className="relative min-h-[65vh] md:min-h-[80vh] flex items-center justify-center border-b border-outline-variant overflow-hidden">
+      <section id="hero" className="relative min-h-[65vh] md:min-h-[80vh] flex items-center justify-center border-b border-outline-variant overflow-hidden scroll-mt-16">
         {/* Background image */}
         <div className="absolute inset-0 z-0 bg-surface-container-highest">
           <Image

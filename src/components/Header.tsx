@@ -40,6 +40,21 @@ export default function Header() {
     };
   }, []);
 
+  const handleLogoClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    if (pathname === "/" || pathname === "") {
+      event.preventDefault();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
+
+  const handleMobileDrawerLogoClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    setMobileMenuOpen(false);
+    if (pathname === "/" || pathname === "") {
+      event.preventDefault();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
+
   useEffect(() => {
     if (!mobileMenuOpen) return;
 
@@ -131,9 +146,10 @@ export default function Header() {
 
           {/* Logo: aligned to the page content edge on desktop */}
           <Link
-            href="/"
+            href="/#hero"
+            onClick={handleLogoClick}
             aria-label="Aluminium Designs — home"
-            className="flex shrink-0 items-center select-none lg:justify-self-start"
+            className="flex shrink-0 items-center select-none lg:justify-self-start cursor-pointer"
           >
             <Image
               src="/images/real_images/logo/logo.png"
@@ -308,9 +324,9 @@ export default function Header() {
           >
             <div className="flex items-center justify-between pb-4 border-b border-outline-variant">
               <Link
-                href="/"
-                onClick={() => setMobileMenuOpen(false)}
-                className="flex shrink-0 items-center select-none"
+                href="/#hero"
+                onClick={handleMobileDrawerLogoClick}
+                className="flex shrink-0 items-center select-none cursor-pointer"
                 aria-label="Aluminium Designs — home"
               >
                 <Image
