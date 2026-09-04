@@ -56,7 +56,7 @@ export default function LocationsDirectory() {
       {/* Header Section */}
       <section className="relative py-20 lg:py-32 bg-surface-container-low border-b border-outline-variant">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
-          <div className="inline-flex items-center justify-center w-16 h-16 border border-outline-variant bg-surface-container text-secondary mb-2 shadow-sm">
+          <div className="inline-flex items-center justify-center w-16 h-16 border border-outline-variant bg-surface-container text-accent mb-2 shadow-sm">
             <Map className="w-8 h-8" />
           </div>
           <h1 className="font-sans font-bold uppercase tracking-tight text-4xl sm:text-5xl text-primary">
@@ -83,7 +83,7 @@ export default function LocationsDirectory() {
                   <h2 className="font-sans font-bold uppercase tracking-tight text-2xl sm:text-3xl text-primary">
                     {municipality}
                   </h2>
-                  <span className="bg-surface-container text-on-tertiary-container font-mono text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full border border-outline-variant">
+                  <span className="bg-surface-container text-accent font-mono text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full border border-outline-variant">
                     {locations.length} Areas
                   </span>
                 </div>
@@ -93,15 +93,15 @@ export default function LocationsDirectory() {
                     <Link
                       key={loc.id}
                       href={`/locations/${loc.id}`}
-                      className="group flex items-center justify-between p-4 border border-outline-variant bg-surface-container-lowest hover:border-primary hover:bg-surface-container transition-all shadow-sm"
+                      className="group flex items-center justify-between p-4 border border-outline-variant bg-surface-container-lowest hover:border-accent hover:bg-surface-container transition-all shadow-sm"
                     >
                       <div className="flex items-center space-x-3">
-                        <MapPin className="w-4 h-4 text-outline group-hover:text-on-tertiary-container transition-colors" />
+                        <MapPin className="w-4 h-4 text-outline group-hover:text-accent transition-colors" />
                         <span className="font-sans font-medium text-sm text-on-surface-variant group-hover:text-primary transition-colors">
                           {loc.name}
                         </span>
                       </div>
-                      <ChevronRight className="w-4 h-4 text-outline group-hover:text-on-tertiary-container transition-transform group-hover:translate-x-1" />
+                      <ChevronRight className="w-4 h-4 text-outline group-hover:text-accent transition-transform group-hover:translate-x-1" />
                     </Link>
                   ))}
                 </div>

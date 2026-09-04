@@ -104,14 +104,14 @@ export default async function LocationServicePage({ params }: { params: Promise<
               <div className="flex flex-col sm:flex-row items-center gap-3 pt-4">
                 <Link
                   href={whatsappQuoteUrl}
-                  className="flex items-center justify-center gap-2 bg-on-tertiary-container hover:bg-primary text-white px-6 py-3.5 font-mono text-[11px] font-bold uppercase tracking-widest transition-colors w-full sm:w-auto rounded-full"
+                  className="flex items-center justify-center gap-2 bg-accent hover:bg-accent-hover text-white px-6 py-3.5 font-mono text-[11px] font-bold uppercase tracking-widest transition-colors w-full sm:w-auto rounded-full"
                 >
                   Request a Quote in {location.name}
                   <ArrowRight className="w-4 h-4" />
                 </Link>
                 <Link
                   href={`/locations/${location.id}`}
-                  className="flex items-center justify-center gap-2 bg-surface text-secondary px-6 py-3.5 font-mono text-[11px] font-bold uppercase tracking-widest rounded-full border border-outline-variant hover:border-primary hover:bg-surface-container transition-colors w-full sm:w-auto"
+                  className="flex items-center justify-center gap-2 bg-surface text-secondary px-6 py-3.5 font-mono text-[11px] font-bold uppercase tracking-widest rounded-full border border-outline-variant hover:border-accent hover:bg-surface-container transition-colors w-full sm:w-auto"
                 >
                   View All {location.name} Services
                 </Link>
@@ -135,7 +135,7 @@ export default async function LocationServicePage({ params }: { params: Promise<
       <section className="py-24 bg-surface">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-10 text-center">
-            <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
+            <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-accent">
               Local Expertise
             </span>
             <h2 className="mt-2 font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
@@ -152,7 +152,7 @@ export default async function LocationServicePage({ params }: { params: Promise<
           </div>
 
           <div className="mt-8 border border-outline-variant bg-surface-container-low p-5 flex items-start gap-3">
-            <CheckCircle2 className="w-5 h-5 text-secondary shrink-0 mt-0.5" />
+            <CheckCircle2 className="w-5 h-5 text-accent shrink-0 mt-0.5" />
             <p className="text-sm text-on-surface font-medium leading-relaxed">
               {content.localizedStory.localClimateNotice}
             </p>
@@ -165,7 +165,7 @@ export default async function LocationServicePage({ params }: { params: Promise<
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
-              <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
+              <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-accent">
                 Service Area
               </span>
               <h2 className="font-sans font-bold uppercase tracking-tight text-3xl sm:text-4xl text-primary">
@@ -182,7 +182,7 @@ export default async function LocationServicePage({ params }: { params: Promise<
                     key={suburb}
                     className="flex items-center gap-2 border border-outline-variant bg-surface-container-lowest px-3 py-2 text-xs font-medium text-on-surface"
                   >
-                    <MapPin className="w-3.5 h-3.5 text-secondary shrink-0" />
+                    <MapPin className="w-3.5 h-3.5 text-accent shrink-0" />
                     {suburb}
                   </li>
                 ))}
@@ -191,9 +191,9 @@ export default async function LocationServicePage({ params }: { params: Promise<
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
                 <a
                   href={`tel:${content.localNAP.phone.replace(/\s/g, "")}`}
-                  className="flex items-center gap-3 border border-outline-variant bg-surface-container-lowest p-4 hover:border-primary transition-colors"
+                  className="flex items-center gap-3 border border-outline-variant bg-surface-container-lowest p-4 hover:border-accent transition-colors"
                 >
-                  <Phone className="w-5 h-5 text-secondary shrink-0" />
+                  <Phone className="w-5 h-5 text-accent shrink-0" />
                   <div>
                     <p className="text-[10px] font-mono uppercase tracking-wider text-secondary">Call us</p>
                     <p className="text-sm font-bold text-primary">{content.localNAP.phone}</p>
@@ -201,9 +201,9 @@ export default async function LocationServicePage({ params }: { params: Promise<
                 </a>
                 <a
                   href={`mailto:${content.localNAP.email}`}
-                  className="flex items-center gap-3 border border-outline-variant bg-surface-container-lowest p-4 hover:border-primary transition-colors"
+                  className="flex items-center gap-3 border border-outline-variant bg-surface-container-lowest p-4 hover:border-accent transition-colors"
                 >
-                  <Mail className="w-5 h-5 text-secondary shrink-0" />
+                  <Mail className="w-5 h-5 text-accent shrink-0" />
                   <div>
                     <p className="text-[10px] font-mono uppercase tracking-wider text-secondary">Email us</p>
                     <p className="text-sm font-bold text-primary truncate">{content.localNAP.email}</p>
@@ -214,7 +214,7 @@ export default async function LocationServicePage({ params }: { params: Promise<
 
             <div className="bg-surface-container-lowest p-8 lg:p-12 border border-outline-variant relative overflow-hidden">
               <div className="relative z-10 space-y-6">
-                <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
+                <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-accent">
                   Branch
                 </span>
                 <h3 className="font-sans font-bold text-2xl text-primary">
@@ -225,13 +225,13 @@ export default async function LocationServicePage({ params }: { params: Promise<
                 </p>
                 {content.localProjects.length > 0 && (
                   <div className="border-t border-outline-variant pt-6">
-                  <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
+                  <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-accent">
                     Nearby Projects
                   </span>
                   <ul className="mt-4 space-y-4">
                     {content.localProjects.map((project, i) => (
                       <li key={i} className="flex gap-4">
-                        <div className="w-8 h-8 rounded-full bg-on-tertiary-container text-white flex items-center justify-center font-bold text-sm shrink-0">
+                        <div className="w-8 h-8 rounded-full bg-accent text-white flex items-center justify-center font-bold text-sm shrink-0">
                           {i + 1}
                         </div>
                         <div>
@@ -255,7 +255,7 @@ export default async function LocationServicePage({ params }: { params: Promise<
         <section className="py-24 bg-surface">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center space-y-4 mb-16">
-            <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
+            <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-accent">
               Local Case Studies
             </span>
             <h2 className="font-sans font-bold uppercase tracking-tight text-3xl sm:text-4xl text-primary">
@@ -267,7 +267,7 @@ export default async function LocationServicePage({ params }: { params: Promise<
             {content.localProjects.map((project, i) => (
               <div
                 key={i}
-                className="border border-outline-variant bg-surface-container-lowest overflow-hidden hover:border-primary transition-colors"
+                className="border border-outline-variant bg-surface-container-lowest overflow-hidden hover:border-accent transition-colors"
               >
                 <div className="relative h-56 w-full overflow-hidden bg-surface-container-high">
                   <Image
@@ -315,7 +315,7 @@ export default async function LocationServicePage({ params }: { params: Promise<
         <section className="py-24 bg-surface-container-low border-t border-outline-variant">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center space-y-4 mb-16">
-            <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
+            <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-accent">
               Local Reviews
             </span>
             <h2 className="font-sans font-bold uppercase tracking-tight text-3xl sm:text-4xl text-primary">
@@ -327,12 +327,12 @@ export default async function LocationServicePage({ params }: { params: Promise<
             {content.localReviews.map((review, i) => (
               <div
                 key={i}
-                className="border border-outline-variant bg-surface-container-lowest p-6 sm:p-8 flex flex-col justify-between hover:border-primary transition-colors"
+                className="border border-outline-variant bg-surface-container-lowest p-6 sm:p-8 flex flex-col justify-between hover:border-accent transition-colors"
               >
                 <div className="space-y-4">
                   <div className="flex items-center gap-1">
                     {[...Array(review.rating)].map((_, j) => (
-                      <Star key={j} className="w-4 h-4 fill-amber-400 text-amber-400" />
+                      <Star key={j} className="w-4 h-4 fill-accent text-accent" />
                     ))}
                   </div>
                   <p className="text-sm text-on-surface-variant leading-relaxed italic">
@@ -356,7 +356,7 @@ export default async function LocationServicePage({ params }: { params: Promise<
       <section className="py-24 bg-surface border-t border-outline-variant">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center space-y-4 mb-16">
-            <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
+            <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-accent">
               Quick Answers
             </span>
             <h2 className="font-sans font-bold uppercase tracking-tight text-3xl sm:text-4xl text-primary">
@@ -371,7 +371,7 @@ export default async function LocationServicePage({ params }: { params: Promise<
       <section className="py-20 bg-surface-container-low border-t border-outline-variant">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-10 text-center">
-            <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
+            <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-accent">
               Explore More
             </span>
             <h2 className="mt-2 font-sans font-bold uppercase tracking-tight text-3xl sm:text-4xl text-primary">
@@ -382,37 +382,37 @@ export default async function LocationServicePage({ params }: { params: Promise<
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             <Link
               href={service.slug}
-              className="group flex items-center justify-between gap-3 border border-outline-variant bg-surface-container-lowest px-5 py-4 transition-colors hover:border-primary"
+              className="group flex items-center justify-between gap-3 border border-outline-variant bg-surface-container-lowest px-5 py-4 transition-colors hover:border-accent"
             >
               <div>
                 <p className="font-mono text-[9px] font-bold uppercase tracking-widest text-secondary">All Products</p>
                 <p className="mt-1 text-sm font-bold text-primary">{service.title}</p>
               </div>
-              <ArrowRight className="h-4 w-4 shrink-0 text-secondary transition-colors group-hover:text-primary" />
+              <ArrowRight className="h-4 w-4 shrink-0 text-secondary transition-colors group-hover:text-accent" />
             </Link>
 
             <Link
               href={`/locations/${location.id}`}
-              className="group flex items-center justify-between gap-3 border border-outline-variant bg-surface-container-lowest px-5 py-4 transition-colors hover:border-primary"
+              className="group flex items-center justify-between gap-3 border border-outline-variant bg-surface-container-lowest px-5 py-4 transition-colors hover:border-accent"
             >
               <div>
                 <p className="font-mono text-[9px] font-bold uppercase tracking-widest text-secondary">All Services</p>
                 <p className="mt-1 text-sm font-bold text-primary">{location.name}</p>
               </div>
-              <ArrowRight className="h-4 w-4 shrink-0 text-secondary transition-colors group-hover:text-primary" />
+              <ArrowRight className="h-4 w-4 shrink-0 text-secondary transition-colors group-hover:text-accent" />
             </Link>
 
             {relatedAreas.map((area) => (
               <Link
                 key={area.id}
                 href={`/locations/${area.id}/${slugify(service.title)}-in-${area.id}`}
-                className="group flex items-center justify-between gap-3 border border-outline-variant bg-surface-container-lowest px-5 py-4 transition-colors hover:border-primary"
+                className="group flex items-center justify-between gap-3 border border-outline-variant bg-surface-container-lowest px-5 py-4 transition-colors hover:border-accent"
               >
                 <div>
                   <p className="font-mono text-[9px] font-bold uppercase tracking-widest text-secondary">Also in</p>
                   <p className="mt-1 text-sm font-bold text-primary">{service.title} in {area.name}</p>
                 </div>
-                <ArrowRight className="h-4 w-4 shrink-0 text-secondary transition-colors group-hover:text-primary" />
+                <ArrowRight className="h-4 w-4 shrink-0 text-secondary transition-colors group-hover:text-accent" />
               </Link>
             ))}
           </div>

@@ -49,9 +49,9 @@ export default function ServiceCard({
             }`}
           >
             {isSteel ? (
-              <ShieldCheck className="h-3 w-3 text-emerald-400" />
+              <ShieldCheck className="h-3 w-3 text-accent" />
             ) : (
-              <Sparkles className="h-3 w-3 text-cyan-300" />
+              <Sparkles className="h-3 w-3 text-accent" />
             )}
             {isSteel ? "Steel Security" : "Aluminium & Glass"}
           </div>

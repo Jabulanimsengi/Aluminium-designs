@@ -76,7 +76,7 @@ export default function ServicePricingAndFinishes({
     <section className="border-b border-outline-variant bg-surface py-16 sm:py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto mb-12 max-w-3xl text-center">
-          <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
+          <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-accent">
             Pricing Guide &amp; Custom Finishes
           </span>
           <h2 className="mt-2 font-sans text-3xl font-bold uppercase tracking-tight text-primary sm:text-4xl">
@@ -125,7 +125,7 @@ export default function ServicePricingAndFinishes({
                 <ul className="space-y-3">
                   {priceFactors.map((factor, i) => (
                     <li key={i} className="flex items-start gap-2.5 text-xs text-on-surface leading-relaxed">
-                      <Check className="h-4 w-4 shrink-0 text-emerald-600 mt-0.5" />
+                      <Check className="h-4 w-4 shrink-0 text-accent mt-0.5" />
                       <span>{factor}</span>
                     </li>
                   ))}
@@ -134,7 +134,7 @@ export default function ServicePricingAndFinishes({
 
               <div className="mt-6 border border-outline-variant/60 bg-surface-container-low p-4 rounded-sm">
                 <div className="flex items-center gap-2 font-mono text-[11px] font-bold text-primary">
-                  <ShieldCheck className="h-4 w-4 text-emerald-600 shrink-0" />
+                  <ShieldCheck className="h-4 w-4 text-accent shrink-0" />
                   <span>SABS Glass &amp; AAAMSA Frame Warranty Included</span>
                 </div>
                 <p className="mt-1 text-[11px] text-on-surface-variant leading-relaxed">
@@ -194,7 +194,7 @@ export default function ServicePricingAndFinishes({
                         onClick={() => setSelectedFinish(finish)}
                         className={`group relative flex flex-col items-center gap-1.5 rounded-md p-2 transition-all cursor-pointer ${
                           isSelected
-                            ? "bg-surface-container-high ring-2 ring-primary"
+                            ? "bg-surface-container-high ring-2 ring-accent"
                             : "hover:bg-surface-container"
                         }`}
                         title={finish.name}
@@ -220,7 +220,7 @@ export default function ServicePricingAndFinishes({
                   <h4 className="font-sans text-sm font-bold uppercase tracking-tight text-primary">
                     {selectedFinish.name}
                   </h4>
-                  <span className="rounded-full bg-primary/10 px-2.5 py-0.5 font-mono text-[10px] font-bold uppercase tracking-wider text-primary">
+                  <span className="rounded-full bg-accent-soft px-2.5 py-0.5 font-mono text-[10px] font-bold uppercase tracking-wider text-accent">
                     {selectedFinish.badge}
                   </span>
                 </div>
@@ -240,7 +240,7 @@ export default function ServicePricingAndFinishes({
                 href={quoteUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex w-full items-center justify-center gap-2 rounded-full border border-primary bg-surface py-3.5 px-6 font-mono text-xs font-bold uppercase tracking-widest text-primary transition-all hover:bg-primary hover:text-white"
+                className="flex w-full items-center justify-center gap-2 rounded-full border border-accent bg-accent py-3.5 px-6 font-mono text-xs font-bold uppercase tracking-widest text-white transition-all hover:bg-accent-hover"
               >
                 Inquire With {selectedFinish.name}
                 <ArrowRight className="h-4 w-4" />

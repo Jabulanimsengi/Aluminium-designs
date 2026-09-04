@@ -87,7 +87,7 @@ export default function SteelCatalogueFilter() {
           return (
             <article
               key={service.id}
-              className="group border border-outline-variant bg-surface-container-lowest overflow-hidden flex flex-col justify-between shadow-xs hover:border-primary transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+              className="group border border-outline-variant bg-surface-container-lowest overflow-hidden flex flex-col justify-between shadow-xs hover:border-accent transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
             >
               <div>
                 <div className="relative h-56 w-full overflow-hidden bg-surface-container">
@@ -100,13 +100,13 @@ export default function SteelCatalogueFilter() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
                   <div className="absolute top-3 left-3 bg-black/80 text-white font-mono text-[9px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full backdrop-blur-xs border border-white/20 flex items-center gap-1">
-                    <ShieldCheck className="h-3 w-3 text-emerald-400" />
+                    <ShieldCheck className="h-3 w-3 text-accent" />
                     Steel Security
                   </div>
                 </div>
 
                 <div className="p-5 space-y-3">
-                  <h3 className="font-sans font-bold text-lg uppercase text-primary group-hover:text-secondary transition-colors">
+                  <h3 className="font-sans font-bold text-lg uppercase text-primary group-hover:text-accent transition-colors">
                     {service.title}
                   </h3>
                   <p className="text-xs text-on-surface-variant leading-relaxed line-clamp-3">
@@ -132,7 +132,7 @@ export default function SteelCatalogueFilter() {
                 <div className="pt-4 flex items-center justify-between gap-2">
                   <Link
                     href={service.slug}
-                    className="inline-flex items-center gap-1 font-mono text-[10px] font-bold uppercase tracking-widest text-primary hover:text-secondary transition-colors"
+                    className="inline-flex items-center gap-1 font-mono text-[10px] font-bold uppercase tracking-widest text-primary hover:text-accent transition-colors"
                   >
                     View Specs
                     <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-1" />

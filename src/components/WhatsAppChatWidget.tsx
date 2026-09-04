@@ -42,12 +42,12 @@ export default function WhatsAppChatWidget() {
               type="button"
               onClick={() => setOpen(false)}
               aria-label="Close"
-              className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-full border border-outline-variant text-secondary transition-colors hover:bg-surface-container hover:text-primary"
+              className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-full border border-outline-variant text-secondary transition-colors hover:border-accent hover:text-accent"
             >
               <X className="h-4 w-4" />
             </button>
 
-            <p className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary mb-1.5">
+            <p className="font-mono text-[10px] font-bold uppercase tracking-widest text-accent mb-1.5">
               Instant Workshop Connection
             </p>
             <h2

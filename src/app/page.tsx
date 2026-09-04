@@ -208,13 +208,13 @@ export default function Home() {
               </p>
               <div className="mt-7 flex flex-col items-start gap-2 sm:flex-row sm:flex-wrap sm:gap-3">
                 <span className="inline-flex items-center gap-1.5 rounded-full border border-outline-variant bg-surface-container-low px-3 py-1.5 text-[11px] font-medium text-primary sm:gap-2 sm:px-4 sm:py-2 sm:text-xs">
-                  <House className="h-3.5 w-3.5 text-secondary sm:h-4 sm:w-4" /> Homes &amp; Renovations
+                  <House className="h-3.5 w-3.5 text-accent sm:h-4 sm:w-4" /> Homes &amp; Renovations
                 </span>
                 <span className="inline-flex items-center gap-1.5 rounded-full border border-outline-variant bg-surface-container-low px-3 py-1.5 text-[11px] font-medium text-primary sm:gap-2 sm:px-4 sm:py-2 sm:text-xs">
-                  <Building2 className="h-3.5 w-3.5 text-secondary sm:h-4 sm:w-4" /> Offices &amp; Shops
+                  <Building2 className="h-3.5 w-3.5 text-accent sm:h-4 sm:w-4" /> Offices &amp; Shops
                 </span>
                 <span className="inline-flex items-center gap-1.5 rounded-full border border-outline-variant bg-surface-container-low px-3 py-1.5 text-[11px] font-medium text-primary sm:gap-2 sm:px-4 sm:py-2 sm:text-xs">
-                  <MapPin className="h-3.5 w-3.5 text-secondary sm:h-4 sm:w-4" /> All Gauteng Areas
+                  <MapPin className="h-3.5 w-3.5 text-accent sm:h-4 sm:w-4" /> All Gauteng Areas
                 </span>
               </div>
             </div>
@@ -225,7 +225,7 @@ export default function Home() {
                 ["03", "Neat Installation", "Our clean, polite fitting crews install your doors and windows and leave your home spotless."],
               ].map(([number, title, detail]) => (
                 <div key={number} className="flex gap-4 border border-outline-variant rounded-xl bg-surface-container-lowest p-5 shadow-sm hover:shadow-md hover:border-accent transition-all">
-                  <span className="font-mono text-xs font-bold text-secondary">{number}</span>
+                  <span className="font-mono text-xs font-bold text-accent">{number}</span>
                   <div>
                     <h3 className="font-sans text-sm font-bold uppercase tracking-tight text-primary">{title}</h3>
                     <p className="mt-1 text-xs leading-relaxed text-on-surface-variant">{detail}</p>
@@ -275,7 +275,7 @@ export default function Home() {
                   className="group min-h-[300px] border-r border-b border-outline-variant bg-surface-container-lowest p-7 sm:p-8 flex flex-col transition-all duration-300 hover:bg-surface hover:shadow-md"
                 >
                   <div className="flex items-center justify-between">
-                    <span className="font-mono text-[10px] font-bold tracking-[0.2em] text-secondary">
+                    <span className="font-mono text-[10px] font-bold tracking-[0.2em] text-accent">
                       {String(index + 1).padStart(2, "0")}
                     </span>
                     <div className="flex h-11 w-11 items-center justify-center rounded-full border border-outline-variant bg-surface-container transition-all duration-300 group-hover:border-accent group-hover:bg-accent group-hover:text-white">
@@ -393,7 +393,7 @@ export default function Home() {
             </Link>
           </div>
 
-          <p className="mb-3 text-center font-mono text-[9px] font-bold uppercase tracking-widest text-secondary sm:hidden">
+          <p className="mb-3 text-center font-mono text-[9px] font-bold uppercase tracking-widest text-accent sm:hidden">
             Swipe to browse projects
           </p>
 

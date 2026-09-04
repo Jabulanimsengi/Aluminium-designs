@@ -142,8 +142,8 @@ export default function SteelWorksPage() {
       <section className="py-20 sm:py-24 bg-surface-container-low border-b border-outline-variant">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
           <div className="inline-flex items-center gap-2 bg-surface border border-outline-variant px-3.5 py-1 font-mono text-[10px] font-bold tracking-widest uppercase rounded-full">
-            <Hammer className="w-3.5 h-3.5 text-secondary" />
-            <span className="text-secondary">Custom Steel Fabrication &bull; Gauteng Workshop</span>
+            <Hammer className="w-3.5 h-3.5 text-accent" />
+            <span className="text-accent">Custom Steel Fabrication &bull; Gauteng Workshop</span>
           </div>
 
           <h1 className="font-sans text-4xl sm:text-5xl lg:text-6xl font-bold uppercase tracking-tight text-primary">
@@ -158,7 +158,7 @@ export default function SteelWorksPage() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
             <Link
               href={whatsappQuoteUrl}
-              className="inline-flex items-center gap-2 bg-primary hover:bg-secondary text-on-primary border border-primary hover:border-secondary px-6 py-3.5 font-mono text-[11px] font-bold uppercase tracking-widest transition-colors rounded-full shadow-sm"
+              className="inline-flex items-center gap-2 bg-accent hover:bg-accent-hover text-white border border-accent hover:border-accent-hover px-6 py-3.5 font-mono text-[11px] font-bold uppercase tracking-widest transition-colors rounded-full shadow-sm"
             >
               Request Free Steel Quote
               <ArrowRight className="w-4 h-4" />
@@ -179,7 +179,7 @@ export default function SteelWorksPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <div className="border border-outline-variant bg-surface-container-lowest p-6 space-y-3 shadow-xs">
-              <div className="w-10 h-10 border border-outline-variant bg-surface-container flex items-center justify-center text-secondary">
+              <div className="w-10 h-10 border border-outline-variant bg-surface-container flex items-center justify-center text-accent">
                 <Shield className="w-5 h-5" />
               </div>
               <h3 className="font-sans font-bold text-base uppercase text-primary">High-Tensile Steel</h3>
@@ -189,7 +189,7 @@ export default function SteelWorksPage() {
             </div>
 
             <div className="border border-outline-variant bg-surface-container-lowest p-6 space-y-3 shadow-xs">
-              <div className="w-10 h-10 border border-outline-variant bg-surface-container flex items-center justify-center text-secondary">
+              <div className="w-10 h-10 border border-outline-variant bg-surface-container flex items-center justify-center text-accent">
                 <Layers className="w-5 h-5" />
               </div>
               <h3 className="font-sans font-bold text-base uppercase text-primary">Anti-Rust Finishes</h3>
@@ -199,7 +199,7 @@ export default function SteelWorksPage() {
             </div>
 
             <div className="border border-outline-variant bg-surface-container-lowest p-6 space-y-3 shadow-xs">
-              <div className="w-10 h-10 border border-outline-variant bg-surface-container flex items-center justify-center text-secondary">
+              <div className="w-10 h-10 border border-outline-variant bg-surface-container flex items-center justify-center text-accent">
                 <Lock className="w-5 h-5" />
               </div>
               <h3 className="font-sans font-bold text-base uppercase text-primary">Slamlock &amp; Tamper Proof</h3>
@@ -209,7 +209,7 @@ export default function SteelWorksPage() {
             </div>
 
             <div className="border border-outline-variant bg-surface-container-lowest p-6 space-y-3 shadow-xs">
-              <div className="w-10 h-10 border border-outline-variant bg-surface-container flex items-center justify-center text-secondary">
+              <div className="w-10 h-10 border border-outline-variant bg-surface-container flex items-center justify-center text-accent">
                 <Wrench className="w-5 h-5" />
               </div>
               <h3 className="font-sans font-bold text-base uppercase text-primary">On-Site Measurement</h3>
@@ -225,7 +225,7 @@ export default function SteelWorksPage() {
       <section className="py-20 bg-surface border-b border-outline-variant">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto text-center mb-12">
-            <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
+            <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-accent">
               Product Catalogue
             </span>
             <h2 className="mt-2 font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
@@ -244,7 +244,7 @@ export default function SteelWorksPage() {
       <section className="py-20 bg-surface-container-low border-b border-outline-variant">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-12 max-w-3xl mx-auto text-center">
-            <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
+            <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-accent">
               Transparent Pricing
             </span>
             <h2 className="mt-2 font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
@@ -300,7 +300,7 @@ export default function SteelWorksPage() {
       <section className="py-20 bg-surface border-b border-outline-variant">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12 space-y-3">
-            <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
+            <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-accent">
               Security Answers
             </span>
             <h2 className="font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
@@ -315,7 +315,7 @@ export default function SteelWorksPage() {
             {steelFaqs.map((faq) => (
               <details
                 key={faq.question}
-                className="group border border-outline-variant bg-surface-container-lowest p-5 transition-colors hover:border-primary shadow-xs"
+                className="group border border-outline-variant bg-surface-container-lowest p-5 transition-colors hover:border-accent shadow-xs"
               >
                 <summary className="flex cursor-pointer list-none items-center justify-between font-sans font-bold text-sm uppercase text-primary [&::-webkit-details-marker]:hidden">
                   <span>{faq.question}</span>
@@ -336,7 +336,7 @@ export default function SteelWorksPage() {
       <section className="py-20 bg-surface-container-low border-b border-outline-variant">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12 space-y-3 max-w-3xl mx-auto">
-            <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
+            <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-accent">
               Gauteng Service Coverage
             </span>
             <h2 className="font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
@@ -351,36 +351,36 @@ export default function SteelWorksPage() {
             {/* Region 1: Johannesburg Central & North */}
             <div className="border border-outline-variant bg-surface-container-lowest p-5 space-y-3 shadow-xs">
               <h3 className="font-sans font-bold text-sm uppercase text-primary border-b border-outline-variant pb-2 flex items-center gap-1.5">
-                <MapPin className="w-3.5 h-3.5 text-secondary" />
+                <MapPin className="w-3.5 h-3.5 text-accent" />
                 Johannesburg &amp; North
               </h3>
               <ul className="space-y-2 text-xs font-mono">
                 <li>
-                  <Link href="/locations/sandton/steel-works-near-sandton" className="text-secondary hover:text-primary transition-colors flex items-center justify-between">
+                  <Link href="/locations/sandton/steel-works-near-sandton" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
                     <span>Steel Works Near Sandton</span>
                     <span>&rarr;</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/locations/sandton/security-gates-near-sandton" className="text-secondary hover:text-primary transition-colors flex items-center justify-between">
+                  <Link href="/locations/sandton/security-gates-near-sandton" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
                     <span>Security Gates Near Sandton</span>
                     <span>&rarr;</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/locations/johannesburg/burglar-bars-near-johannesburg" className="text-secondary hover:text-primary transition-colors flex items-center justify-between">
+                  <Link href="/locations/johannesburg/burglar-bars-near-johannesburg" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
                     <span>Burglar Bars Near JHB CBD</span>
                     <span>&rarr;</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/locations/randburg/driveway-gates-near-randburg" className="text-secondary hover:text-primary transition-colors flex items-center justify-between">
+                  <Link href="/locations/randburg/driveway-gates-near-randburg" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
                     <span>Driveway Gates Near Randburg</span>
                     <span>&rarr;</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/locations/fourways/steel-carports-near-fourways" className="text-secondary hover:text-primary transition-colors flex items-center justify-between">
+                  <Link href="/locations/fourways/steel-carports-near-fourways" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
                     <span>Steel Carports Near Fourways</span>
                     <span>&rarr;</span>
                   </Link>
@@ -391,36 +391,36 @@ export default function SteelWorksPage() {
             {/* Region 2: East Rand & Ekurhuleni */}
             <div className="border border-outline-variant bg-surface-container-lowest p-5 space-y-3 shadow-xs">
               <h3 className="font-sans font-bold text-sm uppercase text-primary border-b border-outline-variant pb-2 flex items-center gap-1.5">
-                <MapPin className="w-3.5 h-3.5 text-secondary" />
+                <MapPin className="w-3.5 h-3.5 text-accent" />
                 East Rand &amp; Ekurhuleni
               </h3>
               <ul className="space-y-2 text-xs font-mono">
                 <li>
-                  <Link href="/locations/katlehong/steel-works-near-katlehong" className="text-secondary hover:text-primary transition-colors flex items-center justify-between">
+                  <Link href="/locations/katlehong/steel-works-near-katlehong" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
                     <span>Steel Works Near Katlehong</span>
                     <span>&rarr;</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/locations/alberton/security-gates-near-alberton" className="text-secondary hover:text-primary transition-colors flex items-center justify-between">
+                  <Link href="/locations/alberton/security-gates-near-alberton" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
                     <span>Security Gates Near Alberton</span>
                     <span>&rarr;</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/locations/germiston/burglar-bars-near-germiston" className="text-secondary hover:text-primary transition-colors flex items-center justify-between">
+                  <Link href="/locations/germiston/burglar-bars-near-germiston" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
                     <span>Burglar Bars Near Germiston</span>
                     <span>&rarr;</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/locations/bedfordview/trellis-security-gates-near-bedfordview" className="text-secondary hover:text-primary transition-colors flex items-center justify-between">
+                  <Link href="/locations/bedfordview/trellis-security-gates-near-bedfordview" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
                     <span>Trellis Gates Near Bedfordview</span>
                     <span>&rarr;</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/locations/boksburg/palisade-fencing-near-boksburg" className="text-secondary hover:text-primary transition-colors flex items-center justify-between">
+                  <Link href="/locations/boksburg/palisade-fencing-near-boksburg" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
                     <span>Palisade Fencing Near Boksburg</span>
                     <span>&rarr;</span>
                   </Link>
@@ -431,36 +431,36 @@ export default function SteelWorksPage() {
             {/* Region 3: Pretoria & Centurion */}
             <div className="border border-outline-variant bg-surface-container-lowest p-5 space-y-3 shadow-xs">
               <h3 className="font-sans font-bold text-sm uppercase text-primary border-b border-outline-variant pb-2 flex items-center gap-1.5">
-                <MapPin className="w-3.5 h-3.5 text-secondary" />
+                <MapPin className="w-3.5 h-3.5 text-accent" />
                 Pretoria &amp; Centurion
               </h3>
               <ul className="space-y-2 text-xs font-mono">
                 <li>
-                  <Link href="/locations/centurion/steel-works-near-centurion" className="text-secondary hover:text-primary transition-colors flex items-center justify-between">
+                  <Link href="/locations/centurion/steel-works-near-centurion" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
                     <span>Steel Works Near Centurion</span>
                     <span>&rarr;</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/locations/centurion/driveway-gates-near-centurion" className="text-secondary hover:text-primary transition-colors flex items-center justify-between">
+                  <Link href="/locations/centurion/driveway-gates-near-centurion" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
                     <span>Driveway Gates Near Centurion</span>
                     <span>&rarr;</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/locations/pretoria/security-gates-near-pretoria" className="text-secondary hover:text-primary transition-colors flex items-center justify-between">
+                  <Link href="/locations/pretoria/security-gates-near-pretoria" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
                     <span>Security Gates Near Pretoria</span>
                     <span>&rarr;</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/locations/midrand/steel-carports-near-midrand" className="text-secondary hover:text-primary transition-colors flex items-center justify-between">
+                  <Link href="/locations/midrand/steel-carports-near-midrand" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
                     <span>Steel Carports Near Midrand</span>
                     <span>&rarr;</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/locations/midrand/palisade-fencing-near-midrand" className="text-secondary hover:text-primary transition-colors flex items-center justify-between">
+                  <Link href="/locations/midrand/palisade-fencing-near-midrand" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
                     <span>Palisade Fencing Near Midrand</span>
                     <span>&rarr;</span>
                   </Link>
@@ -471,36 +471,36 @@ export default function SteelWorksPage() {
             {/* Region 4: West Rand & South */}
             <div className="border border-outline-variant bg-surface-container-lowest p-5 space-y-3 shadow-xs">
               <h3 className="font-sans font-bold text-sm uppercase text-primary border-b border-outline-variant pb-2 flex items-center gap-1.5">
-                <MapPin className="w-3.5 h-3.5 text-secondary" />
+                <MapPin className="w-3.5 h-3.5 text-accent" />
                 West Rand &amp; South
               </h3>
               <ul className="space-y-2 text-xs font-mono">
                 <li>
-                  <Link href="/locations/roodepoort/steel-works-near-roodepoort" className="text-secondary hover:text-primary transition-colors flex items-center justify-between">
+                  <Link href="/locations/roodepoort/steel-works-near-roodepoort" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
                     <span>Steel Works Near Roodepoort</span>
                     <span>&rarr;</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/locations/roodepoort/security-gates-near-roodepoort" className="text-secondary hover:text-primary transition-colors flex items-center justify-between">
+                  <Link href="/locations/roodepoort/security-gates-near-roodepoort" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
                     <span>Security Gates Near Roodepoort</span>
                     <span>&rarr;</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/locations/krugersdorp/burglar-bars-near-krugersdorp" className="text-secondary hover:text-primary transition-colors flex items-center justify-between">
+                  <Link href="/locations/krugersdorp/burglar-bars-near-krugersdorp" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
                     <span>Burglar Bars Near Krugersdorp</span>
                     <span>&rarr;</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/locations/soweto/driveway-gates-near-soweto" className="text-secondary hover:text-primary transition-colors flex items-center justify-between">
+                  <Link href="/locations/soweto/driveway-gates-near-soweto" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
                     <span>Driveway Gates Near Soweto</span>
                     <span>&rarr;</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/locations/alberton/custom-welding-near-alberton" className="text-secondary hover:text-primary transition-colors flex items-center justify-between">
+                  <Link href="/locations/alberton/custom-welding-near-alberton" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
                     <span>Welding Services Near Alberton</span>
                     <span>&rarr;</span>
                   </Link>

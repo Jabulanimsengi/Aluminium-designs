@@ -87,14 +87,14 @@ export default function LeadCaptureForm({ source, onCancel }: LeadCaptureFormPro
   }
 
   const inputClass =
-    "w-full border border-outline-variant bg-surface px-4 py-3 text-sm text-primary placeholder-outline font-sans focus:outline-none focus:border-primary transition-colors rounded-none";
+    "w-full border border-outline-variant bg-surface px-4 py-3 text-sm text-primary placeholder-outline font-sans focus:outline-none focus:border-accent transition-colors rounded-none";
   const labelClass =
     "mb-1.5 block font-mono text-[10px] font-bold uppercase tracking-widest text-outline";
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <label htmlFor="name" className={labelClass}>Name <span className="text-on-tertiary-container">*</span></label>
+        <label htmlFor="name" className={labelClass}>Name <span className="text-accent">*</span></label>
         <input id="name" name="name" type="text" required autoFocus
           value={form.name} onChange={handleChange} placeholder="Your full name"
           className={inputClass} />
@@ -102,7 +102,7 @@ export default function LeadCaptureForm({ source, onCancel }: LeadCaptureFormPro
       </div>
 
       <div>
-        <label htmlFor="phone" className={labelClass}>Phone number <span className="text-on-tertiary-container">*</span></label>
+        <label htmlFor="phone" className={labelClass}>Phone number <span className="text-accent">*</span></label>
         <input id="phone" name="phone" type="tel" required
           value={form.phone} onChange={handleChange} placeholder="082 123 4567"
           className={inputClass} />
@@ -110,7 +110,7 @@ export default function LeadCaptureForm({ source, onCancel }: LeadCaptureFormPro
       </div>
 
       <div>
-        <label htmlFor="location" className={labelClass}>Location / suburb <span className="text-on-tertiary-container">*</span></label>
+        <label htmlFor="location" className={labelClass}>Location / suburb <span className="text-accent">*</span></label>
         <input id="location" name="location" type="text" required
           value={form.location} onChange={handleChange} placeholder="e.g. Sandton"
           className={inputClass} />
@@ -118,7 +118,7 @@ export default function LeadCaptureForm({ source, onCancel }: LeadCaptureFormPro
       </div>
 
       <div>
-        <label htmlFor="budget" className={labelClass}>Budget <span className="text-on-tertiary-container">*</span></label>
+        <label htmlFor="budget" className={labelClass}>Budget <span className="text-accent">*</span></label>
         <select id="budget" name="budget" required value={form.budget} onChange={handleChange}
           className={`${inputClass} cursor-pointer`}>
           <option value="" disabled>Select a budget range...</option>
@@ -129,7 +129,7 @@ export default function LeadCaptureForm({ source, onCancel }: LeadCaptureFormPro
 
       <label className="flex items-center gap-2 text-left text-xs text-on-surface-variant">
         <input type="checkbox" checked={consent} onChange={(event) => setConsent(event.target.checked)}
-          className="h-4 w-4 shrink-0 accent-primary" />
+          className="h-4 w-4 shrink-0 accent-accent" />
         <span>I agree to be contacted regarding my project inquiry.</span>
       </label>
 
@@ -149,7 +149,7 @@ export default function LeadCaptureForm({ source, onCancel }: LeadCaptureFormPro
       </button>
 
       {onCancel ? (
-        <button type="button" onClick={onCancel} className="w-full text-center text-xs text-secondary transition-colors hover:text-primary">
+        <button type="button" onClick={onCancel} className="w-full text-center text-xs text-secondary transition-colors hover:text-accent">
           Cancel
         </button>
       ) : null}

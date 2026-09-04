@@ -170,7 +170,7 @@ export default function Header() {
                       pathname.startsWith("/services")
                         ? "text-primary after:scale-x-100"
                         : "text-secondary hover:text-primary after:scale-x-0 hover:after:scale-x-100"
-                    } after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:origin-left after:scale-x-0 after:bg-on-tertiary-container after:transition-transform after:duration-300 after:ease-out`}
+                    } after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:origin-left after:scale-x-0 after:bg-accent after:transition-transform after:duration-300 after:ease-out`}
                   >
                     {link.name}
                     <ChevronDown className={`w-3.5 h-3.5 transition-transform ${servicesDropdownOpen ? "rotate-180" : ""}`} />
@@ -188,7 +188,7 @@ export default function Header() {
                     <div className="p-4 grid grid-cols-2 gap-4">
                       {/* Column 1: Aluminium & Glass */}
                       <div className="space-y-1">
-                        <div className="flex items-center gap-1.5 pb-2 border-b border-outline-variant text-[10px] font-mono font-bold uppercase tracking-widest text-secondary">
+                        <div className="flex items-center gap-1.5 pb-2 border-b border-outline-variant text-[10px] font-mono font-bold uppercase tracking-widest text-accent">
                           <Sparkles className="w-3 h-3 text-accent" />
                           Aluminium &amp; Glass
                         </div>
@@ -213,7 +213,7 @@ export default function Header() {
 
                       {/* Column 2: Steel & Security */}
                       <div className="space-y-1">
-                        <div className="flex items-center gap-1.5 pb-2 border-b border-outline-variant text-[10px] font-mono font-bold uppercase tracking-widest text-secondary">
+                        <div className="flex items-center gap-1.5 pb-2 border-b border-outline-variant text-[10px] font-mono font-bold uppercase tracking-widest text-accent">
                           <Hammer className="w-3 h-3 text-accent" />
                           Steel Works &amp; Security
                         </div>
@@ -335,7 +335,7 @@ export default function Header() {
                           onClick={() => setMobileMenuOpen(false)}
                           className="flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-bold text-primary bg-surface-container-low hover:bg-surface-container mb-1 border border-outline-variant/60"
                         >
-                          <Hammer className="w-3.5 h-3.5 text-secondary" />
+                          <Hammer className="w-3.5 h-3.5 text-accent" />
                           Steel Works Division Hub
                         </Link>
                         <Link
@@ -359,7 +359,7 @@ export default function Header() {
                           <button
                             type="button"
                             onClick={() => setMobileServicesCount((c) => c + 5)}
-                            className="w-full px-3 py-2 rounded-lg text-[10px] font-mono font-bold uppercase tracking-wider text-secondary hover:text-primary hover:bg-surface-container transition-colors text-center"
+                            className="w-full px-3 py-2 rounded-lg text-[10px] font-mono font-bold uppercase tracking-wider text-accent hover:text-accent-hover hover:bg-surface-container transition-colors text-center"
                           >
                             View More Services ({services.length - mobileServicesCount} remaining)
                           </button>

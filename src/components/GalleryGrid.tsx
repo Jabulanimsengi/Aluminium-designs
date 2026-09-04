@@ -226,7 +226,7 @@ export default function GalleryGrid() {
       <div className="sm:hidden">
         <label
           htmlFor="gallery-category"
-          className="mb-2 block font-mono text-[10px] font-bold uppercase tracking-widest text-secondary"
+          className="mb-2 block font-mono text-[10px] font-bold uppercase tracking-widest text-accent"
         >
           Project category
         </label>
@@ -235,7 +235,7 @@ export default function GalleryGrid() {
             id="gallery-category"
             value={activeFilter}
             onChange={(event) => setFilter(event.target.value)}
-            className="h-12 w-full appearance-none border border-outline-variant bg-surface-container-lowest px-4 pr-11 font-mono text-xs font-bold uppercase tracking-wider text-primary outline-none focus:border-primary focus:ring-2 focus:ring-primary/15"
+            className="h-12 w-full appearance-none border border-outline-variant bg-surface-container-lowest px-4 pr-11 font-mono text-xs font-bold uppercase tracking-wider text-primary outline-none focus:border-accent focus:ring-2 focus:ring-accent/15"
           >
             {categories.map((category) => (
               <option key={category.id} value={category.id}>
@@ -243,7 +243,7 @@ export default function GalleryGrid() {
               </option>
             ))}
           </select>
-          <ChevronRight className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 rotate-90 text-secondary" />
+          <ChevronRight className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 rotate-90 text-accent" />
         </div>
       </div>
 
@@ -257,7 +257,7 @@ export default function GalleryGrid() {
             className={`shrink-0 rounded-full border px-4 py-2 font-mono text-[11px] font-bold uppercase tracking-widest transition-colors ${
               activeFilter === category.id
                 ? "border-primary bg-primary text-on-primary"
-                : "border-outline-variant bg-surface text-secondary hover:bg-surface-container"
+                : "border-outline-variant bg-surface text-on-surface-variant hover:border-accent hover:text-accent"
             }`}
           >
             {category.name}
@@ -267,7 +267,7 @@ export default function GalleryGrid() {
 
       <div className="flex items-end justify-between gap-4">
         <div>
-          <p className="font-mono text-[9px] font-bold uppercase tracking-widest text-secondary">
+          <p className="font-mono text-[9px] font-bold uppercase tracking-widest text-accent">
             Completed work
           </p>
           <p className="mt-1 text-sm font-bold text-primary">
@@ -313,7 +313,7 @@ export default function GalleryGrid() {
                 isLoaded ? "scale-100 opacity-100 group-hover:scale-105" : "scale-[1.02] opacity-0"
               }`}
             />
-            <span className="absolute left-1/2 top-1/2 flex h-11 w-11 -translate-x-1/2 -translate-y-1/2 scale-90 items-center justify-center rounded-full bg-white text-primary opacity-0 shadow-lg transition-all duration-300 group-hover:scale-100 group-hover:opacity-100">
+            <span className="absolute left-1/2 top-1/2 flex h-11 w-11 -translate-x-1/2 -translate-y-1/2 scale-90 items-center justify-center rounded-full bg-accent text-white opacity-0 shadow-lg transition-all duration-300 group-hover:scale-100 group-hover:opacity-100">
               <ZoomIn className="h-4 w-4" />
             </span>
           </button>
@@ -329,7 +329,7 @@ export default function GalleryGrid() {
           <button
             type="button"
             onClick={() => setVisibleCount((current) => current + PROJECT_BATCH_SIZE)}
-            className="inline-flex min-w-44 items-center justify-center rounded-full bg-primary px-6 py-3.5 font-mono text-xs font-bold uppercase tracking-widest text-white transition-colors hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+            className="inline-flex min-w-44 items-center justify-center rounded-full bg-accent px-6 py-3.5 font-mono text-xs font-bold uppercase tracking-widest text-white transition-colors hover:bg-accent-hover focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2"
           >
             Load more
           </button>
@@ -424,7 +424,7 @@ export default function GalleryGrid() {
                     aria-current={isActive ? "true" : undefined}
                     className={`relative h-14 w-20 shrink-0 overflow-hidden border-2 transition-all ${
                       isActive
-                        ? "border-white opacity-100"
+                        ? "border-accent opacity-100"
                         : "border-transparent opacity-55 hover:opacity-100"
                     }`}
                   >

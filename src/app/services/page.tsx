@@ -44,8 +44,8 @@ export default function ServicesPage() {
       <section className="py-16 sm:py-20 lg:py-24 bg-surface-container-low border-b border-outline-variant">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-5">
           <div className="inline-flex items-center gap-2 bg-surface border border-outline-variant px-3.5 py-1 font-mono text-[10px] font-bold tracking-widest uppercase rounded-full">
-            <PenTool className="w-3.5 h-3.5 text-secondary" />
-            <span className="text-secondary">Products &amp; Services</span>
+            <PenTool className="w-3.5 h-3.5 text-accent" />
+            <span className="text-accent">Products &amp; Services</span>
           </div>
           <h1 className="font-sans text-4xl sm:text-5xl font-bold uppercase tracking-tight text-primary">
             Aluminium Windows, Doors &amp; Steel Works

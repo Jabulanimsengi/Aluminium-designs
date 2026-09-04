@@ -193,7 +193,7 @@ export default function AboutPage() {
             <div className="mt-8 flex w-full max-w-md flex-col justify-center gap-3 sm:w-auto sm:max-w-none sm:flex-row">
               <Link
                 href={whatsappQuoteUrl}
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3.5 font-mono text-xs font-bold uppercase tracking-widest text-primary transition-colors hover:bg-secondary hover:text-white"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-accent px-6 py-3.5 font-mono text-xs font-bold uppercase tracking-widest text-white transition-colors hover:bg-accent-hover"
               >
                 Request a quote <ArrowRight className="h-4 w-4" />
               </Link>
@@ -222,7 +222,7 @@ export default function AboutPage() {
       <section className="border-b border-outline-variant bg-surface py-16 sm:py-20 lg:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-3xl text-center">
-            <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
+            <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-accent">
               Who we are
             </span>
             <h2 className="mt-2 font-sans text-3xl font-bold uppercase tracking-tight text-primary sm:text-4xl">
@@ -241,11 +241,11 @@ export default function AboutPage() {
             </p>
             <div className="grid gap-3 pt-4 sm:grid-cols-2">
               <div className="flex items-center justify-center gap-3 border border-outline-variant bg-surface-container-low p-4">
-                <House className="h-5 w-5 shrink-0 text-secondary" />
+                <House className="h-5 w-5 shrink-0 text-accent" />
                 <span className="text-xs font-bold uppercase tracking-wide text-primary">Residential projects</span>
               </div>
               <div className="flex items-center justify-center gap-3 border border-outline-variant bg-surface-container-low p-4">
-                <Building2 className="h-5 w-5 shrink-0 text-secondary" />
+                <Building2 className="h-5 w-5 shrink-0 text-accent" />
                 <span className="text-xs font-bold uppercase tracking-wide text-primary">Commercial projects</span>
               </div>
             </div>
@@ -256,7 +256,7 @@ export default function AboutPage() {
       <section className="border-b border-outline-variant bg-surface-container-low py-16 sm:py-20 lg:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto mb-12 max-w-3xl text-center">
-            <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
+            <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-accent">
               What we offer
             </span>
             <h2 className="mt-2 font-sans text-3xl font-bold uppercase tracking-tight text-primary sm:text-4xl">
@@ -272,7 +272,7 @@ export default function AboutPage() {
               const Icon = group.icon;
               return (
                 <article key={group.title} className="flex min-h-[330px] flex-col border border-outline-variant bg-surface p-6 shadow-sm sm:p-7">
-                  <div className="flex h-11 w-11 items-center justify-center border border-outline-variant bg-surface-container text-secondary">
+                  <div className="flex h-11 w-11 items-center justify-center border border-outline-variant bg-surface-container text-accent">
                     <Icon className="h-5 w-5" />
                   </div>
                   <h3 className="mt-5 font-sans text-lg font-bold uppercase tracking-tight text-primary">{group.title}</h3>
@@ -280,12 +280,12 @@ export default function AboutPage() {
                   <ul className="mt-5 space-y-2">
                     {group.items.map((item) => (
                       <li key={item} className="flex items-start gap-2 text-xs text-on-surface-variant">
-                        <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-secondary" />
+                        <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-accent" />
                         {item}
                       </li>
                     ))}
                   </ul>
-                  <Link href={group.href} className="mt-auto inline-flex items-center gap-2 pt-6 font-mono text-[10px] font-bold uppercase tracking-widest text-primary hover:text-secondary">
+                  <Link href={group.href} className="mt-auto inline-flex items-center gap-2 pt-6 font-mono text-[10px] font-bold uppercase tracking-widest text-primary hover:text-accent">
                     Explore service <ArrowRight className="h-3.5 w-3.5" />
                   </Link>
                 </article>
@@ -294,7 +294,7 @@ export default function AboutPage() {
           </div>
 
           <div className="mt-10 text-center">
-            <Link href="/services" className="inline-flex items-center gap-2 rounded-full border border-primary px-6 py-3 font-mono text-xs font-bold uppercase tracking-widest text-primary transition-colors hover:bg-primary hover:text-white">
+            <Link href="/services" className="inline-flex items-center gap-2 rounded-full border border-accent bg-accent px-6 py-3 font-mono text-xs font-bold uppercase tracking-widest text-white transition-colors hover:bg-accent-hover">
               View all products and services <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
@@ -304,7 +304,7 @@ export default function AboutPage() {
       <section className="border-b border-outline-variant bg-surface py-16 sm:py-20 lg:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="mx-auto mb-12 max-w-3xl text-center">
-              <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">How we work</span>
+              <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-accent">How we work</span>
               <h2 className="mt-2 font-sans text-3xl font-bold uppercase tracking-tight text-primary sm:text-4xl">
                 One process from idea to installation
               </h2>
@@ -319,7 +319,7 @@ export default function AboutPage() {
                   <article key={step.number} className="bg-surface-container-lowest p-6 sm:p-7">
                     <div className="flex items-center justify-between">
                       <span className="font-mono text-xs font-bold text-outline">{step.number}</span>
-                      <Icon className="h-5 w-5 text-secondary" />
+                      <Icon className="h-5 w-5 text-accent" />
                     </div>
                     <h3 className="mt-8 font-sans text-sm font-bold uppercase tracking-tight text-primary">{step.title}</h3>
                     <p className="mt-3 text-xs leading-relaxed text-on-surface-variant">{step.description}</p>
@@ -333,7 +333,7 @@ export default function AboutPage() {
       <section className="border-b border-outline-variant bg-surface py-16 sm:py-20 lg:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto mb-12 max-w-3xl text-center">
-            <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">Our approach</span>
+            <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-accent">Our approach</span>
             <h2 className="mt-2 font-sans text-3xl font-bold uppercase tracking-tight text-primary sm:text-4xl">
               What clients can expect from us
             </h2>
@@ -343,7 +343,7 @@ export default function AboutPage() {
               const Icon = principle.icon;
               return (
                 <article key={principle.title} className="min-h-[250px] border-b border-r border-outline-variant p-6 sm:p-7">
-                  <Icon className="h-6 w-6 text-secondary" />
+                  <Icon className="h-6 w-6 text-accent" />
                   <h3 className="mt-8 font-sans text-sm font-bold uppercase tracking-tight text-primary">{principle.title}</h3>
                   <p className="mt-3 text-xs leading-relaxed text-on-surface-variant">{principle.description}</p>
                 </article>
@@ -356,7 +356,7 @@ export default function AboutPage() {
       <section className="border-b border-outline-variant bg-surface-container-low py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-3xl text-center">
-            <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">Where we work</span>
+            <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-accent">Where we work</span>
             <h2 className="mt-2 font-sans text-3xl font-bold uppercase tracking-tight text-primary">Based in Gauteng, ready for your project</h2>
             <p className="mt-4 text-sm leading-relaxed text-on-surface-variant">
               We serve residential and commercial clients across Gauteng and surrounding areas. Site measurements are available by appointment so we can assess the actual space before finalising the work.
@@ -364,13 +364,13 @@ export default function AboutPage() {
           </div>
           <div className="mx-auto mt-10 max-w-3xl border border-outline-variant bg-surface p-6 text-center shadow-sm sm:p-8">
             <div className="flex flex-col items-center gap-4">
-              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-primary text-white">
+              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-accent text-white">
                 <MapPin className="h-5 w-5" />
               </div>
               <div>
                 <p className="font-sans text-sm font-bold uppercase text-primary">{businessContact.name}</p>
                 <p className="mt-2 text-sm leading-relaxed text-on-surface-variant">{businessContact.fullAddress}</p>
-                <Link href="/contact" className="mt-4 inline-flex items-center gap-2 font-mono text-[10px] font-bold uppercase tracking-widest text-primary hover:text-secondary">
+                <Link href="/contact" className="mt-4 inline-flex items-center gap-2 font-mono text-[10px] font-bold uppercase tracking-widest text-primary hover:text-accent">
                   Contact our team <ArrowRight className="h-3.5 w-3.5" />
                 </Link>
               </div>

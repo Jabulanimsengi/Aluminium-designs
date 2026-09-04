@@ -43,8 +43,8 @@ export default function GalleryPage() {
       <section className="border-b border-outline-variant bg-surface-container-low py-10 sm:py-20 lg:py-24">
         <div className="mx-auto max-w-4xl space-y-4 px-4 text-center sm:space-y-5 sm:px-6 lg:px-8">
           <div className="inline-flex items-center gap-2 bg-surface border border-outline-variant px-3.5 py-1 font-mono text-[10px] font-bold tracking-widest uppercase rounded-full">
-            <Layers className="w-3.5 h-3.5 text-secondary" />
-            <span className="text-secondary">Completed Installations</span>
+            <Layers className="w-3.5 h-3.5 text-accent" />
+            <span className="text-accent">Completed Installations</span>
           </div>
           <h1 className="font-sans text-3xl font-bold uppercase leading-[1.05] tracking-tight text-primary sm:text-5xl">
             Our Aluminium Installation Portfolio

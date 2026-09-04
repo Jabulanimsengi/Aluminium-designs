@@ -302,7 +302,7 @@ export default async function ServiceDetailPage({ params }: Props) {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
             <div className="lg:col-span-7 space-y-6">
               <div>
-                <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
+                <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-accent">
                   About This Service
                 </span>
                 <h2 className="mt-2 font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
@@ -317,7 +317,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                 ))}
               </div>
               <div className="border border-outline-variant bg-surface-container-low p-5 flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-secondary shrink-0 mt-0.5" />
+                <CheckCircle2 className="w-5 h-5 text-accent shrink-0 mt-0.5" />
                 <p className="text-sm text-on-surface font-medium leading-relaxed">
                   {content.overview.keyFeaturesNotice}
                 </p>
@@ -360,7 +360,7 @@ export default async function ServiceDetailPage({ params }: Props) {
       <section className="py-20 bg-surface-container-low border-b border-outline-variant">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-12 text-center">
-            <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
+            <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-accent">
               Why Choose Us
             </span>
             <h2 className="mt-2 font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
@@ -372,9 +372,9 @@ export default async function ServiceDetailPage({ params }: Props) {
             {content.benefits.items.map((benefit) => (
               <div
                 key={benefit.title}
-                className="flex gap-4 border border-outline-variant bg-surface-container-lowest p-5 hover:border-primary transition-colors shadow-sm"
+                className="flex gap-4 border border-outline-variant bg-surface-container-lowest p-5 hover:border-accent transition-colors shadow-sm"
               >
-                <div className="w-10 h-10 border border-outline-variant bg-surface-container flex items-center justify-center text-secondary shrink-0 mt-0.5">
+                <div className="w-10 h-10 border border-outline-variant bg-surface-container flex items-center justify-center text-accent shrink-0 mt-0.5">
                   <BenefitIcon name={benefit.icon} />
                 </div>
                 <div className="min-w-0">
@@ -395,7 +395,7 @@ export default async function ServiceDetailPage({ params }: Props) {
       <section className="py-20 bg-surface border-b border-outline-variant">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-12 text-center">
-            <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
+            <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-accent">
               Options &amp; Styles
             </span>
             <h2 className="mt-2 font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
@@ -410,7 +410,7 @@ export default async function ServiceDetailPage({ params }: Props) {
             {content.productTypes.items.map((type) => (
               <div
                 key={type.name}
-                className="border border-outline-variant bg-surface-container-lowest p-6 hover:border-primary transition-colors flex flex-col"
+                className="border border-outline-variant bg-surface-container-lowest p-6 hover:border-accent transition-colors flex flex-col"
               >
                 <span className="font-mono text-[9px] font-bold uppercase tracking-[0.18em] text-secondary">
                   {type.tagline}
@@ -437,7 +437,7 @@ export default async function ServiceDetailPage({ params }: Props) {
       <section className="py-20 bg-surface-container-low border-b border-outline-variant">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-12 text-center">
-            <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
+            <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-accent">
               Glass &amp; Performance
             </span>
             <h2 className="mt-2 font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
@@ -474,9 +474,9 @@ export default async function ServiceDetailPage({ params }: Props) {
               ).map((option) => (
                 <div
                   key={option.name}
-                  className="border border-outline-variant bg-surface-container-lowest p-5 flex gap-4 hover:border-primary transition-colors shadow-sm"
+                  className="border border-outline-variant bg-surface-container-lowest p-5 flex gap-4 hover:border-accent transition-colors shadow-sm"
                 >
-                  <div className="w-8 h-8 border border-outline-variant bg-surface-container flex items-center justify-center text-secondary shrink-0 mt-0.5">
+                  <div className="w-8 h-8 border border-outline-variant bg-surface-container flex items-center justify-center text-accent shrink-0 mt-0.5">
                     <CheckCircle2 className="w-4 h-4" />
                   </div>
                   <div className="min-w-0">
@@ -496,7 +496,7 @@ export default async function ServiceDetailPage({ params }: Props) {
       <section id="specs" className="py-20 bg-surface border-b border-outline-variant scroll-mt-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-12 text-center">
-            <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
+            <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-accent">
               Built to Spec
             </span>
             <h2 className="mt-2 font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
@@ -551,7 +551,7 @@ export default async function ServiceDetailPage({ params }: Props) {
       <section className="py-20 bg-surface-container-low border-b border-outline-variant">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-14 text-center">
-            <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
+            <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-accent">
               How It Works
             </span>
             <h2 className="mt-2 font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
@@ -568,7 +568,7 @@ export default async function ServiceDetailPage({ params }: Props) {
               return (
                 <div
                   key={step.stepNumber}
-                  className="border border-outline-variant bg-surface-container-lowest overflow-hidden flex flex-col hover:border-primary transition-all duration-300 shadow-sm group"
+                  className="border border-outline-variant bg-surface-container-lowest overflow-hidden flex flex-col hover:border-accent transition-all duration-300 shadow-sm group"
                 >
                   <div className="relative aspect-[4/3] w-full overflow-hidden bg-surface-container">
                     <Image
@@ -579,7 +579,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                       className="object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                    <div className="absolute top-3 left-3 bg-primary text-on-primary font-mono text-xs font-bold w-8 h-8 flex items-center justify-center rounded-full shadow-md">
+                    <div className="absolute top-3 left-3 bg-accent text-white font-mono text-xs font-bold w-8 h-8 flex items-center justify-center rounded-full shadow-md">
                       {step.stepNumber}
                     </div>
                   </div>
@@ -602,7 +602,7 @@ export default async function ServiceDetailPage({ params }: Props) {
       <section className="py-20 bg-surface border-b border-outline-variant">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-12 text-center">
-            <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
+            <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-accent">
               Customer Reviews
             </span>
             <h2 className="mt-2 font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
@@ -619,7 +619,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                 <div className="space-y-4">
                   <div className="flex items-center gap-1">
                     {[...Array(review.rating)].map((_, i) => (
-                      <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
+                      <Star key={i} className="w-4 h-4 fill-accent text-accent" />
                     ))}
                   </div>
                   <p className="text-sm text-on-surface-variant leading-relaxed italic">
@@ -642,7 +642,7 @@ export default async function ServiceDetailPage({ params }: Props) {
       <section className="py-20 bg-surface-container-low border-b border-outline-variant">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-12">
-            <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
+            <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-accent">
               Quick Answers
             </span>
             <h2 className="mt-2 font-sans text-3xl font-bold uppercase tracking-tight text-primary">
@@ -657,7 +657,7 @@ export default async function ServiceDetailPage({ params }: Props) {
       <section className="py-20 bg-surface border-b border-outline-variant overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-10 text-center">
-            <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
+            <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-accent">
               More Aluminium Solutions
             </span>
             <h2 className="mt-2 font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
@@ -670,7 +670,7 @@ export default async function ServiceDetailPage({ params }: Props) {
               <Link
                 key={s.id}
                 href={s.slug}
-                className="group overflow-hidden border border-outline-variant bg-surface-container-lowest transition-all duration-300 hover:-translate-y-1 hover:border-primary hover:shadow-lg"
+                className="group overflow-hidden border border-outline-variant bg-surface-container-lowest transition-all duration-300 hover:-translate-y-1 hover:border-accent hover:shadow-lg"
               >
                 <div className="relative aspect-[4/3] overflow-hidden bg-surface-container-high">
                   <Image
@@ -681,7 +681,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                     className="object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/35 to-transparent" />
-                  <div className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-white text-primary shadow-md transition-colors group-hover:bg-primary group-hover:text-on-primary">
+                  <div className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-white text-primary shadow-md transition-colors group-hover:bg-accent group-hover:text-white">
                     <ArrowUpRight className="h-4 w-4" />
                   </div>
                 </div>
@@ -703,7 +703,7 @@ export default async function ServiceDetailPage({ params }: Props) {
           <div className="mt-6 flex justify-center">
             <Link
               href="/services"
-              className="inline-flex items-center gap-2 rounded-full border border-outline-variant bg-surface px-5 py-3 font-mono text-[10px] font-bold uppercase tracking-widest text-primary transition-colors hover:border-primary hover:bg-primary hover:text-on-primary"
+              className="inline-flex items-center gap-2 rounded-full border border-outline-variant bg-surface px-5 py-3 font-mono text-[10px] font-bold uppercase tracking-widest text-primary transition-colors hover:border-accent hover:bg-accent hover:text-white"
             >
               View All Products
               <ArrowUpRight className="h-4 w-4" />
@@ -716,7 +716,7 @@ export default async function ServiceDetailPage({ params }: Props) {
       <section className="py-20 bg-surface-container-low border-b border-outline-variant">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-10 text-center">
-            <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
+            <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-accent">
               Local Service Areas
             </span>
             <h2 className="mt-2 font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
@@ -732,10 +732,10 @@ export default async function ServiceDetailPage({ params }: Props) {
               <Link
                 key={area.id}
                 href={`/locations/${area.id}/${slugify(service.title)}-in-${area.id}`}
-                className="group flex items-center justify-between gap-2 border border-outline-variant bg-surface-container-lowest px-4 py-3 text-xs font-medium text-on-surface transition-colors hover:border-primary"
+                className="group flex items-center justify-between gap-2 border border-outline-variant bg-surface-container-lowest px-4 py-3 text-xs font-medium text-on-surface transition-colors hover:border-accent"
               >
                 <span className="truncate">{service.title} in {area.name}</span>
-                <ArrowUpRight className="h-3.5 w-3.5 shrink-0 text-secondary transition-colors group-hover:text-primary" />
+                <ArrowUpRight className="h-3.5 w-3.5 shrink-0 text-secondary transition-colors group-hover:text-accent" />
               </Link>
             ))}
           </div>
@@ -743,7 +743,7 @@ export default async function ServiceDetailPage({ params }: Props) {
           <div className="mt-6 flex justify-center">
             <Link
               href="/locations"
-              className="inline-flex items-center gap-2 rounded-full border border-outline-variant bg-surface px-5 py-3 font-mono text-[10px] font-bold uppercase tracking-widest text-primary transition-colors hover:border-primary hover:bg-primary hover:text-on-primary"
+              className="inline-flex items-center gap-2 rounded-full border border-outline-variant bg-surface px-5 py-3 font-mono text-[10px] font-bold uppercase tracking-widest text-primary transition-colors hover:border-accent hover:bg-accent hover:text-white"
             >
               View All Service Areas
               <ArrowUpRight className="h-4 w-4" />

@@ -16,14 +16,14 @@ export default function BusinessLocationMap() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid items-stretch gap-5 sm:gap-8 lg:grid-cols-[0.8fr_1.2fr]">
           <div className="order-2 flex flex-col justify-center border border-outline-variant bg-surface-container-lowest p-5 sm:p-10 lg:order-1">
-            <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
+            <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-accent">
               Visit Our Workshop
             </span>
             <h2 className="mt-3 font-sans text-2xl font-bold uppercase tracking-tight text-primary sm:text-4xl">
               Find Aluminium Designs in Katlehong
             </h2>
             <div className="mt-4 flex items-start gap-3 text-on-surface-variant sm:mt-6">
-              <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-secondary" />
+              <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-accent" />
               <address className="text-sm not-italic leading-relaxed">
                 {businessContact.streetAddress}
                 <br />
@@ -35,8 +35,8 @@ export default function BusinessLocationMap() {
 
             <div className="mt-6 border-t border-outline-variant pt-5 sm:mt-8">
               <div className="flex items-center gap-2">
-                <Clock3 className="h-4 w-4 text-secondary" />
-                <h3 className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
+                <Clock3 className="h-4 w-4 text-accent" />
+                <h3 className="font-mono text-[10px] font-bold uppercase tracking-widest text-accent">
                   Trading hours
                 </h3>
               </div>
@@ -58,7 +58,7 @@ export default function BusinessLocationMap() {
               href={directionsUrl}
               target="_blank"
               rel="noreferrer"
-              className="mt-6 inline-flex w-fit items-center gap-2 rounded-full bg-on-tertiary-container px-5 py-3 font-mono text-[11px] font-bold uppercase tracking-widest text-white transition-colors hover:bg-primary sm:mt-8"
+              className="mt-6 inline-flex w-fit items-center gap-2 rounded-full bg-accent px-5 py-3 font-mono text-[11px] font-bold uppercase tracking-widest text-white transition-colors hover:bg-accent-hover sm:mt-8"
             >
               Get Directions
               <ExternalLink className="h-4 w-4" />
@@ -70,7 +70,7 @@ export default function BusinessLocationMap() {
               href={directionsUrl}
               target="_blank"
               rel="noreferrer"
-              className="absolute right-4 top-4 z-10 inline-flex w-fit items-center gap-2 rounded-full bg-on-tertiary-container px-5 py-3 font-mono text-[11px] font-bold uppercase tracking-widest text-white shadow-lg transition-colors hover:bg-primary"
+              className="absolute right-4 top-4 z-10 inline-flex w-fit items-center gap-2 rounded-full bg-accent px-5 py-3 font-mono text-[11px] font-bold uppercase tracking-widest text-white shadow-lg transition-colors hover:bg-accent-hover"
             >
               Get Directions
               <ExternalLink className="h-4 w-4" />

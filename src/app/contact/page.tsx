@@ -73,8 +73,8 @@ export default function ContactPage() {
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <div className="inline-flex items-center gap-2 bg-surface-container-lowest border border-outline-variant px-3.5 py-1 font-mono text-[10px] font-bold tracking-widest uppercase rounded-full">
-            <MapPin className="w-3.5 h-3.5 text-secondary" />
-            <span className="text-secondary">We Service All Of Gauteng</span>
+            <MapPin className="w-3.5 h-3.5 text-accent" />
+            <span className="text-accent">We Service All Of Gauteng</span>
           </div>
           <h1 className="mt-4 font-sans text-3xl sm:text-4xl lg:text-5xl font-bold uppercase tracking-tight text-primary">
             Get in Touch With Our Team
@@ -93,9 +93,9 @@ export default function ContactPage() {
                 return (
                   <div
                     key={item.title}
-                    className="border border-outline-variant bg-surface-container-lowest p-6 flex items-start gap-4 hover:border-primary transition-colors shadow-sm"
+                    className="border border-outline-variant bg-surface-container-lowest p-6 flex items-start gap-4 hover:border-accent transition-colors shadow-sm"
                   >
-                    <div className="w-10 h-10 border border-outline-variant bg-surface-container flex items-center justify-center text-secondary shrink-0">
+                    <div className="w-10 h-10 border border-outline-variant bg-surface-container flex items-center justify-center text-accent shrink-0">
                       <Icon className="w-5 h-5" />
                     </div>
                     <div className="space-y-1.5">
@@ -110,7 +110,7 @@ export default function ContactPage() {
                           href={item.action}
                           target={item.target}
                           rel="noopener noreferrer"
-                          className="inline-flex items-center text-[10px] font-mono font-bold uppercase tracking-widest text-secondary hover:text-primary transition-colors mt-1"
+                          className="inline-flex items-center text-[10px] font-mono font-bold uppercase tracking-widest text-secondary hover:text-accent transition-colors mt-1"
                         >
                           {item.actionText}
                           <ArrowRight className="w-3 h-3 ml-1" />
@@ -125,7 +125,7 @@ export default function ContactPage() {
             {/* Hours */}
             <div className="border border-outline-variant bg-surface-container-lowest p-6 space-y-4 shadow-sm">
               <h4 className="font-sans font-bold text-sm uppercase text-primary flex items-center gap-2">
-                <Clock className="w-4 h-4 text-secondary shrink-0" />
+                <Clock className="w-4 h-4 text-accent shrink-0" />
                 Working Hours
               </h4>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
@@ -160,7 +160,7 @@ export default function ContactPage() {
                   href={directionsUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="absolute top-4 right-4 z-10 inline-flex items-center gap-2 bg-on-tertiary-container hover:bg-primary text-white px-4 py-2 font-mono text-[10px] font-bold uppercase tracking-widest shadow-md transition-colors rounded-full"
+                  className="absolute top-4 right-4 z-10 inline-flex items-center gap-2 bg-accent hover:bg-accent-hover text-white px-4 py-2 font-mono text-[10px] font-bold uppercase tracking-widest shadow-md transition-colors rounded-full"
                 >
                   Get Directions
                   <ExternalLink className="w-3.5 h-3.5" />
@@ -180,7 +180,7 @@ export default function ContactPage() {
                   href={directionsUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-4 py-2 border border-outline-variant bg-surface-container hover:border-primary font-mono text-[10px] font-bold uppercase tracking-widest text-secondary transition-colors rounded-full text-center shrink-0"
+                  className="px-4 py-2 border border-outline-variant bg-surface-container hover:border-accent hover:text-accent font-mono text-[10px] font-bold uppercase tracking-widest text-secondary transition-colors rounded-full text-center shrink-0"
                 >
                   Open in Google Maps
                 </a>

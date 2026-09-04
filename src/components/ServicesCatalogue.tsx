@@ -40,7 +40,7 @@ export default function ServicesCatalogue({ services }: ServicesCatalogueProps) 
             className={`rounded-full px-4 py-2 font-mono text-[11px] font-bold uppercase tracking-wider transition-colors shrink-0 ${
               activeCategory === "all"
                 ? "bg-primary text-white shadow-xs"
-                : "bg-surface-container-lowest border border-outline-variant text-secondary hover:border-primary"
+                : "bg-surface-container-lowest border border-outline-variant text-secondary hover:border-accent"
             }`}
           >
             All Products ({services.length})
@@ -51,7 +51,7 @@ export default function ServicesCatalogue({ services }: ServicesCatalogueProps) 
             className={`rounded-full px-4 py-2 font-mono text-[11px] font-bold uppercase tracking-wider transition-colors shrink-0 ${
               activeCategory === "aluminium"
                 ? "bg-primary text-white shadow-xs"
-                : "bg-surface-container-lowest border border-outline-variant text-secondary hover:border-primary"
+                : "bg-surface-container-lowest border border-outline-variant text-secondary hover:border-accent"
             }`}
           >
             Aluminium &amp; Glass ({aluminiumCount})
@@ -62,7 +62,7 @@ export default function ServicesCatalogue({ services }: ServicesCatalogueProps) 
             className={`rounded-full px-4 py-2 font-mono text-[11px] font-bold uppercase tracking-wider transition-colors shrink-0 ${
               activeCategory === "steel"
                 ? "bg-primary text-white shadow-xs"
-                : "bg-surface-container-lowest border border-outline-variant text-secondary hover:border-primary"
+                : "bg-surface-container-lowest border border-outline-variant text-secondary hover:border-accent"
             }`}
           >
             Steel Works &amp; Security ({steelCount})
@@ -71,7 +71,7 @@ export default function ServicesCatalogue({ services }: ServicesCatalogueProps) 
 
         <Link
           href="/steel-works"
-          className="inline-flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-wider text-secondary hover:text-primary transition-colors"
+          className="inline-flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-wider text-secondary hover:text-accent transition-colors"
         >
           <Hammer className="w-3.5 h-3.5" />
           Dedicated Steel Works Hub
@@ -83,8 +83,8 @@ export default function ServicesCatalogue({ services }: ServicesCatalogueProps) 
       {activeCategory === "steel" && (
         <div className="border border-outline-variant bg-surface-container-low p-6 sm:p-8 flex flex-col md:flex-row items-center text-center md:text-left justify-between gap-6 shadow-xs max-w-5xl mx-auto">
           <div className="space-y-2 max-w-2xl">
-            <div className="inline-flex items-center gap-2 font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
-              <ShieldCheck className="w-4 h-4 text-secondary" />
+            <div className="inline-flex items-center gap-2 font-mono text-[10px] font-bold uppercase tracking-widest text-accent">
+              <ShieldCheck className="w-4 h-4 text-accent" />
               Heavy-Duty Security Division
             </div>
             <h2 className="font-sans text-xl sm:text-2xl font-bold uppercase tracking-tight text-primary">
@@ -96,7 +96,7 @@ export default function ServicesCatalogue({ services }: ServicesCatalogueProps) 
           </div>
           <Link
             href="/steel-works"
-            className="inline-flex items-center gap-2 bg-primary hover:bg-secondary text-white px-5 py-2.5 font-mono text-[10px] font-bold uppercase tracking-widest transition-colors rounded-full shrink-0 shadow-sm"
+            className="inline-flex items-center gap-2 bg-accent hover:bg-accent-hover text-white px-5 py-2.5 font-mono text-[10px] font-bold uppercase tracking-widest transition-colors rounded-full shrink-0 shadow-sm"
           >
             Explore Steel Division
             <ArrowRight className="w-3.5 h-3.5" />

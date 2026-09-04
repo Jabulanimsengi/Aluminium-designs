@@ -237,7 +237,7 @@ export default async function LocationPage({ params }: { params: Promise<{ area:
 
             <h1 className="font-sans font-bold uppercase tracking-tight text-4xl sm:text-5xl lg:text-6xl text-primary leading-[1.1]">
               Aluminium Windows, Doors &amp; Steel Works {location.type === "mall" ? "Near" : "in"}{" "}
-              <span className="text-on-tertiary-container">{location.name}</span>
+              <span className="text-accent">{location.name}</span>
             </h1>
 
             <p className="font-sans text-on-surface-variant text-lg leading-relaxed max-w-2xl">
@@ -247,7 +247,7 @@ export default async function LocationPage({ params }: { params: Promise<{ area:
             <div className="flex flex-col sm:flex-row items-center gap-3 pt-4">
               <Link
                 href={whatsappQuoteUrl}
-                className="flex items-center justify-center gap-2 bg-on-tertiary-container hover:bg-primary text-white px-6 py-3.5 font-mono text-[11px] font-bold uppercase tracking-widest transition-colors w-full sm:w-auto rounded-full"
+                className="flex items-center justify-center gap-2 bg-accent hover:bg-accent-hover text-white px-6 py-3.5 font-mono text-[11px] font-bold uppercase tracking-widest transition-colors w-full sm:w-auto rounded-full"
               >
                 Get a Free Quote in {location.name}
                 <ArrowRight className="w-4 h-4" />
@@ -300,10 +300,10 @@ export default async function LocationPage({ params }: { params: Promise<{ area:
               return (
                 <div
                   key={i}
-                  className={`p-8 border border-outline-variant flex flex-col justify-between min-h-[200px] hover:border-primary transition-all duration-300 ${benefit.span}`}
+                  className={`p-8 border border-outline-variant flex flex-col justify-between min-h-[200px] hover:border-accent transition-all duration-300 ${benefit.span}`}
                 >
                   <div className="space-y-4">
-                    <div className="w-10 h-10 border border-outline-variant bg-surface-container flex items-center justify-center text-secondary">
+                    <div className="w-10 h-10 border border-outline-variant bg-surface-container flex items-center justify-center text-accent">
                       <Icon className="w-5 h-5" />
                     </div>
                     <div className="space-y-2 text-left">

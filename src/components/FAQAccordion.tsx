@@ -56,7 +56,7 @@ export default function FAQAccordion({ limit, category = "all", locationName, it
             className={`border transition-colors ${
               isOpen
                 ? "bg-surface-container-lowest border-outline-variant"
-                : "bg-surface-container-lowest border-outline-variant hover:border-primary"
+                : "bg-surface-container-lowest border-outline-variant hover:border-accent"
             }`}
           >
             <button
@@ -67,7 +67,7 @@ export default function FAQAccordion({ limit, category = "all", locationName, it
               className="flex items-center justify-between w-full p-5 text-left cursor-pointer"
             >
               <div className="flex items-center gap-3 pr-4">
-                <HelpCircle className="w-4 h-4 text-secondary shrink-0" />
+                <HelpCircle className="w-4 h-4 text-accent shrink-0" />
                 <span className="text-sm font-sans font-bold text-primary leading-snug">{faq.question}</span>
               </div>
               <ChevronDown

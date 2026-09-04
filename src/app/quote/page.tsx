@@ -12,7 +12,7 @@ export default function QuotePage() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-16 sm:py-24">
       <div className="border border-outline-variant bg-surface-container-lowest p-6 sm:p-10">
-        <p className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
+        <p className="font-mono text-[10px] font-bold uppercase tracking-widest text-accent">
           No-obligation quote
         </p>
         <h1 className="mt-3 text-left font-sans text-3xl font-bold uppercase tracking-tight text-primary sm:text-4xl">
