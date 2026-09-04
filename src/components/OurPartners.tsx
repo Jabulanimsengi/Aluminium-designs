@@ -1,6 +1,16 @@
+import React from "react";
 import Image from "next/image";
 
-const partners = [
+interface Partner {
+  name: string;
+  logo: string;
+  width: number;
+  height: number;
+  className: string;
+  style?: React.CSSProperties;
+}
+
+const partners: Partner[] = [
   {
     name: "Alpeco",
     logo: "/images/partners/alpeco.png",
@@ -20,7 +30,8 @@ const partners = [
     logo: "/images/partners/logo-hsystem.png",
     width: 512,
     height: 512,
-    className: "h-9 sm:h-11 w-auto object-contain",
+    className: "h-9 sm:h-11 w-auto object-contain brightness-0 [filter:brightness(0)]",
+    style: { filter: "brightness(0)" },
   },
   {
     name: "AGW",
@@ -51,6 +62,7 @@ export default function OurPartners() {
                 width={partner.width}
                 height={partner.height}
                 className={partner.className}
+                style={partner.style}
               />
             </div>
           ))}
