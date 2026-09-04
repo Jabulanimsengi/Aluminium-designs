@@ -11,6 +11,7 @@ import FAQAccordion from "@/components/FAQAccordion";
 import CTASection from "@/components/CTASection";
 import PlanningTools from "@/components/PlanningTools";
 import TrustedBy from "@/components/TrustedBy";
+import OurPartners from "@/components/OurPartners";
 import BusinessLocationMap from "@/components/BusinessLocationMap";
 import { absoluteUrl, siteUrl, whatsappQuoteUrl } from "@/lib/site";
 import { faqs } from "@/data/faqs";
@@ -507,8 +508,11 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 10. FAQ */}
-      <section className="py-20 bg-surface-container-low border-b border-outline-variant">
+      {/* 10. OUR PARTNERS */}
+      <OurPartners />
+
+      {/* 11. FAQ */}
+      <section className="py-20 bg-surface border-b border-outline-variant">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-12 text-center">
             <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">
