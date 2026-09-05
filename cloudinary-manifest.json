@@ -1370,5 +1370,35 @@
     "width": 1024,
     "height": 1024,
     "uploaded_at": "2026-09-05T12:58:26.087Z"
+  },
+  "/images/real_images/products/steaming/steaming-image-one.jpeg": {
+    "public_id": "apex-aluminium/images/real_images/products/steaming/steaming-image-one",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788618085/apex-aluminium/images/real_images/products/steaming/steaming-image-one.jpg",
+    "resource_type": "image",
+    "format": "jpg",
+    "bytes": 74673,
+    "width": 720,
+    "height": 1600,
+    "uploaded_at": "2026-09-05T14:21:26.216Z"
+  },
+  "/images/real_images/products/steaming/steaming-image-three.jpeg": {
+    "public_id": "apex-aluminium/images/real_images/products/steaming/steaming-image-three",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788618087/apex-aluminium/images/real_images/products/steaming/steaming-image-three.jpg",
+    "resource_type": "image",
+    "format": "jpg",
+    "bytes": 83636,
+    "width": 720,
+    "height": 1600,
+    "uploaded_at": "2026-09-05T14:21:27.937Z"
+  },
+  "/images/real_images/products/steaming/steaming-image-two.jpeg": {
+    "public_id": "apex-aluminium/images/real_images/products/steaming/steaming-image-two",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788618088/apex-aluminium/images/real_images/products/steaming/steaming-image-two.jpg",
+    "resource_type": "image",
+    "format": "jpg",
+    "bytes": 90918,
+    "width": 720,
+    "height": 1600,
+    "uploaded_at": "2026-09-05T14:21:29.238Z"
   }
 }

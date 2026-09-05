@@ -6,7 +6,7 @@ import Image from "next/image";
 import { projects } from "@/data/projects";
 import { ChevronLeft, ChevronRight, X, ZoomIn, ZoomOut, Play, Film } from "lucide-react";
 
-const INITIAL_PROJECT_COUNT = 12;
+const INITIAL_PROJECT_COUNT = 18;
 const PROJECT_BATCH_SIZE = 12;
 const LIGHTBOX_THUMBNAIL_COUNT = 7;
 

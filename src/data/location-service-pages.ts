@@ -312,10 +312,25 @@ export const katlehongAluminiumWindows: LocationServiceObject = {
 // Composed (generated) content
 // ---------------------------------------------------------------------------
 
-function buildHero(location: LocationArea, service: Service, page: ServicePageContent, isNear: boolean) {
+function buildHero(
+  location: LocationArea,
+  service: Service,
+  page: ServicePageContent,
+  isNear: boolean,
+  isInstallation: boolean = false,
+) {
   const isSteel = service.category === "steel";
   const isMall = location.type === "mall";
   const preposition = (isNear || isMall) ? "Near" : "in";
+
+  if (isInstallation) {
+    return {
+      headline: `${service.title} Installation ${preposition} ${location.name}`,
+      subheadline: `Professional, SABS-certified ${service.title.toLowerCase()} installation services across ${location.name}. Precision millimeter measuring, clean on-site fitting, weather-tight sealing, and full manufacturer warranty.`,
+      localBadgeText: `Certified Installation Team · Serving ${location.name} & Surrounds`,
+    };
+  }
+
   return {
     headline: `${service.title} ${preposition} ${location.name}`,
     subheadline: isMall
@@ -462,23 +477,40 @@ function buildSeo(
   suburbs: string[],
   routeServiceId: string,
   isNear: boolean,
+  isInstallation: boolean = false,
 ): LocationServiceSeo {
-  const canonical = `${siteUrl}/locations/${location.id}/${routeServiceId}`;
+  const canonical = `${siteUrl}/locations/${location.slug || location.id}/${routeServiceId}`;
   const firstSuburbs = suburbs.slice(0, 2).join(" & ");
   const isSteel = service.category === "steel";
   const isMall = location.type === "mall";
 
-  const titleTag = isMall || isNear || isSteel
-    ? `${service.title} Near ${location.name} | Local Installers & Free Quotes`
-    : `${service.title} ${location.name} | Manufacturer & Local Installers`;
+  let titleTag: string;
+  let metaDescription: string;
 
-  const metaDescription = isMall
-    ? `Looking for ${service.title.toLowerCase()} near ${location.name}? Professional custom aluminium and steel installations for homes, estates, and businesses in the ${location.name} precinct (${location.region}). Free quotes.`
-    : isNear || isSteel
-    ? `Looking for ${service.title.toLowerCase()} near ${location.name}? Custom-welded heavy-duty security gates, burglar bars, carports & steel works near you in ${location.name}${firstSuburbs ? ` and ${firstSuburbs}` : ""}. Free quotes & fast installation.`
-    : `Premium custom ${service.title.toLowerCase()} installers in ${location.name}${firstSuburbs ? `, ${firstSuburbs}` : ""}. ${service.shortDescription} SANS certified, high security & free quotes.`;
+  if (isInstallation) {
+    titleTag = `${service.title} Installation ${location.name} | Certified Local Installers & Free Quote`;
+    metaDescription = `Looking for expert ${service.title.toLowerCase()} installation in ${location.name}${firstSuburbs ? ` or ${firstSuburbs}` : ""}? Custom-measured and professionally fitted with SABS-certified materials, clean removal of old frames & free quotes. Call 071 612 2439.`;
+  } else if (isMall || isNear || isSteel) {
+    titleTag = `${service.title} Near ${location.name} | Local Installers & Free Quotes`;
+    metaDescription = isMall
+      ? `Looking for ${service.title.toLowerCase()} near ${location.name}? Professional custom aluminium and steel installations for homes, estates, and businesses in the ${location.name} precinct (${location.region}). Free quotes.`
+      : `Looking for ${service.title.toLowerCase()} near ${location.name}? Custom-welded heavy-duty security gates, burglar bars, carports & steel works near you in ${location.name}${firstSuburbs ? ` and ${firstSuburbs}` : ""}. Free quotes & fast installation.`;
+  } else {
+    titleTag = `${service.title} ${location.name} | Manufacturer & Local Installers`;
+    metaDescription = `Premium custom ${service.title.toLowerCase()} installers in ${location.name}${firstSuburbs ? `, ${firstSuburbs}` : ""}. ${service.shortDescription} SANS certified, high security & free quotes.`;
+  }
+
+  const singularService = service.title
+    .toLowerCase()
+    .replace(/s$/, "")
+    .replace(/doors$/, "door")
+    .replace(/windows$/, "window");
 
   const keywords = [
+    `${service.title.toLowerCase()} installation ${location.name}`,
+    `${singularService} installation ${location.name}`,
+    `${service.title.toLowerCase()} installers ${location.name}`,
+    `install ${service.title.toLowerCase()} in ${location.name}`,
     `${service.title.toLowerCase()} near ${location.name}`,
     `${service.title.toLowerCase()} near me`,
     isMall ? `custom ${service.title.toLowerCase()} ${location.region}` : `${service.title.toLowerCase()} ${location.name}`,
@@ -567,22 +599,71 @@ function buildStructuredData(
 // Public API
 // ---------------------------------------------------------------------------
 
+const aliasServiceMap: Record<string, string> = {
+  "aluminium-door": "aluminium-sliding-doors",
+  "aluminium-doors": "aluminium-sliding-doors",
+  "aluminium-window": "aluminium-windows",
+  "aluminium-windows": "aluminium-windows",
+  "steam-room": "custom-steam-rooms",
+  "steam-rooms": "custom-steam-rooms",
+  "sauna": "custom-steam-rooms",
+  "saunas": "custom-steam-rooms",
+  "custom-steam-room": "custom-steam-rooms",
+  "custom-steam-rooms": "custom-steam-rooms",
+  "sliding-door": "aluminium-sliding-doors",
+  "sliding-doors": "aluminium-sliding-doors",
+  "stacking-door": "aluminium-stacking-doors",
+  "stacking-doors": "aluminium-stacking-doors",
+  "security-gate": "security-gates",
+  "burglar-bar": "burglar-bars",
+};
+
 /**
  * Builds the full page content for a single location x service combination.
  * Content is composed deterministically from verified service and location data.
- * Supports both "[service]-near-[location]" and legacy "[service]-in-[location]" route patterns.
+ * Supports "[service]-near-[location]", "[service]-in-[location]",
+ * and dedicated "[service]-installation-in-[location]" keyword routes.
  */
 export function getLocationServicePage(area: string, routeServiceId: string): LocationServiceObject | null {
-  const location = gautengLocations.find((loc) => loc.slug === area);
+  const location = gautengLocations.find((loc) => loc.slug === area || loc.id === area);
   if (!location) return null;
 
+  const isInstallation = routeServiceId.includes("-installation-");
   const isNear = location.type === "mall" || routeServiceId.includes("-near-");
 
-  const service = services.find(
-    (s) =>
-      `${slugify(s.title)}-near-${location.slug}` === routeServiceId ||
-      `${slugify(s.title)}-in-${location.slug}` === routeServiceId,
-  );
+  // Extract service identifier part from the route
+  let parsedServiceKey = routeServiceId;
+  const locSuffixPatterns = [
+    `-installation-in-${location.slug}`,
+    `-installation-near-${location.slug}`,
+    `-in-${location.slug}`,
+    `-near-${location.slug}`,
+    `-installation-in-${location.id}`,
+    `-installation-near-${location.id}`,
+    `-in-${location.id}`,
+    `-near-${location.id}`,
+  ];
+
+  for (const suffix of locSuffixPatterns) {
+    if (parsedServiceKey.endsWith(suffix)) {
+      parsedServiceKey = parsedServiceKey.slice(0, -suffix.length);
+      break;
+    }
+  }
+
+  const resolvedKey = aliasServiceMap[parsedServiceKey] || parsedServiceKey;
+
+  const service = services.find((s) => {
+    const slug = slugify(s.title);
+    const singularSlug = slug.replace(/s$/, "").replace(/doors$/, "door").replace(/windows$/, "window");
+    return (
+      s.id === resolvedKey ||
+      slug === resolvedKey ||
+      singularSlug === resolvedKey ||
+      s.id === parsedServiceKey ||
+      slug === parsedServiceKey
+    );
+  });
   if (!service) return null;
 
   const page = servicePages[service.id];
@@ -590,13 +671,13 @@ export function getLocationServicePage(area: string, routeServiceId: string): Lo
 
   const suburbs = getLocalSuburbs(location);
 
-  const hero = buildHero(location, service, page, isNear);
+  const hero = buildHero(location, service, page, isNear, isInstallation);
   const localizedStory = buildStory(location, service, page, suburbs, isNear);
   const localNAP = buildNap(location, suburbs);
   const localFaqs = buildFaqs(location, service, page, suburbs, isNear);
 
   const base: LocationServiceObject = {
-    id: `loc-srv-${location.slug}-${service.id}`,
+    id: `loc-srv-${location.slug}-${service.id}${isInstallation ? "-inst" : ""}`,
     serviceId: service.id,
     locationSlug: location.slug,
     fullPageUrl: `${siteUrl}/locations/${location.slug}/${routeServiceId}`,
@@ -606,7 +687,7 @@ export function getLocationServicePage(area: string, routeServiceId: string): Lo
     localProjects: [],
     localReviews: [],
     localFaqs,
-    seo: buildSeo(location, service, page, suburbs, routeServiceId, isNear),
+    seo: buildSeo(location, service, page, suburbs, routeServiceId, isNear, isInstallation),
     structuredDataJsonLd: {},
   };
 
@@ -620,6 +701,8 @@ export function getAllLocationServiceRoutes(): { area: string; serviceId: string
   for (const location of gautengLocations) {
     for (const service of services) {
       const slug = slugify(service.title);
+      const singularSlug = slug.replace(/s$/, "").replace(/doors$/, "door").replace(/windows$/, "window");
+
       // For malls, the natural user query is always "-near-"
       if (location.type === "mall") {
         routes.push({
@@ -642,6 +725,18 @@ export function getAllLocationServiceRoutes(): { area: string; serviceId: string
             serviceId: `${slug}-near-${location.slug}`,
           });
         }
+      }
+
+      // High-intent installation routes
+      routes.push({
+        area: location.slug,
+        serviceId: `${slug}-installation-in-${location.slug}`,
+      });
+      if (singularSlug !== slug) {
+        routes.push({
+          area: location.slug,
+          serviceId: `${singularSlug}-installation-in-${location.slug}`,
+        });
       }
     }
   }
@@ -669,22 +764,37 @@ export function getPrerenderLocationServiceRoutes(): { area: string; serviceId: 
   for (const location of priorityLocations) {
     for (const service of services) {
       const slug = slugify(service.title);
+      const singularSlug = slug.replace(/s$/, "").replace(/doors$/, "door").replace(/windows$/, "window");
+      const locId = location.slug || location.id;
+
       if (location.type === "mall") {
         routes.push({
-          area: location.id,
-          serviceId: `${slug}-near-${location.id}`,
+          area: locId,
+          serviceId: `${slug}-near-${locId}`,
         });
       } else {
         routes.push({
-          area: location.id,
-          serviceId: `${slug}-in-${location.id}`,
+          area: locId,
+          serviceId: `${slug}-in-${locId}`,
         });
         if (service.category === "steel") {
           routes.push({
-            area: location.id,
-            serviceId: `${slug}-near-${location.id}`,
+            area: locId,
+            serviceId: `${slug}-near-${locId}`,
           });
         }
+      }
+
+      // Installation routes for priority hubs
+      routes.push({
+        area: locId,
+        serviceId: `${slug}-installation-in-${locId}`,
+      });
+      if (singularSlug !== slug) {
+        routes.push({
+          area: locId,
+          serviceId: `${singularSlug}-installation-in-${locId}`,
+        });
       }
     }
   }

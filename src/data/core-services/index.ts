@@ -18,6 +18,7 @@ import { aluminiumSkylightsService } from './aluminiumSkylights';
 import { seamlessAluminiumGuttersService } from './seamlessAluminiumGutters';
 import { officeGlassPartitionsService } from './officeGlassPartitions';
 import { framelessShowerDoorsService } from './framelessShowerDoors';
+import { customSteamRoomsService } from './customSteamRooms';
 import { aluminiumFlyScreensService } from './aluminiumFlyScreens';
 import { aluminiumRepairsService } from './aluminiumRepairs';
 import { slidingDoorRepairsService } from './slidingDoorRepairs';
@@ -61,6 +62,7 @@ export const allCoreServices: ServiceObject[] = [
   seamlessAluminiumGuttersService,
   officeGlassPartitionsService,
   framelessShowerDoorsService,
+  customSteamRoomsService,
   aluminiumFlyScreensService,
   aluminiumRepairsService,
   slidingDoorRepairsService,
