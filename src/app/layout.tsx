@@ -7,6 +7,7 @@ import WhatsAppChatWidget from "@/components/WhatsAppChatWidget";
 import ScrollToTop from "@/components/ScrollToTop";
 import NavigationLoader from "@/components/NavigationLoader";
 import QuotePrompt from "@/components/QuotePrompt";
+import WorkVideosModal from "@/components/WorkVideosModal";
 import ScrollRevealObserver from "@/components/ScrollRevealObserver";
 import LeadGate from "@/components/LeadGate";
 import { absoluteUrl, businessContact, siteUrl } from "@/lib/site";
@@ -120,6 +121,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <Footer />
         <WhatsAppChatWidget />
         <QuotePrompt />
+        <WorkVideosModal />
         <LeadGate />
         <ScrollToTop />
       </body>
