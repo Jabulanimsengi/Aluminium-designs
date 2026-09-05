@@ -7,9 +7,12 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "images:optimize": "node scripts/optimize-images.js"
+    "images:optimize": "node scripts/optimize-images.js",
+    "cloudinary:upload": "node scripts/upload-to-cloudinary.js",
+    "cloudinary:dry-run": "node scripts/upload-to-cloudinary.js --dry-run"
   },
   "dependencies": {
+    "cloudinary": "^2.11.0",
     "lucide-react": "^1.23.0",
     "next": "^16.3.0",
     "react": "19.2.4",

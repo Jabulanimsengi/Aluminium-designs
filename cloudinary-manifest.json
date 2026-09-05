@@ -1,0 +1,1374 @@
+{
+  "/videos/video-work-one.mp4": {
+    "public_id": "apex-aluminium/videos/video-work-one",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/video/upload/v1788612279/apex-aluminium/videos/video-work-one.mp4",
+    "resource_type": "video",
+    "format": "mp4",
+    "bytes": 2076329,
+    "width": 478,
+    "height": 850,
+    "duration": 12.16,
+    "uploaded_at": "2026-09-05T12:44:42.965Z"
+  },
+  "/videos/video-work-two.mp4": {
+    "public_id": "apex-aluminium/videos/video-work-two",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/video/upload/v1788612367/apex-aluminium/videos/video-work-two.mp4",
+    "resource_type": "video",
+    "format": "mp4",
+    "bytes": 4763353,
+    "width": 478,
+    "height": 850,
+    "duration": 27.760021,
+    "uploaded_at": "2026-09-05T12:46:08.798Z"
+  },
+  "/images/cards/card_aluminium_french_doors.jpg": {
+    "public_id": "apex-aluminium/images/cards/card_aluminium_french_doors",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612883/apex-aluminium/images/cards/card_aluminium_french_doors.jpg",
+    "resource_type": "image",
+    "format": "jpg",
+    "bytes": 114177,
+    "width": 800,
+    "height": 597,
+    "uploaded_at": "2026-09-05T12:54:43.965Z"
+  },
+  "/images/cards/card_aluminium_front_doors.jpg": {
+    "public_id": "apex-aluminium/images/cards/card_aluminium_front_doors",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612885/apex-aluminium/images/cards/card_aluminium_front_doors.jpg",
+    "resource_type": "image",
+    "format": "jpg",
+    "bytes": 67191,
+    "width": 800,
+    "height": 597,
+    "uploaded_at": "2026-09-05T12:54:45.409Z"
+  },
+  "/images/cards/card_aluminium_garage_doors.jpg": {
+    "public_id": "apex-aluminium/images/cards/card_aluminium_garage_doors",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612886/apex-aluminium/images/cards/card_aluminium_garage_doors.jpg",
+    "resource_type": "image",
+    "format": "jpg",
+    "bytes": 92813,
+    "width": 800,
+    "height": 597,
+    "uploaded_at": "2026-09-05T12:54:47.150Z"
+  },
+  "/images/cards/card_aluminium_sliding_doors.jpg": {
+    "public_id": "apex-aluminium/images/cards/card_aluminium_sliding_doors",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612888/apex-aluminium/images/cards/card_aluminium_sliding_doors.jpg",
+    "resource_type": "image",
+    "format": "jpg",
+    "bytes": 74685,
+    "width": 800,
+    "height": 597,
+    "uploaded_at": "2026-09-05T12:54:49.148Z"
+  },
+  "/images/cards/card_aluminium_stacking_doors.jpg": {
+    "public_id": "apex-aluminium/images/cards/card_aluminium_stacking_doors",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612892/apex-aluminium/images/cards/card_aluminium_stacking_doors.jpg",
+    "resource_type": "image",
+    "format": "jpg",
+    "bytes": 81213,
+    "width": 800,
+    "height": 597,
+    "uploaded_at": "2026-09-05T12:54:53.169Z"
+  },
+  "/images/cards/card_aluminium_windows.jpg": {
+    "public_id": "apex-aluminium/images/cards/card_aluminium_windows",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612904/apex-aluminium/images/cards/card_aluminium_windows.jpg",
+    "resource_type": "image",
+    "format": "jpg",
+    "bytes": 125715,
+    "width": 800,
+    "height": 597,
+    "uploaded_at": "2026-09-05T12:55:04.492Z"
+  },
+  "/images/glass_balustrade.png": {
+    "public_id": "apex-aluminium/images/glass_balustrade",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612917/apex-aluminium/images/glass_balustrade.png",
+    "resource_type": "image",
+    "format": "png",
+    "bytes": 454292,
+    "width": 1024,
+    "height": 1024,
+    "uploaded_at": "2026-09-05T12:55:17.973Z"
+  },
+  "/images/hero_exterior.png": {
+    "public_id": "apex-aluminium/images/hero_exterior",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612922/apex-aluminium/images/hero_exterior.png",
+    "resource_type": "image",
+    "format": "png",
+    "bytes": 466959,
+    "width": 1024,
+    "height": 1024,
+    "uploaded_at": "2026-09-05T12:55:23.164Z"
+  },
+  "/images/office_partitions.png": {
+    "public_id": "apex-aluminium/images/office_partitions",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612926/apex-aluminium/images/office_partitions.png",
+    "resource_type": "image",
+    "format": "png",
+    "bytes": 498642,
+    "width": 1024,
+    "height": 1024,
+    "uploaded_at": "2026-09-05T12:55:27.386Z"
+  },
+  "/images/partners/agw.logo.jpg": {
+    "public_id": "apex-aluminium/images/partners/agw.logo",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612928/apex-aluminium/images/partners/agw.logo.jpg",
+    "resource_type": "image",
+    "format": "jpg",
+    "bytes": 16783,
+    "width": 350,
+    "height": 232,
+    "uploaded_at": "2026-09-05T12:55:28.859Z"
+  },
+  "/images/partners/alpeco.png": {
+    "public_id": "apex-aluminium/images/partners/alpeco",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612930/apex-aluminium/images/partners/alpeco.png",
+    "resource_type": "image",
+    "format": "png",
+    "bytes": 8030,
+    "width": 300,
+    "height": 100,
+    "uploaded_at": "2026-09-05T12:55:30.660Z"
+  },
+  "/images/partners/conways.png": {
+    "public_id": "apex-aluminium/images/partners/conways",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612931/apex-aluminium/images/partners/conways.png",
+    "resource_type": "image",
+    "format": "png",
+    "bytes": 23564,
+    "width": 1149,
+    "height": 239,
+    "uploaded_at": "2026-09-05T12:55:33.008Z"
+  },
+  "/images/partners/logo-hsystem.png": {
+    "public_id": "apex-aluminium/images/partners/logo-hsystem",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612933/apex-aluminium/images/partners/logo-hsystem.png",
+    "resource_type": "image",
+    "format": "png",
+    "bytes": 20904,
+    "width": 512,
+    "height": 512,
+    "uploaded_at": "2026-09-05T12:55:33.908Z"
+  },
+  "/images/patio_enclosure.png": {
+    "public_id": "apex-aluminium/images/patio_enclosure",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612934/apex-aluminium/images/patio_enclosure.png",
+    "resource_type": "image",
+    "format": "png",
+    "bytes": 511505,
+    "width": 1024,
+    "height": 1024,
+    "uploaded_at": "2026-09-05T12:55:35.458Z"
+  },
+  "/images/pivot_door.png": {
+    "public_id": "apex-aluminium/images/pivot_door",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612936/apex-aluminium/images/pivot_door.png",
+    "resource_type": "image",
+    "format": "png",
+    "bytes": 647789,
+    "width": 1024,
+    "height": 1024,
+    "uploaded_at": "2026-09-05T12:55:36.848Z"
+  },
+  "/images/real_images/logo/logo.png": {
+    "public_id": "apex-aluminium/images/real_images/logo/logo",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612937/apex-aluminium/images/real_images/logo/logo.png",
+    "resource_type": "image",
+    "format": "png",
+    "bytes": 11762,
+    "width": 422,
+    "height": 168,
+    "uploaded_at": "2026-09-05T12:55:37.530Z"
+  },
+  "/images/real_images/products/doors/aluminium_door_eight.jpeg": {
+    "public_id": "apex-aluminium/images/real_images/products/doors/aluminium_door_eight",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612937/apex-aluminium/images/real_images/products/doors/aluminium_door_eight.jpg",
+    "resource_type": "image",
+    "format": "jpg",
+    "bytes": 93212,
+    "width": 1063,
+    "height": 1077,
+    "uploaded_at": "2026-09-05T12:55:38.365Z"
+  },
+  "/images/real_images/products/doors/aluminium_door_five.jpeg": {
+    "public_id": "apex-aluminium/images/real_images/products/doors/aluminium_door_five",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612938/apex-aluminium/images/real_images/products/doors/aluminium_door_five.jpg",
+    "resource_type": "image",
+    "format": "jpg",
+    "bytes": 55172,
+    "width": 540,
+    "height": 1200,
+    "uploaded_at": "2026-09-05T12:55:39.009Z"
+  },
+  "/images/real_images/products/doors/aluminium_door_four.jpeg": {
+    "public_id": "apex-aluminium/images/real_images/products/doors/aluminium_door_four",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612939/apex-aluminium/images/real_images/products/doors/aluminium_door_four.jpg",
+    "resource_type": "image",
+    "format": "jpg",
+    "bytes": 95681,
+    "width": 720,
+    "height": 1600,
+    "uploaded_at": "2026-09-05T12:55:39.693Z"
+  },
+  "/images/real_images/products/doors/aluminium_door_nie.jpeg": {
+    "public_id": "apex-aluminium/images/real_images/products/doors/aluminium_door_nie",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612940/apex-aluminium/images/real_images/products/doors/aluminium_door_nie.jpg",
+    "resource_type": "image",
+    "format": "jpg",
+    "bytes": 78731,
+    "width": 1080,
+    "height": 1077,
+    "uploaded_at": "2026-09-05T12:55:40.558Z"
+  },
+  "/images/real_images/products/doors/aluminium_door_one.jpeg": {
+    "public_id": "apex-aluminium/images/real_images/products/doors/aluminium_door_one",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612940/apex-aluminium/images/real_images/products/doors/aluminium_door_one.jpg",
+    "resource_type": "image",
+    "format": "jpg",
+    "bytes": 121254,
+    "width": 1200,
+    "height": 1599,
+    "uploaded_at": "2026-09-05T12:55:41.382Z"
+  },
+  "/images/real_images/products/doors/aluminium_door_seven.jpeg": {
+    "public_id": "apex-aluminium/images/real_images/products/doors/aluminium_door_seven",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612941/apex-aluminium/images/real_images/products/doors/aluminium_door_seven.jpg",
+    "resource_type": "image",
+    "format": "jpg",
+    "bytes": 118097,
+    "width": 864,
+    "height": 1152,
+    "uploaded_at": "2026-09-05T12:55:42.142Z"
+  },
+  "/images/real_images/products/doors/aluminium_door_six.jpeg": {
+    "public_id": "apex-aluminium/images/real_images/products/doors/aluminium_door_six",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612942/apex-aluminium/images/real_images/products/doors/aluminium_door_six.jpg",
+    "resource_type": "image",
+    "format": "jpg",
+    "bytes": 147417,
+    "width": 864,
+    "height": 1152,
+    "uploaded_at": "2026-09-05T12:55:42.907Z"
+  },
+  "/images/real_images/products/doors/aluminium_door_ten.jpeg": {
+    "public_id": "apex-aluminium/images/real_images/products/doors/aluminium_door_ten",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612943/apex-aluminium/images/real_images/products/doors/aluminium_door_ten.jpg",
+    "resource_type": "image",
+    "format": "jpg",
+    "bytes": 86297,
+    "width": 983,
+    "height": 1451,
+    "uploaded_at": "2026-09-05T12:55:43.541Z"
+  },
+  "/images/real_images/products/doors/aluminium_door_three.jpeg": {
+    "public_id": "apex-aluminium/images/real_images/products/doors/aluminium_door_three",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612943/apex-aluminium/images/real_images/products/doors/aluminium_door_three.jpg",
+    "resource_type": "image",
+    "format": "jpg",
+    "bytes": 62974,
+    "width": 720,
+    "height": 1600,
+    "uploaded_at": "2026-09-05T12:55:44.239Z"
+  },
+  "/images/real_images/products/doors/aluminium_door_two.jpeg": {
+    "public_id": "apex-aluminium/images/real_images/products/doors/aluminium_door_two",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612944/apex-aluminium/images/real_images/products/doors/aluminium_door_two.jpg",
+    "resource_type": "image",
+    "format": "jpg",
+    "bytes": 126685,
+    "width": 1080,
+    "height": 829,
+    "uploaded_at": "2026-09-05T12:55:45.025Z"
+  },
+  "/images/real_images/products/doors/stackingdoors-installation-one.jpeg": {
+    "public_id": "apex-aluminium/images/real_images/products/doors/stackingdoors-installation-one",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612945/apex-aluminium/images/real_images/products/doors/stackingdoors-installation-one.jpg",
+    "resource_type": "image",
+    "format": "jpg",
+    "bytes": 122024,
+    "width": 1280,
+    "height": 960,
+    "uploaded_at": "2026-09-05T12:55:45.747Z"
+  },
+  "/images/real_images/products/doors/stackingdoors-installation-two.jpeg": {
+    "public_id": "apex-aluminium/images/real_images/products/doors/stackingdoors-installation-two",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612946/apex-aluminium/images/real_images/products/doors/stackingdoors-installation-two.jpg",
+    "resource_type": "image",
+    "format": "jpg",
+    "bytes": 95814,
+    "width": 960,
+    "height": 1280,
+    "uploaded_at": "2026-09-05T12:55:46.529Z"
+  },
+  "/images/real_images/products/gates/aluminium_gate_one.jpeg": {
+    "public_id": "apex-aluminium/images/real_images/products/gates/aluminium_gate_one",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612947/apex-aluminium/images/real_images/products/gates/aluminium_gate_one.jpg",
+    "resource_type": "image",
+    "format": "jpg",
+    "bytes": 111010,
+    "width": 1200,
+    "height": 901,
+    "uploaded_at": "2026-09-05T12:55:47.627Z"
+  },
+  "/images/real_images/products/gates/aluminium_gate_three.jpeg": {
+    "public_id": "apex-aluminium/images/real_images/products/gates/aluminium_gate_three",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612948/apex-aluminium/images/real_images/products/gates/aluminium_gate_three.jpg",
+    "resource_type": "image",
+    "format": "jpg",
+    "bytes": 68058,
+    "width": 720,
+    "height": 986,
+    "uploaded_at": "2026-09-05T12:55:48.607Z"
+  },
+  "/images/real_images/products/gates/aluminium_gate_two.jpeg": {
+    "public_id": "apex-aluminium/images/real_images/products/gates/aluminium_gate_two",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612949/apex-aluminium/images/real_images/products/gates/aluminium_gate_two.jpg",
+    "resource_type": "image",
+    "format": "jpg",
+    "bytes": 45106,
+    "width": 720,
+    "height": 405,
+    "uploaded_at": "2026-09-05T12:55:49.602Z"
+  },
+  "/images/real_images/products/security/security_burglar-doors_five.jpeg": {
+    "public_id": "apex-aluminium/images/real_images/products/security/security_burglar-doors_five",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612950/apex-aluminium/images/real_images/products/security/security_burglar-doors_five.jpg",
+    "resource_type": "image",
+    "format": "jpg",
+    "bytes": 90145,
+    "width": 720,
+    "height": 1600,
+    "uploaded_at": "2026-09-05T12:55:50.839Z"
+  },
+  "/images/real_images/products/security/security_burglar-doors_four.jpeg": {
+    "public_id": "apex-aluminium/images/real_images/products/security/security_burglar-doors_four",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612951/apex-aluminium/images/real_images/products/security/security_burglar-doors_four.jpg",
+    "resource_type": "image",
+    "format": "jpg",
+    "bytes": 94729,
+    "width": 720,
+    "height": 1600,
+    "uploaded_at": "2026-09-05T12:55:52.892Z"
+  },
+  "/images/real_images/products/security/security_burglar-doors_one.jpeg": {
+    "public_id": "apex-aluminium/images/real_images/products/security/security_burglar-doors_one",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612953/apex-aluminium/images/real_images/products/security/security_burglar-doors_one.jpg",
+    "resource_type": "image",
+    "format": "jpg",
+    "bytes": 81312,
+    "width": 720,
+    "height": 1600,
+    "uploaded_at": "2026-09-05T12:55:54.118Z"
+  },
+  "/images/real_images/products/security/security_burglar-doors_three.jpeg": {
+    "public_id": "apex-aluminium/images/real_images/products/security/security_burglar-doors_three",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612955/apex-aluminium/images/real_images/products/security/security_burglar-doors_three.jpg",
+    "resource_type": "image",
+    "format": "jpg",
+    "bytes": 87675,
+    "width": 720,
+    "height": 1600,
+    "uploaded_at": "2026-09-05T12:55:55.993Z"
+  },
+  "/images/real_images/products/security/security_burglar-doors_two.jpeg": {
+    "public_id": "apex-aluminium/images/real_images/products/security/security_burglar-doors_two",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612957/apex-aluminium/images/real_images/products/security/security_burglar-doors_two.jpg",
+    "resource_type": "image",
+    "format": "jpg",
+    "bytes": 96367,
+    "width": 720,
+    "height": 1600,
+    "uploaded_at": "2026-09-05T12:55:57.344Z"
+  },
+  "/images/real_images/products/windows/window_aluminium_five.jpeg": {
+    "public_id": "apex-aluminium/images/real_images/products/windows/window_aluminium_five",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612958/apex-aluminium/images/real_images/products/windows/window_aluminium_five.jpg",
+    "resource_type": "image",
+    "format": "jpg",
+    "bytes": 95072,
+    "width": 1200,
+    "height": 901,
+    "uploaded_at": "2026-09-05T12:55:59.010Z"
+  },
+  "/images/real_images/products/windows/window_aluminium_four.jpeg": {
+    "public_id": "apex-aluminium/images/real_images/products/windows/window_aluminium_four",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612959/apex-aluminium/images/real_images/products/windows/window_aluminium_four.jpg",
+    "resource_type": "image",
+    "format": "jpg",
+    "bytes": 185807,
+    "width": 1200,
+    "height": 901,
+    "uploaded_at": "2026-09-05T12:55:59.909Z"
+  },
+  "/images/real_images/products/windows/window_aluminium_one.jpeg": {
+    "public_id": "apex-aluminium/images/real_images/products/windows/window_aluminium_one",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612960/apex-aluminium/images/real_images/products/windows/window_aluminium_one.jpg",
+    "resource_type": "image",
+    "format": "jpg",
+    "bytes": 78659,
+    "width": 1200,
+    "height": 901,
+    "uploaded_at": "2026-09-05T12:56:01.275Z"
+  },
+  "/images/real_images/products/windows/window_aluminium_seven.jpeg": {
+    "public_id": "apex-aluminium/images/real_images/products/windows/window_aluminium_seven",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612961/apex-aluminium/images/real_images/products/windows/window_aluminium_seven.jpg",
+    "resource_type": "image",
+    "format": "jpg",
+    "bytes": 122097,
+    "width": 1200,
+    "height": 901,
+    "uploaded_at": "2026-09-05T12:56:02.204Z"
+  },
+  "/images/real_images/products/windows/window_aluminium_six.jpeg": {
+    "public_id": "apex-aluminium/images/real_images/products/windows/window_aluminium_six",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612962/apex-aluminium/images/real_images/products/windows/window_aluminium_six.jpg",
+    "resource_type": "image",
+    "format": "jpg",
+    "bytes": 127096,
+    "width": 1200,
+    "height": 901,
+    "uploaded_at": "2026-09-05T12:56:02.942Z"
+  },
+  "/images/real_images/products/windows/window_aluminium_three.jpeg": {
+    "public_id": "apex-aluminium/images/real_images/products/windows/window_aluminium_three",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612963/apex-aluminium/images/real_images/products/windows/window_aluminium_three.jpg",
+    "resource_type": "image",
+    "format": "jpg",
+    "bytes": 198595,
+    "width": 1200,
+    "height": 1599,
+    "uploaded_at": "2026-09-05T12:56:03.955Z"
+  },
+  "/images/real_images/products/windows/window_aluminium_two.jpeg": {
+    "public_id": "apex-aluminium/images/real_images/products/windows/window_aluminium_two",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612964/apex-aluminium/images/real_images/products/windows/window_aluminium_two.jpg",
+    "resource_type": "image",
+    "format": "jpg",
+    "bytes": 103336,
+    "width": 1200,
+    "height": 1599,
+    "uploaded_at": "2026-09-05T12:56:04.917Z"
+  },
+  "/images/sections/finishes_hardware.jpg": {
+    "public_id": "apex-aluminium/images/sections/finishes_hardware",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612965/apex-aluminium/images/sections/finishes_hardware.jpg",
+    "resource_type": "image",
+    "format": "jpg",
+    "bytes": 168239,
+    "width": 1376,
+    "height": 768,
+    "uploaded_at": "2026-09-05T12:56:05.937Z"
+  },
+  "/images/sections/glazing_technology.jpg": {
+    "public_id": "apex-aluminium/images/sections/glazing_technology",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612966/apex-aluminium/images/sections/glazing_technology.jpg",
+    "resource_type": "image",
+    "format": "jpg",
+    "bytes": 88890,
+    "width": 1200,
+    "height": 896,
+    "uploaded_at": "2026-09-05T12:56:06.587Z"
+  },
+  "/images/sections/overview_craftsmanship.jpg": {
+    "public_id": "apex-aluminium/images/sections/overview_craftsmanship",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612966/apex-aluminium/images/sections/overview_craftsmanship.jpg",
+    "resource_type": "image",
+    "format": "jpg",
+    "bytes": 66756,
+    "width": 1200,
+    "height": 896,
+    "uploaded_at": "2026-09-05T12:56:07.338Z"
+  },
+  "/images/sections/process_step1_measure.jpg": {
+    "public_id": "apex-aluminium/images/sections/process_step1_measure",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612967/apex-aluminium/images/sections/process_step1_measure.jpg",
+    "resource_type": "image",
+    "format": "jpg",
+    "bytes": 152612,
+    "width": 1200,
+    "height": 896,
+    "uploaded_at": "2026-09-05T12:56:08.110Z"
+  },
+  "/images/sections/process_step2_manufacture.jpg": {
+    "public_id": "apex-aluminium/images/sections/process_step2_manufacture",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612968/apex-aluminium/images/sections/process_step2_manufacture.jpg",
+    "resource_type": "image",
+    "format": "jpg",
+    "bytes": 141021,
+    "width": 1200,
+    "height": 896,
+    "uploaded_at": "2026-09-05T12:56:09.248Z"
+  },
+  "/images/sections/process_step3_install.jpg": {
+    "public_id": "apex-aluminium/images/sections/process_step3_install",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612969/apex-aluminium/images/sections/process_step3_install.jpg",
+    "resource_type": "image",
+    "format": "jpg",
+    "bytes": 154955,
+    "width": 1200,
+    "height": 896,
+    "uploaded_at": "2026-09-05T12:56:10.082Z"
+  },
+  "/images/sections/process_step4_inspect.jpg": {
+    "public_id": "apex-aluminium/images/sections/process_step4_inspect",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612970/apex-aluminium/images/sections/process_step4_inspect.jpg",
+    "resource_type": "image",
+    "format": "jpg",
+    "bytes": 103805,
+    "width": 1200,
+    "height": 896,
+    "uploaded_at": "2026-09-05T12:56:10.798Z"
+  },
+  "/images/services/aluminium-awnings-hero.webp": {
+    "public_id": "apex-aluminium/images/services/aluminium-awnings-hero",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612971/apex-aluminium/images/services/aluminium-awnings-hero.webp",
+    "resource_type": "image",
+    "format": "webp",
+    "bytes": 177490,
+    "width": 1599,
+    "height": 1200,
+    "uploaded_at": "2026-09-05T12:56:11.673Z"
+  },
+  "/images/services/aluminium-fly-screens-hero.webp": {
+    "public_id": "apex-aluminium/images/services/aluminium-fly-screens-hero",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612972/apex-aluminium/images/services/aluminium-fly-screens-hero.webp",
+    "resource_type": "image",
+    "format": "webp",
+    "bytes": 306236,
+    "width": 1599,
+    "height": 1200,
+    "uploaded_at": "2026-09-05T12:56:12.881Z"
+  },
+  "/images/services/aluminium-french-doors-hero.webp": {
+    "public_id": "apex-aluminium/images/services/aluminium-french-doors-hero",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612973/apex-aluminium/images/services/aluminium-french-doors-hero.webp",
+    "resource_type": "image",
+    "format": "webp",
+    "bytes": 231864,
+    "width": 1200,
+    "height": 896,
+    "uploaded_at": "2026-09-05T12:56:13.682Z"
+  },
+  "/images/services/aluminium-front-doors-hero.webp": {
+    "public_id": "apex-aluminium/images/services/aluminium-front-doors-hero",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612974/apex-aluminium/images/services/aluminium-front-doors-hero.webp",
+    "resource_type": "image",
+    "format": "webp",
+    "bytes": 108142,
+    "width": 1200,
+    "height": 896,
+    "uploaded_at": "2026-09-05T12:56:14.423Z"
+  },
+  "/images/services/aluminium-garage-doors-hero.webp": {
+    "public_id": "apex-aluminium/images/services/aluminium-garage-doors-hero",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612974/apex-aluminium/images/services/aluminium-garage-doors-hero.webp",
+    "resource_type": "image",
+    "format": "webp",
+    "bytes": 168366,
+    "width": 1200,
+    "height": 896,
+    "uploaded_at": "2026-09-05T12:56:15.304Z"
+  },
+  "/images/services/aluminium-pergolas-hero.webp": {
+    "public_id": "apex-aluminium/images/services/aluminium-pergolas-hero",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612975/apex-aluminium/images/services/aluminium-pergolas-hero.webp",
+    "resource_type": "image",
+    "format": "webp",
+    "bytes": 130878,
+    "width": 1024,
+    "height": 1024,
+    "uploaded_at": "2026-09-05T12:56:16.227Z"
+  },
+  "/images/services/aluminium-repairs-hero.webp": {
+    "public_id": "apex-aluminium/images/services/aluminium-repairs-hero",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612976/apex-aluminium/images/services/aluminium-repairs-hero.webp",
+    "resource_type": "image",
+    "format": "webp",
+    "bytes": 96548,
+    "width": 1024,
+    "height": 1024,
+    "uploaded_at": "2026-09-05T12:56:16.969Z"
+  },
+  "/images/services/aluminium-shopfronts-hero.webp": {
+    "public_id": "apex-aluminium/images/services/aluminium-shopfronts-hero",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612977/apex-aluminium/images/services/aluminium-shopfronts-hero.webp",
+    "resource_type": "image",
+    "format": "webp",
+    "bytes": 139082,
+    "width": 1024,
+    "height": 1024,
+    "uploaded_at": "2026-09-05T12:56:17.769Z"
+  },
+  "/images/services/aluminium-skylights-hero.webp": {
+    "public_id": "apex-aluminium/images/services/aluminium-skylights-hero",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612978/apex-aluminium/images/services/aluminium-skylights-hero.webp",
+    "resource_type": "image",
+    "format": "webp",
+    "bytes": 58336,
+    "width": 1024,
+    "height": 1024,
+    "uploaded_at": "2026-09-05T12:56:19.686Z"
+  },
+  "/images/services/aluminium-sliding-doors-hero.webp": {
+    "public_id": "apex-aluminium/images/services/aluminium-sliding-doors-hero",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612980/apex-aluminium/images/services/aluminium-sliding-doors-hero.webp",
+    "resource_type": "image",
+    "format": "webp",
+    "bytes": 124332,
+    "width": 1200,
+    "height": 896,
+    "uploaded_at": "2026-09-05T12:56:20.595Z"
+  },
+  "/images/services/aluminium-sliding-windows-hero.webp": {
+    "public_id": "apex-aluminium/images/services/aluminium-sliding-windows-hero",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612981/apex-aluminium/images/services/aluminium-sliding-windows-hero.webp",
+    "resource_type": "image",
+    "format": "webp",
+    "bytes": 170854,
+    "width": 1599,
+    "height": 1200,
+    "uploaded_at": "2026-09-05T12:56:21.534Z"
+  },
+  "/images/services/aluminium-stacking-doors-hero.webp": {
+    "public_id": "apex-aluminium/images/services/aluminium-stacking-doors-hero",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612981/apex-aluminium/images/services/aluminium-stacking-doors-hero.webp",
+    "resource_type": "image",
+    "format": "webp",
+    "bytes": 133902,
+    "width": 1200,
+    "height": 896,
+    "uploaded_at": "2026-09-05T12:56:22.255Z"
+  },
+  "/images/services/aluminium-windows-hero.webp": {
+    "public_id": "apex-aluminium/images/services/aluminium-windows-hero",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612982/apex-aluminium/images/services/aluminium-windows-hero.webp",
+    "resource_type": "image",
+    "format": "webp",
+    "bytes": 260668,
+    "width": 1200,
+    "height": 896,
+    "uploaded_at": "2026-09-05T12:56:23.585Z"
+  },
+  "/images/services/awnings-thumb.webp": {
+    "public_id": "apex-aluminium/images/services/awnings-thumb",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612984/apex-aluminium/images/services/awnings-thumb.webp",
+    "resource_type": "image",
+    "format": "webp",
+    "bytes": 21616,
+    "width": 480,
+    "height": 360,
+    "uploaded_at": "2026-09-05T12:56:24.422Z"
+  },
+  "/images/services/balustrades-thumb.webp": {
+    "public_id": "apex-aluminium/images/services/balustrades-thumb",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612984/apex-aluminium/images/services/balustrades-thumb.webp",
+    "resource_type": "image",
+    "format": "webp",
+    "bytes": 26320,
+    "width": 480,
+    "height": 480,
+    "uploaded_at": "2026-09-05T12:56:25.106Z"
+  },
+  "/images/services/bars-thumb.webp": {
+    "public_id": "apex-aluminium/images/services/bars-thumb",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612985/apex-aluminium/images/services/bars-thumb.webp",
+    "resource_type": "image",
+    "format": "webp",
+    "bytes": 30584,
+    "width": 480,
+    "height": 1067,
+    "uploaded_at": "2026-09-05T12:56:25.813Z"
+  },
+  "/images/services/burglar-bars-hero.jpg": {
+    "public_id": "apex-aluminium/images/services/burglar-bars-hero",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612986/apex-aluminium/images/services/burglar-bars-hero.jpg",
+    "resource_type": "image",
+    "format": "jpg",
+    "bytes": 100560,
+    "width": 1200,
+    "height": 896,
+    "uploaded_at": "2026-09-05T12:56:26.984Z"
+  },
+  "/images/services/burglar-bars-hero.webp": {
+    "public_id": "apex-aluminium/images/services/burglar-bars-hero",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612986/apex-aluminium/images/services/burglar-bars-hero.jpg",
+    "resource_type": "image",
+    "format": "jpg",
+    "bytes": 100560,
+    "width": 1200,
+    "height": 896,
+    "uploaded_at": "2026-09-05T12:56:27.588Z"
+  },
+  "/images/services/burglar-bars-thumb.webp": {
+    "public_id": "apex-aluminium/images/services/burglar-bars-thumb",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612988/apex-aluminium/images/services/burglar-bars-thumb.webp",
+    "resource_type": "image",
+    "format": "webp",
+    "bytes": 30584,
+    "width": 480,
+    "height": 1067,
+    "uploaded_at": "2026-09-05T12:56:28.458Z"
+  },
+  "/images/services/carports-thumb.webp": {
+    "public_id": "apex-aluminium/images/services/carports-thumb",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612988/apex-aluminium/images/services/carports-thumb.webp",
+    "resource_type": "image",
+    "format": "webp",
+    "bytes": 39028,
+    "width": 480,
+    "height": 480,
+    "uploaded_at": "2026-09-05T12:56:29.492Z"
+  },
+  "/images/services/clear-bars-thumb.webp": {
+    "public_id": "apex-aluminium/images/services/clear-bars-thumb",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612989/apex-aluminium/images/services/clear-bars-thumb.webp",
+    "resource_type": "image",
+    "format": "webp",
+    "bytes": 37318,
+    "width": 480,
+    "height": 1067,
+    "uploaded_at": "2026-09-05T12:56:30.143Z"
+  },
+  "/images/services/clear-burglar-bars-hero.webp": {
+    "public_id": "apex-aluminium/images/services/clear-burglar-bars-hero",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612990/apex-aluminium/images/services/clear-burglar-bars-hero.webp",
+    "resource_type": "image",
+    "format": "webp",
+    "bytes": 62668,
+    "width": 720,
+    "height": 1600,
+    "uploaded_at": "2026-09-05T12:56:30.868Z"
+  },
+  "/images/services/custom-welding-hero.jpg": {
+    "public_id": "apex-aluminium/images/services/custom-welding-hero",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612993/apex-aluminium/images/services/custom-welding-hero.jpg",
+    "resource_type": "image",
+    "format": "jpg",
+    "bytes": 129656,
+    "width": 1200,
+    "height": 896,
+    "uploaded_at": "2026-09-05T12:56:33.887Z"
+  },
+  "/images/services/custom-welding-hero.webp": {
+    "public_id": "apex-aluminium/images/services/custom-welding-hero",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788612993/apex-aluminium/images/services/custom-welding-hero.jpg",
+    "resource_type": "image",
+    "format": "jpg",
+    "bytes": 129656,
+    "width": 1200,
+    "height": 896,
+    "uploaded_at": "2026-09-05T12:56:40.106Z"
+  },
+  "/images/services/doors-thumb.webp": {
+    "public_id": "apex-aluminium/images/services/doors-thumb",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788613000/apex-aluminium/images/services/doors-thumb.webp",
+    "resource_type": "image",
+    "format": "webp",
+    "bytes": 22710,
+    "width": 480,
+    "height": 358,
+    "uploaded_at": "2026-09-05T12:56:40.737Z"
+  },
+  "/images/services/double-glazed-windows-hero.webp": {
+    "public_id": "apex-aluminium/images/services/double-glazed-windows-hero",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788613001/apex-aluminium/images/services/double-glazed-windows-hero.webp",
+    "resource_type": "image",
+    "format": "webp",
+    "bytes": 55088,
+    "width": 1200,
+    "height": 1599,
+    "uploaded_at": "2026-09-05T12:56:41.422Z"
+  },
+  "/images/services/driveway-gates-hero.jpg": {
+    "public_id": "apex-aluminium/images/services/driveway-gates-hero",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788613002/apex-aluminium/images/services/driveway-gates-hero.jpg",
+    "resource_type": "image",
+    "format": "jpg",
+    "bytes": 214238,
+    "width": 1200,
+    "height": 896,
+    "uploaded_at": "2026-09-05T12:56:42.488Z"
+  },
+  "/images/services/driveway-gates-hero.webp": {
+    "public_id": "apex-aluminium/images/services/driveway-gates-hero",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788613002/apex-aluminium/images/services/driveway-gates-hero.jpg",
+    "resource_type": "image",
+    "format": "jpg",
+    "bytes": 214238,
+    "width": 1200,
+    "height": 896,
+    "uploaded_at": "2026-09-05T12:56:42.971Z"
+  },
+  "/images/services/driveway-thumb.webp": {
+    "public_id": "apex-aluminium/images/services/driveway-thumb",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788613003/apex-aluminium/images/services/driveway-thumb.webp",
+    "resource_type": "image",
+    "format": "webp",
+    "bytes": 18176,
+    "width": 480,
+    "height": 270,
+    "uploaded_at": "2026-09-05T12:56:43.671Z"
+  },
+  "/images/services/fly-screens-hero.webp": {
+    "public_id": "apex-aluminium/images/services/fly-screens-hero",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788613004/apex-aluminium/images/services/fly-screens-hero.webp",
+    "resource_type": "image",
+    "format": "webp",
+    "bytes": 306236,
+    "width": 1599,
+    "height": 1200,
+    "uploaded_at": "2026-09-05T12:56:44.668Z"
+  },
+  "/images/services/frameless-shower-doors-hero.webp": {
+    "public_id": "apex-aluminium/images/services/frameless-shower-doors-hero",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788613005/apex-aluminium/images/services/frameless-shower-doors-hero.webp",
+    "resource_type": "image",
+    "format": "webp",
+    "bytes": 67026,
+    "width": 1024,
+    "height": 1024,
+    "uploaded_at": "2026-09-05T12:56:45.416Z"
+  },
+  "/images/services/front-doors-thumb.webp": {
+    "public_id": "apex-aluminium/images/services/front-doors-thumb",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788613005/apex-aluminium/images/services/front-doors-thumb.webp",
+    "resource_type": "image",
+    "format": "webp",
+    "bytes": 22710,
+    "width": 480,
+    "height": 358,
+    "uploaded_at": "2026-09-05T12:56:46.401Z"
+  },
+  "/images/services/gate-motors-hero.webp": {
+    "public_id": "apex-aluminium/images/services/gate-motors-hero",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788613006/apex-aluminium/images/services/gate-motors-hero.webp",
+    "resource_type": "image",
+    "format": "webp",
+    "bytes": 58608,
+    "width": 720,
+    "height": 986,
+    "uploaded_at": "2026-09-05T12:56:47.057Z"
+  },
+  "/images/services/gates-thumb.webp": {
+    "public_id": "apex-aluminium/images/services/gates-thumb",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788613007/apex-aluminium/images/services/gates-thumb.webp",
+    "resource_type": "image",
+    "format": "webp",
+    "bytes": 48348,
+    "width": 480,
+    "height": 480,
+    "uploaded_at": "2026-09-05T12:56:47.837Z"
+  },
+  "/images/services/glass-balustrades-hero.webp": {
+    "public_id": "apex-aluminium/images/services/glass-balustrades-hero",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788613008/apex-aluminium/images/services/glass-balustrades-hero.webp",
+    "resource_type": "image",
+    "format": "webp",
+    "bytes": 92912,
+    "width": 1024,
+    "height": 1024,
+    "uploaded_at": "2026-09-05T12:56:48.536Z"
+  },
+  "/images/services/glass-balustrades-thumb.webp": {
+    "public_id": "apex-aluminium/images/services/glass-balustrades-thumb",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788613008/apex-aluminium/images/services/glass-balustrades-thumb.webp",
+    "resource_type": "image",
+    "format": "webp",
+    "bytes": 26320,
+    "width": 480,
+    "height": 480,
+    "uploaded_at": "2026-09-05T12:56:49.136Z"
+  },
+  "/images/services/glass-patio-enclosures-hero.webp": {
+    "public_id": "apex-aluminium/images/services/glass-patio-enclosures-hero",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788613009/apex-aluminium/images/services/glass-patio-enclosures-hero.webp",
+    "resource_type": "image",
+    "format": "webp",
+    "bytes": 130878,
+    "width": 1024,
+    "height": 1024,
+    "uploaded_at": "2026-09-05T12:56:49.965Z"
+  },
+  "/images/services/glass-replacement-hero.webp": {
+    "public_id": "apex-aluminium/images/services/glass-replacement-hero",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788613010/apex-aluminium/images/services/glass-replacement-hero.webp",
+    "resource_type": "image",
+    "format": "webp",
+    "bytes": 58336,
+    "width": 1024,
+    "height": 1024,
+    "uploaded_at": "2026-09-05T12:56:50.792Z"
+  },
+  "/images/services/glass-shopfronts-hero.webp": {
+    "public_id": "apex-aluminium/images/services/glass-shopfronts-hero",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788613011/apex-aluminium/images/services/glass-shopfronts-hero.webp",
+    "resource_type": "image",
+    "format": "webp",
+    "bytes": 139082,
+    "width": 1024,
+    "height": 1024,
+    "uploaded_at": "2026-09-05T12:56:51.606Z"
+  },
+  "/images/services/glass-thumb.webp": {
+    "public_id": "apex-aluminium/images/services/glass-thumb",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788613011/apex-aluminium/images/services/glass-thumb.webp",
+    "resource_type": "image",
+    "format": "webp",
+    "bytes": 17574,
+    "width": 480,
+    "height": 480,
+    "uploaded_at": "2026-09-05T12:56:52.266Z"
+  },
+  "/images/services/mesh-fencing-hero.webp": {
+    "public_id": "apex-aluminium/images/services/mesh-fencing-hero",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788613012/apex-aluminium/images/services/mesh-fencing-hero.webp",
+    "resource_type": "image",
+    "format": "webp",
+    "bytes": 61588,
+    "width": 720,
+    "height": 1600,
+    "uploaded_at": "2026-09-05T12:56:52.964Z"
+  },
+  "/images/services/mesh-thumb.webp": {
+    "public_id": "apex-aluminium/images/services/mesh-thumb",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788613013/apex-aluminium/images/services/mesh-thumb.webp",
+    "resource_type": "image",
+    "format": "webp",
+    "bytes": 36512,
+    "width": 480,
+    "height": 1067,
+    "uploaded_at": "2026-09-05T12:56:53.757Z"
+  },
+  "/images/services/motors-thumb.webp": {
+    "public_id": "apex-aluminium/images/services/motors-thumb",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788613014/apex-aluminium/images/services/motors-thumb.webp",
+    "resource_type": "image",
+    "format": "webp",
+    "bytes": 33788,
+    "width": 480,
+    "height": 657,
+    "uploaded_at": "2026-09-05T12:56:54.422Z"
+  },
+  "/images/services/office-glass-partitions-hero.webp": {
+    "public_id": "apex-aluminium/images/services/office-glass-partitions-hero",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788613014/apex-aluminium/images/services/office-glass-partitions-hero.webp",
+    "resource_type": "image",
+    "format": "webp",
+    "bytes": 129412,
+    "width": 1024,
+    "height": 1024,
+    "uploaded_at": "2026-09-05T12:56:55.140Z"
+  },
+  "/images/services/palisade-fencing-hero.jpg": {
+    "public_id": "apex-aluminium/images/services/palisade-fencing-hero",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788613015/apex-aluminium/images/services/palisade-fencing-hero.jpg",
+    "resource_type": "image",
+    "format": "jpg",
+    "bytes": 177607,
+    "width": 1200,
+    "height": 896,
+    "uploaded_at": "2026-09-05T12:56:55.974Z"
+  },
+  "/images/services/palisade-fencing-hero.webp": {
+    "public_id": "apex-aluminium/images/services/palisade-fencing-hero",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788613015/apex-aluminium/images/services/palisade-fencing-hero.jpg",
+    "resource_type": "image",
+    "format": "jpg",
+    "bytes": 177607,
+    "width": 1200,
+    "height": 896,
+    "uploaded_at": "2026-09-05T12:56:56.501Z"
+  },
+  "/images/services/palisade-thumb.webp": {
+    "public_id": "apex-aluminium/images/services/palisade-thumb",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788613016/apex-aluminium/images/services/palisade-thumb.webp",
+    "resource_type": "image",
+    "format": "webp",
+    "bytes": 48348,
+    "width": 480,
+    "height": 480,
+    "uploaded_at": "2026-09-05T12:56:57.106Z"
+  },
+  "/images/services/partitions-thumb.webp": {
+    "public_id": "apex-aluminium/images/services/partitions-thumb",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788613017/apex-aluminium/images/services/partitions-thumb.webp",
+    "resource_type": "image",
+    "format": "webp",
+    "bytes": 35238,
+    "width": 480,
+    "height": 480,
+    "uploaded_at": "2026-09-05T12:56:57.814Z"
+  },
+  "/images/services/patio-enclosures-hero.webp": {
+    "public_id": "apex-aluminium/images/services/patio-enclosures-hero",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788613018/apex-aluminium/images/services/patio-enclosures-hero.webp",
+    "resource_type": "image",
+    "format": "webp",
+    "bytes": 130878,
+    "width": 1024,
+    "height": 1024,
+    "uploaded_at": "2026-09-05T12:56:58.499Z"
+  },
+  "/images/services/patio-thumb.webp": {
+    "public_id": "apex-aluminium/images/services/patio-thumb",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788613018/apex-aluminium/images/services/patio-thumb.webp",
+    "resource_type": "image",
+    "format": "webp",
+    "bytes": 39028,
+    "width": 480,
+    "height": 480,
+    "uploaded_at": "2026-09-05T12:56:59.060Z"
+  },
+  "/images/services/pergolas-thumb.webp": {
+    "public_id": "apex-aluminium/images/services/pergolas-thumb",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788613019/apex-aluminium/images/services/pergolas-thumb.webp",
+    "resource_type": "image",
+    "format": "webp",
+    "bytes": 39028,
+    "width": 480,
+    "height": 480,
+    "uploaded_at": "2026-09-05T12:56:59.735Z"
+  },
+  "/images/services/repairs-thumb.webp": {
+    "public_id": "apex-aluminium/images/services/repairs-thumb",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788613020/apex-aluminium/images/services/repairs-thumb.webp",
+    "resource_type": "image",
+    "format": "webp",
+    "bytes": 31878,
+    "width": 480,
+    "height": 480,
+    "uploaded_at": "2026-09-05T12:57:00.435Z"
+  },
+  "/images/services/screens-thumb.webp": {
+    "public_id": "apex-aluminium/images/services/screens-thumb",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788613020/apex-aluminium/images/services/screens-thumb.webp",
+    "resource_type": "image",
+    "format": "webp",
+    "bytes": 32236,
+    "width": 480,
+    "height": 360,
+    "uploaded_at": "2026-09-05T12:57:01.032Z"
+  },
+  "/images/services/seamless-gutters-hero.webp": {
+    "public_id": "apex-aluminium/images/services/seamless-gutters-hero",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788613021/apex-aluminium/images/services/seamless-gutters-hero.webp",
+    "resource_type": "image",
+    "format": "webp",
+    "bytes": 139372,
+    "width": 1200,
+    "height": 1599,
+    "uploaded_at": "2026-09-05T12:57:01.818Z"
+  },
+  "/images/services/security-gates-hero.jpg": {
+    "public_id": "apex-aluminium/images/services/security-gates-hero",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788613022/apex-aluminium/images/services/security-gates-hero.jpg",
+    "resource_type": "image",
+    "format": "jpg",
+    "bytes": 245840,
+    "width": 1200,
+    "height": 896,
+    "uploaded_at": "2026-09-05T12:57:02.684Z"
+  },
+  "/images/services/security-gates-hero.webp": {
+    "public_id": "apex-aluminium/images/services/security-gates-hero",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788613022/apex-aluminium/images/services/security-gates-hero.jpg",
+    "resource_type": "image",
+    "format": "jpg",
+    "bytes": 245840,
+    "width": 1200,
+    "height": 896,
+    "uploaded_at": "2026-09-05T12:57:03.147Z"
+  },
+  "/images/services/sheds-thumb.webp": {
+    "public_id": "apex-aluminium/images/services/sheds-thumb",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788613023/apex-aluminium/images/services/sheds-thumb.webp",
+    "resource_type": "image",
+    "format": "webp",
+    "bytes": 39028,
+    "width": 480,
+    "height": 480,
+    "uploaded_at": "2026-09-05T12:57:03.811Z"
+  },
+  "/images/services/shopfront-thumb.webp": {
+    "public_id": "apex-aluminium/images/services/shopfront-thumb",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788613024/apex-aluminium/images/services/shopfront-thumb.webp",
+    "resource_type": "image",
+    "format": "webp",
+    "bytes": 39000,
+    "width": 480,
+    "height": 480,
+    "uploaded_at": "2026-09-05T12:57:04.480Z"
+  },
+  "/images/services/sliding-door-repairs-hero.webp": {
+    "public_id": "apex-aluminium/images/services/sliding-door-repairs-hero",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788613024/apex-aluminium/images/services/sliding-door-repairs-hero.webp",
+    "resource_type": "image",
+    "format": "webp",
+    "bytes": 124332,
+    "width": 1200,
+    "height": 896,
+    "uploaded_at": "2026-09-05T12:57:05.247Z"
+  },
+  "/images/services/sliding-thumb.webp": {
+    "public_id": "apex-aluminium/images/services/sliding-thumb",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788613025/apex-aluminium/images/services/sliding-thumb.webp",
+    "resource_type": "image",
+    "format": "webp",
+    "bytes": 27880,
+    "width": 480,
+    "height": 358,
+    "uploaded_at": "2026-09-05T12:57:06.409Z"
+  },
+  "/images/services/sliding-windows-thumb.webp": {
+    "public_id": "apex-aluminium/images/services/sliding-windows-thumb",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788613026/apex-aluminium/images/services/sliding-windows-thumb.webp",
+    "resource_type": "image",
+    "format": "webp",
+    "bytes": 19640,
+    "width": 480,
+    "height": 360,
+    "uploaded_at": "2026-09-05T12:57:07.079Z"
+  },
+  "/images/services/stacking-thumb.webp": {
+    "public_id": "apex-aluminium/images/services/stacking-thumb",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788613027/apex-aluminium/images/services/stacking-thumb.webp",
+    "resource_type": "image",
+    "format": "webp",
+    "bytes": 29908,
+    "width": 480,
+    "height": 358,
+    "uploaded_at": "2026-09-05T12:57:07.745Z"
+  },
+  "/images/services/stairs-thumb.webp": {
+    "public_id": "apex-aluminium/images/services/stairs-thumb",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788613028/apex-aluminium/images/services/stairs-thumb.webp",
+    "resource_type": "image",
+    "format": "webp",
+    "bytes": 26320,
+    "width": 480,
+    "height": 480,
+    "uploaded_at": "2026-09-05T12:57:08.398Z"
+  },
+  "/images/services/steel-balustrades-hero.jpg": {
+    "public_id": "apex-aluminium/images/services/steel-balustrades-hero",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788613028/apex-aluminium/images/services/steel-balustrades-hero.jpg",
+    "resource_type": "image",
+    "format": "jpg",
+    "bytes": 232038,
+    "width": 1200,
+    "height": 896,
+    "uploaded_at": "2026-09-05T12:57:09.173Z"
+  },
+  "/images/services/steel-balustrades-hero.webp": {
+    "public_id": "apex-aluminium/images/services/steel-balustrades-hero",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788613028/apex-aluminium/images/services/steel-balustrades-hero.jpg",
+    "resource_type": "image",
+    "format": "jpg",
+    "bytes": 232038,
+    "width": 1200,
+    "height": 896,
+    "uploaded_at": "2026-09-05T12:57:09.707Z"
+  },
+  "/images/services/steel-carports-hero.jpg": {
+    "public_id": "apex-aluminium/images/services/steel-carports-hero",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788613030/apex-aluminium/images/services/steel-carports-hero.jpg",
+    "resource_type": "image",
+    "format": "jpg",
+    "bytes": 180481,
+    "width": 1200,
+    "height": 896,
+    "uploaded_at": "2026-09-05T12:57:10.521Z"
+  },
+  "/images/services/steel-carports-hero.webp": {
+    "public_id": "apex-aluminium/images/services/steel-carports-hero",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788613030/apex-aluminium/images/services/steel-carports-hero.jpg",
+    "resource_type": "image",
+    "format": "jpg",
+    "bytes": 180481,
+    "width": 1200,
+    "height": 896,
+    "uploaded_at": "2026-09-05T12:57:13.431Z"
+  },
+  "/images/services/steel-repairs-hero.jpg": {
+    "public_id": "apex-aluminium/images/services/steel-repairs-hero",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788613035/apex-aluminium/images/services/steel-repairs-hero.jpg",
+    "resource_type": "image",
+    "format": "jpg",
+    "bytes": 157278,
+    "width": 1200,
+    "height": 896,
+    "uploaded_at": "2026-09-05T12:57:16.163Z"
+  },
+  "/images/services/steel-repairs-hero.webp": {
+    "public_id": "apex-aluminium/images/services/steel-repairs-hero",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788613035/apex-aluminium/images/services/steel-repairs-hero.jpg",
+    "resource_type": "image",
+    "format": "jpg",
+    "bytes": 157278,
+    "width": 1200,
+    "height": 896,
+    "uploaded_at": "2026-09-05T12:57:18.229Z"
+  },
+  "/images/services/steel-sheds-hero.jpg": {
+    "public_id": "apex-aluminium/images/services/steel-sheds-hero",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788613041/apex-aluminium/images/services/steel-sheds-hero.jpg",
+    "resource_type": "image",
+    "format": "jpg",
+    "bytes": 225363,
+    "width": 1200,
+    "height": 896,
+    "uploaded_at": "2026-09-05T12:57:22.033Z"
+  },
+  "/images/services/steel-sheds-hero.webp": {
+    "public_id": "apex-aluminium/images/services/steel-sheds-hero",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788613041/apex-aluminium/images/services/steel-sheds-hero.jpg",
+    "resource_type": "image",
+    "format": "jpg",
+    "bytes": 225363,
+    "width": 1200,
+    "height": 896,
+    "uploaded_at": "2026-09-05T12:57:24.234Z"
+  },
+  "/images/services/steel-staircases-hero.jpg": {
+    "public_id": "apex-aluminium/images/services/steel-staircases-hero",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788613045/apex-aluminium/images/services/steel-staircases-hero.jpg",
+    "resource_type": "image",
+    "format": "jpg",
+    "bytes": 179298,
+    "width": 1200,
+    "height": 896,
+    "uploaded_at": "2026-09-05T12:57:25.943Z"
+  },
+  "/images/services/steel-staircases-hero.webp": {
+    "public_id": "apex-aluminium/images/services/steel-staircases-hero",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788613045/apex-aluminium/images/services/steel-staircases-hero.jpg",
+    "resource_type": "image",
+    "format": "jpg",
+    "bytes": 179298,
+    "width": 1200,
+    "height": 896,
+    "uploaded_at": "2026-09-05T12:57:26.820Z"
+  },
+  "/images/services/steel-to-aluminium-hero.webp": {
+    "public_id": "apex-aluminium/images/services/steel-to-aluminium-hero",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788613049/apex-aluminium/images/services/steel-to-aluminium-hero.webp",
+    "resource_type": "image",
+    "format": "webp",
+    "bytes": 260668,
+    "width": 1200,
+    "height": 896,
+    "uploaded_at": "2026-09-05T12:57:29.958Z"
+  },
+  "/images/services/steel-works-hero.jpg": {
+    "public_id": "apex-aluminium/images/services/steel-works-hero",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788613051/apex-aluminium/images/services/steel-works-hero.jpg",
+    "resource_type": "image",
+    "format": "jpg",
+    "bytes": 181911,
+    "width": 1200,
+    "height": 896,
+    "uploaded_at": "2026-09-05T12:57:31.675Z"
+  },
+  "/images/services/trellis-gates-hero.webp": {
+    "public_id": "apex-aluminium/images/services/trellis-gates-hero",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788613052/apex-aluminium/images/services/trellis-gates-hero.webp",
+    "resource_type": "image",
+    "format": "webp",
+    "bytes": 59850,
+    "width": 720,
+    "height": 1600,
+    "uploaded_at": "2026-09-05T12:57:32.852Z"
+  },
+  "/images/services/trellis-thumb.webp": {
+    "public_id": "apex-aluminium/images/services/trellis-thumb",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788613053/apex-aluminium/images/services/trellis-thumb.webp",
+    "resource_type": "image",
+    "format": "webp",
+    "bytes": 34602,
+    "width": 480,
+    "height": 1067,
+    "uploaded_at": "2026-09-05T12:57:33.750Z"
+  },
+  "/images/services/welding-thumb.webp": {
+    "public_id": "apex-aluminium/images/services/welding-thumb",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788613054/apex-aluminium/images/services/welding-thumb.webp",
+    "resource_type": "image",
+    "format": "webp",
+    "bytes": 48348,
+    "width": 480,
+    "height": 480,
+    "uploaded_at": "2026-09-05T12:57:34.909Z"
+  },
+  "/images/services/windows-thumb.webp": {
+    "public_id": "apex-aluminium/images/services/windows-thumb",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788613055/apex-aluminium/images/services/windows-thumb.webp",
+    "resource_type": "image",
+    "format": "webp",
+    "bytes": 53002,
+    "width": 480,
+    "height": 358,
+    "uploaded_at": "2026-09-05T12:57:36.105Z"
+  },
+  "/images/shopfront_facade.png": {
+    "public_id": "apex-aluminium/images/shopfront_facade",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788613061/apex-aluminium/images/shopfront_facade.png",
+    "resource_type": "image",
+    "format": "png",
+    "bytes": 522962,
+    "width": 1024,
+    "height": 1024,
+    "uploaded_at": "2026-09-05T12:57:41.525Z"
+  },
+  "/images/shower_enclosure.png": {
+    "public_id": "apex-aluminium/images/shower_enclosure",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788613069/apex-aluminium/images/shower_enclosure.png",
+    "resource_type": "image",
+    "format": "png",
+    "bytes": 443302,
+    "width": 1024,
+    "height": 1024,
+    "uploaded_at": "2026-09-05T12:57:49.691Z"
+  },
+  "/images/slatted_gate.png": {
+    "public_id": "apex-aluminium/images/slatted_gate",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788613091/apex-aluminium/images/slatted_gate.png",
+    "resource_type": "image",
+    "format": "png",
+    "bytes": 594411,
+    "width": 1024,
+    "height": 1024,
+    "uploaded_at": "2026-09-05T12:58:12.212Z"
+  },
+  "/images/sliding_doors.png": {
+    "public_id": "apex-aluminium/images/sliding_doors",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788613102/apex-aluminium/images/sliding_doors.png",
+    "resource_type": "image",
+    "format": "png",
+    "bytes": 448071,
+    "width": 1024,
+    "height": 1024,
+    "uploaded_at": "2026-09-05T12:58:23.118Z"
+  },
+  "/images/window_detail.png": {
+    "public_id": "apex-aluminium/images/window_detail",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788613104/apex-aluminium/images/window_detail.png",
+    "resource_type": "image",
+    "format": "png",
+    "bytes": 504376,
+    "width": 1024,
+    "height": 1024,
+    "uploaded_at": "2026-09-05T12:58:24.697Z"
+  },
+  "/images/window_repair.png": {
+    "public_id": "apex-aluminium/images/window_repair",
+    "secure_url": "https://res.cloudinary.com/dw8dqd5tj/image/upload/v1788613105/apex-aluminium/images/window_repair.png",
+    "resource_type": "image",
+    "format": "png",
+    "bytes": 544624,
+    "width": 1024,
+    "height": 1024,
+    "uploaded_at": "2026-09-05T12:58:26.087Z"
+  }
+}
