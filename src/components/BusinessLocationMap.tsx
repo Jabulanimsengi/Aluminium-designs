@@ -1,5 +1,6 @@
 import { Clock3, ExternalLink, MapPin } from "lucide-react";
 import { businessContact, businessHours } from "@/lib/site";
+import GoogleMapEmbed from "./GoogleMapEmbed";
 
 const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
   businessContact.fullAddress,
@@ -70,18 +71,16 @@ export default function BusinessLocationMap() {
               href={directionsUrl}
               target="_blank"
               rel="noreferrer"
-              className="absolute right-4 top-4 z-10 hidden sm:inline-flex w-fit items-center gap-2 rounded-full bg-accent px-5 py-3 font-mono text-[11px] font-bold uppercase tracking-widest text-white shadow-lg transition-colors hover:bg-accent-hover"
+              className="absolute right-4 top-4 z-20 hidden sm:inline-flex w-fit items-center gap-2 rounded-full bg-accent px-5 py-3 font-mono text-[11px] font-bold uppercase tracking-widest text-white shadow-lg transition-colors hover:bg-accent-hover"
             >
               Get Directions
               <ExternalLink className="h-4 w-4" />
             </a>
-            <iframe
+            <GoogleMapEmbed
               title="Google Map showing Aluminium Designs in Katlehong"
-              src={mapUrl}
-              className="h-full min-h-[280px] w-full border-0 sm:min-h-[420px]"
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              allowFullScreen
+              mapUrl={mapUrl}
+              directionsUrl={directionsUrl}
+              minHeightClass="min-h-[280px] sm:min-h-[420px]"
             />
           </div>
         </div>

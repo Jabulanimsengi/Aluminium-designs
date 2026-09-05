@@ -2,6 +2,7 @@ import React from "react";
 import { Metadata } from "next";
 import { Phone, Mail, MapPin, Clock, ArrowRight, ExternalLink } from "lucide-react";
 import { absoluteUrl, businessContact, businessHours, siteUrl } from "@/lib/site";
+import GoogleMapEmbed from "@/components/GoogleMapEmbed";
 
 export const metadata: Metadata = {
   title: "Contact Us | Aluminium Designs Gauteng",
@@ -148,23 +149,21 @@ export default function ContactPage() {
           <div className="lg:col-span-7 flex flex-col">
             <div className="border border-outline-variant bg-surface-container-lowest h-full min-h-[460px] flex flex-col justify-between overflow-hidden shadow-sm">
               <div className="relative w-full flex-1 min-h-[380px] bg-surface-container">
-                <iframe
-                  title="Google Map showing Aluminium Designs Katlehong Workshop"
-                  src={googleMapEmbedUrl}
-                  className="absolute inset-0 w-full h-full border-0"
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  allowFullScreen
-                />
                 <a
                   href={directionsUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="absolute top-4 right-4 z-10 hidden sm:inline-flex items-center gap-2 bg-accent hover:bg-accent-hover text-white px-4 py-2 font-mono text-[10px] font-bold uppercase tracking-widest shadow-md transition-colors rounded-full"
+                  className="absolute top-4 right-4 z-20 hidden sm:inline-flex items-center gap-2 bg-accent hover:bg-accent-hover text-white px-4 py-2 font-mono text-[10px] font-bold uppercase tracking-widest shadow-md transition-colors rounded-full"
                 >
                   Get Directions
                   <ExternalLink className="w-3.5 h-3.5" />
                 </a>
+                <GoogleMapEmbed
+                  title="Google Map showing Aluminium Designs Katlehong Workshop"
+                  mapUrl={googleMapEmbedUrl}
+                  directionsUrl={directionsUrl}
+                  minHeightClass="min-h-[380px]"
+                />
               </div>
 
               <div className="border-t border-outline-variant bg-surface p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">

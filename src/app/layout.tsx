@@ -105,6 +105,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap"
           rel="stylesheet"
         />
+        <link rel="preconnect" href="https://maps.google.com" />
+        <link rel="preconnect" href="https://maps.gstatic.com" crossOrigin="anonymous" />
       </head>
       <body className="min-h-full flex flex-col bg-surface text-on-surface selection:bg-tertiary-fixed selection:text-on-tertiary-fixed font-sans">
         <script
