@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function QuotePage() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-16 sm:py-24">
-      <div className="border border-outline-variant bg-surface-container-lowest p-6 sm:p-10">
+      <div className="rounded-2xl border border-outline-variant/70 bg-surface-container-lowest p-6 sm:p-10 shadow-sm">
         <p className="font-mono text-[10px] font-bold uppercase tracking-widest text-accent">
           No-obligation quote
         </p>

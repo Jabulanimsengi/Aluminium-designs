@@ -34,28 +34,25 @@ export default function QuotePrompt() {
 
   return (
     <div
-      className="fixed inset-0 z-[60] flex items-center justify-center bg-black/50 p-4"
+      className="fixed inset-0 z-[60] flex items-center justify-center overflow-y-auto bg-black/60 backdrop-blur-xs p-4"
       role="dialog"
       aria-modal="true"
       aria-labelledby="quote-prompt-title"
     >
-      <div className="relative w-full max-w-md max-h-[90dvh] overflow-y-auto bg-surface-container-lowest p-6 shadow-2xl sm:p-8">
+      <div className="relative w-full max-w-md max-h-[90dvh] overflow-y-auto rounded-2xl border border-outline-variant/60 bg-surface-container-lowest p-6 shadow-2xl sm:p-7">
         <button
           type="button"
           onClick={closePrompt}
-          className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-full border border-outline-variant text-secondary transition-colors hover:border-accent hover:text-accent"
+          className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full text-secondary transition-colors hover:bg-surface-container hover:text-primary"
           aria-label="Close quotation prompt"
         >
           <X className="h-4 w-4" />
         </button>
 
-        <p className="font-mono text-[10px] font-bold uppercase tracking-widest text-accent">
-          Custom Sizing &bull; Factory Direct Rates
-        </p>
-        <h2 id="quote-prompt-title" className="mt-3 pr-8 font-sans text-2xl font-bold uppercase leading-tight tracking-tight text-primary sm:text-3xl">
+        <h2 id="quote-prompt-title" className="pr-8 font-sans text-xl font-bold text-primary sm:text-2xl">
           Need Custom Windows, Doors, or Conversions?
         </h2>
-        <p className="mt-4 text-sm leading-relaxed text-on-surface-variant">
+        <p className="mt-2.5 text-sm leading-relaxed text-on-surface-variant">
           Get an accurate, no-obligation estimate for your home or business. We measure, manufacture, and install across all of Gauteng.
         </p>
 
@@ -63,7 +60,7 @@ export default function QuotePrompt() {
           <Link
             href="/quote"
             onClick={closePrompt}
-            className="inline-flex flex-1 items-center justify-center gap-2 rounded-full bg-accent px-5 py-3 font-mono text-[11px] font-bold uppercase tracking-widest text-white transition-colors hover:bg-accent-hover"
+            className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-accent px-5 py-3 font-sans text-sm font-semibold text-white shadow-sm transition-all hover:bg-accent-hover active:scale-[0.99]"
           >
             Get Free Estimate
             <ArrowRight className="h-4 w-4" />
@@ -71,7 +68,7 @@ export default function QuotePrompt() {
           <button
             type="button"
             onClick={closePrompt}
-            className="rounded-full border border-outline-variant px-5 py-3 font-mono text-[11px] font-bold uppercase tracking-widest text-primary transition-colors hover:border-accent hover:text-accent"
+            className="rounded-xl border border-outline-variant px-5 py-3 font-sans text-sm font-medium text-secondary transition-colors hover:bg-surface-container hover:text-primary"
           >
             Continue Browsing
           </button>

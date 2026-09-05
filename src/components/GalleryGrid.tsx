@@ -10,6 +10,54 @@ const INITIAL_PROJECT_COUNT = 12;
 const PROJECT_BATCH_SIZE = 12;
 const LIGHTBOX_THUMBNAIL_COUNT = 7;
 
+function GalleryCard({
+  project,
+  index,
+  onOpen,
+}: {
+  project: (typeof projects)[0];
+  index: number;
+  onOpen: (project: (typeof projects)[0]) => void;
+}) {
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  return (
+    <button
+      type="button"
+      onClick={() => onOpen(project)}
+      aria-label={`Open ${project.title}`}
+      className={`group relative overflow-hidden bg-surface-container-high text-left ${
+        index === 0 ? "col-span-2 aspect-[16/10]" : "aspect-square"
+      } sm:col-span-1 sm:aspect-[4/3]`}
+    >
+      <span
+        aria-hidden="true"
+        className={`gallery-image-skeleton absolute inset-0 transition-opacity duration-500 ${
+          isLoaded ? "opacity-0" : "opacity-100"
+        }`}
+      />
+      <Image
+        src={project.imagePath}
+        alt={project.title}
+        fill
+        loading={index < 3 ? "eager" : "lazy"}
+        sizes={
+          index === 0
+            ? "(max-width: 639px) calc(100vw - 24px), (max-width: 1023px) calc(50vw - 32px), calc(33vw - 32px)"
+            : "(max-width: 639px) calc(50vw - 16px), (max-width: 1023px) calc(50vw - 32px), calc(33vw - 32px)"
+        }
+        onLoad={() => setIsLoaded(true)}
+        className={`object-cover transition-[opacity,transform] duration-700 ${
+          isLoaded ? "scale-100 opacity-100 group-hover:scale-105" : "scale-[1.02] opacity-0"
+        }`}
+      />
+      <span className="absolute left-1/2 top-1/2 flex h-11 w-11 -translate-x-1/2 -translate-y-1/2 scale-90 items-center justify-center rounded-full bg-accent text-white opacity-0 shadow-lg transition-all duration-300 group-hover:scale-100 group-hover:opacity-100">
+        <ZoomIn className="h-4 w-4" />
+      </span>
+    </button>
+  );
+}
+
 export default function GalleryGrid() {
   const [activeFilter, setActiveFilter] = useState<string>("all");
   const [activeProject, setActiveProject] = useState<(typeof projects)[0] | null>(null);
@@ -17,23 +65,13 @@ export default function GalleryGrid() {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [dragging, setDragging] = useState(false);
   const [visibleCount, setVisibleCount] = useState(INITIAL_PROJECT_COUNT);
-  const [loadedImages, setLoadedImages] = useState<Set<string>>(() => new Set());
   const dragStart = useRef({ x: 0, y: 0 });
   const posStart = useRef({ x: 0, y: 0 });
-  const preloadedImages = useRef(new Set<string>());
   const dialogRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const returnFocusRef = useRef<HTMLElement | null>(null);
   const touchStart = useRef({ x: 0, y: 0 });
   const suppressClick = useRef(false);
-
-  const preloadImage = useCallback((src: string) => {
-    if (preloadedImages.current.has(src)) return;
-
-    const image = new window.Image();
-    image.src = src;
-    preloadedImages.current.add(src);
-  }, []);
 
   const resetZoom = useCallback(() => {
     setZoom(1);
@@ -46,10 +84,9 @@ export default function GalleryGrid() {
         returnFocusRef.current = document.activeElement as HTMLElement | null;
       }
       resetZoom();
-      preloadImage(project.imagePath);
       setActiveProject(project);
     },
-    [preloadImage, resetZoom],
+    [resetZoom],
   );
 
   const closeLightbox = useCallback(() => {
@@ -129,15 +166,6 @@ export default function GalleryGrid() {
     setVisibleCount(INITIAL_PROJECT_COUNT);
   }, []);
 
-  const markImageLoaded = useCallback((id: string) => {
-    setLoadedImages((current) => {
-      if (current.has(id)) return current;
-      const next = new Set(current);
-      next.add(id);
-      return next;
-    });
-  }, []);
-
   const activeProjectIndex = activeProject
     ? filteredProjects.findIndex((project) => project.id === activeProject.id)
     : -1;
@@ -207,20 +235,6 @@ export default function GalleryGrid() {
     };
   }, [activeProject, closeLightbox, showProject]);
 
-  useEffect(() => {
-    if (!activeProject || filteredProjects.length < 2) return;
-
-    const currentIndex = filteredProjects.findIndex(
-      (project) => project.id === activeProject.id
-    );
-    const previousIndex =
-      (currentIndex - 1 + filteredProjects.length) % filteredProjects.length;
-    const nextIndex = (currentIndex + 1) % filteredProjects.length;
-
-    preloadImage(filteredProjects[previousIndex].imagePath);
-    preloadImage(filteredProjects[nextIndex].imagePath);
-  }, [activeProject, filteredProjects, preloadImage]);
-
   return (
     <div className="space-y-5 sm:space-y-10">
       <div className="sm:hidden">
@@ -281,44 +295,14 @@ export default function GalleryGrid() {
       </div>
 
       <div className="grid grid-cols-2 gap-2 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
-        {visibleProjects.map((project, index) => {
-          const isLoaded = loadedImages.has(project.id);
-
-          return (
-          <button
+        {visibleProjects.map((project, index) => (
+          <GalleryCard
             key={project.id}
-            type="button"
-            onClick={() => openProject(project)}
-            aria-label={`Open ${project.title}`}
-            className={`group relative overflow-hidden bg-surface-container-high text-left ${
-              index === 0 ? "col-span-2 aspect-[16/10]" : "aspect-square"
-            } sm:col-span-1 sm:aspect-[4/3]`}
-          >
-            <span
-              aria-hidden="true"
-              className={`gallery-image-skeleton absolute inset-0 transition-opacity duration-500 ${
-                isLoaded ? "opacity-0" : "opacity-100"
-              }`}
-            />
-            <Image
-              src={project.imagePath}
-              alt={project.title}
-              fill
-              loading={index < 3 ? "eager" : "lazy"}
-              sizes={index === 0
-                ? "(max-width: 639px) calc(100vw - 24px), (max-width: 1023px) calc(50vw - 32px), calc(33vw - 32px)"
-                : "(max-width: 639px) calc(50vw - 16px), (max-width: 1023px) calc(50vw - 32px), calc(33vw - 32px)"}
-              onLoad={() => markImageLoaded(project.id)}
-              className={`object-cover transition-[opacity,transform] duration-700 ${
-                isLoaded ? "scale-100 opacity-100 group-hover:scale-105" : "scale-[1.02] opacity-0"
-              }`}
-            />
-            <span className="absolute left-1/2 top-1/2 flex h-11 w-11 -translate-x-1/2 -translate-y-1/2 scale-90 items-center justify-center rounded-full bg-accent text-white opacity-0 shadow-lg transition-all duration-300 group-hover:scale-100 group-hover:opacity-100">
-              <ZoomIn className="h-4 w-4" />
-            </span>
-          </button>
-          );
-        })}
+            project={project}
+            index={index}
+            onOpen={openProject}
+          />
+        ))}
       </div>
 
       {remainingProjectCount > 0 && (

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { X } from "lucide-react";
+import { MessageCircle, X } from "lucide-react";
 import LeadCaptureForm from "./LeadCaptureForm";
 
 export default function WhatsAppChatWidget() {
@@ -29,7 +29,7 @@ export default function WhatsAppChatWidget() {
 
       {open ? (
         <div
-          className="fixed inset-0 z-[120] flex items-center justify-center overflow-y-auto bg-black/60 p-3 sm:p-4"
+          className="fixed inset-0 z-[120] flex items-center justify-center overflow-y-auto bg-black/60 backdrop-blur-xs p-4"
           role="dialog"
           aria-modal="true"
           aria-labelledby="lead-gate-title"
@@ -37,32 +37,34 @@ export default function WhatsAppChatWidget() {
             if (event.target === event.currentTarget) setOpen(false);
           }}
         >
-          <div className="relative w-full max-w-md max-h-[92dvh] overflow-y-auto border border-outline-variant bg-surface-container-lowest p-4 shadow-2xl sm:p-6">
+          <div className="relative w-full max-w-md max-h-[92dvh] overflow-y-auto rounded-2xl border border-outline-variant/60 bg-surface-container-lowest p-6 shadow-2xl">
             <button
               type="button"
               onClick={() => setOpen(false)}
               aria-label="Close"
-              className="absolute right-2.5 top-2.5 flex h-8 w-8 items-center justify-center rounded-full border border-outline-variant text-secondary transition-colors hover:border-accent hover:text-accent"
+              className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full text-secondary transition-colors hover:bg-surface-container hover:text-primary"
             >
               <X className="h-4 w-4" />
             </button>
 
-            <p className="font-mono text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-accent mb-1">
-              Instant Workshop Connection
-            </p>
-            <h2
-              id="lead-gate-title"
-              className="pr-8 text-left font-sans text-lg sm:text-xl font-bold uppercase leading-snug tracking-tight text-primary"
-            >
-              Chat Directly With Our Team
-            </h2>
-            <p className="mt-1 text-xs sm:text-sm leading-normal text-on-surface-variant line-clamp-2 sm:line-clamp-none">
-              Share a few quick details to chat directly with our estimators on WhatsApp.
-            </p>
-
-            <div className="mt-3 sm:mt-4">
-              <LeadCaptureForm source="whatsapp" onCancel={() => setOpen(false)} />
+            <div className="flex items-center gap-3 pr-8 mb-4">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#25D366]/15 text-[#25D366]">
+                <MessageCircle className="h-5 w-5 fill-[#25D366]/20" />
+              </div>
+              <div>
+                <h2
+                  id="lead-gate-title"
+                  className="font-sans text-lg font-bold text-primary"
+                >
+                  Chat on WhatsApp
+                </h2>
+                <p className="text-xs text-on-surface-variant">
+                  Direct connection with our workshop estimators
+                </p>
+              </div>
             </div>
+
+            <LeadCaptureForm source="whatsapp" onCancel={() => setOpen(false)} />
           </div>
         </div>
       ) : null}

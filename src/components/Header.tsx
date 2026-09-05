@@ -154,10 +154,10 @@ export default function Header() {
             <Image
               src="/images/real_images/logo/logo.png"
               alt="Aluminium Designs"
-              width={134}
-              height={53}
+              width={160}
+              height={64}
               priority
-              className="h-10 sm:h-11 md:h-12 w-auto object-contain"
+              className="h-12 sm:h-12 md:h-13 w-auto object-contain"
             />
           </Link>
 
@@ -332,10 +332,10 @@ export default function Header() {
                 <Image
                   src="/images/real_images/logo/logo.png"
                   alt="Aluminium Designs"
-                  width={120}
-                  height={48}
+                  width={150}
+                  height={60}
                   priority
-                  className="h-8 sm:h-9 w-auto object-contain"
+                  className="h-11 sm:h-12 w-auto object-contain"
                 />
               </Link>
               <button
