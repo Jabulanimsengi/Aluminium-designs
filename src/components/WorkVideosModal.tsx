@@ -87,19 +87,25 @@ export default function WorkVideosModal() {
         }
       }}
     >
-      <div className="relative w-full max-w-sm sm:max-w-md max-h-[96dvh] rounded-2xl border border-white/20 bg-surface-container-lowest p-3 sm:p-4 shadow-2xl flex flex-col items-center">
-        {/* Cancel 'X' button */}
-        <button
-          type="button"
-          onClick={handleCancelAndDismiss}
-          aria-label="Cancel and do not show again"
-          className="absolute -top-3 -right-3 z-20 flex h-9 w-9 items-center justify-center rounded-full bg-surface-container-high border border-outline-variant text-primary shadow-lg transition-transform hover:scale-105 hover:bg-surface-container-highest cursor-pointer"
-        >
-          <X className="h-4 w-4" />
-        </button>
+      <div className="relative w-full max-w-xs sm:max-w-sm max-h-[96dvh] rounded-2xl border border-white/15 bg-black/90 p-1.5 sm:p-2 shadow-2xl flex flex-col items-center backdrop-blur-md">
+        {/* Video Player with Overlay Text & Cancel X */}
+        <div className="relative w-full overflow-hidden rounded-xl bg-black border border-white/10 shadow-inner flex items-center justify-center">
+          {/* 'Our Work' text overlaid on video */}
+          <div className="absolute top-2.5 left-2.5 z-20 pointer-events-none inline-flex items-center gap-1.5 rounded-full bg-black/65 backdrop-blur-md px-2.5 py-1 font-mono text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-white border border-white/20 shadow-sm">
+            <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" />
+            <span>Our Work</span>
+          </div>
 
-        {/* Video Player */}
-        <div className="relative w-full overflow-hidden rounded-xl bg-black border border-outline-variant/60 shadow-inner flex items-center justify-center">
+          {/* Cancel 'X' Button on top-right of video */}
+          <button
+            type="button"
+            onClick={handleCancelAndDismiss}
+            aria-label="Cancel and do not show again"
+            className="absolute top-2.5 right-2.5 z-20 flex h-7 w-7 sm:h-8 sm:w-8 items-center justify-center rounded-full bg-black/65 backdrop-blur-md border border-white/20 text-white hover:bg-black/90 hover:scale-105 transition-all shadow-md cursor-pointer"
+          >
+            <X className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+          </button>
+
           <video
             key={currentVideo.id}
             controls
@@ -108,9 +114,8 @@ export default function WorkVideosModal() {
             playsInline
             preload="metadata"
             poster={currentVideo.poster}
-            className="max-h-[62vh] sm:max-h-[68vh] w-auto max-w-full object-contain mx-auto"
+            className="max-h-[64vh] sm:max-h-[70vh] w-auto max-w-full object-contain mx-auto rounded-lg"
             onEnded={() => {
-              // Automatically transition to next work video if available
               setActiveIdx((prev) => (prev + 1) % FEATURED_VIDEOS.length);
             }}
           >
@@ -120,12 +125,12 @@ export default function WorkVideosModal() {
           </video>
         </div>
 
-        {/* Action Buttons: Cancel and Get Quote for This */}
-        <div className="mt-3.5 w-full flex items-center justify-between gap-2.5">
+        {/* Action Buttons: Cancel and Get Quote for This in a slim bar */}
+        <div className="mt-2 w-full flex items-center justify-between gap-2 px-0.5 pb-0.5">
           <button
             type="button"
             onClick={handleCancelAndDismiss}
-            className="flex-1 rounded-xl border border-outline-variant px-3 py-2.5 font-mono text-xs font-semibold text-secondary hover:bg-surface-container hover:text-primary transition-colors text-center cursor-pointer"
+            className="flex-1 rounded-xl border border-white/20 bg-white/5 py-2 px-2.5 font-mono text-[11px] font-semibold text-white/80 hover:bg-white/10 hover:text-white transition-colors text-center cursor-pointer"
           >
             Cancel
           </button>
@@ -135,10 +140,10 @@ export default function WorkVideosModal() {
             target="_blank"
             rel="noopener noreferrer"
             onClick={handleCancelAndDismiss}
-            className="flex-[1.4] inline-flex items-center justify-center gap-1.5 rounded-xl bg-accent px-4 py-2.5 font-mono text-xs font-bold uppercase tracking-wider text-white hover:bg-accent-hover transition-colors shadow-xs text-center cursor-pointer"
+            className="flex-[1.4] inline-flex items-center justify-center gap-1.5 rounded-xl bg-accent py-2 px-3 font-mono text-[11px] font-bold uppercase tracking-wider text-white hover:bg-accent-hover transition-colors shadow-xs text-center cursor-pointer"
           >
             <span>Get Quote for This</span>
-            <ArrowRight className="h-3.5 w-3.5" />
+            <ArrowRight className="h-3 w-3" />
           </a>
         </div>
       </div>
