@@ -9,6 +9,9 @@ export interface Project {
   finish: string;
   glass: string;
   aesthetic: string;
+  mediaType?: "image" | "video";
+  videoUrl?: string;
+  videoDuration?: string;
 }
 
 const base = "/images/real_images/products";
@@ -391,5 +394,50 @@ export const projects: Project[] = [
     finish: "Charcoal Powder Coat",
     glass: "N/A (Aluminium Bars)",
     aesthetic: "Frame-Aligned Security",
+  },
+  {
+    id: "proj-vid-1",
+    title: "Aluminium Stacking Doors Operation",
+    category: "doors",
+    client: "Residential Estate",
+    location: "Bryanston, Johannesburg",
+    description: "Live video demonstration of multi-panel folding stacking doors opening smoothly to create an expansive, barrier-free patio entertainment area.",
+    imagePath: `${base}/doors/aluminium_door_one.jpeg`,
+    finish: "Charcoal Matte Powder Coat",
+    glass: "Toughened Safety Glass",
+    aesthetic: "Seamless Indoor-Outdoor Flow",
+    mediaType: "video",
+    videoUrl: "/videos/stacking-doors-demo.mp4",
+    videoDuration: "0:45",
+  },
+  {
+    id: "proj-vid-2",
+    title: "Sliding Patio Door Precision Fitting",
+    category: "doors",
+    client: "Private Homeowner",
+    location: "Centurion, Pretoria",
+    description: "Video showcase of smooth-glide rollers, stainless steel tracks, and acoustic weather seals on custom heavy-duty sliding glass patio doors.",
+    imagePath: `${base}/doors/aluminium_door_three.jpeg`,
+    finish: "Matte Black Powder Coat",
+    glass: "Double-Glazed Low-E Glass",
+    aesthetic: "Effortless Whisper Glide",
+    mediaType: "video",
+    videoUrl: "/videos/sliding-doors-demo.mp4",
+    videoDuration: "0:38",
+  },
+  {
+    id: "proj-vid-3",
+    title: "Commercial Glass Shopfront Walkthrough",
+    category: "shopfronts",
+    client: "Retail Development",
+    location: "Rosebank, Johannesburg",
+    description: "Architectural video tour of a high-span commercial aluminium shopfront with toughened safety glass and automated double-entrance doors.",
+    imagePath: `${base}/doors/aluminium_door_ten.jpeg`,
+    finish: "Natural Anodized Aluminium",
+    glass: "10mm Toughened Clear Glass",
+    aesthetic: "Modern Retail Facade",
+    mediaType: "video",
+    videoUrl: "/videos/shopfront-tour.mp4",
+    videoDuration: "1:12",
   },
 ];

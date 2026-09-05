@@ -2,7 +2,7 @@ import React from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, Check, ChevronRight, Lock, Sun, VolumeX, Building2, House, MapPin, Paintbrush, Ruler, Gem } from "lucide-react";
+import { ArrowRight, Check, ChevronRight, Lock, Sun, VolumeX, Building2, House, MapPin, Paintbrush, Ruler, Gem, Play } from "lucide-react";
 import { projects } from "@/data/projects";
 import HomeServicesShowcase from "@/components/HomeServicesShowcase";
 import ProcessSteps from "@/components/ProcessSteps";
@@ -412,6 +412,12 @@ export default function Home() {
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
                 />
+                {project.mediaType === "video" && (
+                  <span className="absolute top-2.5 left-2.5 z-10 inline-flex items-center gap-1.5 rounded-full bg-black/80 px-2.5 py-1 font-mono text-[9px] font-bold uppercase tracking-wider text-white backdrop-blur-md border border-white/20 shadow-xs">
+                    <Play className="h-2.5 w-2.5 fill-accent text-accent" />
+                    {project.videoDuration || "Video"}
+                  </span>
+                )}
                 <span className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300" />
                 <span className="absolute bottom-3 left-3 right-3 translate-y-0 sm:translate-y-2 opacity-100 sm:opacity-0 sm:group-hover:translate-y-0 sm:group-hover:opacity-100 text-left transition-all duration-300">
                   <span className="block font-sans text-xs font-bold uppercase tracking-wide text-white">{project.title}</span>

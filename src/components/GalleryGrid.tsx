@@ -4,11 +4,36 @@ import React, { useState, useRef, useCallback, useEffect, useMemo } from "react"
 import { createPortal } from "react-dom";
 import Image from "next/image";
 import { projects } from "@/data/projects";
-import { ChevronLeft, ChevronRight, X, ZoomIn, ZoomOut } from "lucide-react";
+import { ChevronLeft, ChevronRight, X, ZoomIn, ZoomOut, Play, Film } from "lucide-react";
 
 const INITIAL_PROJECT_COUNT = 12;
 const PROJECT_BATCH_SIZE = 12;
 const LIGHTBOX_THUMBNAIL_COUNT = 7;
+
+function parseVideoSource(url: string) {
+  const ytMatch = url.match(
+    /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i
+  );
+  if (ytMatch && ytMatch[1]) {
+    return {
+      type: "youtube" as const,
+      embedUrl: `https://www.youtube-nocookie.com/embed/${ytMatch[1]}?autoplay=1&rel=0&playsinline=1`,
+    };
+  }
+  const vimeoMatch = url.match(
+    /vimeo\.com\/(?:channels\/(?:\w+\/)?|groups\/([^\/]*)\/videos\/|album\/(\d+)\/video\/|video\/|)(\d+)/i
+  );
+  if (vimeoMatch && vimeoMatch[3]) {
+    return {
+      type: "vimeo" as const,
+      embedUrl: `https://player.vimeo.com/video/${vimeoMatch[3]}?autoplay=1&playsinline=1`,
+    };
+  }
+  return {
+    type: "native" as const,
+    src: url,
+  };
+}
 
 function GalleryCard({
   project,
@@ -20,6 +45,7 @@ function GalleryCard({
   onOpen: (project: (typeof projects)[0]) => void;
 }) {
   const [isLoaded, setIsLoaded] = useState(false);
+  const isVideo = project.mediaType === "video";
 
   return (
     <button
@@ -51,8 +77,22 @@ function GalleryCard({
           isLoaded ? "scale-100 opacity-100 group-hover:scale-105" : "scale-[1.02] opacity-0"
         }`}
       />
-      <span className="absolute left-1/2 top-1/2 flex h-11 w-11 -translate-x-1/2 -translate-y-1/2 scale-90 items-center justify-center rounded-full bg-accent text-white opacity-0 shadow-lg transition-all duration-300 group-hover:scale-100 group-hover:opacity-100">
-        <ZoomIn className="h-4 w-4" />
+
+      {/* Video Badge */}
+      {isVideo && (
+        <span className="absolute top-2.5 left-2.5 z-10 inline-flex items-center gap-1.5 rounded-full bg-black/80 px-2.5 py-1 font-mono text-[9px] font-bold uppercase tracking-wider text-white backdrop-blur-md border border-white/20 shadow-xs">
+          <Play className="h-2.5 w-2.5 fill-accent text-accent" />
+          {project.videoDuration || "Video"}
+        </span>
+      )}
+
+      {/* Hover action icon */}
+      <span className="absolute left-1/2 top-1/2 flex h-12 w-12 -translate-x-1/2 -translate-y-1/2 scale-90 items-center justify-center rounded-full bg-accent text-white opacity-0 shadow-lg transition-all duration-300 group-hover:scale-100 group-hover:opacity-100">
+        {isVideo ? (
+          <Play className="h-5 w-5 fill-white ml-0.5" />
+        ) : (
+          <ZoomIn className="h-4 w-4" />
+        )}
       </span>
     </button>
   );
@@ -140,6 +180,7 @@ export default function GalleryGrid() {
 
   const categories = [
     { id: "all", name: "All" },
+    { id: "videos", name: "Videos" },
     { id: "windows", name: "Windows" },
     { id: "doors", name: "Doors" },
     { id: "gates", name: "Gates" },
@@ -151,13 +192,13 @@ export default function GalleryGrid() {
     { id: "custom", name: "Custom" },
   ];
 
-  const filteredProjects = useMemo(
-    () =>
-      activeFilter === "all"
-        ? projects
-        : projects.filter((project) => project.category === activeFilter),
-    [activeFilter],
-  );
+  const filteredProjects = useMemo(() => {
+    if (activeFilter === "all") return projects;
+    if (activeFilter === "videos") {
+      return projects.filter((project) => project.mediaType === "video" || !!project.videoUrl);
+    }
+    return projects.filter((project) => project.category === activeFilter);
+  }, [activeFilter]);
   const visibleProjects = filteredProjects.slice(0, visibleCount);
   const remainingProjectCount = Math.max(0, filteredProjects.length - visibleProjects.length);
 
@@ -338,7 +379,7 @@ export default function GalleryGrid() {
             ref={dialogRef}
             role="dialog"
             aria-modal="true"
-            aria-label={`${activeProject.title} image viewer`}
+            aria-label={`${activeProject.title} media viewer`}
             className="relative h-[100dvh] w-screen overflow-hidden bg-black"
             onClick={(event) => event.stopPropagation()}
           >
@@ -346,7 +387,7 @@ export default function GalleryGrid() {
               ref={closeButtonRef}
               type="button"
               onClick={closeLightbox}
-              aria-label="Close image viewer"
+              aria-label="Close media viewer"
               className="absolute right-3 top-3 z-20 flex h-11 w-11 items-center justify-center rounded-full border border-white/30 bg-black/70 text-white transition-colors hover:bg-black sm:right-4 sm:top-4 sm:h-10 sm:w-10"
             >
               <X className="h-4 w-4" />
@@ -355,7 +396,7 @@ export default function GalleryGrid() {
             <button
               type="button"
               onClick={() => showProject(-1)}
-              aria-label="Previous image"
+              aria-label="Previous item"
               className="absolute left-2 top-1/2 z-20 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-black/70 text-white transition-colors hover:bg-black sm:left-5 sm:h-11 sm:w-11"
             >
               <ChevronLeft className="h-5 w-5" />
@@ -364,37 +405,47 @@ export default function GalleryGrid() {
             <button
               type="button"
               onClick={() => showProject(1)}
-              aria-label="Next image"
+              aria-label="Next item"
               className="absolute right-2 top-1/2 z-20 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-black/70 text-white transition-colors hover:bg-black sm:right-5 sm:h-11 sm:w-11"
             >
               <ChevronRight className="h-5 w-5" />
             </button>
 
-            <div className="absolute left-3 top-3 z-20 flex items-center gap-2 rounded-full border border-white/30 bg-black/70 px-3 py-2 sm:left-1/2 sm:top-4 sm:-translate-x-1/2 sm:bg-black/60">
-              <button
-                type="button"
-                aria-label="Zoom out"
-                onClick={() => setZoom((currentZoom) => Math.max(0.5, currentZoom - 0.5))}
-                className="p-1 text-white/80 hover:text-white"
-              >
-                <ZoomOut className="h-4 w-4" />
-              </button>
-              <span className="min-w-10 text-center font-mono text-[10px] text-white/70">
-                {Math.round(zoom * 100)}%
-              </span>
-              <button
-                type="button"
-                aria-label="Zoom in"
-                onClick={() => setZoom((currentZoom) => Math.min(5, currentZoom + 0.5))}
-                className="p-1 text-white/80 hover:text-white"
-              >
-                <ZoomIn className="h-4 w-4" />
-              </button>
-            </div>
+            {activeProject.mediaType === "video" ? (
+              <div className="absolute left-3 top-3 z-20 flex items-center gap-1.5 rounded-full border border-white/30 bg-black/70 px-3.5 py-1.5 sm:left-1/2 sm:top-4 sm:-translate-x-1/2 sm:bg-black/60">
+                <Film className="h-3.5 w-3.5 text-accent" />
+                <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-white">
+                  Video Showcase {activeProject.videoDuration ? `• ${activeProject.videoDuration}` : ""}
+                </span>
+              </div>
+            ) : (
+              <div className="absolute left-3 top-3 z-20 flex items-center gap-2 rounded-full border border-white/30 bg-black/70 px-3 py-2 sm:left-1/2 sm:top-4 sm:-translate-x-1/2 sm:bg-black/60">
+                <button
+                  type="button"
+                  aria-label="Zoom out"
+                  onClick={() => setZoom((currentZoom) => Math.max(0.5, currentZoom - 0.5))}
+                  className="p-1 text-white/80 hover:text-white"
+                >
+                  <ZoomOut className="h-4 w-4" />
+                </button>
+                <span className="min-w-10 text-center font-mono text-[10px] text-white/70">
+                  {Math.round(zoom * 100)}%
+                </span>
+                <button
+                  type="button"
+                  aria-label="Zoom in"
+                  onClick={() => setZoom((currentZoom) => Math.min(5, currentZoom + 0.5))}
+                  className="p-1 text-white/80 hover:text-white"
+                >
+                  <ZoomIn className="h-4 w-4" />
+                </button>
+              </div>
+            )}
 
             <div className="scrollbar-hide absolute inset-x-0 bottom-0 z-20 flex gap-2 overflow-x-auto border-t border-white/20 bg-black/80 p-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] sm:inset-x-auto sm:bottom-4 sm:left-1/2 sm:w-[calc(100%-2rem)] sm:max-w-3xl sm:-translate-x-1/2 sm:border sm:bg-black/70 sm:pb-2">
               {lightboxThumbnails.map((project) => {
                 const isActive = project.id === activeProject.id;
+                const isThumbVideo = project.mediaType === "video";
 
                 return (
                   <button
@@ -419,56 +470,107 @@ export default function GalleryGrid() {
                       sizes="80px"
                       className="object-cover"
                     />
+                    {isThumbVideo && (
+                      <span className="absolute bottom-1 right-1 flex h-4 w-4 items-center justify-center rounded-full bg-black/80 text-accent shadow-xs">
+                        <Play className="h-2 w-2 fill-accent ml-0.5" />
+                      </span>
+                    )}
                   </button>
                 );
               })}
             </div>
 
-            <div
-              className="flex h-full w-full items-center justify-center"
-              style={{ cursor: zoom > 1 ? (dragging ? "grabbing" : "grab") : "zoom-in" }}
-              onWheel={handleWheel}
-              onClick={() => {
-                if (suppressClick.current) {
-                  suppressClick.current = false;
-                  return;
-                }
-                toggleZoom();
-              }}
-              onMouseDown={handleMouseDown}
-              onMouseMove={handleMouseMove}
-              onMouseUp={handleMouseUp}
-              onMouseLeave={handleMouseUp}
-              onTouchStart={(event) => {
-                const touch = event.touches[0];
-                touchStart.current = { x: touch.clientX, y: touch.clientY };
-              }}
-              onTouchEnd={(event) => {
-                if (zoom > 1) return;
-                const touch = event.changedTouches[0];
-                const deltaX = touch.clientX - touchStart.current.x;
-                const deltaY = touch.clientY - touchStart.current.y;
-
-                if (Math.abs(deltaX) > 50 && Math.abs(deltaX) > Math.abs(deltaY)) {
-                  suppressClick.current = true;
-                  showProject(deltaX < 0 ? 1 : -1);
-                }
-              }}
-            >
-              <Image
-                src={activeProject.imagePath}
-                alt={activeProject.title}
-                fill
-                sizes="100vw"
-                loading="eager"
-                unoptimized
-                className="pointer-events-none select-none object-contain p-3 pb-20 transition-transform duration-150 sm:p-8 sm:pb-24"
-                style={{
-                  transform: `scale(${zoom}) translate(${position.x / zoom}px, ${position.y / zoom}px)`,
+            {activeProject.mediaType === "video" && activeProject.videoUrl ? (
+              <div className="flex h-full w-full flex-col items-center justify-center p-4 pb-28 pt-16 sm:p-10 sm:pb-32 sm:pt-20">
+                {(() => {
+                  const source = parseVideoSource(activeProject.videoUrl);
+                  if (source.type === "youtube" || source.type === "vimeo") {
+                    return (
+                      <div className="relative aspect-video w-full max-w-4xl overflow-hidden rounded-xl bg-black shadow-2xl border border-white/20">
+                        <iframe
+                          src={source.embedUrl}
+                          title={activeProject.title}
+                          className="absolute inset-0 h-full w-full border-0"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen
+                        />
+                      </div>
+                    );
+                  }
+                  return (
+                    <div className="flex max-h-[68vh] sm:max-h-[75vh] w-full max-w-4xl items-center justify-center">
+                      <video
+                        key={activeProject.id}
+                        controls
+                        autoPlay
+                        playsInline
+                        preload="metadata"
+                        poster={activeProject.imagePath}
+                        className="max-h-[68vh] sm:max-h-[75vh] max-w-[94vw] sm:max-w-4xl rounded-xl shadow-2xl object-contain bg-black border border-white/20"
+                      >
+                        <source src={source.src} type="video/mp4" />
+                        <source src={source.src.replace(/\.mp4$/i, ".webm")} type="video/webm" />
+                        Your browser does not support the video tag.
+                      </video>
+                    </div>
+                  );
+                })()}
+                <div className="mt-3 text-center">
+                  <p className="font-heading text-sm font-semibold text-white drop-shadow">
+                    {activeProject.title}
+                  </p>
+                  <p className="font-mono text-xs text-white/70">
+                    {activeProject.location}
+                  </p>
+                </div>
+              </div>
+            ) : (
+              <div
+                className="flex h-full w-full items-center justify-center"
+                style={{ cursor: zoom > 1 ? (dragging ? "grabbing" : "grab") : "zoom-in" }}
+                onWheel={handleWheel}
+                onClick={() => {
+                  if (suppressClick.current) {
+                    suppressClick.current = false;
+                    return;
+                  }
+                  toggleZoom();
                 }}
-                draggable={false}
-              />
-            </div>
+                onMouseDown={handleMouseDown}
+                onMouseMove={handleMouseMove}
+                onMouseUp={handleMouseUp}
+                onMouseLeave={handleMouseUp}
+                onTouchStart={(event) => {
+                  const touch = event.touches[0];
+                  touchStart.current = { x: touch.clientX, y: touch.clientY };
+                }}
+                onTouchEnd={(event) => {
+                  if (zoom > 1) return;
+                  const touch = event.changedTouches[0];
+                  const deltaX = touch.clientX - touchStart.current.x;
+                  const deltaY = touch.clientY - touchStart.current.y;
+
+                  if (Math.abs(deltaX) > 50 && Math.abs(deltaX) > Math.abs(deltaY)) {
+                    suppressClick.current = true;
+                    showProject(deltaX < 0 ? 1 : -1);
+                  }
+                }}
+              >
+                <Image
+                  src={activeProject.imagePath}
+                  alt={activeProject.title}
+                  fill
+                  sizes="100vw"
+                  loading="eager"
+                  unoptimized
+                  className="pointer-events-none select-none object-contain p-3 pb-20 transition-transform duration-150 sm:p-8 sm:pb-24"
+                  style={{
+                    transform: `scale(${zoom}) translate(${position.x / zoom}px, ${position.y / zoom}px)`,
+                  }}
+                  draggable={false}
+                />
+              </div>
+            )}
             </div>
           </div>,
           document.body,
