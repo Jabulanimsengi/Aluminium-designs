@@ -1,7 +1,7 @@
 import React from "react";
 import { Metadata } from "next";
 import { Phone, Mail, MapPin, Clock, ArrowRight, ExternalLink } from "lucide-react";
-import { absoluteUrl, businessContact, businessHours, siteUrl } from "@/lib/site";
+import { absoluteUrl, businessContact, businessHours, googleMapsDirectionsUrl, siteUrl } from "@/lib/site";
 import GoogleMapEmbed from "@/components/GoogleMapEmbed";
 
 export const metadata: Metadata = {
@@ -36,19 +36,12 @@ export const metadata: Metadata = {
 };
 
 export default function ContactPage() {
-  const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
-    businessContact.fullAddress,
-  )}`;
-  const googleMapEmbedUrl = `https://maps.google.com/maps?q=${encodeURIComponent(
-    businessContact.fullAddress,
-  )}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
-
   const contactDetails = [
     {
       title: "Our Address",
       value: businessContact.fullAddress,
       icon: MapPin,
-      action: directionsUrl,
+      action: googleMapsDirectionsUrl,
       actionText: "Get Directions",
       target: "_blank",
     },
@@ -150,7 +143,7 @@ export default function ContactPage() {
             <div className="border border-outline-variant bg-surface-container-lowest h-full min-h-[460px] flex flex-col justify-between overflow-hidden shadow-sm">
               <div className="relative w-full flex-1 min-h-[380px] bg-surface-container">
                 <a
-                  href={directionsUrl}
+                  href={googleMapsDirectionsUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="absolute top-4 right-4 z-20 hidden sm:inline-flex items-center gap-2 bg-accent hover:bg-accent-hover text-white px-4 py-2 font-mono text-[10px] font-bold uppercase tracking-widest shadow-md transition-colors rounded-full"
@@ -160,8 +153,6 @@ export default function ContactPage() {
                 </a>
                 <GoogleMapEmbed
                   title="Google Map showing Aluminium Designs Katlehong Workshop"
-                  mapUrl={googleMapEmbedUrl}
-                  directionsUrl={directionsUrl}
                   minHeightClass="min-h-[380px]"
                 />
               </div>
@@ -176,7 +167,7 @@ export default function ContactPage() {
                   </p>
                 </div>
                 <a
-                  href={directionsUrl}
+                  href={googleMapsDirectionsUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="px-4 py-2.5 border border-outline-variant bg-surface-container hover:border-accent hover:text-accent font-mono text-[10px] font-bold uppercase tracking-widest text-secondary transition-colors rounded-full text-center w-full sm:w-auto shrink-0"

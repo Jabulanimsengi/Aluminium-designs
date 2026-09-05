@@ -21,6 +21,14 @@ export const businessHours = {
   appointmentNote: "Home measurements available by appointment",
 } as const;
 
+export const googleMapsDirectionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
+  businessContact.fullAddress,
+)}`;
+
+export const googleMapsEmbedUrl = `https://maps.google.com/maps?q=${encodeURIComponent(
+  businessContact.fullAddress,
+)}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
+
 const whatsappPhone = businessContact.phoneE164.replace(/\D/g, "");
 
 export function getWhatsAppQuoteUrl(message: string) {

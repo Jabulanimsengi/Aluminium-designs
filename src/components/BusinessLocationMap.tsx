@@ -1,14 +1,6 @@
 import { Clock3, ExternalLink, MapPin } from "lucide-react";
-import { businessContact, businessHours } from "@/lib/site";
+import { businessContact, businessHours, googleMapsDirectionsUrl } from "@/lib/site";
 import GoogleMapEmbed from "./GoogleMapEmbed";
-
-const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
-  businessContact.fullAddress,
-)}`;
-
-const mapUrl = `https://maps.google.com/maps?q=${encodeURIComponent(
-  businessContact.fullAddress,
-)}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
 
 export default function BusinessLocationMap() {
 
@@ -56,7 +48,7 @@ export default function BusinessLocationMap() {
               </p>
             </div>
             <a
-              href={directionsUrl}
+              href={googleMapsDirectionsUrl}
               target="_blank"
               rel="noreferrer"
               className="mt-6 inline-flex w-full sm:w-fit items-center justify-center gap-2 rounded-full bg-accent px-5 py-3.5 font-mono text-[11px] font-bold uppercase tracking-widest text-white transition-colors hover:bg-accent-hover sm:mt-8"
@@ -68,7 +60,7 @@ export default function BusinessLocationMap() {
 
           <div className="order-1 relative min-h-[280px] overflow-hidden border border-outline-variant bg-surface-container-high sm:min-h-[420px] lg:order-2">
             <a
-              href={directionsUrl}
+              href={googleMapsDirectionsUrl}
               target="_blank"
               rel="noreferrer"
               className="absolute right-4 top-4 z-20 hidden sm:inline-flex w-fit items-center gap-2 rounded-full bg-accent px-5 py-3 font-mono text-[11px] font-bold uppercase tracking-widest text-white shadow-lg transition-colors hover:bg-accent-hover"
@@ -78,8 +70,6 @@ export default function BusinessLocationMap() {
             </a>
             <GoogleMapEmbed
               title="Google Map showing Aluminium Designs in Katlehong"
-              mapUrl={mapUrl}
-              directionsUrl={directionsUrl}
               minHeightClass="min-h-[280px] sm:min-h-[420px]"
             />
           </div>
