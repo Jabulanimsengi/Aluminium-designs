@@ -18,7 +18,7 @@ export const service: Service = {
     "Secure multi-point cylinder locks and drop bolts",
   ],
   imagePath: "/images/real_images/products/doors/aluminium_door_two.jpeg",
-  iconName: "Sparkles",
+  iconName: "Layers",
   featured: true,
 };
 

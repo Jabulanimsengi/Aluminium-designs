@@ -83,7 +83,7 @@ export const page: ServicePageContent = {
           "We install safety glass in doors and low windows that complies with all building safety codes.",
       },
       {
-        icon: "Sparkles",
+        icon: "Layers",
         title: "Full Glass Clean-Up",
         description:
           "We safely vacuum and remove all shattered glass pieces from your floor, frames, and garden.",

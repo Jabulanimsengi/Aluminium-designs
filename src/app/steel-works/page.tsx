@@ -12,7 +12,6 @@ import {
   CheckCircle2,
   Hammer,
   Truck,
-  Sparkles,
   MapPin,
 } from "lucide-react";
 import { absoluteUrl, siteUrl, whatsappQuoteUrl } from "@/lib/site";

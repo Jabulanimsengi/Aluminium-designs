@@ -83,7 +83,7 @@ export const page: ServicePageContent = {
           "Open the sash a crack for a gentle breeze or slide it fully open to flood the room with fresh air.",
       },
       {
-        icon: "Sparkles",
+        icon: "Sliders",
         title: "Easy to Clean & Use",
         description:
           "Panels glide smoothly on durable rollers and can be lifted out for quick, thorough cleaning.",

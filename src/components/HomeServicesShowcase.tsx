@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { ArrowRight, ShieldCheck, Sparkles } from "lucide-react";
+import { ArrowRight, ShieldCheck, Layers } from "lucide-react";
 import { aluminiumServices, steelServices } from "@/data/services";
 import ServiceCard from "./ServiceCard";
 
@@ -26,7 +26,7 @@ export default function HomeServicesShowcase() {
               : "bg-surface-container border border-outline-variant text-secondary hover:text-primary hover:bg-surface-container-high"
           }`}
         >
-          <Sparkles className="h-3.5 w-3.5 text-accent" />
+          <Layers className="h-3.5 w-3.5 text-accent" />
           Aluminium Windows &amp; Doors
         </button>
 

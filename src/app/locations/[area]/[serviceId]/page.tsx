@@ -60,7 +60,7 @@ export default async function LocationServicePage({ params }: { params: Promise<
     longDescription: content.localizedStory.uniqueParagraphs[0] ?? "",
     features: [],
     imagePath: "/images/window_detail.png",
-    iconName: "Sparkles",
+    iconName: "Layers",
   };
 
   const relatedAreas = gautengLocations

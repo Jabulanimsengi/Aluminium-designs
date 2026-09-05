@@ -4,7 +4,7 @@ import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Menu, X, Phone, ChevronDown, ArrowRight, Hammer, Sparkles } from "lucide-react";
+import { Menu, X, Phone, ChevronDown, ArrowRight, Hammer, Layers } from "lucide-react";
 import { services, aluminiumServices, steelServices } from "@/data/services";
 import { whatsappQuoteUrl } from "@/lib/site";
 
@@ -204,7 +204,7 @@ export default function Header() {
                       {/* Column 1: Aluminium & Glass */}
                       <div className="space-y-1">
                         <div className="flex items-center gap-1.5 pb-2 border-b border-outline-variant text-[10px] font-mono font-bold uppercase tracking-widest text-accent">
-                          <Sparkles className="w-3 h-3 text-accent" />
+                          <Layers className="w-3 h-3 text-accent" />
                           Aluminium &amp; Glass
                         </div>
                         <div className="pt-1 flex flex-col gap-1">

@@ -42,7 +42,7 @@ export const services: Service[] = allCoreServices.map((srv, index) => {
     longDescription: srv.overview.paragraphs.join(" "),
     features: srv.features.map((f) => f.title),
     imagePath: srv.hero.heroImage,
-    iconName: "Sparkles",
+    iconName: isSteel ? "ShieldCheck" : "Layers",
     category: isSteel ? "steel" : "aluminium",
     featured: index < 6,
   };

@@ -83,7 +83,7 @@ export const page: ServicePageContent = {
           "Unlike timber, aluminium never warps, shrinks or needs endless repainting in harsh sun and rain.",
       },
       {
-        icon: "Sparkles",
+        icon: "Layers",
         title: "Striking First Impression",
         description:
           "Sleek pivot and hinged designs with glass inserts create a modern, elegant entrance.",

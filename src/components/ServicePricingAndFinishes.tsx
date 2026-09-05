@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Check, ShieldCheck, Tag, Sparkles, ArrowRight } from "lucide-react";
+import { Check, ShieldCheck, Tag, Paintbrush, ArrowRight } from "lucide-react";
 import { getWhatsAppQuoteUrl } from "@/lib/site";
 import WhatsAppIcon from "./WhatsAppIcon";
 
@@ -162,7 +162,7 @@ export default function ServicePricingAndFinishes({
               <div className="flex items-center justify-between border-b border-outline-variant pb-4">
                 <div className="flex items-center gap-2">
                   <div className="flex h-9 w-9 items-center justify-center rounded-full bg-surface-container text-primary">
-                    <Sparkles className="h-4 w-4" />
+                    <Paintbrush className="h-4 w-4" />
                   </div>
                   <div>
                     <h3 className="font-sans text-base font-bold uppercase tracking-tight text-primary">

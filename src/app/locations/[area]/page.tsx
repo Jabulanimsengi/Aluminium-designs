@@ -2,7 +2,7 @@ import React from "react";
 import { gautengLocations } from "@/data/locations";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ArrowRight, MapPin, ShieldCheck, Sparkles, Hammer } from "lucide-react";
+import { ArrowRight, MapPin, ShieldCheck, Layers, Paintbrush, Hammer } from "lucide-react";
 import CTASection from "@/components/CTASection";
 import FAQAccordion from "@/components/FAQAccordion";
 import ServiceCard from "@/components/ServiceCard";
@@ -118,7 +118,7 @@ export default async function LocationPage({ params }: { params: Promise<{ area:
     {
       title: "Clean Minimalist Look",
       description: "Ultra-slim frames designed to sit flush, maximizing natural sunlight and offering uninterrupted views of your property.",
-      icon: Sparkles,
+      icon: Layers,
     },
     {
       title: "Weather & Noise Protection",
@@ -133,7 +133,7 @@ export default async function LocationPage({ params }: { params: Promise<{ area:
     {
       title: "Sleek Colour Finishes",
       description: "Choose from durable powder-coated colours including Matte Black, Charcoal Grey, and Satin Silver that never rust or need painting.",
-      icon: Sparkles,
+      icon: Paintbrush,
     },
   ];
 

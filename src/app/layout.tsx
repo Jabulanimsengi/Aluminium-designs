@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { Plus_Jakarta_Sans, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -11,14 +11,14 @@ import ScrollRevealObserver from "@/components/ScrollRevealObserver";
 import LeadGate from "@/components/LeadGate";
 import { absoluteUrl, businessContact, siteUrl } from "@/lib/site";
 
-const inter = Inter({
-  variable: "--font-inter",
+const plusJakartaSans = Plus_Jakarta_Sans({
+  variable: "--font-plus-jakarta-sans",
   subsets: ["latin"],
   display: "swap",
 });
 
-const jetBrainsMono = JetBrains_Mono({
-  variable: "--font-jetbrains-mono",
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-space-grotesk",
   subsets: ["latin"],
   display: "swap",
 });
@@ -101,7 +101,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${jetBrainsMono.variable} h-full antialiased scroll-smooth`}
+      className={`${plusJakartaSans.variable} ${spaceGrotesk.variable} h-full antialiased scroll-smooth`}
       data-scroll-behavior="smooth"
     >
       <body className="min-h-full flex flex-col bg-surface text-on-surface selection:bg-tertiary-fixed selection:text-on-tertiary-fixed">

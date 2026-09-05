@@ -2,7 +2,7 @@
 
 import React, { useState, useMemo } from "react";
 import Link from "next/link";
-import { Hammer, ShieldCheck, Sparkles, ArrowRight } from "lucide-react";
+import { Hammer, ShieldCheck, ArrowRight } from "lucide-react";
 import type { Service } from "@/data/services";
 import ServiceCard from "@/components/ServiceCard";
 

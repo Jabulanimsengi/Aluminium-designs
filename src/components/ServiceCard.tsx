@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, ShieldCheck, Sparkles } from "lucide-react";
+import { ArrowRight, ShieldCheck, Layers } from "lucide-react";
 
 interface ServiceCardProps {
   title: string;
@@ -51,7 +51,7 @@ export default function ServiceCard({
             {isSteel ? (
               <ShieldCheck className="h-3 w-3 text-accent" />
             ) : (
-              <Sparkles className="h-3 w-3 text-accent" />
+              <Layers className="h-3 w-3 text-accent" />
             )}
             {isSteel ? "Steel Security" : "Aluminium & Glass"}
           </div>
