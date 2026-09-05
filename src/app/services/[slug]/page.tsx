@@ -326,8 +326,8 @@ export default async function ServiceDetailPage({ params }: Props) {
             <div className="lg:col-span-5 relative">
               <div className="relative aspect-[4/3] w-full overflow-hidden border border-outline-variant bg-surface-container shadow-sm group">
                 <Image
-                  src="/images/sections/overview_craftsmanship.jpg"
-                  alt={`${service.title} precision craftsmanship and joinery`}
+                  src={service.imagePath}
+                  alt={`${service.title} custom manufactured and installed by Aluminium Designs`}
                   fill
                   sizes="(max-width: 1024px) 100vw, 450px"
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
@@ -335,10 +335,10 @@ export default async function ServiceDetailPage({ params }: Props) {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                 <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between">
                   <span className="inline-block bg-black/70 backdrop-blur-md px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-widest text-white border border-white/20 rounded-full">
-                    Precision Fit &amp; Weather Seals
+                    {service.category === "steel" ? "Heavy-Duty Steel Fabrication" : "Precision Fit & Weather Seals"}
                   </span>
                   <span className="font-mono text-[10px] text-white/80 uppercase">
-                    SANS 10400
+                    {service.category === "steel" ? "SABS Grade" : "SANS 10400"}
                   </span>
                 </div>
               </div>
@@ -451,8 +451,16 @@ export default async function ServiceDetailPage({ params }: Props) {
             <div className="lg:col-span-5 relative">
               <div className="relative aspect-[4/3] w-full overflow-hidden border border-outline-variant bg-surface-container shadow-sm group">
                 <Image
-                  src="/images/sections/glazing_technology.jpg"
-                  alt="Double glazing thermal insulation and soundproof safety glass"
+                  src={
+                    service.category === "steel"
+                      ? "/images/services/steel-works-hero.jpg"
+                      : "/images/sections/glazing_technology.jpg"
+                  }
+                  alt={
+                    service.category === "steel"
+                      ? "Heavy-duty steel fabrication, precision welding and powder-coating"
+                      : "Double glazing thermal insulation and soundproof safety glass"
+                  }
                   fill
                   sizes="(max-width: 1024px) 100vw, 450px"
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
@@ -460,7 +468,9 @@ export default async function ServiceDetailPage({ params }: Props) {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                 <div className="absolute bottom-4 left-4 right-4">
                   <span className="inline-block bg-black/70 backdrop-blur-md px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-widest text-white border border-white/20 rounded-full">
-                    Double-Glazing &amp; Thermal Break
+                    {service.category === "steel"
+                      ? "Corrosion Protection & Powder Coating"
+                      : "Double-Glazing & Thermal Break"}
                   </span>
                 </div>
               </div>

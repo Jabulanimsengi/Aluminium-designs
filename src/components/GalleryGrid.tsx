@@ -212,16 +212,17 @@ export default function GalleryGrid() {
     : -1;
   const lightboxThumbnails = activeProjectIndex < 0
     ? []
+    : filteredProjects.length <= LIGHTBOX_THUMBNAIL_COUNT
+    ? filteredProjects
     : Array.from(
-        { length: Math.min(LIGHTBOX_THUMBNAIL_COUNT, filteredProjects.length) },
+        { length: LIGHTBOX_THUMBNAIL_COUNT },
         (_, offset) => {
           const halfWindow = Math.floor(LIGHTBOX_THUMBNAIL_COUNT / 2);
-          const index =
-            (activeProjectIndex - halfWindow + offset + filteredProjects.length) %
-            filteredProjects.length;
+          const raw = activeProjectIndex - halfWindow + offset;
+          const index = ((raw % filteredProjects.length) + filteredProjects.length) % filteredProjects.length;
           return filteredProjects[index];
         },
-      );
+      ).filter(Boolean);
 
   const showProject = useCallback(
     (direction: number) => {
@@ -444,6 +445,7 @@ export default function GalleryGrid() {
 
             <div className="scrollbar-hide absolute inset-x-0 bottom-0 z-20 flex gap-2 overflow-x-auto border-t border-white/20 bg-black/80 p-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] sm:inset-x-auto sm:bottom-4 sm:left-1/2 sm:w-[calc(100%-2rem)] sm:max-w-3xl sm:-translate-x-1/2 sm:border sm:bg-black/70 sm:pb-2">
               {lightboxThumbnails.map((project) => {
+                if (!project) return null;
                 const isActive = project.id === activeProject.id;
                 const isThumbVideo = project.mediaType === "video";
 
@@ -503,6 +505,7 @@ export default function GalleryGrid() {
                         key={activeProject.id}
                         controls
                         autoPlay
+                        muted
                         playsInline
                         preload="metadata"
                         poster={activeProject.imagePath}

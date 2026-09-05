@@ -19,7 +19,8 @@ import {
   Wrench,
 } from "lucide-react";
 import CTASection from "@/components/CTASection";
-import { absoluteUrl, businessContact, siteUrl, whatsappQuoteUrl } from "@/lib/site";
+import GoogleMapEmbed from "@/components/GoogleMapEmbed";
+import { absoluteUrl, businessContact, businessHours, googleMapsDirectionsUrl, siteUrl, whatsappQuoteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "About Aluminium Designs | Gauteng Aluminium Specialists",
@@ -362,18 +363,61 @@ export default function AboutPage() {
               We serve residential and commercial clients across Gauteng and surrounding areas. Site measurements are available by appointment so we can assess the actual space before finalising the work.
             </p>
           </div>
-          <div className="mx-auto mt-10 max-w-3xl border border-outline-variant bg-surface p-6 text-center shadow-sm sm:p-8">
-            <div className="flex flex-col items-center gap-4">
-              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-accent text-white">
-                <MapPin className="h-5 w-5" />
+
+          <div className="mt-12 grid grid-cols-1 gap-8 lg:grid-cols-12 items-stretch">
+            {/* Workshop Details Card */}
+            <div className="lg:col-span-5 flex flex-col justify-between border border-outline-variant bg-surface p-6 sm:p-8 shadow-sm">
+              <div className="space-y-6">
+                <div className="flex items-start gap-4">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-accent text-white">
+                    <MapPin className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <h3 className="font-sans text-base font-bold uppercase text-primary">{businessContact.name} Workshop</h3>
+                    <p className="mt-1.5 text-sm leading-relaxed text-on-surface-variant">{businessContact.fullAddress}</p>
+                  </div>
+                </div>
+
+                <div className="border-t border-outline-variant/60 pt-5 space-y-3">
+                  <p className="font-mono text-[10px] font-bold uppercase tracking-widest text-accent">Operating Hours</p>
+                  <div className="flex justify-between text-xs text-on-surface-variant">
+                    <span>Monday - Friday:</span>
+                    <span className="font-bold text-primary">{businessHours.weekdays}</span>
+                  </div>
+                  <div className="flex justify-between text-xs text-on-surface-variant">
+                    <span>Saturday - Sunday:</span>
+                    <span className="font-bold text-outline">{businessHours.weekends}</span>
+                  </div>
+                  <p className="text-[11px] text-on-surface-variant italic pt-1">
+                    {businessHours.appointmentNote}
+                  </p>
+                </div>
               </div>
-              <div>
-                <p className="font-sans text-sm font-bold uppercase text-primary">{businessContact.name}</p>
-                <p className="mt-2 text-sm leading-relaxed text-on-surface-variant">{businessContact.fullAddress}</p>
-                <Link href="/contact" className="mt-4 inline-flex items-center gap-2 font-mono text-[10px] font-bold uppercase tracking-widest text-primary hover:text-accent">
-                  Contact our team <ArrowRight className="h-3.5 w-3.5" />
+
+              <div className="mt-8 pt-6 border-t border-outline-variant/60 flex flex-wrap gap-3">
+                <a
+                  href={googleMapsDirectionsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-full bg-accent px-5 py-2.5 font-mono text-[10px] font-bold uppercase tracking-widest text-white hover:bg-accent-hover transition-colors shadow-xs"
+                >
+                  Get Directions <ArrowRight className="h-3.5 w-3.5" />
+                </a>
+                <Link
+                  href="/contact"
+                  className="inline-flex items-center gap-2 rounded-full border border-outline-variant bg-surface px-5 py-2.5 font-mono text-[10px] font-bold uppercase tracking-widest text-primary hover:text-accent transition-colors"
+                >
+                  Contact Us
                 </Link>
               </div>
+            </div>
+
+            {/* Google Map Embed */}
+            <div className="lg:col-span-7 relative min-h-[350px] sm:min-h-[420px] overflow-hidden border border-outline-variant bg-surface-container shadow-sm">
+              <GoogleMapEmbed
+                title="Google Map showing Aluminium Designs Workshop in Katlehong"
+                minHeightClass="min-h-[350px] sm:min-h-[420px]"
+              />
             </div>
           </div>
         </div>

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, ShieldCheck, Layers } from "lucide-react";
+import { getWhatsAppQuoteUrl } from "@/lib/site";
 
 interface ServiceCardProps {
   title: string;
@@ -22,15 +23,20 @@ export default function ServiceCard({
   features,
 }: ServiceCardProps) {
   const isSteel = category === "steel";
+  const quoteUrl = getWhatsAppQuoteUrl(
+    `Hi Aluminium Designs, I would like to request a quotation for ${title}.`
+  );
 
   return (
-    <Link
-      href={slug}
-      data-lead-gate="false"
-      aria-label={`View ${title} specifications`}
+    <div
       className="group grid min-h-[280px] grid-cols-1 overflow-hidden border border-outline-variant bg-surface-container-lowest transition-all duration-300 hover:-translate-y-1 hover:border-accent hover:shadow-lg sm:grid-cols-[44%_56%]"
     >
-      <div className="relative min-h-56 overflow-hidden border-b border-outline-variant bg-surface-container-high sm:min-h-full sm:border-b-0 sm:border-r">
+      <Link
+        href={slug}
+        data-lead-gate="false"
+        aria-label={`View ${title} specifications`}
+        className="relative block min-h-56 overflow-hidden border-b border-outline-variant bg-surface-container-high sm:min-h-full sm:border-b-0 sm:border-r"
+      >
         <Image
           src={imagePath}
           alt={title}
@@ -62,13 +68,19 @@ export default function ServiceCard({
             From {startingPrice}
           </div>
         )}
-      </div>
+      </Link>
 
       <div className="flex flex-col p-6 sm:p-7 justify-between">
         <div>
-          <h3 className="font-sans text-lg font-bold uppercase leading-tight tracking-tight text-primary transition-colors group-hover:text-accent">
-            {title}
-          </h3>
+          <Link
+            href={slug}
+            data-lead-gate="false"
+            className="block"
+          >
+            <h3 className="font-sans text-lg font-bold uppercase leading-tight tracking-tight text-primary transition-colors hover:text-accent group-hover:text-accent">
+              {title}
+            </h3>
+          </Link>
           <p className="mt-2.5 text-xs leading-relaxed text-on-surface-variant line-clamp-2">
             {shortDescription}
           </p>
@@ -87,16 +99,25 @@ export default function ServiceCard({
           )}
         </div>
 
-        <div className="mt-5 pt-4 border-t border-outline-variant/50 flex items-center justify-between">
-          <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-primary group-hover:text-accent transition-colors inline-flex items-center gap-1">
-            Explore Specs
-            <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-1" />
-          </span>
-          <span className="rounded-full bg-surface-container px-2.5 py-0.5 font-mono text-[9px] font-bold uppercase tracking-wider text-secondary group-hover:bg-accent group-hover:text-white transition-colors">
+        <div className="mt-5 pt-4 border-t border-outline-variant/50 flex items-center justify-between gap-3">
+          <Link
+            href={slug}
+            data-lead-gate="false"
+            aria-label={`Explore specs for ${title}`}
+            className="font-mono text-[10px] font-bold uppercase tracking-widest text-primary hover:text-accent transition-colors inline-flex items-center gap-1.5 py-1"
+          >
+            <span>Explore Specs</span>
+            <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+          </Link>
+          <a
+            href={quoteUrl}
+            aria-label={`Request quotation for ${title}`}
+            className="rounded-full bg-surface-container border border-outline-variant/70 px-3 py-1.5 font-mono text-[10px] font-bold uppercase tracking-wider text-primary hover:bg-accent hover:text-white hover:border-accent transition-all inline-flex items-center gap-1 shadow-xs cursor-pointer"
+          >
             Quote &rarr;
-          </span>
+          </a>
         </div>
       </div>
-    </Link>
+    </div>
   );
 }
