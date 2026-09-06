@@ -2,12 +2,17 @@ import React from "react";
 import { gautengLocations } from "@/data/locations";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ArrowRight, MapPin, ShieldCheck, Layers, Paintbrush, Hammer } from "lucide-react";
+import { ArrowRight, ArrowUpRight, ChevronRight, MapPin, ShieldCheck, Layers, Paintbrush, Hammer } from "lucide-react";
 import CTASection from "@/components/CTASection";
 import FAQAccordion from "@/components/FAQAccordion";
 import ServiceCard from "@/components/ServiceCard";
 import { services } from "@/data/services";
 import { absoluteUrl, businessContact, siteUrl, whatsappQuoteUrl } from "@/lib/site";
+import {
+  getCanonicalServiceLocationSlug,
+  isRepairService,
+  toSingularServiceTitle,
+} from "@/lib/serviceLocationParser";
 
 function slugify(text: string) {
   return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
@@ -53,18 +58,23 @@ export async function generateMetadata({ params }: { params: Promise<{ area: str
     return { title: "Location Not Found" };
   }
 
+  const isKat = (location.slug || location.id).toLowerCase() === "katlehong";
+  const prep = isKat ? "in" : "Near";
+  const prepLower = isKat ? "in" : "near";
+
   const variations = [
-    `Premium custom aluminium windows, doors, and glass installations in ${location.name}, ${location.municipality}. Contact Aluminium Designs for a free quote in your area.`,
-    `Top-rated aluminium installations in ${location.name}. Custom sizing, sleek finishes, and professional fitting. Get a free quote today!`,
+    `Premium custom aluminium windows, doors, and glass installations ${prepLower} ${location.name}, ${location.municipality}. Contact Aluminium Designs for a free quote in your area.`,
+    `Top-rated aluminium installations ${prepLower} ${location.name}. Custom sizing, sleek finishes, and professional fitting. Get a free quote today!`,
     `Upgrade your ${location.name} home with modern aluminium windows and doors. Expert manufacturing and flawless installation by Aluminium Designs.`
   ];
   
   const random = seededRandom(location.id);
   const desc = variations[Math.floor(random() * variations.length)];
   const socialImg = absoluteUrl("/images/hero_exterior.png");
+  const metaTitle = `Aluminium Windows & Doors ${prep} ${location.name}`;
 
   return {
-    title: `Aluminium Windows & Doors in ${location.name} | Aluminium Designs`,
+    title: metaTitle,
     description: desc,
     robots: { index: true, follow: true },
     alternates: { canonical: `${siteUrl}/locations/${location.slug}` },
@@ -73,20 +83,20 @@ export async function generateMetadata({ params }: { params: Promise<{ area: str
       locale: "en_ZA",
       url: `${siteUrl}/locations/${location.slug}`,
       siteName: "Aluminium Designs",
-      title: `Aluminium Windows & Doors in ${location.name} | Aluminium Designs`,
+      title: `${metaTitle} | Aluminium Designs`,
       description: desc,
       images: [
         {
           url: socialImg,
           width: 1200,
           height: 630,
-          alt: `Aluminium Designs in ${location.name}`,
+          alt: `Aluminium Designs ${prep} ${location.name}`,
         },
       ],
     },
     twitter: {
       card: "summary_large_image",
-      title: `Aluminium Windows & Doors in ${location.name} | Aluminium Designs`,
+      title: `${metaTitle} | Aluminium Designs`,
       description: desc,
       images: [socialImg],
     },
@@ -101,10 +111,14 @@ export default async function LocationPage({ params }: { params: Promise<{ area:
     notFound();
   }
 
+  const isKat = (location.slug || location.id).toLowerCase() === "katlehong";
+  const prep = isKat ? "in" : "Near";
+  const prepLower = isKat ? "in" : "near";
+
   // Rotating Hero Paragraphs
   const heroVariations = [
-    `Brighten your home with clean, modern aluminium windows and smooth-sliding doors. We measure, make, and install high-quality aluminium frames for homes and residential estates across ${location.name}.`,
-    `Looking for quality aluminium doors or windows in ${location.name}? We provide custom-made sliding doors, folding stackers, and window frames designed to fit your home and lifestyle.`,
+    `Brighten your home with clean, modern aluminium windows and smooth-sliding doors. We measure, make, and install high-quality aluminium frames for homes and residential estates ${prepLower} ${location.name}.`,
+    `Looking for quality aluminium doors or windows ${prepLower} ${location.name}? We provide custom-made sliding doors, folding stackers, and window frames designed to fit your home and lifestyle.`,
     `Aluminium Designs brings durable, easy-to-clean aluminium windows, doors, and security gates to ${location.name} homeowners. Explore our range of custom designs made to fit your property perfectly.`
   ];
   const random = seededRandom(location.id);
@@ -149,6 +163,15 @@ export default async function LocationPage({ params }: { params: Promise<{ area:
     ...benefit,
     span: layoutSpans[index]
   }));
+
+  // Regional Hubs & Suburbs in Municipality
+  const neighboringInMunicipality = gautengLocations.filter(
+    (l) => (l.slug || l.id) !== location.slug && l.municipality === location.municipality
+  );
+  const additionalLocations = gautengLocations.filter(
+    (l) => (l.slug || l.id) !== location.slug && l.municipality !== location.municipality
+  );
+  const neighboringAreas = [...neighboringInMunicipality, ...additionalLocations].slice(0, 18);
 
   // Schema generation
   const localBusinessJsonLd = {
@@ -228,6 +251,31 @@ export default async function LocationPage({ params }: { params: Promise<{ area:
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-3xl space-y-8 animate-fade-in-up">
+            {/* Breadcrumbs */}
+            <nav aria-label="Breadcrumb" className="mb-2">
+              <ol className="flex flex-wrap items-center gap-1.5 font-mono text-[10px] font-bold uppercase tracking-wider text-outline">
+                <li>
+                  <Link href="/" className="text-secondary hover:text-accent transition-colors">
+                    Home
+                  </Link>
+                </li>
+                <li>
+                  <ChevronRight className="w-3 h-3 text-outline" />
+                </li>
+                <li>
+                  <Link href="/locations" className="text-secondary hover:text-accent transition-colors">
+                    Locations
+                  </Link>
+                </li>
+                <li>
+                  <ChevronRight className="w-3 h-3 text-outline" />
+                </li>
+                <li className="text-accent font-semibold" aria-current="page">
+                  {location.name}
+                </li>
+              </ol>
+            </nav>
+
             <div className="inline-flex items-center space-x-2 bg-surface-container-low border border-outline-variant px-3.5 py-1.5 rounded-full">
               <MapPin className="w-4 h-4 text-on-tertiary-container" />
               <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">
@@ -236,7 +284,7 @@ export default async function LocationPage({ params }: { params: Promise<{ area:
             </div>
 
             <h1 className="font-sans font-bold uppercase tracking-tight text-4xl sm:text-5xl lg:text-6xl text-primary leading-[1.1]">
-              Aluminium Windows, Doors &amp; Steel Works {location.type === "mall" ? "Near" : "in"}{" "}
+              Aluminium Windows, Doors &amp; Steel Works {prep}{" "}
               <span className="text-accent">{location.name}</span>
             </h1>
 
@@ -249,7 +297,7 @@ export default async function LocationPage({ params }: { params: Promise<{ area:
                 href={whatsappQuoteUrl}
                 className="flex items-center justify-center gap-2 bg-accent hover:bg-accent-hover text-white px-6 py-3.5 font-mono text-[11px] font-bold uppercase tracking-widest transition-colors w-full sm:w-auto rounded-full"
               >
-                Get a Free Quote in {location.name}
+                Get a Free Quote {prep} {location.name}
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
@@ -262,7 +310,7 @@ export default async function LocationPage({ params }: { params: Promise<{ area:
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center space-y-4 mb-16">
             <h2 className="font-sans font-bold uppercase tracking-tight text-3xl sm:text-4xl text-primary">
-              Popular Installations in {location.name}
+              Popular Installations {prep} {location.name}
             </h2>
             <p className="font-sans text-on-surface-variant text-base max-w-xl mx-auto leading-relaxed">
               Explore our core product lines built for residential homes, office fit-outs, and commercial structures in the area.
@@ -271,11 +319,15 @@ export default async function LocationPage({ params }: { params: Promise<{ area:
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {shuffledServices.map((service) => {
-              const localizedSlug = `/locations/${location.slug}/${slugify(service.title)}-in-${location.slug}`;
+              const localizedSlug = `/${getCanonicalServiceLocationSlug(service.title, location.slug)}`;
+              const isRep = isRepairService(service.title);
+              const cardTitle = isRep
+                ? service.title
+                : `${toSingularServiceTitle(service.title)} Installation`;
               return (
                 <ServiceCard
                   key={service.id}
-                  title={service.title}
+                  title={cardTitle}
                   shortDescription={service.shortDescription}
                   slug={localizedSlug}
                   imagePath={service.imagePath}
@@ -291,7 +343,7 @@ export default async function LocationPage({ params }: { params: Promise<{ area:
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center space-y-4 mb-16">
             <h2 className="font-sans font-bold uppercase tracking-tight text-3xl sm:text-4xl text-primary">
-              Why Choose Us in {location.name}?
+              Why Choose Us {prep} {location.name}?
             </h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -327,14 +379,64 @@ export default async function LocationPage({ params }: { params: Promise<{ area:
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center space-y-4 mb-16">
             <h2 className="font-sans font-bold uppercase tracking-tight text-3xl sm:text-4xl text-primary">
-              Questions About Installations in {location.name}?
+              Questions About Installations {prep} {location.name}?
             </h2>
           </div>
           <FAQAccordion limit={4} locationName={location.name} />
         </div>
       </section>
 
-      {/* 5. CTA SECTION */}
+      {/* 5. REGIONAL HUBS & SUBURBS IN MUNICIPALITY */}
+      {neighboringAreas.length > 0 && (
+        <section className="py-20 bg-surface-container-low border-t border-outline-variant">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center space-y-3 mb-12">
+              <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-accent">
+                Regional Coverage Network
+              </span>
+              <h2 className="font-sans font-bold uppercase tracking-tight text-3xl sm:text-4xl text-primary">
+                Other Service Areas in {location.municipality}
+              </h2>
+              <p className="font-sans text-on-surface-variant text-sm max-w-xl mx-auto leading-relaxed">
+                We dispatch mobile measurement and fitting crews throughout {location.name}, {location.municipality}, and across greater Gauteng.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+              {neighboringAreas.map((nearArea) => {
+                const nearSlug = nearArea.slug || nearArea.id;
+                return (
+                  <Link
+                    key={nearSlug}
+                    href={`/locations/${nearSlug}`}
+                    className="group p-3.5 bg-surface border border-outline-variant hover:border-accent rounded-xl transition-all text-center flex flex-col items-center justify-center space-y-1.5 shadow-xs"
+                  >
+                    <MapPin className="w-3.5 h-3.5 text-accent group-hover:scale-110 transition-transform" />
+                    <span className="text-xs font-semibold text-primary group-hover:text-accent transition-colors line-clamp-1">
+                      {nearArea.name}
+                    </span>
+                    <span className="text-[9px] text-on-surface-variant font-mono uppercase tracking-wider">
+                      {nearArea.type || "Area"}
+                    </span>
+                  </Link>
+                );
+              })}
+            </div>
+
+            <div className="mt-8 flex justify-center">
+              <Link
+                href="/locations"
+                className="inline-flex items-center gap-2 rounded-full border border-outline-variant bg-surface px-5 py-3 font-mono text-[10px] font-bold uppercase tracking-widest text-primary transition-colors hover:border-accent hover:bg-accent hover:text-white"
+              >
+                View All Gauteng Locations
+                <ArrowUpRight className="h-4 w-4" />
+              </Link>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* 6. CTA SECTION */}
       <CTASection />
     </div>
   );

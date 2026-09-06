@@ -9,7 +9,7 @@ import { faqs } from "@/data/faqs";
 type FaqCategory = "general" | "installation" | "pricing";
 
 export const metadata: Metadata = {
-  title: "Frequently Asked Questions | Aluminium Designs",
+  title: "Frequently Asked Questions & Support",
   description:
     "Find clear answers about aluminium windows, sliding doors, steel security gates, delivery times, custom sizing, warranties, and free home quotes.",
   alternates: { canonical: `${siteUrl}/faq` },

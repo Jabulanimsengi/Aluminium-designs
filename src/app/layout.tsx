@@ -83,13 +83,45 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       : {}),
     telephone: businessContact.phoneE164,
     email: businessContact.email,
+    priceRange: "R1500 - R85000",
+    currenciesAccepted: "ZAR",
+    paymentAccepted: "Cash, Credit Card, Debit Card, EFT",
     address: {
       "@type": "PostalAddress",
       streetAddress: businessContact.streetAddress,
       addressLocality: businessContact.addressCity,
       addressRegion: businessContact.addressRegion,
+      postalCode: businessContact.postalCode,
       addressCountry: businessContact.addressCountry,
     },
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: businessContact.geo.latitude,
+      longitude: businessContact.geo.longitude,
+    },
+    openingHoursSpecification: [
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+        ],
+        opens: "08:00",
+        closes: "18:00",
+      },
+    ],
+    areaServed: [
+      { "@type": "AdministrativeArea", name: "City of Johannesburg" },
+      { "@type": "AdministrativeArea", name: "City of Tshwane" },
+      { "@type": "AdministrativeArea", name: "City of Ekurhuleni" },
+      { "@type": "AdministrativeArea", name: "West Rand" },
+      { "@type": "AdministrativeArea", name: "Sedibeng" },
+      { "@type": "AdministrativeArea", name: "Gauteng" },
+    ],
     url: siteUrl,
   };
 
@@ -100,12 +132,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       data-scroll-behavior="smooth"
     >
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap"
-          rel="stylesheet"
-        />
+        <meta name="geo.region" content="ZA-GT" />
+        <meta name="geo.placename" content="Katlehong, Gauteng" />
+        <meta name="geo.position" content="-26.3458;28.1633" />
+        <meta name="ICBM" content="-26.3458, 28.1633" />
         <link rel="preconnect" href="https://maps.google.com" />
         <link rel="preconnect" href="https://maps.gstatic.com" crossOrigin="anonymous" />
       </head>

@@ -10,6 +10,7 @@ import {
   Phone,
   Layers,
   CheckCircle2,
+  ChevronRight,
   Hammer,
   Truck,
   MapPin,
@@ -19,7 +20,7 @@ import CTASection from "@/components/CTASection";
 import SteelCatalogueFilter from "@/components/SteelCatalogueFilter";
 
 export const metadata: Metadata = {
-  title: "Custom Steel Works, Security Gates, Burglar Bars & Carports Gauteng",
+  title: "Custom Steel Works & Security Barriers Gauteng",
   description:
     "Professional steel fabrication & security installation in Gauteng. Heavy-duty steel gates, burglar bars, automated driveway gates, palisade fencing, steel carports & mobile welding.",
   alternates: { canonical: `${siteUrl}/steel-works` },
@@ -135,11 +136,84 @@ const steelFaqs = [
 ];
 
 export default function SteelWorksPage() {
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Service",
+        "@id": `${siteUrl}/steel-works#service`,
+        url: `${siteUrl}/steel-works`,
+        name: "Custom Steel Works & Security Barriers Gauteng",
+        serviceType: "Structural Steel Fabrication & Physical Security",
+        provider: {
+          "@id": `${siteUrl}#business`,
+        },
+        areaServed: {
+          "@type": "State",
+          name: "Gauteng",
+        },
+        description:
+          "Heavy-duty steel security gates, burglar bars, automated driveway gates, palisade fencing, and steel carports across Gauteng.",
+      },
+      {
+        "@type": "FAQPage",
+        "@id": `${siteUrl}/steel-works#faq`,
+        mainEntity: steelFaqs.map((faq) => ({
+          "@type": "Question",
+          name: faq.question,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: faq.answer,
+          },
+        })),
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": `${siteUrl}/steel-works#breadcrumb`,
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: siteUrl,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Steel Works",
+            item: `${siteUrl}/steel-works`,
+          },
+        ],
+      },
+    ],
+  };
+
   return (
     <div className="relative bg-surface text-on-surface">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
       {/* Hero Section */}
       <section className="py-20 sm:py-24 bg-surface-container-low border-b border-outline-variant">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
+          {/* Breadcrumbs */}
+          <nav aria-label="Breadcrumb" className="mb-4">
+            <ol className="flex flex-wrap items-center justify-center gap-1.5 font-mono text-[10px] font-bold uppercase tracking-wider text-outline">
+              <li>
+                <Link href="/" className="text-secondary hover:text-accent transition-colors">
+                  Home
+                </Link>
+              </li>
+              <li>
+                <ChevronRight className="w-3 h-3 text-outline" />
+              </li>
+              <li className="text-accent font-semibold" aria-current="page">
+                Steel Works
+              </li>
+            </ol>
+          </nav>
+
           <div className="inline-flex items-center gap-2 bg-surface border border-outline-variant px-3.5 py-1 font-mono text-[10px] font-bold tracking-widest uppercase rounded-full">
             <Hammer className="w-3.5 h-3.5 text-accent" />
             <span className="text-accent">Custom Steel Fabrication &bull; Gauteng Workshop</span>
@@ -355,31 +429,31 @@ export default function SteelWorksPage() {
               </h3>
               <ul className="space-y-2 text-xs font-mono">
                 <li>
-                  <Link href="/locations/sandton/steel-works-near-sandton" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
+                  <Link href="/steel-works-installation-near-sandton" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
                     <span>Steel Works Near Sandton</span>
                     <span>&rarr;</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/locations/sandton/security-gates-near-sandton" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
+                  <Link href="/security-gate-installation-near-sandton" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
                     <span>Security Gates Near Sandton</span>
                     <span>&rarr;</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/locations/johannesburg/burglar-bars-near-johannesburg" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
+                  <Link href="/burglar-bar-installation-near-johannesburg" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
                     <span>Burglar Bars Near JHB CBD</span>
                     <span>&rarr;</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/locations/randburg/driveway-gates-near-randburg" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
+                  <Link href="/driveway-gate-installation-near-randburg" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
                     <span>Driveway Gates Near Randburg</span>
                     <span>&rarr;</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/locations/fourways/steel-carports-near-fourways" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
+                  <Link href="/steel-carport-installation-near-fourways" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
                     <span>Steel Carports Near Fourways</span>
                     <span>&rarr;</span>
                   </Link>
@@ -395,31 +469,31 @@ export default function SteelWorksPage() {
               </h3>
               <ul className="space-y-2 text-xs font-mono">
                 <li>
-                  <Link href="/locations/katlehong/steel-works-near-katlehong" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
-                    <span>Steel Works Near Katlehong</span>
+                  <Link href="/steel-works-installation-in-katlehong" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
+                    <span>Steel Works in Katlehong</span>
                     <span>&rarr;</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/locations/alberton/security-gates-near-alberton" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
+                  <Link href="/security-gate-installation-near-alberton" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
                     <span>Security Gates Near Alberton</span>
                     <span>&rarr;</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/locations/germiston/burglar-bars-near-germiston" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
+                  <Link href="/burglar-bar-installation-near-germiston" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
                     <span>Burglar Bars Near Germiston</span>
                     <span>&rarr;</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/locations/bedfordview/trellis-security-gates-near-bedfordview" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
+                  <Link href="/trellis-door-installation-near-bedfordview" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
                     <span>Trellis Gates Near Bedfordview</span>
                     <span>&rarr;</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/locations/boksburg/palisade-fencing-near-boksburg" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
+                  <Link href="/palisade-fencing-installation-near-boksburg" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
                     <span>Palisade Fencing Near Boksburg</span>
                     <span>&rarr;</span>
                   </Link>
@@ -435,31 +509,31 @@ export default function SteelWorksPage() {
               </h3>
               <ul className="space-y-2 text-xs font-mono">
                 <li>
-                  <Link href="/locations/centurion/steel-works-near-centurion" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
+                  <Link href="/steel-works-installation-near-centurion" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
                     <span>Steel Works Near Centurion</span>
                     <span>&rarr;</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/locations/centurion/driveway-gates-near-centurion" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
+                  <Link href="/driveway-gate-installation-near-centurion" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
                     <span>Driveway Gates Near Centurion</span>
                     <span>&rarr;</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/locations/pretoria/security-gates-near-pretoria" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
+                  <Link href="/security-gate-installation-near-pretoria" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
                     <span>Security Gates Near Pretoria</span>
                     <span>&rarr;</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/locations/midrand/steel-carports-near-midrand" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
+                  <Link href="/steel-carport-installation-near-midrand" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
                     <span>Steel Carports Near Midrand</span>
                     <span>&rarr;</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/locations/midrand/palisade-fencing-near-midrand" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
+                  <Link href="/palisade-fencing-installation-near-midrand" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
                     <span>Palisade Fencing Near Midrand</span>
                     <span>&rarr;</span>
                   </Link>
@@ -475,31 +549,31 @@ export default function SteelWorksPage() {
               </h3>
               <ul className="space-y-2 text-xs font-mono">
                 <li>
-                  <Link href="/locations/roodepoort/steel-works-near-roodepoort" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
+                  <Link href="/steel-works-installation-near-roodepoort" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
                     <span>Steel Works Near Roodepoort</span>
                     <span>&rarr;</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/locations/roodepoort/security-gates-near-roodepoort" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
+                  <Link href="/security-gate-installation-near-roodepoort" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
                     <span>Security Gates Near Roodepoort</span>
                     <span>&rarr;</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/locations/krugersdorp/burglar-bars-near-krugersdorp" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
+                  <Link href="/burglar-bar-installation-near-krugersdorp" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
                     <span>Burglar Bars Near Krugersdorp</span>
                     <span>&rarr;</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/locations/soweto/driveway-gates-near-soweto" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
+                  <Link href="/driveway-gate-installation-near-soweto" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
                     <span>Driveway Gates Near Soweto</span>
                     <span>&rarr;</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/locations/alberton/custom-welding-near-alberton" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
+                  <Link href="/custom-welding-installation-near-alberton" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
                     <span>Welding Services Near Alberton</span>
                     <span>&rarr;</span>
                   </Link>

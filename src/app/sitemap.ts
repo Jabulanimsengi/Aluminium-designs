@@ -10,7 +10,7 @@ const coreRoutes = [
   "/services",
   "/steel-works",
   "/gallery",
-  "/prices",
+  "/pricing",
   "/faq",
   "/contact",
   "/locations",
@@ -30,7 +30,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     } else if (path === "/services" || path === "/steel-works") {
       priority = 0.8;
       changeFrequency = "weekly";
-    } else if (path === "/prices" || path === "/gallery" || path === "/contact") {
+    } else if (path === "/pricing" || path === "/gallery" || path === "/contact") {
       priority = 0.7;
     }
 
@@ -57,7 +57,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   }));
 
   const locationServiceEntries: MetadataRoute.Sitemap = getAllLocationServiceRoutes().map((route) => ({
-    url: `${siteUrl}/locations/${route.area}/${route.serviceId}`,
+    url: `${siteUrl}/${route.serviceId}`,
     lastModified,
     changeFrequency: "monthly",
     priority: 0.5,

@@ -8,6 +8,7 @@ import {
   CheckCircle2,
   ArrowRight,
   ArrowUpRight,
+  ChevronRight,
   BatteryCharging,
   Building,
   Car,
@@ -39,6 +40,7 @@ import {
   Wind,
   Wrench,
   Zap,
+  Tag,
   type LucideIcon,
 } from "lucide-react";
 import { services } from "@/data/services";
@@ -47,8 +49,12 @@ import { allCoreServices } from "@/data/core-services";
 import { gautengLocations } from "@/data/locations";
 import CTASection from "@/components/CTASection";
 import FAQAccordion from "@/components/FAQAccordion";
-import ServicePricingAndFinishes from "@/components/ServicePricingAndFinishes";
 import { absoluteUrl, siteUrl, slugify, whatsappQuoteUrl } from "@/lib/site";
+import {
+  getCanonicalServiceLocationSlug,
+  isRepairService,
+  toSingularServiceTitle,
+} from "@/lib/serviceLocationParser";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -114,7 +120,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const canonicalUrl = siteUrl ? `${siteUrl}/services/${slug}` : content.seo.canonicalUrl;
 
   return {
-    title: content.seo.titleTag,
+    title: { absolute: content.seo.titleTag },
     description: content.seo.metaDescription,
     keywords: content.seo.keywords,
     alternates: { canonical: canonicalUrl },
@@ -168,9 +174,23 @@ export default async function ServiceDetailPage({ params }: Props) {
 
   const otherServices = services.filter((s) => s.id !== service.id);
   const coreSrv = allCoreServices.find((s) => s.slug === slug || s.slug === service.id);
-  const majorAreas = gautengLocations
-    .filter((location) => location.type === "city" || location.type === "suburb")
-    .slice(0, 12);
+
+  const strategicHubSlugs = [
+    // City of Johannesburg
+    "sandton", "randburg", "midrand", "rosebank", "fourways", "roodepoort", "constantia-kloof",
+    // City of Tshwane
+    "pretoria", "centurion", "menlyn", "pretoria-east", "pretoria-north",
+    // City of Ekurhuleni / East Rand
+    "katlehong", "alberton", "boksburg", "benoni", "germiston", "kempton-park", "bedfordview",
+    // West Rand
+    "krugersdorp", "randfontein",
+    // Sedibeng & Vaal
+    "vereeniging", "vanderbijlpark", "meyerton", "heidelberg",
+  ];
+
+  const majorAreas = strategicHubSlugs
+    .map((s) => gautengLocations.find((l) => (l.slug || l.id) === s))
+    .filter((l): l is NonNullable<typeof l> => Boolean(l));
 
   const rawServiceLd = content.structuredDataJsonLd;
   const serviceSchema = {
@@ -267,6 +287,34 @@ export default async function ServiceDetailPage({ params }: Props) {
         <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/45 to-black/20" />
         <div className="relative z-10 w-full p-6 sm:p-12 pb-8 sm:pb-12">
           <div className="max-w-4xl mx-auto space-y-4">
+            {/* Breadcrumbs */}
+            <nav aria-label="Breadcrumb" className="mb-2">
+              <ol className="flex flex-wrap items-center gap-1.5 font-mono text-[10px] font-bold uppercase tracking-wider text-white/70">
+                <li>
+                  <Link href="/" className="hover:text-white transition-colors">
+                    Home
+                  </Link>
+                </li>
+                <li>
+                  <ChevronRight className="w-3 h-3 text-white/50" />
+                </li>
+                <li>
+                  <Link
+                    href={service.category === "steel" ? "/steel-works" : "/services"}
+                    className="hover:text-white transition-colors"
+                  >
+                    {service.category === "steel" ? "Steel Works" : "Services"}
+                  </Link>
+                </li>
+                <li>
+                  <ChevronRight className="w-3 h-3 text-white/50" />
+                </li>
+                <li className="text-white font-semibold" aria-current="page">
+                  {service.title}
+                </li>
+              </ol>
+            </nav>
+
             <div className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-md border border-white/20 px-3.5 py-1 font-mono text-[10px] font-bold tracking-widest uppercase rounded-full text-white">
               {content.hero.badgeText}
             </div>
@@ -283,6 +331,13 @@ export default async function ServiceDetailPage({ params }: Props) {
               >
                 {content.hero.primaryCtaText}
                 <ArrowRight className="w-4 h-4" />
+              </Link>
+              <Link
+                href="/pricing"
+                className="inline-flex items-center justify-center gap-2 bg-accent hover:bg-accent-hover text-white px-6 py-3 font-mono text-[11px] font-bold uppercase tracking-widest transition-colors rounded-full w-full sm:w-auto text-center shadow-xs"
+              >
+                <Tag className="w-4 h-4" />
+                View Pricing
               </Link>
               <Link
                 href={content.hero.secondaryCtaLink || "#specs"}
@@ -347,13 +402,6 @@ export default async function ServiceDetailPage({ params }: Props) {
         </div>
       </section>
 
-      {/* PRICING & FINISHES */}
-      <ServicePricingAndFinishes
-        serviceTitle={service.title}
-        startingPrice={coreSrv?.pricingGuide?.estimatedStartingPrice}
-        priceUnit={coreSrv?.pricingGuide?.priceUnit}
-        priceFactors={coreSrv?.pricingGuide?.priceFactors}
-      />
 
       {/* BENEFITS */}
       <section className="py-20 bg-surface-container-low border-b border-outline-variant">
@@ -390,47 +438,6 @@ export default async function ServiceDetailPage({ params }: Props) {
         </div>
       </section>
 
-      {/* PRODUCT TYPES */}
-      <section className="py-20 bg-surface border-b border-outline-variant">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="mb-12 text-center">
-            <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-accent">
-              Options &amp; Styles
-            </span>
-            <h2 className="mt-2 font-sans text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary">
-              {content.productTypes.title}
-            </h2>
-            <p className="mt-3 max-w-2xl mx-auto text-sm text-on-surface-variant leading-relaxed">
-              {content.productTypes.description}
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            {content.productTypes.items.map((type) => (
-              <div
-                key={type.name}
-                className="border border-outline-variant bg-surface-container-lowest p-6 hover:border-accent transition-colors flex flex-col"
-              >
-                <span className="font-mono text-[9px] font-bold uppercase tracking-[0.18em] text-secondary">
-                  {type.tagline}
-                </span>
-                <h3 className="mt-2 font-sans text-lg font-bold uppercase tracking-tight text-primary">
-                  {type.name}
-                </h3>
-                <p className="mt-3 text-xs text-on-surface-variant leading-relaxed">
-                  {type.description}
-                </p>
-                <p className="mt-4 border-t border-outline-variant pt-3 text-[11px] font-medium text-on-surface">
-                  <span className="font-mono text-[9px] font-bold uppercase tracking-widest text-secondary">
-                    Ideal for:{" "}
-                  </span>
-                  {type.idealFor}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* GLAZING OPTIONS */}
       <section className="py-20 bg-surface-container-low border-b border-outline-variant">
@@ -737,16 +744,26 @@ export default async function ServiceDetailPage({ params }: Props) {
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
-            {majorAreas.map((area) => (
-              <Link
-                key={area.id}
-                href={`/locations/${area.id}/${slugify(service.title)}-in-${area.id}`}
-                className="group flex items-center justify-between gap-2 border border-outline-variant bg-surface-container-lowest px-4 py-3 text-xs font-medium text-on-surface transition-colors hover:border-accent"
-              >
-                <span className="truncate">{service.title} in {area.name}</span>
-                <ArrowUpRight className="h-3.5 w-3.5 shrink-0 text-secondary transition-colors group-hover:text-accent" />
-              </Link>
-            ))}
+            {majorAreas.map((area) => {
+              const locSlug = area.slug || area.id;
+              const isKat = locSlug.toLowerCase() === "katlehong";
+              const prep = isKat ? "in" : "Near";
+              const canonicalRoute = getCanonicalServiceLocationSlug(service.title, locSlug);
+              const isRep = isRepairService(service.title);
+              const linkLabel = isRep
+                ? `${service.title} ${prep} ${area.name}`
+                : `${toSingularServiceTitle(service.title)} Installation ${prep} ${area.name}`;
+              return (
+                <Link
+                  key={area.id}
+                  href={`/${canonicalRoute}`}
+                  className="group flex items-center justify-between gap-2 border border-outline-variant bg-surface-container-lowest px-4 py-3 text-xs font-medium text-on-surface transition-colors hover:border-accent"
+                >
+                  <span className="truncate">{linkLabel}</span>
+                  <ArrowUpRight className="h-3.5 w-3.5 shrink-0 text-secondary transition-colors group-hover:text-accent" />
+                </Link>
+              );
+            })}
           </div>
 
           <div className="mt-6 flex justify-center">

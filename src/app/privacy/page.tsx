@@ -4,7 +4,7 @@ import { ArrowRight, ShieldCheck } from "lucide-react";
 import { absoluteUrl, businessContact, siteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Privacy Notice | Aluminium Designs",
+  title: "Privacy Policy & POPIA Notice",
   description: "How Aluminium Designs collects and uses website monitoring and enquiry information.",
   alternates: { canonical: `${siteUrl}/privacy` },
   openGraph: {

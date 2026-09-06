@@ -43,6 +43,16 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
+        source: "/locations/:area/:serviceId",
+        destination: "/:serviceId",
+        permanent: true,
+      },
+      {
+        source: "/prices",
+        destination: "/pricing",
+        permanent: true,
+      },
+      {
         source: "/services/trellis-doors-security-gates",
         destination: "/services/trellis-doors",
         permanent: true,

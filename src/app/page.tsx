@@ -16,7 +16,7 @@ import { absoluteUrl, siteUrl, whatsappQuoteUrl } from "@/lib/site";
 import { faqs } from "@/data/faqs";
 
 export const metadata: Metadata = {
-  title: "Custom Aluminium Doors, Windows & Steel Works Gauteng | Aluminium Designs",
+  title: { absolute: "Custom Aluminium Doors, Windows & Steel Works Gauteng | Aluminium Designs" },
   description:
     "SABS certified custom aluminium windows, sliding doors, folding stackers, security gates & steel carports across Johannesburg, Pretoria & Gauteng. Request a free quote.",
   alternates: { canonical: siteUrl || "/" },
@@ -124,7 +124,7 @@ export default function Home() {
         <div className="absolute inset-0 z-0 bg-surface-container-highest">
           <Image
             src="/images/hero_exterior.png"
-            alt="Beautiful home aluminium installation"
+            alt="Custom aluminium sliding doors and windows installation in Gauteng - Aluminium Designs"
             fill
             priority
             sizes="100vw"
@@ -307,7 +307,7 @@ export default function Home() {
             <div className="lg:col-span-5 h-[320px] sm:h-[400px] border border-outline-variant rounded-2xl overflow-hidden relative shadow-md">
               <Image
                 src="/images/slatted_gate.png"
-                alt="Custom aluminium gate installation"
+                alt="Custom fabricated architectural aluminium security gate in Gauteng"
                 fill
                 sizes="(max-width: 1024px) 100vw, 420px"
                 className="object-cover"

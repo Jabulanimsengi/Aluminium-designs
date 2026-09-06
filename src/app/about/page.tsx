@@ -5,6 +5,7 @@ import {
   ArrowRight,
   Building2,
   CheckCircle2,
+  ChevronRight,
   ClipboardCheck,
   DoorOpen,
   DraftingCompass,
@@ -23,7 +24,7 @@ import GoogleMapEmbed from "@/components/GoogleMapEmbed";
 import { absoluteUrl, businessContact, businessHours, googleMapsDirectionsUrl, siteUrl, whatsappQuoteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "About Aluminium Designs | Gauteng Aluminium Specialists",
+  title: "About Us | Gauteng Aluminium Specialists",
   description:
     "Meet Aluminium Designs, a Gauteng team measuring, manufacturing, installing, and repairing custom aluminium windows, doors, glass systems, shopfronts, security products, and outdoor structures.",
   alternates: { canonical: `${siteUrl}/about` },
@@ -163,8 +164,47 @@ const principles = [
 ] as const;
 
 export default function AboutPage() {
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "AboutPage",
+        "@id": `${siteUrl}/about#webpage`,
+        url: `${siteUrl}/about`,
+        name: "About Aluminium Designs | Gauteng Aluminium Specialists",
+        description:
+          "Aluminium Designs measures, manufactures, installs, and repairs custom aluminium and glass solutions for homes, businesses, and property developments across Gauteng.",
+        mainEntity: {
+          "@id": `${siteUrl}#business`,
+        },
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": `${siteUrl}/about#breadcrumb`,
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: siteUrl,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "About Us",
+            item: `${siteUrl}/about`,
+          },
+        ],
+      },
+    ],
+  };
+
   return (
     <div className="bg-surface text-on-surface">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
       <section className="relative flex min-h-[680px] items-center overflow-hidden border-b border-outline-variant sm:min-h-[720px]">
         <Image
           src="/images/sliding_doors.png"
@@ -178,6 +218,23 @@ export default function AboutPage() {
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/35 to-black/45" />
 
         <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col items-center px-4 py-20 text-center sm:px-6 lg:px-8">
+            {/* Breadcrumbs */}
+            <nav aria-label="Breadcrumb" className="mb-4">
+              <ol className="flex flex-wrap items-center justify-center gap-1.5 font-mono text-[10px] font-bold uppercase tracking-wider text-white/70">
+                <li>
+                  <Link href="/" className="hover:text-white transition-colors">
+                    Home
+                  </Link>
+                </li>
+                <li>
+                  <ChevronRight className="w-3 h-3 text-white/50" />
+                </li>
+                <li className="text-white font-semibold" aria-current="page">
+                  About Us
+                </li>
+              </ol>
+            </nav>
+
             <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/30 bg-black/35 px-3.5 py-1 font-mono text-[10px] font-bold uppercase tracking-widest text-white backdrop-blur-md">
               <Hammer className="h-3.5 w-3.5" />
               About Aluminium Designs
@@ -381,12 +438,12 @@ export default function AboutPage() {
                 <div className="border-t border-outline-variant/60 pt-5 space-y-3">
                   <p className="font-mono text-[10px] font-bold uppercase tracking-widest text-accent">Operating Hours</p>
                   <div className="flex justify-between text-xs text-on-surface-variant">
-                    <span>Monday - Friday:</span>
-                    <span className="font-bold text-primary">{businessHours.weekdays}</span>
+                    <span>Monday - Saturday:</span>
+                    <span className="font-bold text-primary">{businessHours.saturday}</span>
                   </div>
                   <div className="flex justify-between text-xs text-on-surface-variant">
-                    <span>Saturday - Sunday:</span>
-                    <span className="font-bold text-outline">{businessHours.weekends}</span>
+                    <span>Sunday:</span>
+                    <span className="font-bold text-outline">{businessHours.sunday}</span>
                   </div>
                   <p className="text-[11px] text-on-surface-variant italic pt-1">
                     {businessHours.appointmentNote}

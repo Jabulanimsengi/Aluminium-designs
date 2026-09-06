@@ -55,7 +55,7 @@ export interface LocalizedPageContent {
   // Hero Section
   hero: {
     badge: string;
-    headline: string; // H1 match: e.g. "Aluminium Windows Near Katlehong"
+    headline: string; // H1 match: e.g. "Aluminium Windows in Katlehong" or "Aluminium Windows Near Sandton"
     subheadline: string;
     primaryCtaText: string;
     primaryCtaAction: 'OPEN_QUOTE_MODAL';

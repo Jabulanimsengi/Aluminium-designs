@@ -8,7 +8,7 @@ import type { Metadata } from "next";
 import { absoluteUrl, siteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Service Areas in Gauteng | Aluminium Designs",
+  title: "Service Areas Across Gauteng",
   description:
     "View our list of service areas across Gauteng. We manufacture and install custom aluminium windows, doors, and security gates in Johannesburg, Pretoria, and surrounding areas.",
   alternates: { canonical: `${siteUrl}/locations` },
@@ -92,7 +92,7 @@ export default function LocationsDirectory() {
                   {sortedLocations.map((loc) => (
                     <Link
                       key={loc.id}
-                      href={`/locations/${loc.id}`}
+                      href={`/locations/${loc.slug || loc.id}`}
                       className="group flex items-center justify-between p-4 border border-outline-variant bg-surface-container-lowest hover:border-accent hover:bg-surface-container transition-all shadow-sm"
                     >
                       <div className="flex items-center space-x-3">

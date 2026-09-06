@@ -4,41 +4,38 @@ import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Menu, X, Phone, ChevronDown, ArrowRight, Hammer, Layers } from "lucide-react";
-import { services, aluminiumServices, steelServices } from "@/data/services";
+import {
+  Menu,
+  X,
+  Phone,
+  ChevronDown,
+  ArrowRight,
+  Layers,
+  Flame,
+  Lock,
+  ShieldCheck,
+  Wrench,
+  Tag,
+} from "lucide-react";
+import { rawServiceTaxonomy, allTaxonomyServices } from "@/data/serviceTaxonomy";
 import { whatsappQuoteUrl } from "@/lib/site";
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [servicesDropdownOpen, setServicesDropdownOpen] = useState(false);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
-  const [mobileServicesCount, setMobileServicesCount] = useState(5);
   const pathname = usePathname();
-  const dropdownTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const mobileMenuButtonRef = useRef<HTMLButtonElement>(null);
   const mobilePanelRef = useRef<HTMLDivElement>(null);
   const servicesMenuRef = useRef<HTMLDivElement>(null);
   const servicesButtonRef = useRef<HTMLButtonElement>(null);
 
-  const handleDropdownEnter = () => {
-    if (dropdownTimer.current) {
-      clearTimeout(dropdownTimer.current);
-      dropdownTimer.current = null;
-    }
-    setServicesDropdownOpen(true);
-  };
-
-  const handleDropdownLeave = () => {
-    dropdownTimer.current = setTimeout(() => {
-      setServicesDropdownOpen(false);
-    }, 150);
-  };
-
+  // Automatically close dropdowns on route changes
   useEffect(() => {
-    return () => {
-      if (dropdownTimer.current) clearTimeout(dropdownTimer.current);
-    };
-  }, []);
+    setServicesDropdownOpen(false);
+    setMobileMenuOpen(false);
+    setMobileServicesOpen(false);
+  }, [pathname]);
 
   const handleLogoClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
     if (pathname === "/" || pathname === "") {
@@ -123,7 +120,7 @@ export default function Header() {
     { name: "Home", href: "/" },
     { name: "About Us", href: "/about" },
     { name: "Services", href: "/services", hasDropdown: true },
-    { name: "Prices", href: "/prices" },
+    { name: "Pricing", href: "/pricing" },
     { name: "Gallery", href: "/gallery" },
     { name: "FAQ", href: "/faq" },
     { name: "Contact", href: "/contact" },
@@ -137,7 +134,7 @@ export default function Header() {
             <button
               ref={mobileMenuButtonRef}
               type="button"
-              onClick={() => { setMobileServicesOpen(false); setMobileServicesCount(5); setMobileMenuOpen(!mobileMenuOpen); }}
+              onClick={() => { setMobileServicesOpen(false); setMobileMenuOpen(!mobileMenuOpen); }}
               className="lg:hidden flex h-11 w-11 items-center justify-center -ml-2 rounded-lg text-primary transition-colors hover:bg-surface-container active:bg-surface-container-high touch-manipulation"
               aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
             >
@@ -171,8 +168,6 @@ export default function Header() {
                   ref={servicesMenuRef}
                   key={link.name}
                   className="relative"
-                  onMouseEnter={handleDropdownEnter}
-                  onMouseLeave={handleDropdownLeave}
                 >
                   <button
                     ref={servicesButtonRef}
@@ -180,92 +175,199 @@ export default function Header() {
                     aria-haspopup="true"
                     aria-expanded={servicesDropdownOpen}
                     aria-controls="desktop-services-menu"
-                    onClick={() => setServicesDropdownOpen((isOpen) => !isOpen)}
-                    className={`relative flex items-center gap-1 text-[12px] font-sans font-semibold tracking-wide uppercase transition-colors pb-1 cursor-pointer ${
-                      pathname.startsWith("/services")
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setServicesDropdownOpen((isOpen) => !isOpen);
+                    }}
+                    className={`relative flex items-center gap-1.5 text-[12px] font-sans font-semibold tracking-wide uppercase transition-colors pb-1 cursor-pointer select-none ${
+                      pathname.startsWith("/services") || servicesDropdownOpen
                         ? "text-primary after:scale-x-100"
-                        : "text-secondary hover:text-primary after:scale-x-0 hover:after:scale-x-100"
+                        : "text-secondary hover:text-primary after:scale-x-0"
                     } after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:origin-left after:scale-x-0 after:bg-accent after:transition-transform after:duration-300 after:ease-out`}
                   >
-                    {link.name}
-                    <ChevronDown className={`w-3.5 h-3.5 transition-transform ${servicesDropdownOpen ? "rotate-180" : ""}`} />
+                    <span>{link.name}</span>
+                    <ChevronDown
+                      className={`w-3.5 h-3.5 transition-transform duration-200 ${
+                        servicesDropdownOpen ? "rotate-180 text-accent" : ""
+                      }`}
+                    />
                   </button>
 
                   <div
                     id="desktop-services-menu"
                     aria-hidden={!servicesDropdownOpen}
-                    className={`absolute -left-16 top-full w-[560px] rounded-xl bg-surface border border-outline-variant shadow-2xl transition-all duration-200 origin-top-left ${
+                    className={`absolute -left-28 top-full w-[780px] xl:w-[860px] rounded-xl bg-surface border border-outline-variant shadow-2xl transition-all duration-200 origin-top-left z-50 ${
                       servicesDropdownOpen
-                        ? "opacity-100 translate-y-0 scale-100 pointer-events-auto"
-                        : "opacity-0 -translate-y-1 scale-95 pointer-events-none"
+                        ? "opacity-100 translate-y-2 scale-100 pointer-events-auto"
+                        : "opacity-0 translate-y-0 scale-95 pointer-events-none"
                     }`}
                   >
-                    <div className="p-4 grid grid-cols-2 gap-4">
-                      {/* Column 1: Aluminium & Glass */}
-                      <div className="space-y-1">
+                    <div className="p-5 grid grid-cols-3 gap-5">
+                      {/* Column 1: Aluminium & Doors */}
+                      <div className="space-y-2">
                         <div className="flex items-center gap-1.5 pb-2 border-b border-outline-variant text-[10px] font-mono font-bold uppercase tracking-widest text-accent">
-                          <Layers className="w-3 h-3 text-accent" />
-                          Aluminium &amp; Glass
+                          <Layers className="w-3.5 h-3.5 text-accent" />
+                          Aluminium &amp; Doors
                         </div>
-                        <div className="pt-1 flex flex-col gap-1">
-                          {aluminiumServices.slice(0, 5).map((s) => (
-                            <Link
-                              key={s.id}
-                              href={s.slug}
-                              tabIndex={servicesDropdownOpen ? 0 : -1}
-                              className="group rounded-lg p-2.5 transition-colors hover:bg-surface-container hover:shadow-sm focus-visible:outline-2 focus-visible:outline-accent"
-                            >
-                              <span className="block truncate text-[13px] font-sans font-semibold text-primary group-hover:text-accent">
-                                {s.title}
-                              </span>
-                              <span className="mt-0.5 block truncate text-[11px] leading-snug text-on-surface-variant">
-                                {s.shortDescription}
-                              </span>
-                            </Link>
-                          ))}
+                        <div className="flex flex-col gap-1">
+                          {allTaxonomyServices
+                            .filter((s) => s.category === "Aluminium & Doors")
+                            .slice(0, 5)
+                            .map((s) => (
+                              <Link
+                                key={s.slug}
+                                href={`/services/${s.slug}`}
+                                onClick={() => setServicesDropdownOpen(false)}
+                                tabIndex={servicesDropdownOpen ? 0 : -1}
+                                className="group rounded-md p-1.5 transition-colors hover:bg-surface-container focus-visible:outline-2 focus-visible:outline-accent"
+                              >
+                                <span className="block truncate text-xs font-sans font-semibold text-primary group-hover:text-accent">
+                                  {s.name}
+                                </span>
+                                <span className="block text-[10px] text-on-surface-variant font-mono">
+                                  {s.startingPriceDisplay}
+                                </span>
+                              </Link>
+                            ))}
                         </div>
                       </div>
 
-                      {/* Column 2: Steel & Security */}
-                      <div className="space-y-1">
-                        <div className="flex items-center gap-1.5 pb-2 border-b border-outline-variant text-[10px] font-mono font-bold uppercase tracking-widest text-accent">
-                          <Hammer className="w-3 h-3 text-accent" />
-                          Steel Works &amp; Security
+                      {/* Column 2: Glass & Enclosures + Maintenance */}
+                      <div className="space-y-4">
+                        <div className="space-y-2">
+                          <div className="flex items-center gap-1.5 pb-2 border-b border-outline-variant text-[10px] font-mono font-bold uppercase tracking-widest text-accent">
+                            <Flame className="w-3.5 h-3.5 text-accent" />
+                            Glass &amp; Enclosures
+                          </div>
+                          <div className="flex flex-col gap-1">
+                            {allTaxonomyServices
+                              .filter((s) => s.category === "Glass & Enclosures")
+                              .slice(0, 4)
+                              .map((s) => (
+                                <Link
+                                  key={s.slug}
+                                  href={`/services/${s.slug}`}
+                                  onClick={() => setServicesDropdownOpen(false)}
+                                  tabIndex={servicesDropdownOpen ? 0 : -1}
+                                  className="group rounded-md p-1.5 transition-colors hover:bg-surface-container focus-visible:outline-2 focus-visible:outline-accent"
+                                >
+                                  <span className="block truncate text-xs font-sans font-semibold text-primary group-hover:text-accent">
+                                    {s.name}
+                                  </span>
+                                  <span className="block text-[10px] text-on-surface-variant font-mono">
+                                    {s.startingPriceDisplay}
+                                  </span>
+                                </Link>
+                              ))}
+                          </div>
                         </div>
-                        <div className="pt-1 flex flex-col gap-1">
-                          {steelServices.slice(0, 5).map((s) => (
-                            <Link
-                              key={s.id}
-                              href={s.slug}
-                              tabIndex={servicesDropdownOpen ? 0 : -1}
-                              className="group rounded-lg p-2.5 transition-colors hover:bg-surface-container hover:shadow-sm focus-visible:outline-2 focus-visible:outline-accent"
-                            >
-                              <span className="block truncate text-[13px] font-sans font-semibold text-primary group-hover:text-accent">
-                                {s.title}
-                              </span>
-                              <span className="mt-0.5 block truncate text-[11px] leading-snug text-on-surface-variant">
-                                {s.shortDescription}
-                              </span>
-                            </Link>
-                          ))}
+
+                        <div className="space-y-2 pt-2 border-t border-outline-variant/60">
+                          <div className="flex items-center gap-1.5 pb-1 text-[10px] font-mono font-bold uppercase tracking-widest text-accent">
+                            <Wrench className="w-3.5 h-3.5 text-accent" />
+                            Maintenance &amp; Repairs
+                          </div>
+                          <div className="flex flex-col gap-1">
+                            {allTaxonomyServices
+                              .filter((s) => s.category === "Maintenance & Repairs")
+                              .slice(0, 3)
+                              .map((s) => (
+                                <Link
+                                  key={s.slug}
+                                  href={`/services/${s.slug}`}
+                                  onClick={() => setServicesDropdownOpen(false)}
+                                  tabIndex={servicesDropdownOpen ? 0 : -1}
+                                  className="group rounded-md p-1.5 transition-colors hover:bg-surface-container focus-visible:outline-2 focus-visible:outline-accent"
+                                >
+                                  <span className="block truncate text-xs font-sans font-semibold text-primary group-hover:text-accent">
+                                    {s.name}
+                                  </span>
+                                  <span className="block text-[10px] text-on-surface-variant font-mono">
+                                    {s.startingPriceDisplay}
+                                  </span>
+                                </Link>
+                              ))}
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Column 3: Security & Fencing + Steel Works */}
+                      <div className="space-y-4">
+                        <div className="space-y-2">
+                          <div className="flex items-center gap-1.5 pb-2 border-b border-outline-variant text-[10px] font-mono font-bold uppercase tracking-widest text-accent">
+                            <Lock className="w-3.5 h-3.5 text-accent" />
+                            Security &amp; Fencing
+                          </div>
+                          <div className="flex flex-col gap-1">
+                            {allTaxonomyServices
+                              .filter((s) => s.category === "Security & Fencing")
+                              .slice(0, 4)
+                              .map((s) => (
+                                <Link
+                                  key={s.slug}
+                                  href={`/services/${s.slug}`}
+                                  onClick={() => setServicesDropdownOpen(false)}
+                                  tabIndex={servicesDropdownOpen ? 0 : -1}
+                                  className="group rounded-md p-1.5 transition-colors hover:bg-surface-container focus-visible:outline-2 focus-visible:outline-accent"
+                                >
+                                  <span className="block truncate text-xs font-sans font-semibold text-primary group-hover:text-accent">
+                                    {s.name}
+                                  </span>
+                                  <span className="block text-[10px] text-on-surface-variant font-mono">
+                                    {s.startingPriceDisplay}
+                                  </span>
+                                </Link>
+                              ))}
+                          </div>
+                        </div>
+
+                        <div className="space-y-2 pt-2 border-t border-outline-variant/60">
+                          <div className="flex items-center gap-1.5 pb-1 text-[10px] font-mono font-bold uppercase tracking-widest text-accent">
+                            <ShieldCheck className="w-3.5 h-3.5 text-accent" />
+                            Steel &amp; Custom Works
+                          </div>
+                          <div className="flex flex-col gap-1">
+                            {allTaxonomyServices
+                              .filter((s) => s.category === "Steel & Custom Works")
+                              .slice(0, 3)
+                              .map((s) => (
+                                <Link
+                                  key={s.slug}
+                                  href={`/services/${s.slug}`}
+                                  onClick={() => setServicesDropdownOpen(false)}
+                                  tabIndex={servicesDropdownOpen ? 0 : -1}
+                                  className="group rounded-md p-1.5 transition-colors hover:bg-surface-container focus-visible:outline-2 focus-visible:outline-accent"
+                                >
+                                  <span className="block truncate text-xs font-sans font-semibold text-primary group-hover:text-accent">
+                                    {s.name}
+                                  </span>
+                                  <span className="block text-[10px] text-on-surface-variant font-mono">
+                                    {s.startingPriceDisplay}
+                                  </span>
+                                </Link>
+                              ))}
+                          </div>
                         </div>
                       </div>
                     </div>
 
-                    <div className="border-t border-outline-variant bg-surface-container-low rounded-b-xl px-4 py-3 flex items-center justify-between text-[11px] font-sans font-semibold uppercase tracking-wide">
+                    <div className="border-t border-outline-variant bg-surface-container-low rounded-b-xl px-5 py-3 flex items-center justify-between text-[11px] font-sans font-semibold uppercase tracking-wide">
                       <Link
                         href="/services"
+                        onClick={() => setServicesDropdownOpen(false)}
                         tabIndex={servicesDropdownOpen ? 0 : -1}
-                        className="text-secondary hover:text-accent transition-colors flex items-center gap-1 px-2 py-1.5 rounded-md focus-visible:outline-2 focus-visible:outline-accent"
+                        className="text-primary hover:text-accent font-bold transition-colors flex items-center gap-1.5 px-2.5 py-1.5 rounded-md hover:bg-surface-container"
                       >
-                        All {services.length} Products &rarr;
+                        Browse All 38 Services &rarr;
                       </Link>
                       <Link
-                        href="/steel-works"
+                        href="/pricing"
+                        onClick={() => setServicesDropdownOpen(false)}
                         tabIndex={servicesDropdownOpen ? 0 : -1}
-                        className="text-accent hover:text-accent-hover font-bold transition-colors flex items-center gap-1 px-2 py-1.5 rounded-md focus-visible:outline-2 focus-visible:outline-accent"
+                        className="text-accent hover:text-accent-hover font-bold transition-colors flex items-center gap-1.5 px-2.5 py-1.5 rounded-md hover:bg-surface-container"
                       >
-                        Steel Works Hub &rarr;
+                        <Tag className="w-3.5 h-3.5 text-accent" />
+                        Central Pricing Hub &rarr;
                       </Link>
                     </div>
                   </div>
@@ -351,53 +453,73 @@ export default function Header() {
             <nav className="flex flex-col gap-1">
               {navLinks.map((link) =>
                 link.hasDropdown ? (
-                  <div key={link.name}>
+                  <div key={link.name} className="space-y-1">
                     <button
                       type="button"
                       aria-expanded={mobileServicesOpen}
                       aria-controls="mobile-services-menu"
                       onClick={() => setMobileServicesOpen((o) => !o)}
-                      className="flex w-full items-center justify-between px-4 py-3 text-xs font-bold uppercase tracking-wider text-secondary hover:bg-surface-container transition-colors rounded-lg"
+                      className="flex w-full items-center justify-between px-4 py-3 text-xs font-bold uppercase tracking-wider text-secondary hover:text-primary hover:bg-surface-container transition-colors rounded-lg cursor-pointer"
                     >
-                      {link.name}
-                      <ChevronDown className={`w-4 h-4 transition-transform ${mobileServicesOpen ? "rotate-180" : ""}`} />
+                      <span className="flex items-center gap-2">
+                        <Layers className="w-4 h-4 text-accent" />
+                        {link.name}
+                      </span>
+                      <ChevronDown
+                        className={`w-4 h-4 transition-transform duration-200 ${
+                          mobileServicesOpen ? "rotate-180 text-accent" : ""
+                        }`}
+                      />
                     </button>
+
+                    {/* Contents strictly only show on user click */}
                     {mobileServicesOpen && (
-                      <div id="mobile-services-menu" className="border-l-2 border-outline-variant ml-4 pl-4 space-y-0.5">
-                        <Link
-                          href="/steel-works"
-                          onClick={() => setMobileMenuOpen(false)}
-                          className="flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-bold text-primary bg-surface-container-low hover:bg-surface-container mb-1 border border-outline-variant/60"
-                        >
-                          <Hammer className="w-3.5 h-3.5 text-accent" />
-                          Steel Works Division Hub
-                        </Link>
-                        <Link
-                          href="/services"
-                          onClick={() => setMobileMenuOpen(false)}
-                          className="block px-3 py-2 rounded-lg text-xs font-medium text-on-surface-variant hover:text-primary hover:bg-surface-container"
-                        >
-                          All 38 Services
-                        </Link>
-                        {services.slice(0, mobileServicesCount).map((s) => (
+                      <div
+                        id="mobile-services-menu"
+                        className="border-l-2 border-accent ml-4 pl-3.5 space-y-3 py-2 animate-in fade-in slide-in-from-top-2 duration-200"
+                      >
+                        {/* All Services Link */}
+                        <div className="pb-2 border-b border-outline-variant">
                           <Link
-                            key={s.id}
-                            href={s.slug}
-                            onClick={() => setMobileMenuOpen(false)}
-                            className="block px-3 py-2 rounded-lg text-[11px] text-on-surface-variant hover:text-primary hover:bg-surface-container"
+                            href="/services"
+                            onClick={() => {
+                              setMobileMenuOpen(false);
+                              setMobileServicesOpen(false);
+                            }}
+                            className="flex items-center justify-center gap-1 px-3 py-2 rounded-md text-[10px] font-mono font-bold uppercase tracking-wider text-white bg-primary hover:bg-primary/90 transition-colors text-center w-full"
                           >
-                            {s.title}
+                            Browse All 38 Services &rarr;
                           </Link>
-                        ))}
-                        {mobileServicesCount < services.length && (
-                          <button
-                            type="button"
-                            onClick={() => setMobileServicesCount((c) => c + 5)}
-                            className="w-full px-3 py-2 rounded-lg text-[10px] font-mono font-bold uppercase tracking-wider text-accent hover:text-accent-hover hover:bg-surface-container transition-colors text-center"
-                          >
-                            View More Services ({services.length - mobileServicesCount} remaining)
-                          </button>
-                        )}
+                        </div>
+
+                        {/* 5 Categories grouped */}
+                        {rawServiceTaxonomy.map((group) => {
+                          const groupServices = allTaxonomyServices.filter(
+                            (s) => s.category === group.category
+                          );
+                          return (
+                            <div key={group.category} className="space-y-1">
+                              <div className="text-[10px] font-mono font-bold uppercase tracking-widest text-accent flex items-center gap-1 pt-1">
+                                {group.category}
+                              </div>
+                              <div className="space-y-0.5">
+                                {groupServices.slice(0, 3).map((s) => (
+                                  <Link
+                                    key={s.slug}
+                                    href={`/services/${s.slug}`}
+                                    onClick={() => {
+                                      setMobileMenuOpen(false);
+                                      setMobileServicesOpen(false);
+                                    }}
+                                    className="block px-2.5 py-1 rounded-md text-xs text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors"
+                                  >
+                                    {s.name}
+                                  </Link>
+                                ))}
+                              </div>
+                            </div>
+                          );
+                        })}
                       </div>
                     )}
                   </div>

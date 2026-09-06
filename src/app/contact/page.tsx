@@ -1,11 +1,12 @@
 import React from "react";
 import { Metadata } from "next";
-import { Phone, Mail, MapPin, Clock, ArrowRight, ExternalLink } from "lucide-react";
+import Link from "next/link";
+import { Phone, Mail, MapPin, Clock, ArrowRight, ChevronRight, ExternalLink } from "lucide-react";
 import { absoluteUrl, businessContact, businessHours, googleMapsDirectionsUrl, siteUrl } from "@/lib/site";
 import GoogleMapEmbed from "@/components/GoogleMapEmbed";
 
 export const metadata: Metadata = {
-  title: "Contact Us | Aluminium Designs Gauteng",
+  title: "Contact Us | Free Quotes & Site Visits",
   description:
     "Get in touch for custom aluminium and steel quotes, site visits, and advice. Call 071 612 2439 or visit us in Katlehong, Gauteng.",
   alternates: { canonical: `${siteUrl}/contact` },
@@ -36,6 +37,41 @@ export const metadata: Metadata = {
 };
 
 export default function ContactPage() {
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "ContactPage",
+        "@id": `${siteUrl}/contact#webpage`,
+        url: `${siteUrl}/contact`,
+        name: "Contact Us | Aluminium Designs Gauteng",
+        description:
+          "Get in touch for custom aluminium and steel quotes, site visits, and advice across Gauteng.",
+        mainEntity: {
+          "@id": `${siteUrl}#business`,
+        },
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": `${siteUrl}/contact#breadcrumb`,
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: siteUrl,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Contact Us",
+            item: `${siteUrl}/contact`,
+          },
+        ],
+      },
+    ],
+  };
+
   const contactDetails = [
     {
       title: "Our Address",
@@ -63,9 +99,30 @@ export default function ContactPage() {
 
   return (
     <div className="relative bg-surface min-h-screen py-16 lg:py-24">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
+          {/* Breadcrumbs */}
+          <nav aria-label="Breadcrumb" className="mb-4">
+            <ol className="flex flex-wrap items-center justify-center gap-1.5 font-mono text-[10px] font-bold uppercase tracking-wider text-outline">
+              <li>
+                <Link href="/" className="text-secondary hover:text-accent transition-colors">
+                  Home
+                </Link>
+              </li>
+              <li>
+                <ChevronRight className="w-3 h-3 text-outline" />
+              </li>
+              <li className="text-accent font-semibold" aria-current="page">
+                Contact Us
+              </li>
+            </ol>
+          </nav>
+
           <div className="inline-flex items-center gap-2 bg-surface-container-lowest border border-outline-variant px-3.5 py-1 font-mono text-[10px] font-bold tracking-widest uppercase rounded-full">
             <MapPin className="w-3.5 h-3.5 text-accent" />
             <span className="text-accent">We Service All Of Gauteng</span>
@@ -124,12 +181,12 @@ export default function ContactPage() {
               </h4>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
                 <div>
-                  <p className="font-mono text-[10px] uppercase tracking-wider text-outline">Monday - Friday</p>
-                  <p className="font-sans font-bold text-primary mt-0.5">{businessHours.weekdays}</p>
+                  <p className="font-mono text-[10px] uppercase tracking-wider text-outline">Monday - Saturday</p>
+                  <p className="font-sans font-bold text-primary mt-0.5">{businessHours.saturday}</p>
                 </div>
                 <div>
-                  <p className="font-mono text-[10px] uppercase tracking-wider text-outline">Sat - Sun</p>
-                  <p className="font-sans font-bold text-outline mt-0.5">{businessHours.weekends}</p>
+                  <p className="font-mono text-[10px] uppercase tracking-wider text-outline">Sunday</p>
+                  <p className="font-sans font-bold text-outline mt-0.5">{businessHours.sunday}</p>
                 </div>
               </div>
               <div className="border-t border-outline-variant pt-3 font-mono text-[9px] uppercase tracking-wider text-outline">

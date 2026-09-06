@@ -2,19 +2,20 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Aluminium Designs | Custom Aluminium Doors, Windows & Steel Works Gauteng",
+    name: "Aluminium Designs - Custom Aluminium Doors, Windows & Steel Works",
     short_name: "Aluminium Designs",
     description:
-      "Custom aluminium doors, windows, security gates, burglar bars, steel carports & glass installations across Gauteng. SABS certified. Request a free quote.",
+      "Precision custom aluminium windows, sliding doors, folding stackers, security gates, burglar bars, and steel carports across Gauteng.",
     start_url: "/",
     display: "standalone",
-    background_color: "#ffffff",
-    theme_color: "#0f2a43",
+    background_color: "#14181c",
+    theme_color: "#14181c",
     icons: [
       {
         src: "/favicon.png",
-        sizes: "any",
+        sizes: "192x192 512x512",
         type: "image/png",
+        purpose: "maskable",
       },
     ],
   };

@@ -35,12 +35,12 @@ export default function BusinessLocationMap() {
               </div>
               <dl className="mt-4 space-y-3 text-sm">
                 <div className="flex items-baseline justify-between gap-4">
-                  <dt className="text-on-surface-variant">Monday - Friday</dt>
-                  <dd className="font-bold text-primary">{businessHours.weekdays}</dd>
+                  <dt className="text-on-surface-variant">Monday - Saturday</dt>
+                  <dd className="font-bold text-primary">{businessHours.saturday}</dd>
                 </div>
                 <div className="flex items-baseline justify-between gap-4">
-                  <dt className="text-on-surface-variant">Saturday - Sunday</dt>
-                  <dd className="font-bold text-outline">{businessHours.weekends}</dd>
+                  <dt className="text-on-surface-variant">Sunday</dt>
+                  <dd className="font-bold text-outline">{businessHours.sunday}</dd>
                 </div>
               </dl>
               <p className="mt-4 font-mono text-[9px] font-bold uppercase tracking-wider text-outline">

@@ -12,13 +12,21 @@ export const businessContact = {
   addressCity: "Katlehong",
   addressRegion: "Gauteng",
   addressCountry: "ZA",
-  fullAddress: "755 Sontonga Road, Moleleki Ext 1, Katlehong, Gauteng, South Africa",
+  postalCode: "1432",
+  geo: {
+    latitude: -26.3458,
+    longitude: 28.1633,
+  },
+  fullAddress: "755 Sontonga Road, Moleleki Ext 1, Katlehong, 1432, Gauteng, South Africa",
 } as const;
 
 export const businessHours = {
-  weekdays: "08:00 - 17:00",
-  weekends: "Closed",
-  appointmentNote: "Home measurements available by appointment",
+  display: "Monday – Saturday: 08:00 – 18:00",
+  weekdays: "08:00 - 18:00",
+  saturday: "08:00 - 18:00",
+  sunday: "Closed",
+  weekends: "Sat: 08:00 - 18:00 | Sun: Closed",
+  appointmentNote: "On-site laser measurements and consultations available Monday to Saturday",
 } as const;
 
 export const googleMapsDirectionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(

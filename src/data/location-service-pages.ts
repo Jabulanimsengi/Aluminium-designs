@@ -2,6 +2,10 @@ import { gautengLocations, type LocationArea } from "@/data/locations";
 import { services, type Service } from "@/data/services";
 import { servicePages, type ServicePageContent } from "@/data/service-pages";
 import { businessContact, siteUrl } from "@/lib/site";
+import {
+  getCanonicalServiceLocationSlug,
+  toSingularServiceTitle,
+} from "@/lib/serviceLocationParser";
 
 export interface LocationServiceSeo {
   titleTag: string;
@@ -136,7 +140,7 @@ export const katlehongAluminiumWindows: LocationServiceObject = {
   fullPageUrl: `${siteUrl}/locations/katlehong/aluminium-windows-in-katlehong`,
 
   hero: {
-    headline: "Aluminium Windows in Katlehong",
+    headline: "Aluminium Windows Installation in Katlehong",
     subheadline: "Custom-manufactured casement, sliding, and fixed aluminium window systems engineered for long-term thermal comfort, strict home security, and severe Highveld weather resistance.",
     localBadgeText: "Ekurhuleni Certified & SANS 10400-XA Compliant Glazing",
   },
@@ -318,21 +322,31 @@ function buildHero(
   page: ServicePageContent,
   isNear: boolean,
   isInstallation: boolean = false,
+  customHeadline?: string,
 ) {
   const isSteel = service.category === "steel";
   const isMall = location.type === "mall";
-  const preposition = (isNear || isMall) ? "Near" : "in";
 
-  if (isInstallation) {
-    return {
-      headline: `${service.title} Installation ${preposition} ${location.name}`,
-      subheadline: `Professional, SABS-certified ${service.title.toLowerCase()} installation services across ${location.name}. Precision millimeter measuring, clean on-site fitting, weather-tight sealing, and full manufacturer warranty.`,
-      localBadgeText: `Certified Installation Team · Serving ${location.name} & Surrounds`,
-    };
+  // URL-to-H1 matching formula:
+  // - If customHeadline is supplied, use directly.
+  // - If route includes installation: [Service] Installation in/Near [Location]
+  // - If route includes near or mall: [Service] Near [Location]
+  // - Default (e.g. aluminium-windows-in-centurion): [Service] in [Location]
+  let headline = customHeadline;
+  if (!headline) {
+    const prep = isNear ? "Near" : "in";
+    if (isInstallation) {
+      const displayTitle = toSingularServiceTitle(service.title);
+      headline = `${displayTitle} Installation ${prep} ${location.name}`;
+    } else if (isNear) {
+      headline = `${service.title} Near ${location.name}`;
+    } else {
+      headline = `${service.title} in ${location.name}`;
+    }
   }
 
   return {
-    headline: `${service.title} ${preposition} ${location.name}`,
+    headline,
     subheadline: isMall
       ? `Precision ${service.title.toLowerCase()} manufactured and installed for homes, residential estates, and commercial properties throughout the ${location.name} precinct.`
       : page.hero.subheadline,
@@ -479,25 +493,26 @@ function buildSeo(
   isNear: boolean,
   isInstallation: boolean = false,
 ): LocationServiceSeo {
-  const canonical = `${siteUrl}/locations/${location.slug || location.id}/${routeServiceId}`;
+  const canonical = `${siteUrl}/${routeServiceId}`;
   const firstSuburbs = suburbs.slice(0, 2).join(" & ");
   const isSteel = service.category === "steel";
   const isMall = location.type === "mall";
 
   let titleTag: string;
   let metaDescription: string;
+  const displayTitle = isInstallation ? toSingularServiceTitle(service.title) : service.title;
 
   if (isInstallation) {
-    titleTag = `${service.title} Installation ${location.name} | Certified Local Installers & Free Quote`;
-    metaDescription = `Looking for expert ${service.title.toLowerCase()} installation in ${location.name}${firstSuburbs ? ` or ${firstSuburbs}` : ""}? Custom-measured and professionally fitted with SABS-certified materials, clean removal of old frames & free quotes. Call 071 612 2439.`;
-  } else if (isMall || isNear || isSteel) {
+    titleTag = `${displayTitle} Installation ${isNear ? "Near" : "in"} ${location.name} | Certified Local Installers & Free Quote`;
+    metaDescription = `Looking for expert ${displayTitle.toLowerCase()} installation ${isNear ? "near" : "in"} ${location.name}${firstSuburbs ? ` or ${firstSuburbs}` : ""}? Custom-measured and professionally fitted with SABS-certified materials, clean removal of old frames & free quotes. Call 071 612 2439.`;
+  } else if (isMall || isNear) {
     titleTag = `${service.title} Near ${location.name} | Local Installers & Free Quotes`;
     metaDescription = isMall
       ? `Looking for ${service.title.toLowerCase()} near ${location.name}? Professional custom aluminium and steel installations for homes, estates, and businesses in the ${location.name} precinct (${location.region}). Free quotes.`
       : `Looking for ${service.title.toLowerCase()} near ${location.name}? Custom-welded heavy-duty security gates, burglar bars, carports & steel works near you in ${location.name}${firstSuburbs ? ` and ${firstSuburbs}` : ""}. Free quotes & fast installation.`;
   } else {
-    titleTag = `${service.title} ${location.name} | Manufacturer & Local Installers`;
-    metaDescription = `Premium custom ${service.title.toLowerCase()} installers in ${location.name}${firstSuburbs ? `, ${firstSuburbs}` : ""}. ${service.shortDescription} SANS certified, high security & free quotes.`;
+    titleTag = `${service.title} in ${location.name} | Manufacturer & Local Installers`;
+    metaDescription = `Premium custom ${service.title.toLowerCase()} in ${location.name}${firstSuburbs ? `, ${firstSuburbs}` : ""}. ${service.shortDescription} SANS certified, high security & free quotes.`;
   }
 
   const singularService = service.title
@@ -680,7 +695,7 @@ export function getLocationServicePage(area: string, routeServiceId: string): Lo
     id: `loc-srv-${location.slug}-${service.id}${isInstallation ? "-inst" : ""}`,
     serviceId: service.id,
     locationSlug: location.slug,
-    fullPageUrl: `${siteUrl}/locations/${location.slug}/${routeServiceId}`,
+    fullPageUrl: `${siteUrl}/${routeServiceId}`,
     hero,
     localizedStory,
     localNAP,
@@ -695,49 +710,16 @@ export function getLocationServicePage(area: string, routeServiceId: string): Lo
   return base;
 }
 
-/** Returns every valid location x service route for full sitemap generation. */
+/** Returns canonical location x service routes for full sitemap generation (strictly under 50,000 URL limit). */
 export function getAllLocationServiceRoutes(): { area: string; serviceId: string }[] {
   const routes: { area: string; serviceId: string }[] = [];
   for (const location of gautengLocations) {
+    const locSlug = location.slug || location.id;
     for (const service of services) {
-      const slug = slugify(service.title);
-      const singularSlug = slug.replace(/s$/, "").replace(/doors$/, "door").replace(/windows$/, "window");
-
-      // For malls, the natural user query is always "-near-"
-      if (location.type === "mall") {
-        routes.push({
-          area: location.slug,
-          serviceId: `${slug}-near-${location.slug}`,
-        });
-        routes.push({
-          area: location.slug,
-          serviceId: `${slug}-in-${location.slug}`,
-        });
-      } else {
-        // Cities & Suburbs
-        routes.push({
-          area: location.slug,
-          serviceId: `${slug}-in-${location.slug}`,
-        });
-        if (service.category === "steel") {
-          routes.push({
-            area: location.slug,
-            serviceId: `${slug}-near-${location.slug}`,
-          });
-        }
-      }
-
-      // High-intent installation routes
       routes.push({
-        area: location.slug,
-        serviceId: `${slug}-installation-in-${location.slug}`,
+        area: locSlug,
+        serviceId: getCanonicalServiceLocationSlug(service.title, locSlug),
       });
-      if (singularSlug !== slug) {
-        routes.push({
-          area: location.slug,
-          serviceId: `${singularSlug}-installation-in-${location.slug}`,
-        });
-      }
     }
   }
   return routes;
@@ -745,57 +727,30 @@ export function getAllLocationServiceRoutes(): { area: string; serviceId: string
 
 /** Returns priority location x service routes for build-time pre-rendering. */
 export function getPrerenderLocationServiceRoutes(): { area: string; serviceId: string }[] {
-  // Prerender primary cities, flagship malls, and high-volume hubs
-  const priorityLocations = gautengLocations.filter(
-    (loc) =>
-      loc.type === "city" ||
-      (loc.type === "mall" && [
-        "sandton-city", "mall-of-africa", "menlyn-park", "eastgate", "fourways-mall",
-        "cresta", "clearwater", "the-glen", "east-rand-mall", "centurion-mall",
-        "brooklyn-mall", "woodlands-boulevard", "cradlestone", "rosebank-mall",
-        "hyde-park", "greenstone", "sam-ntuli-mall", "chris-hani-crossing",
-        "maponya-mall", "festival-mall", "carnival", "westgate", "southgate",
-        "wonderpark", "kolonnade", "bedford-centre", "nicolway"
-      ].some(k => loc.slug.includes(k))) ||
-      ["sandton", "fourways", "midrand", "centurion", "bedfordview", "roodepoort", "kempton-park", "alberton", "benoni", "boksburg", "soweto", "menlyn", "katlehong"].some(prefix => loc.id.includes(prefix))
-  ).slice(0, 60);
+  // Prerender primary strategic commercial nodes (including Katlehong, Sandton, Midrand)
+  // All other combinations are generated on-demand at runtime via dynamicParams = true.
+  const priorityLocationSlugs = ["katlehong", "sandton", "midrand", "pretoria", "fourways"];
+  const priorityLocations = gautengLocations.filter((loc) =>
+    priorityLocationSlugs.includes(loc.slug) || priorityLocationSlugs.includes(loc.id)
+  );
+
+  const priorityServiceSlugs = [
+    "aluminium-windows",
+    "aluminium-sliding-doors",
+    "aluminium-stacking-doors",
+    "trellis-doors",
+    "trellis-security-gates",
+  ];
+  const targetServices = services.filter((s) => priorityServiceSlugs.includes(s.id));
 
   const routes: { area: string; serviceId: string }[] = [];
   for (const location of priorityLocations) {
-    for (const service of services) {
-      const slug = slugify(service.title);
-      const singularSlug = slug.replace(/s$/, "").replace(/doors$/, "door").replace(/windows$/, "window");
-      const locId = location.slug || location.id;
-
-      if (location.type === "mall") {
-        routes.push({
-          area: locId,
-          serviceId: `${slug}-near-${locId}`,
-        });
-      } else {
-        routes.push({
-          area: locId,
-          serviceId: `${slug}-in-${locId}`,
-        });
-        if (service.category === "steel") {
-          routes.push({
-            area: locId,
-            serviceId: `${slug}-near-${locId}`,
-          });
-        }
-      }
-
-      // Installation routes for priority hubs
+    const locId = location.slug || location.id;
+    for (const service of targetServices) {
       routes.push({
         area: locId,
-        serviceId: `${slug}-installation-in-${locId}`,
+        serviceId: getCanonicalServiceLocationSlug(service.title, locId),
       });
-      if (singularSlug !== slug) {
-        routes.push({
-          area: locId,
-          serviceId: `${singularSlug}-installation-in-${locId}`,
-        });
-      }
     }
   }
   return routes;
