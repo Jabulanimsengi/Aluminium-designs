@@ -6,11 +6,12 @@ import CTASection from "@/components/CTASection";
 
 import type { Metadata } from "next";
 import { absoluteUrl, siteUrl } from "@/lib/site";
+import { getLocationSeoEligibility } from "@/lib/seoEligibility";
 
 export const metadata: Metadata = {
   title: "Service Areas Across Gauteng",
   description:
-    "View our list of service areas across Gauteng. We manufacture and install custom aluminium windows, doors, and security gates in Johannesburg, Pretoria, and surrounding areas.",
+    "Find aluminium, glass, security and steel installation coverage across Johannesburg, Pretoria, Ekurhuleni, West Rand and greater Gauteng.",
   alternates: { canonical: `${siteUrl}/locations` },
   openGraph: {
     type: "website",
@@ -40,7 +41,9 @@ export const metadata: Metadata = {
 
 export default function LocationsDirectory() {
   // Group locations by municipality
-  const groupedLocations = gautengLocations.reduce((acc, loc) => {
+  const groupedLocations = gautengLocations
+    .filter((loc) => getLocationSeoEligibility(loc).index)
+    .reduce((acc, loc) => {
     if (!acc[loc.municipality]) {
       acc[loc.municipality] = [];
     }

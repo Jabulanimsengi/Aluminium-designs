@@ -1,11 +1,16 @@
-export type TitleModifier = "Affordable" | "Custom" | "Top-Rated" | "Contractors" | "Fast";
+export type TitleModifier =
+  | "Custom"
+  | "Made-to-Measure"
+  | "Local"
+  | "Professional"
+  | "Specialist";
 
 export const TITLE_MODIFIERS: TitleModifier[] = [
   "Custom",
-  "Affordable",
-  "Top-Rated",
-  "Contractors",
-  "Fast",
+  "Made-to-Measure",
+  "Local",
+  "Professional",
+  "Specialist",
 ];
 
 export interface TitleVariantOptions {
@@ -46,7 +51,7 @@ function hashString(input: string): number {
 
 /**
  * Generates a high-CTR meta title tag strictly under 60 characters for mobile SERPs.
- * Rotates semantic modifiers ("Affordable", "Custom", "Top-Rated", "Contractors", "Fast")
+ * Rotates descriptive modifiers without unverifiable superlatives.
  * and respects the Katlehong strict location rule (omitting "Near").
  *
  * Example Output: "Custom Aluminium Window | Installation Near Sandton"
@@ -129,10 +134,14 @@ export function generateMetaTitleVariant(options: TitleVariantOptions): string {
   return shortFallback.slice(0, 57) + "...";
 }
 
-/**
- * Generates a psychological trigger meta description strictly between 140 and 155 characters.
- * Includes starting price, trust signals, and clear call to action.
- */
+function trimDescriptionAtWordBoundary(value: string, maxLength = 160): string {
+  if (value.length <= maxLength) return value;
+  const shortened = value.slice(0, maxLength - 1);
+  const lastSpace = shortened.lastIndexOf(" ");
+  return `${shortened.slice(0, lastSpace > 120 ? lastSpace : maxLength - 1).replace(/[.,;:]$/, "")}…`;
+}
+
+/** Generates a readable search description without padding or mid-word cuts. */
 export function generateMetaDescriptionVariant(options: DescriptionVariantOptions): string {
   const {
     serviceName,
@@ -148,25 +157,11 @@ export function generateMetaDescriptionVariant(options: DescriptionVariantOption
   const prep = isKatlehong ? "in" : (options.preposition || "near");
 
   const actionWord = options.isInstallation === false ? "repairs" : "installation";
+  const cleanPrice = priceDisplay.replace(/^from\s+/i, "").trim();
+  const pricePhrase = cleanPrice.toLowerCase() === "competitive rates"
+    ? "at competitive rates"
+    : `from ${cleanPrice}`;
+  const desc = `${serviceName} ${prep} ${locationName}: custom ${actionWord} ${pricePhrase}. ${trustSignal1}. ${trustSignal2}. ${cta}`;
 
-  // Programmatic formula:
-  // "Looking for {Service} {in/near} {Location}? Professional {actionWord} from {Price}. {Trust1} & {Trust2}. {CTA}"
-  let desc = `Looking for ${serviceName.toLowerCase()} ${prep} ${locationName}? Professional ${actionWord} starting from ${priceDisplay}. ${trustSignal1} & ${trustSignal2}. ${cta}`;
-
-  if (desc.length > 155) {
-    // Shorter variant
-    desc = `Need ${serviceName.toLowerCase()} ${prep} ${locationName}? Expert ${actionWord} starting from ${priceDisplay}. ${trustSignal1}. ${cta}`;
-  }
-
-  if (desc.length < 140) {
-    // Pad slightly to satisfy the strict 140-155 character window
-    desc = `Looking for professional ${serviceName.toLowerCase()} ${prep} ${locationName}? Custom ${actionWord} starting from ${priceDisplay}. ${trustSignal1} & ${trustSignal2}. ${cta}`;
-  }
-
-  // Ensure strict bounds [140, 155] if possible, or <= 155
-  if (desc.length > 155) {
-    desc = desc.slice(0, 152) + "...";
-  }
-
-  return desc;
+  return trimDescriptionAtWordBoundary(desc);
 }

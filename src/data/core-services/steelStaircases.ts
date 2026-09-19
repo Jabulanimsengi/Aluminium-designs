@@ -104,7 +104,7 @@ export const steelStaircasesService: ServiceObject = {
   ],
   seo: {
     titleTag: "Steel Staircases & Spiral Stairs | South Africa",
-    metaDescription: "Custom steel staircases, spiral stairs, and external fire escapes. Solid welded steel construction, non-slip treads, and professional installation across South Africa.",
+    metaDescription: "Custom steel staircases, spiral stairs and external access stairs measured, fabricated and installed across Gauteng.",
     keywords: ["steel staircases", "spiral stairs", "external steel stairs", "staircase builders SA"],
     canonicalUrl: "https://www.aluminiumdesigns.co.za/services/steel-staircases",
     openGraphImage: "https://www.aluminiumdesigns.co.za/images/services/steel-staircases-hero.jpg"

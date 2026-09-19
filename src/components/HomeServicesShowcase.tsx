@@ -50,7 +50,7 @@ export default function HomeServicesShowcase() {
           ? topAluminium.map((service) => (
               <ServiceCard
                 key={service.id}
-                title={service.title}
+                title={service.menuLabel || service.title}
                 shortDescription={service.shortDescription}
                 slug={service.slug}
                 imagePath={service.imagePath}
@@ -61,7 +61,7 @@ export default function HomeServicesShowcase() {
           : topSteel.map((service) => (
               <ServiceCard
                 key={service.id}
-                title={service.title}
+                title={service.menuLabel || service.title}
                 shortDescription={service.shortDescription}
                 slug={service.slug}
                 imagePath={service.imagePath}

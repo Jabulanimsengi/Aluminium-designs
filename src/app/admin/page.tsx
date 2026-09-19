@@ -26,9 +26,12 @@ import {
   Users,
 } from "lucide-react";
 import { ADMIN_SESSION_COOKIE, verifyAdminSessionToken } from "@/lib/admin-auth";
-import { getAllLocationServiceRoutes } from "@/data/location-service-pages";
 import { gautengLocations } from "@/data/locations";
 import { services } from "@/data/services";
+import {
+  getLocationSeoEligibility,
+  getServiceLocationSeoEligibility,
+} from "@/lib/seoEligibility";
 import {
   monitoringWindowStart,
   readMonitoringEvents,
@@ -511,7 +514,19 @@ export default async function AdminMonitoringPage({
     average: values.reduce((sum, value) => sum + value, 0) / values.length,
     samples: values.length,
   }));
-  const sitemapCount = 10 + services.length + gautengLocations.length + getAllLocationServiceRoutes().length;
+  const indexedLocationCount = gautengLocations.filter(
+    (location) => getLocationSeoEligibility(location).includeInSitemap,
+  ).length;
+  const indexedLocalServiceCount = gautengLocations.reduce(
+    (total, location) =>
+      total +
+      services.filter((service) =>
+        getServiceLocationSeoEligibility(service.id, location).includeInSitemap,
+      ).length,
+    0,
+  );
+  const sitemapCount =
+    10 + services.length + indexedLocationCount + indexedLocalServiceCount;
 
   const latestWhatsappEvent = whatsappEvents[0];
   const latestQuoteClick = quoteClickEvents[0];
@@ -1254,9 +1269,9 @@ export default async function AdminMonitoringPage({
               <div className="border border-outline-variant bg-primary p-5 sm:p-6 text-white shadow-sm">
                 <Search className="h-5 w-5 sm:h-6 sm:w-6" />
                 <h2 className="mt-3 text-left text-lg sm:text-xl font-bold uppercase">Search indexing</h2>
-                <p className="mt-2 text-xs sm:text-sm text-white/70">{sitemapCount.toLocaleString()} canonical public URLs are partitioned in XML sitemaps.</p>
-                <a href={absoluteUrl("/sitemap.xml")} target="_blank" rel="noreferrer" className="mt-4 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider underline">
-                  Open sitemap <ArrowUpRight className="h-4 w-4" />
+                <p className="mt-2 text-xs sm:text-sm text-white/70">{sitemapCount.toLocaleString()} eligible canonical URLs are published across the XML sitemaps.</p>
+                <a href={absoluteUrl("/robots.txt")} target="_blank" rel="noreferrer" className="mt-4 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider underline">
+                  Open sitemap list <ArrowUpRight className="h-4 w-4" />
                 </a>
               </div>
               <div className="border border-outline-variant bg-white p-5 sm:p-6 shadow-sm">

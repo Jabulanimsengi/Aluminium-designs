@@ -222,7 +222,7 @@ export default function Header() {
                                 className="group rounded-md p-1.5 transition-colors hover:bg-surface-container focus-visible:outline-2 focus-visible:outline-accent"
                               >
                                 <span className="block truncate text-xs font-sans font-semibold text-primary group-hover:text-accent">
-                                  {s.name}
+                                  {s.menuLabel || s.name}
                                 </span>
                                 <span className="block text-[10px] text-on-surface-variant font-mono">
                                   {s.startingPriceDisplay}
@@ -252,7 +252,7 @@ export default function Header() {
                                   className="group rounded-md p-1.5 transition-colors hover:bg-surface-container focus-visible:outline-2 focus-visible:outline-accent"
                                 >
                                   <span className="block truncate text-xs font-sans font-semibold text-primary group-hover:text-accent">
-                                    {s.name}
+                                    {s.menuLabel || s.name}
                                   </span>
                                   <span className="block text-[10px] text-on-surface-variant font-mono">
                                     {s.startingPriceDisplay}
@@ -280,7 +280,7 @@ export default function Header() {
                                   className="group rounded-md p-1.5 transition-colors hover:bg-surface-container focus-visible:outline-2 focus-visible:outline-accent"
                                 >
                                   <span className="block truncate text-xs font-sans font-semibold text-primary group-hover:text-accent">
-                                    {s.name}
+                                    {s.menuLabel || s.name}
                                   </span>
                                   <span className="block text-[10px] text-on-surface-variant font-mono">
                                     {s.startingPriceDisplay}
@@ -311,7 +311,7 @@ export default function Header() {
                                   className="group rounded-md p-1.5 transition-colors hover:bg-surface-container focus-visible:outline-2 focus-visible:outline-accent"
                                 >
                                   <span className="block truncate text-xs font-sans font-semibold text-primary group-hover:text-accent">
-                                    {s.name}
+                                    {s.menuLabel || s.name}
                                   </span>
                                   <span className="block text-[10px] text-on-surface-variant font-mono">
                                     {s.startingPriceDisplay}
@@ -339,7 +339,7 @@ export default function Header() {
                                   className="group rounded-md p-1.5 transition-colors hover:bg-surface-container focus-visible:outline-2 focus-visible:outline-accent"
                                 >
                                   <span className="block truncate text-xs font-sans font-semibold text-primary group-hover:text-accent">
-                                    {s.name}
+                                    {s.menuLabel || s.name}
                                   </span>
                                   <span className="block text-[10px] text-on-surface-variant font-mono">
                                     {s.startingPriceDisplay}
@@ -513,7 +513,7 @@ export default function Header() {
                                     }}
                                     className="block px-2.5 py-1 rounded-md text-xs text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors"
                                   >
-                                    {s.name}
+                                    {s.menuLabel || s.name}
                                   </Link>
                                 ))}
                               </div>

@@ -22,7 +22,7 @@ export default function Footer() {
   ];
 
   const targetLocations = [
-    { name: "Katlehong (Workshop HQ)", slug: "katlehong" },
+    { name: "Johannesburg", slug: "johannesburg" },
     { name: "Alberton", slug: "alberton" },
     { name: "Germiston", slug: "germiston" },
     { name: "Boksburg", slug: "boksburg" },
@@ -30,37 +30,32 @@ export default function Footer() {
     { name: "Kempton Park", slug: "kempton-park" },
     { name: "Bedfordview", slug: "bedfordview" },
     { name: "Sandton", slug: "sandton" },
-    { name: "Bryanston", slug: "bryanston" },
+    { name: "Soweto", slug: "soweto" },
     { name: "Rosebank", slug: "rosebank" },
     { name: "Randburg", slug: "randburg" },
     { name: "Fourways", slug: "fourways" },
     { name: "Midrand", slug: "midrand" },
-    { name: "Waterfall", slug: "waterfall" },
+    { name: "Pretoria East", slug: "pretoria-east" },
     { name: "Centurion", slug: "centurion" },
     { name: "Pretoria", slug: "pretoria" },
     { name: "Roodepoort", slug: "roodepoort" },
-    { name: "Soweto", slug: "soweto" },
+    { name: "Vereeniging", slug: "vereeniging" },
   ];
 
   const popularInstallations = [
-    { label: "Aluminium Sliding Door Installation in Katlehong", href: "/aluminium-sliding-door-installation-in-katlehong" },
-    { label: "Aluminium Window Installation in Katlehong", href: "/aluminium-window-installation-in-katlehong" },
-    { label: "Aluminium Stacking Door Installation in Katlehong", href: "/aluminium-stacking-door-installation-in-katlehong" },
-    { label: "Custom Steam Room Installation in Katlehong", href: "/custom-steam-room-installation-in-katlehong" },
+    { label: "Aluminium Windows Near Johannesburg", href: "/aluminium-window-installation-near-johannesburg" },
+    { label: "Aluminium Repairs Near Johannesburg", href: "/aluminium-repairs-near-johannesburg" },
     { label: "Aluminium Window Installation Near Sandton", href: "/aluminium-window-installation-near-sandton" },
     { label: "Aluminium Sliding Door Installation Near Sandton", href: "/aluminium-sliding-door-installation-near-sandton" },
     { label: "Aluminium Stacking Door Installation Near Sandton", href: "/aluminium-stacking-door-installation-near-sandton" },
-    { label: "Custom Steam Room Installation Near Sandton", href: "/custom-steam-room-installation-near-sandton" },
+    { label: "Glass Replacement Near Sandton", href: "/glass-replacement-near-sandton" },
     { label: "Aluminium Sliding Door Installation Near Centurion", href: "/aluminium-sliding-door-installation-near-centurion" },
     { label: "Aluminium Window Installation Near Centurion", href: "/aluminium-window-installation-near-centurion" },
     { label: "Aluminium Sliding Door Installation Near Alberton", href: "/aluminium-sliding-door-installation-near-alberton" },
-    { label: "Steel Carport Installation Near Alberton", href: "/steel-carport-installation-near-alberton" },
-    { label: "Security Gate Installation Near Midrand", href: "/security-gate-installation-near-midrand" },
     { label: "Aluminium Window Installation Near Randburg", href: "/aluminium-window-installation-near-randburg" },
     { label: "Aluminium Stacking Door Installation Near Fourways", href: "/aluminium-stacking-door-installation-near-fourways" },
-    { label: "Steel Works Installation Near Boksburg", href: "/steel-works-installation-near-boksburg" },
-    { label: "Double Glazed Window Installation Near Pretoria", href: "/double-glazed-window-installation-near-pretoria" },
-    { label: "Aluminium Front Door Installation Near Bryanston", href: "/aluminium-front-door-installation-near-bryanston" },
+    { label: "Security Gate Installation Near Boksburg", href: "/security-gate-installation-near-boksburg" },
+    { label: "Security Gate Installation Near Soweto", href: "/security-gate-installation-near-soweto" },
   ];
 
   return (
@@ -209,7 +204,7 @@ export default function Footer() {
               href="/locations"
               className="inline-flex items-center gap-1.5 text-xs font-mono font-bold uppercase tracking-wider text-accent hover:text-white transition-colors shrink-0"
             >
-              All 50+ Service Areas &rarr;
+              All 37 Hubs &amp; 800+ Covered Areas &rarr;
             </Link>
           </div>
 
@@ -253,7 +248,7 @@ export default function Footer() {
             <div className="flex flex-wrap gap-x-3 gap-y-1 text-xs text-outline-variant">
               <Link href="/locations/sandton" className="hover:text-accent transition-colors">Sandton</Link>
               <span>&middot;</span>
-              <Link href="/locations/katlehong" className="hover:text-accent transition-colors">Katlehong</Link>
+              <Link href="/locations/johannesburg" className="hover:text-accent transition-colors">Johannesburg</Link>
               <span>&middot;</span>
               <Link href="/locations/centurion" className="hover:text-accent transition-colors">Centurion</Link>
               <span>&middot;</span>

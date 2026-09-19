@@ -1,7 +1,11 @@
 import type { MetadataRoute } from "next";
 import { gautengLocations } from "@/data/locations";
 import { services } from "@/data/services";
-import { getAllLocationServiceRoutes } from "@/data/location-service-pages";
+import {
+  getLocationSeoEligibility,
+  getServiceLocationSeoEligibility,
+} from "@/lib/seoEligibility";
+import { getCanonicalServiceLocationSlug } from "@/lib/serviceLocationParser";
 import { siteUrl } from "@/lib/site";
 
 const coreRoutes = [
@@ -18,9 +22,7 @@ const coreRoutes = [
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const lastModified = new Date();
-
-  const entries: MetadataRoute.Sitemap = coreRoutes.map((path) => {
+  const coreEntries: MetadataRoute.Sitemap = coreRoutes.map((path) => {
     let priority = 0.6;
     let changeFrequency: "weekly" | "monthly" = "monthly";
 
@@ -36,7 +38,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
     return {
       url: `${siteUrl}${path}`,
-      lastModified,
       changeFrequency,
       priority,
     };
@@ -44,24 +45,37 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const serviceEntries: MetadataRoute.Sitemap = services.map((service) => ({
     url: `${siteUrl}${service.slug}`,
-    lastModified,
     changeFrequency: "monthly",
     priority: 0.8,
   }));
 
-  const locationEntries: MetadataRoute.Sitemap = gautengLocations.map((location) => ({
-    url: `${siteUrl}/locations/${location.slug}`,
-    lastModified,
-    changeFrequency: "monthly",
-    priority: 0.6,
-  }));
+  const locationEntries: MetadataRoute.Sitemap = gautengLocations
+    .filter((location) => getLocationSeoEligibility(location).includeInSitemap)
+    .map((location) => ({
+      url: `${siteUrl}/locations/${location.slug}`,
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    }));
 
-  const locationServiceEntries: MetadataRoute.Sitemap = getAllLocationServiceRoutes().map((route) => ({
-    url: `${siteUrl}/${route.serviceId}`,
-    lastModified,
-    changeFrequency: "monthly",
-    priority: 0.5,
-  }));
+  const localServiceEntries: MetadataRoute.Sitemap = [];
+  for (const location of gautengLocations) {
+    for (const service of services) {
+      if (!getServiceLocationSeoEligibility(service.id, location).includeInSitemap) {
+        continue;
+      }
 
-  return [...entries, ...serviceEntries, ...locationEntries, ...locationServiceEntries];
+      localServiceEntries.push({
+        url: `${siteUrl}/${getCanonicalServiceLocationSlug(service.id, location.slug)}`,
+        changeFrequency: "monthly",
+        priority: 0.7,
+      });
+    }
+  }
+
+  return [
+    ...coreEntries,
+    ...serviceEntries,
+    ...locationEntries,
+    ...localServiceEntries,
+  ];
 }

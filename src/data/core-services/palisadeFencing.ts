@@ -104,7 +104,7 @@ export const palisadeFencingService: ServiceObject = {
   ],
   seo: {
     titleTag: "Steel Palisade Fencing & Security Barriers | South Africa",
-    metaDescription: "Professional steel palisade fencing installation. 7-spike & 3-spike options, hot-dip galvanizing, tamper-proof bolts, and expert boundary fencing across South Africa.",
+    metaDescription: "Steel palisade fencing and gates with multiple spike, coating and anchoring options, measured and installed across Gauteng.",
     keywords: ["palisade fencing", "steel palisade gates", "perimeter security fencing", "palisade fencing installers SA"],
     canonicalUrl: "https://www.aluminiumdesigns.co.za/services/palisade-fencing",
     openGraphImage: "https://www.aluminiumdesigns.co.za/images/services/palisade-fencing-hero.jpg"

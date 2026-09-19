@@ -4,8 +4,10 @@ import { servicePages, type ServicePageContent } from "@/data/service-pages";
 import { businessContact, siteUrl } from "@/lib/site";
 import {
   getCanonicalServiceLocationSlug,
+  isRepairService,
   toSingularServiceTitle,
 } from "@/lib/serviceLocationParser";
+import { getServiceLocationSeoEligibility } from "@/lib/seoEligibility";
 
 export interface LocationServiceSeo {
   titleTag: string;
@@ -120,13 +122,54 @@ function specValue(page: ServicePageContent, label: string): string | undefined 
 // ---------------------------------------------------------------------------
 
 function getLocalSuburbs(location: LocationArea): string[] {
-  const sameMunicipality = gautengLocations.filter(
-    (l) => l.municipality === location.municipality && l.slug !== location.slug,
+  if (location.nearbyNames?.length) {
+    return location.nearbyNames.slice(0, 9);
+  }
+
+  const sameRegion = gautengLocations.filter(
+    (candidate) =>
+      candidate.slug !== location.slug &&
+      candidate.type !== "mall" &&
+      candidate.region === location.region,
   );
-  if (sameMunicipality.length === 0) return [];
+  const sameMunicipality = gautengLocations.filter(
+    (candidate) =>
+      candidate.slug !== location.slug &&
+      candidate.type !== "mall" &&
+      candidate.municipality === location.municipality,
+  );
+  const candidates = sameRegion.length > 0 ? sameRegion : sameMunicipality;
+  if (candidates.length === 0) return [location.region];
   const rng = seededRandom(`${location.id}:suburbs`);
-  const picked = pickMany(sameMunicipality, Math.min(sameMunicipality.length, 9), rng);
+  const picked = pickMany(candidates, Math.min(candidates.length, 9), rng);
   return picked.map((l) => l.name);
+}
+
+function getServiceUseCase(service: Service): string {
+  const slug = service.id;
+
+  if (slug.includes("repair") || slug === "glass-replacement") {
+    return "fault diagnosis, safe removal, replacement parts, and restoring reliable day-to-day operation";
+  }
+  if (slug.includes("shopfront") || slug.includes("office-glass")) {
+    return "retail and office fit-outs, controlled access, clear sightlines, and durable high-traffic entrances";
+  }
+  if (slug.includes("gate") || slug.includes("burglar") || slug.includes("trellis")) {
+    return "layered property security, controlled access, ventilation, and practical everyday use";
+  }
+  if (slug.includes("carport") || slug.includes("pergola")) {
+    return "weather protection, outdoor living, vehicle cover, drainage, and a finish suited to the existing building";
+  }
+  if (slug.includes("gutter")) {
+    return "roofline drainage, correct falls, controlled downpipe discharge, and protection from summer storm water";
+  }
+  if (slug.includes("balustrade") || slug.includes("staircase")) {
+    return "safe circulation, edge protection, accurate site dimensions, and a finish coordinated with the property";
+  }
+  if (slug.includes("steam")) {
+    return "moisture-resistant detailing, ventilation, safe glazing, and a layout sized for the available room";
+  }
+  return "opening size, security, ventilation, natural light, weather sealing, and the way the space is used";
 }
 
 // ---------------------------------------------------------------------------
@@ -353,8 +396,8 @@ function buildHero(
     localBadgeText: isMall
       ? `Serving Homes & Businesses in the ${location.name} Precinct · Free Consultations`
       : isSteel
-      ? `${location.municipality} Service Area · SANS Physical Barrier Security & Free Quotes`
-      : `${location.municipality} Service Area · Built to Applicable SANS Standards`,
+      ? `${location.municipality} Service Area · Site-Specific Security Specifications`
+      : `${location.municipality} Service Area · Specified for the Application`,
   };
 }
 
@@ -371,23 +414,26 @@ function buildStory(
   service: Service,
   page: ServicePageContent,
   suburbs: string[],
-  isNear: boolean,
 ) {
   const rng = seededRandom(`${location.id}:${service.id}:story`);
-  const [a, b, c, d] = [...suburbs, "the surrounding area", "newer developments", "neighbouring suburbs", "established estates"];
+  const [a, b] = [...suburbs, "the surrounding area", "neighbouring suburbs"];
   const isSteel = service.category === "steel";
   const isMall = location.type === "mall";
+  const isGlazingSystem = /(window|door|glass|shopfront|partition)/.test(service.id);
   const benefit = pick(page.benefits.items, rng);
+  const useCase = getServiceUseCase(service);
+  const localContext = location.context || `${location.name} in ${location.region}`;
+  const serviceDetail = page.overview.paragraphs[0] || service.longDescription;
 
   if (isMall) {
     return {
       heading: `${isSteel ? "Heavy-Duty Steel" : "Custom Aluminium"} Solutions Near ${location.name}`,
       uniqueParagraphs: [
-        `Homeowners, residential security estates, and commercial facilities throughout the precinct surrounding ${location.name} in ${location.region} (${location.municipality}) require dependable physical security and custom aluminium door & window installations. Properties situated near this major retail and commercial landmark benefit from our prompt on-site laser measurements, engineering precision, and full turnkey installation services.`,
+        `${location.name} is used here as a clear service-area landmark for the surrounding ${location.region} precinct in ${location.municipality}. ${localContext}. We assess each enquiry by the actual property address and intended application; this page does not imply that we operate a branch inside, or are affiliated with, the centre.`,
         isSteel
-          ? `Our custom steel ${service.title.toLowerCase()} near ${location.name} are manufactured in our Gauteng workshop using solid mild steel square bar, heavy-wall structural tubing, and industrial cold-rolled sections. Each unit receives multi-stage zinc phosphate anti-rust primer and UV-stabilized baked epoxy powder coating, with full hot-dip galvanizing available for long-term outdoor weather resistance.`
-          : `Our custom aluminium ${service.title.toLowerCase()} near ${location.name} are crafted from heavy-duty 6063-T6 aluminium alloy with a durable 60–80 micron powder-coated finish. They will never warp, rust, or corrode under Gauteng's harsh Highveld UV glare or summer hailstorms, while precision perimeter EPDM rubber seals ensure total draught and storm-water exclusion.`,
-        `Whether upgrading a residential property near ${location.name} or outfitting commercial tenant facilities, ${benefit.title.toLowerCase()} is at the heart of our craftsmanship. ${benefit.description} All work is carried out in full compliance with national building and safety regulations, with heavy-duty anchors and professional handover.`,
+          ? `For ${service.title.toLowerCase()}, the site assessment focuses on ${useCase}. Units are made to measured openings in our Gauteng workshop, with the steel section, anchoring method, corrosion protection, and hardware specified for the installation rather than selected as an off-the-shelf fit.`
+          : `For ${service.title.toLowerCase()}, the site assessment focuses on ${useCase}. ${serviceDetail} Dimensions, finishes, interfaces, and installation access are confirmed for the actual building before manufacture or ordering.`,
+        `Homes, offices, and retail premises near ${location.name} have different access and installation constraints. Before quoting, we confirm the address, opening dimensions, access windows, removal requirements, and whether work must be coordinated with an estate, landlord, or centre-management process. ${benefit.title} remains a key design consideration: ${benefit.description}`,
       ],
       localClimateNotice: isSteel
         ? `Manufactured from solid mild steel and galvanized components with tamper-proof security wall fasteners.`
@@ -399,9 +445,9 @@ function buildStory(
     return {
       heading: `Heavy-Duty Steel & Physical Security Solutions Near ${location.name}`,
       uniqueParagraphs: [
-        `Homeowners and commercial property managers across ${location.name}—from established properties in ${a} and ${b} to business premises in ${c} and ${d}—require dependable physical security barriers to protect perimeter gates, driveways, and window openings against break-ins.`,
+        `${location.name} forms part of ${location.region} in ${location.municipality}. ${localContext}. For ${service.title.toLowerCase()}, we consider ${useCase}, along with the opening, wall construction, access, and daily operating pattern.`,
         `Our ${location.name} custom steel ${service.title.toLowerCase()} are manufactured in our Gauteng workshop using solid mild steel square bar, heavy-gauge structural tubing, and industrial cold-rolled sections. Every fixture receives comprehensive anti-rust protection: multi-stage zinc phosphate primer and UV-stabilized baked epoxy powder coating, with full hot-dip galvanizing available for long-term outdoor weather resistance.`,
-        `Whether installing custom-welded security gates, burglar bars, or automated driveway access near ${location.name}, ${benefit.title.toLowerCase()} is built into every job. ${benefit.description} Our certified technicians anchor directly into solid brickwork with tamper-proof shear-head security bolts, ensuring maximum structural strength and peace of mind.`,
+        `For work around ${location.name}, ${benefit.title.toLowerCase()} is considered alongside access, fixing points, corrosion exposure, and safe operation. ${benefit.description} The final fabrication and anchoring method is confirmed against the measured site conditions.`,
       ],
       localClimateNotice: "Manufactured from solid mild steel and galvanized components with tamper-proof snap-off wall fasteners.",
     };
@@ -414,9 +460,11 @@ function buildStory(
   return {
     heading: `Tailored for ${location.name}'s Highveld Climate & Building Requirements`,
     uniqueParagraphs: [
-      `Properties across ${location.name}—from established family homes in ${a} and ${b} to ${c} and ${d}—face Gauteng's demanding Highveld climate. Freezing winter night drops, intense summer UV glare, and severe hailstorms place heavy stress on older timber and steel window frames.`,
-      `Our ${location.name} ${service.title.toLowerCase()} are manufactured from ${frameMaterial}, protected by a ${powderCoating}. This guarantees the frames will never warp, rust, swell, or peel under intense sunlight or driving rain, while precision weather seals keep winter draughts and storm water out.`,
-      `Whether you are renovating a home in ${location.name} or building a new commercial development, ${benefit.title.toLowerCase()} is at the heart of every installation. ${benefit.description} All work is carried out in full compliance with national building standards (${safetyStandards}), from the first on-site measurement to final sign-off, including the removal of old frames.`,
+      `${location.name} forms part of ${location.region} in ${location.municipality}. ${localContext}. Our survey for ${service.title.toLowerCase()} considers ${useCase}, rather than assuming that every property in the area needs the same configuration.`,
+      isGlazingSystem
+        ? `Our ${location.name} ${service.title.toLowerCase()} are specified around ${frameMaterial} and ${powderCoating}. Profile depth, glass or infill, hardware, drainage, and perimeter sealing are matched to the measured opening and exposure.`
+        : `${serviceDetail} For a ${location.name} project, dimensions, materials, finishes, interfaces with the existing structure, drainage where relevant, and installation access are confirmed during the survey.`,
+      `Whether the project is in ${a}, ${b}, or elsewhere around ${location.name}, ${benefit.title.toLowerCase()} is considered alongside access, removal of existing work, finishing, and handover. ${benefit.description} Applicable work is specified to relevant national building standards (${safetyStandards}) from measurement through final sign-off.`,
     ],
     localClimateNotice: page.overview.keyFeaturesNotice,
   };
@@ -438,48 +486,37 @@ function buildFaqs(
   service: Service,
   page: ServicePageContent,
   suburbs: string[],
-  isNear: boolean,
 ) {
-  const suburbList = suburbs.slice(0, 4).join(", ");
+  const suburbList = suburbs.slice(0, 6).join(", ");
   const serviceFaqs = page.faqs.map((f) => ({ question: f.question, answer: f.answer }));
-  const isSteel = service.category === "steel";
-  const isMall = location.type === "mall";
-
-  if (isMall) {
-    return [
-      ...serviceFaqs.slice(0, 2),
-      {
-        question: `Do you install ${service.title.toLowerCase()} for residential homes and complexes near ${location.name}?`,
-        answer: `Yes. Our mobile technical teams service private homes, townhouse complexes, and residential estates located near ${location.name} in ${location.region}. We bring material samples, take laser measurements, and supply zero-obligation written quotes.`,
-      },
-      {
-        question: `Can you fabricate custom shopfronts, doors, or security gates for retail tenants at ${location.name}?`,
-        answer: `Yes. We provide commercial aluminium shopfronts, frameless glass entries, heavy-duty slamlock security gates, and emergency repairs for retail stores, restaurants, and commercial offices located in and around ${location.name}.`,
-      },
-      {
-        question: `How quickly can you measure and install near ${location.name}?`,
-        answer: `We offer prompt on-site visits across the ${location.region} area. Once measurements and custom specifications are confirmed, fabrication takes 7 to 12 working days, with on-site installation taking 1 to 2 days.`,
-      },
-    ];
-  }
+  const useCase = getServiceUseCase(service);
+  const repair = isRepairService(service.id);
 
   return [
     ...serviceFaqs.slice(0, 3),
     {
-      question: `Do you provide ${service.title.toLowerCase()} and steel services near me in ${location.name}?`,
-      answer: `Yes. Our mobile measurement and installation team operates directly in ${location.name} and neighbouring areas like ${suburbList || location.name}. We conduct laser on-site measurements, provide itemized written quotes, and consultation callout fees are credited back 100% against your invoice.`,
+      question: `Do you provide ${service.title.toLowerCase()} near ${location.name} and surrounding areas?`,
+      answer: `Yes. Our mobile team serves project addresses near ${location.name}${suburbList ? `, including ${suburbList}` : ""}. Share the exact address when enquiring so we can confirm coverage, access, and appointment availability.`,
     },
     {
-      question: `How long does ${service.title.toLowerCase()} manufacturing and installation take in ${location.name}?`,
-      answer: `After final measurements are taken onsite in ${location.name}, custom fabrication in our workshop takes 7 to 12 working days. Onsite installation usually takes 1 to 2 days depending on the property size.`,
+      question: `What affects the price of ${service.title.toLowerCase()} near ${location.name}?`,
+      answer: `The quote is based on ${useCase}, opening dimensions, materials, hardware, finish, access, removal work, quantity, and installation conditions. Photographs and approximate measurements help with an initial estimate, while final dimensions may require an on-site visit.`,
     },
     {
-      question: isSteel
-        ? `What anti-rust warranty and coatings are included with steel installations in ${location.name}?`
-        : `Do you offer free onsite measurements and quotes across ${location.name}?`,
-      answer: isSteel
-        ? `All steel fixtures receive multi-stage zinc phosphate anti-rust primer and UV-stabilized epoxy powder coating or hot-dip galvanizing, engineered to withstand Johannesburg highveld rains and temperature extremes.`
-        : `Yes. We offer free onsite technical measurements, advice, and zero-obligation quotes across all ${location.name} areas, including ${suburbList || location.name}.`,
+      question: `How long will ${service.title.toLowerCase()} take near ${location.name}?`,
+      answer: `Timing depends on the confirmed scope, material availability, workshop schedule, quantity, and site readiness. Your written quote should state whether fabrication is required and separate the expected lead time from the on-site work duration.`,
+    },
+    {
+      question: repair
+        ? `How do you decide whether to repair or replace the existing product near ${location.name}?`
+        : `What happens during measurement and installation near ${location.name}?`,
+      answer: repair
+        ? `We assess the frame or structure, moving parts, glazing, seals, alignment, and the availability of compatible replacement components. We recommend replacement only when a repair would be unsafe, unreliable, or poor value.`
+        : `We confirm the opening, specification, finish, hardware, access, and any removal work before manufacture. During installation, the team fits and aligns the product, completes the agreed sealing or fixing work, tests its operation, and clears the work area.`,
+    },
+    {
+      question: `What warranty and aftercare apply to ${service.title.toLowerCase()} near ${location.name}?`,
+      answer: `Warranty coverage depends on the selected product, components, finish, and scope of work. The written quote should identify the applicable coverage, exclusions, maintenance requirements, and the process for reporting an installation or component issue.`,
     },
   ];
 }
@@ -503,16 +540,16 @@ function buildSeo(
   const displayTitle = isInstallation ? toSingularServiceTitle(service.title) : service.title;
 
   if (isInstallation) {
-    titleTag = `${displayTitle} Installation ${isNear ? "Near" : "in"} ${location.name} | Certified Local Installers & Free Quote`;
-    metaDescription = `Looking for expert ${displayTitle.toLowerCase()} installation ${isNear ? "near" : "in"} ${location.name}${firstSuburbs ? ` or ${firstSuburbs}` : ""}? Custom-measured and professionally fitted with SABS-certified materials, clean removal of old frames & free quotes. Call 071 612 2439.`;
+    titleTag = `${displayTitle} Installation ${isNear ? "Near" : "in"} ${location.name}`;
+    metaDescription = `${displayTitle} installation ${isNear ? "near" : "in"} ${location.name}${firstSuburbs ? ` and ${firstSuburbs}` : ""}. Custom measurement, written specifications and professional fitting.`;
   } else if (isMall || isNear) {
-    titleTag = `${service.title} Near ${location.name} | Local Installers & Free Quotes`;
+    titleTag = `${service.title} Near ${location.name}`;
     metaDescription = isMall
-      ? `Looking for ${service.title.toLowerCase()} near ${location.name}? Professional custom aluminium and steel installations for homes, estates, and businesses in the ${location.name} precinct (${location.region}). Free quotes.`
-      : `Looking for ${service.title.toLowerCase()} near ${location.name}? Custom-welded heavy-duty security gates, burglar bars, carports & steel works near you in ${location.name}${firstSuburbs ? ` and ${firstSuburbs}` : ""}. Free quotes & fast installation.`;
+      ? `${service.title} near ${location.name} for homes and businesses in ${location.region}. Custom site measurement, fabrication and installation. Request a written quote.`
+      : `${service.title} near ${location.name}${firstSuburbs ? `, ${firstSuburbs}` : ""}. ${service.shortDescription} Custom site measurement, professional installation and written quotes.`;
   } else {
-    titleTag = `${service.title} in ${location.name} | Manufacturer & Local Installers`;
-    metaDescription = `Premium custom ${service.title.toLowerCase()} in ${location.name}${firstSuburbs ? `, ${firstSuburbs}` : ""}. ${service.shortDescription} SANS certified, high security & free quotes.`;
+    titleTag = `${service.title} in ${location.name}`;
+    metaDescription = `Custom ${service.title.toLowerCase()} in ${location.name}${firstSuburbs ? ` and ${firstSuburbs}` : ""}. Site measurement, written specifications, professional fitting and quotes.`;
   }
 
   const singularService = service.title
@@ -687,9 +724,9 @@ export function getLocationServicePage(area: string, routeServiceId: string): Lo
   const suburbs = getLocalSuburbs(location);
 
   const hero = buildHero(location, service, page, isNear, isInstallation);
-  const localizedStory = buildStory(location, service, page, suburbs, isNear);
+  const localizedStory = buildStory(location, service, page, suburbs);
   const localNAP = buildNap(location, suburbs);
-  const localFaqs = buildFaqs(location, service, page, suburbs, isNear);
+  const localFaqs = buildFaqs(location, service, page, suburbs);
 
   const base: LocationServiceObject = {
     id: `loc-srv-${location.slug}-${service.id}${isInstallation ? "-inst" : ""}`,
@@ -710,15 +747,18 @@ export function getLocationServicePage(area: string, routeServiceId: string): Lo
   return base;
 }
 
-/** Returns canonical location x service routes for full sitemap generation (strictly under 50,000 URL limit). */
+/** Returns only the service/location routes approved for organic indexing. */
 export function getAllLocationServiceRoutes(): { area: string; serviceId: string }[] {
   const routes: { area: string; serviceId: string }[] = [];
   for (const location of gautengLocations) {
     const locSlug = location.slug || location.id;
     for (const service of services) {
+      if (!getServiceLocationSeoEligibility(service.id, location).includeInSitemap) {
+        continue;
+      }
       routes.push({
         area: locSlug,
-        serviceId: getCanonicalServiceLocationSlug(service.title, locSlug),
+        serviceId: getCanonicalServiceLocationSlug(service.id, locSlug),
       });
     }
   }
@@ -749,7 +789,7 @@ export function getPrerenderLocationServiceRoutes(): { area: string; serviceId: 
     for (const service of targetServices) {
       routes.push({
         area: locId,
-        serviceId: getCanonicalServiceLocationSlug(service.title, locId),
+        serviceId: getCanonicalServiceLocationSlug(service.id, locId),
       });
     }
   }

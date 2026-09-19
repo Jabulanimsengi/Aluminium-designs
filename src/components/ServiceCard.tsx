@@ -33,7 +33,6 @@ export default function ServiceCard({
     >
       <Link
         href={slug}
-        data-lead-gate="false"
         aria-label={`View ${title} specifications`}
         className="relative block min-h-56 overflow-hidden border-b border-outline-variant bg-surface-container-high sm:min-h-full sm:border-b-0 sm:border-r"
       >
@@ -74,7 +73,6 @@ export default function ServiceCard({
         <div>
           <Link
             href={slug}
-            data-lead-gate="false"
             className="block"
           >
             <h3 className="font-sans text-lg font-bold uppercase leading-tight tracking-tight text-primary transition-colors hover:text-accent group-hover:text-accent">
@@ -102,7 +100,6 @@ export default function ServiceCard({
         <div className="mt-5 pt-4 border-t border-outline-variant/50 flex items-center justify-between gap-3">
           <Link
             href={slug}
-            data-lead-gate="false"
             aria-label={`Explore specs for ${title}`}
             className="font-mono text-[10px] font-bold uppercase tracking-widest text-primary hover:text-accent transition-colors inline-flex items-center gap-1.5 py-1"
           >

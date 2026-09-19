@@ -8,18 +8,18 @@ import { services } from "@/data/services";
 import { absoluteUrl, siteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "38 Architectural Aluminium, Glass & Steel Services",
+  title: "Aluminium, Glass & Steel Services",
   description:
-    "Browse our complete 38-service catalogue across 5 specialised divisions: Aluminium & Doors, Glass & Enclosures, Security & Fencing, Steel Works, and Maintenance.",
+    "Browse 38 aluminium, glass, security, steel and repair services available for homes and commercial properties across Gauteng.",
   alternates: { canonical: `${siteUrl}/services` },
   openGraph: {
     type: "website",
     locale: "en_ZA",
     url: `${siteUrl}/services`,
     siteName: "Aluminium Designs",
-    title: "38 Architectural Aluminium, Glass & Steel Services | Aluminium Designs",
+    title: "Aluminium, Glass & Steel Services | Aluminium Designs",
     description:
-      "Browse our complete 38-service catalogue across 5 specialised divisions: Aluminium & Doors, Glass & Enclosures, Security & Fencing, Steel Works, and Maintenance.",
+      "Browse 38 aluminium, glass, security, steel and repair services available for homes and commercial properties across Gauteng.",
     images: [
       {
         url: absoluteUrl("/images/hero_exterior.png"),
@@ -31,9 +31,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "38 Architectural Aluminium, Glass & Steel Services | Aluminium Designs",
+    title: "Aluminium, Glass & Steel Services | Aluminium Designs",
     description:
-      "Browse our complete 38-service catalogue across 5 specialised divisions: Aluminium & Doors, Glass & Enclosures, Security & Fencing, Steel Works, and Maintenance.",
+      "Browse 38 aluminium, glass, security, steel and repair services available for homes and commercial properties across Gauteng.",
     images: [absoluteUrl("/images/hero_exterior.png")],
   },
 };
@@ -46,9 +46,9 @@ export default function ServicesPage() {
         "@type": "CollectionPage",
         "@id": `${siteUrl}/services#webpage`,
         url: `${siteUrl}/services`,
-        name: "38 Architectural Aluminium, Glass & Steel Services | Aluminium Designs",
+        name: "Aluminium, Glass & Steel Services | Aluminium Designs",
         description:
-          "Browse our complete 38-service catalogue across 5 specialised divisions: Aluminium & Doors, Glass & Enclosures, Security & Fencing, Steel Works, and Maintenance.",
+          "Browse 38 aluminium, glass, security, steel and repair services available for homes and commercial properties across Gauteng.",
         mainEntity: {
           "@type": "ItemList",
           numberOfItems: services.length,

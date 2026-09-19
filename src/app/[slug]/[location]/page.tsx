@@ -1,9 +1,11 @@
 import { Metadata } from "next";
 import { notFound, permanentRedirect, RedirectType } from "next/navigation";
-import { gautengLocations } from "@/data/locations";
+import { gautengLocations, getHubForLocation } from "@/data/locations";
 import { getTaxonomyServiceBySlug } from "@/data/serviceTaxonomy";
 import { services } from "@/data/services";
 import { siteUrl, slugify } from "@/lib/site";
+import { getCanonicalServiceLocationSlug } from "@/lib/serviceLocationParser";
+import { getServiceLocationSeoEligibility } from "@/lib/seoEligibility";
 
 interface PageProps {
   params: Promise<{ slug: string; location: string }>;
@@ -23,6 +25,32 @@ function resolveService(serviceSlug: string) {
   );
 }
 
+function getCoreServiceSlug(service: ReturnType<typeof resolveService>): string | null {
+  if (!service) return null;
+  const resolvedSlug = service.slug.replace(/^\/services\//, "");
+  return services.find((candidate) => candidate.id === resolvedSlug)?.id || resolvedSlug;
+}
+
+function getRedirectPath(
+  service: NonNullable<ReturnType<typeof resolveService>>,
+  location: (typeof gautengLocations)[number],
+): string {
+  const serviceSlug = getCoreServiceSlug(service);
+  const coreService = services.find((candidate) => candidate.id === serviceSlug);
+  if (!serviceSlug || !coreService) return "/services";
+
+  const parentHub = getHubForLocation(location);
+  const destinationLocation = location.isHub ? location : parentHub;
+  if (
+    destinationLocation &&
+    getServiceLocationSeoEligibility(serviceSlug, destinationLocation).index
+  ) {
+    return `/${getCanonicalServiceLocationSlug(serviceSlug, destinationLocation.slug)}`;
+  }
+
+  return coreService.slug;
+}
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug: serviceSlug, location: locationSlug } = await params;
   const service = resolveService(serviceSlug);
@@ -34,10 +62,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     return { title: "Page Not Found" };
   }
 
-  const sSlug = "slug" in service && service.slug ? service.slug : slugify((service as any).title);
-  const locSlug = location.slug || location.id;
-  const prep = locSlug.toLowerCase() === "katlehong" ? "in" : "near";
-  const canonicalUrl = `${siteUrl}/${sSlug}-${prep}-${locSlug}`;
+  const canonicalUrl = `${siteUrl}${getRedirectPath(service, location)}`;
 
   return {
     alternates: { canonical: canonicalUrl },
@@ -56,9 +81,5 @@ export default async function ServiceLocationPage({ params }: PageProps) {
     notFound();
   }
 
-  const sSlug = "slug" in service && service.slug ? service.slug : slugify((service as any).title);
-  const locSlug = location.slug || location.id;
-  const prep = locSlug.toLowerCase() === "katlehong" ? "in" : "near";
-
-  permanentRedirect(`/${sSlug}-${prep}-${locSlug}`, RedirectType.replace);
+  permanentRedirect(getRedirectPath(service, location), RedirectType.replace);
 }

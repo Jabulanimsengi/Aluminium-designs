@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { ArrowRight, Home, Layers, MapPin, Tag, ShieldCheck, Phone } from "lucide-react";
-import { whatsappQuoteUrl, businessContact } from "@/lib/site";
+import { whatsappQuoteUrl } from "@/lib/site";
 
 export const metadata = {
   title: "Page Not Found (404) | Aluminium Designs",

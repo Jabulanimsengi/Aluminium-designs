@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from "next";
-import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -11,12 +10,6 @@ import WorkVideosModal from "@/components/WorkVideosModal";
 import ScrollRevealObserver from "@/components/ScrollRevealObserver";
 import LeadGate from "@/components/LeadGate";
 import { absoluteUrl, businessContact, siteUrl } from "@/lib/site";
-
-const plusJakartaSans = Plus_Jakarta_Sans({
-  variable: "--font-plus-jakarta-sans",
-  subsets: ["latin"],
-  display: "swap",
-});
 
 const socialImageUrl = absoluteUrl("/images/hero_exterior.png");
 
@@ -34,7 +27,7 @@ export const metadata: Metadata = {
     template: "%s | Aluminium Designs"
   },
   description:
-    "Top-rated custom aluminium doors, sliding windows, folding stackers, security gates, burglar bars, steel carports & glass balustrades across Gauteng, South Africa. SABS certified. Request your free quote today.",
+    "Custom aluminium doors, windows, stacking systems, security gates, steel carports and glass balustrades measured and installed across Gauteng. Request a written quote.",
   keywords: [
     "aluminium designs",
     "aluminium doors gauteng",
@@ -45,7 +38,7 @@ export const metadata: Metadata = {
     "steel carports",
     "glass shopfronts",
     "folding stacker doors",
-    "sabs approved",
+    "custom aluminium fabrication",
   ],
   authors: [{ name: "Aluminium Designs" }],
   formatDetection: { email: false, address: false, telephone: false },
@@ -58,7 +51,7 @@ export const metadata: Metadata = {
     siteName: "Aluminium Designs",
     title: "Aluminium Designs | Custom Aluminium Doors, Windows & Steel Works Gauteng",
     description:
-      "Custom manufacturing and professional installation of SABS & AAAMSA certified aluminium doors, windows, security gates, and steel structures across Gauteng.",
+      "Custom manufacturing and installation of aluminium doors, windows, security gates, glass systems and steel structures across Gauteng.",
     ...(socialImageUrl
       ? { images: [{ url: socialImageUrl, alt: "Aluminium Designs installation" }] }
       : {}),
@@ -67,7 +60,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Aluminium Designs | Custom Aluminium Doors, Windows & Steel Works Gauteng",
     description:
-      "Custom-tailored SABS approved aluminium and steel fabrication with free on-site measuring in Johannesburg, Pretoria, and Gauteng.",
+      "Made-to-measure aluminium, glass and steel fabrication for homes and businesses across Johannesburg, Pretoria and Gauteng.",
     ...(socialImageUrl ? { images: [socialImageUrl] } : {}),
   },
 };
@@ -128,7 +121,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html
       lang="en"
-      className={`${plusJakartaSans.variable} h-full antialiased scroll-smooth`}
+      className="h-full antialiased scroll-smooth"
       data-scroll-behavior="smooth"
     >
       <head>

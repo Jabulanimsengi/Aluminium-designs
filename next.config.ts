@@ -43,8 +43,9 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
-        source: "/locations/:area/:serviceId",
-        destination: "/:serviceId",
+        source: "/:path*",
+        has: [{ type: "host", value: "aluminiumdesigns.co.za" }],
+        destination: "https://www.aluminiumdesigns.co.za/:path*",
         permanent: true,
       },
       {

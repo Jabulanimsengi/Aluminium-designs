@@ -11,12 +11,11 @@ import {
   ArrowUpRight,
   ChevronRight,
   Layers,
-  Phone,
   Clock,
   HelpCircle,
   FileCheck,
 } from "lucide-react";
-import { gautengLocations } from "@/data/locations";
+import { gautengLocations, getHubForLocation } from "@/data/locations";
 import { services } from "@/data/services";
 import { getLocationServicePage } from "@/data/location-service-pages";
 import {
@@ -29,7 +28,8 @@ import {
   generateMetaTitleVariant,
   generateMetaDescriptionVariant,
 } from "@/lib/seoVariants";
-import { siteUrl, businessContact, getWhatsAppQuoteUrl } from "@/lib/site";
+import { getServiceLocationSeoEligibility } from "@/lib/seoEligibility";
+import { absoluteUrl, siteUrl, getWhatsAppQuoteUrl } from "@/lib/site";
 import CTASection from "@/components/CTASection";
 
 interface PageProps {
@@ -43,27 +43,13 @@ export const dynamicParams = true;
  * All remaining combinations render on demand via dynamicParams = true.
  */
 export async function generateStaticParams() {
-  const priorityServices = [
-    "aluminium-windows",
-    "aluminium-sliding-doors",
-    "aluminium-stacking-doors",
-    "trellis-doors",
-    "trellis-security-gates",
-    "seamless-aluminium-gutters",
-  ];
-  const priorityLocations = [
-    "centurion",
-    "katlehong",
-    "sandton",
-    "midrand",
-    "pretoria",
-    "fourways",
-  ];
-
   const params: { slug: string }[] = [];
-  for (const service of priorityServices) {
-    for (const location of priorityLocations) {
-      params.push({ slug: getCanonicalServiceLocationSlug(service, location) });
+  for (const location of gautengLocations) {
+    for (const service of services) {
+      if (!getServiceLocationSeoEligibility(service.id, location).index) continue;
+      params.push({
+        slug: getCanonicalServiceLocationSlug(service.id, location.slug),
+      });
     }
   }
   return params;
@@ -96,17 +82,35 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     locationSlug: parsed.locationSlug,
     preposition: parsed.preposition,
     priceDisplay,
-    trustSignal1: "No Call-Out Fee",
-    trustSignal2: "SANS 10400 Compliant",
+    trustSignal1: "Made to Measure",
+    trustSignal2: "Written Quote",
     isInstallation: isInst,
   });
 
   const canonicalUrl = `${siteUrl}/${parsed.canonicalSlug}`;
+  const eligibility = getServiceLocationSeoEligibility(
+    parsed.coreService?.id || parsed.serviceSlug,
+    parsed.location,
+  );
+  const socialImage = absoluteUrl(
+    parsed.coreService?.imagePath || "/images/window_detail.png",
+  );
 
   return {
     title: { absolute: title },
     description,
     alternates: { canonical: canonicalUrl },
+    robots: {
+      index: eligibility.index,
+      follow: true,
+      googleBot: {
+        index: eligibility.index,
+        follow: true,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+        "max-video-preview": -1,
+      },
+    },
     openGraph: {
       title,
       description,
@@ -116,7 +120,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       siteName: "Aluminium Designs",
       images: [
         {
-          url: `${siteUrl}/images/window_detail.png`,
+          url: socialImage,
           width: 1200,
           height: 630,
           alt: `${parsed.serviceTitle} in ${parsed.locationName}`,
@@ -139,6 +143,27 @@ export default async function FlatServiceLocationPage({ params }: PageProps) {
     notFound();
   }
 
+  const eligibility = getServiceLocationSeoEligibility(
+    parsed.coreService?.id || parsed.serviceSlug,
+    parsed.location,
+  );
+  if (!eligibility.index) {
+    const parentHub = getHubForLocation(parsed.location);
+    const serviceId = parsed.coreService?.id;
+    if (
+      parentHub &&
+      serviceId &&
+      getServiceLocationSeoEligibility(serviceId, parentHub).index
+    ) {
+      permanentRedirect(
+        `/${getCanonicalServiceLocationSlug(serviceId, parentHub.slug)}`,
+        RedirectType.replace,
+      );
+    }
+
+    permanentRedirect(parsed.coreService?.slug || "/services", RedirectType.replace);
+  }
+
   if (parsed.slug !== parsed.canonicalSlug) {
     permanentRedirect(`/${parsed.canonicalSlug}`, RedirectType.replace);
   }
@@ -148,7 +173,6 @@ export default async function FlatServiceLocationPage({ params }: PageProps) {
     locationName,
     location,
     preposition,
-    isInstallation,
     h1: h1Title,
     taxonomyService,
     coreService,
@@ -170,26 +194,46 @@ export default async function FlatServiceLocationPage({ params }: PageProps) {
   const defaultFaqs = [
     {
       question: `What is the estimated cost of ${serviceTitle.toLowerCase()} ${locationContextPhrase}?`,
-      answer: `Starting prices for ${serviceTitle.toLowerCase()} begin at ${priceDisplay} (${priceUnit}). Final pricing depends on exact opening dimensions, glass specifications, and custom powder-coated finishes. We provide free on-site measurements and written quotations.`,
+      answer: `Indicative pricing begins at ${priceDisplay} (${priceUnit}), but the written quote depends on confirmed dimensions, materials, hardware, finish, access, removal work, and installation conditions.`,
     },
     {
-      question: `Do your ${serviceTitle.toLowerCase()} comply with SANS 10400 building regulations?`,
-      answer: `Yes. All our ${serviceTitle.toLowerCase()} are fully compliant with South African National Standards (SANS 10400 Part N for safety glazing and SANS 10400-XA for energy efficiency). We issue SAGGA Glazing Compliance Certificates upon completion where required.`,
+      question: `What information do you need to quote ${serviceTitle.toLowerCase()} ${prepWord} ${locationName}?`,
+      answer: `Send the project address, photographs, approximate dimensions, the required product or repair, preferred finish, and any access restrictions. Final manufacturing dimensions may require an on-site measurement.`,
     },
     {
       question: `How long does manufacturing and installation take ${prepWord} ${locationName}?`,
-      answer: `Once exact laser measurements are verified on-site, precision manufacturing in our Gauteng workshop takes 7 to 12 working days. On-site installation is completed cleanly in 1 to 2 days with minimal disruption.`,
+      answer: `Timing depends on the confirmed specification, material availability, quantity, workshop schedule, and site readiness. The written quote should separate the expected fabrication lead time from the on-site work duration.`,
+    },
+    {
+      question: `Which areas around ${locationName} do you serve?`,
+      answer: `We serve project addresses across the ${locationName} hub and its listed surrounding suburbs and townships. Confirm the exact address when enquiring so we can verify coverage and appointment availability.`,
+    },
+    {
+      question: `Can you remove, repair, or replace an existing product ${prepWord} ${locationName}?`,
+      answer: `Yes, where the existing condition and opening allow it. We assess the frames or structure, glazing, seals, hardware, alignment, and compatible parts before recommending repair, component replacement, or full replacement.`,
+    },
+    {
+      question: `How do you confirm the right specification for ${serviceTitle.toLowerCase()}?`,
+      answer: `The specification is based on dimensions, intended use, security, ventilation, glazing or steel requirements, weather exposure, finish, hardware, and the condition of the supporting opening or structure.`,
+    },
+    {
+      question: `Can you work at estates, complexes, shops, and offices ${prepWord} ${locationName}?`,
+      answer: `Yes. Tell us about estate rules, landlord approvals, working-hour restrictions, parking, lifting, security induction, or other access requirements before the site visit is scheduled.`,
+    },
+    {
+      question: `What warranty and aftercare apply to ${serviceTitle.toLowerCase()}?`,
+      answer: `Coverage depends on the chosen product, components, finish, and work scope. The written quote should identify the applicable warranty, exclusions, maintenance requirements, and issue-reporting process.`,
     },
   ];
 
   const faqsToRender =
-    locContent?.localFaqs && locContent.localFaqs.length > 0
+    locContent?.localFaqs && locContent.localFaqs.length >= 8
       ? locContent.localFaqs
       : defaultFaqs;
 
   const defaultStoryParagraphs = [
-    `Properties across ${locationName} and ${location.municipality} encounter distinct Highveld weather fluctuations, ranging from intense summer UV radiation to brisk sub-zero winter mornings. Our custom ${serviceTitle.toLowerCase()} are built with heavy-wall architectural aluminium extrusions or structural mild steel, protected by architectural powder coating. This ensures frames will never warp, corrode, or degrade over decades of service.`,
-    `Whether replacing worn-out window and door frames on an established residential home or supplying high-traffic commercial systems, our dedicated mobile fitting crews provide turnkey delivery—from millimeter-exact laser measurement to clean removal of legacy frames and issuance of official compliance certificates.`,
+    `Properties across ${locationName} and ${location.municipality} experience strong Highveld sun, summer storms, and cold winter mornings. The material, coating, hardware, drainage, and sealing for ${serviceTitle.toLowerCase()} are selected for the measured opening and exposure.`,
+    `Whether replacing worn window and door frames or supplying a commercial system, the work scope covers measurement, specification, fabrication or ordering, installation, testing, and the handover documents listed in the written quote.`,
   ];
 
   const storyParagraphs =
@@ -219,7 +263,7 @@ export default async function FlatServiceLocationPage({ params }: PageProps) {
           "@type": "AdministrativeArea",
           name: locationName,
         },
-        description: `Professional custom ${serviceTitle.toLowerCase()} services ${locationContextPhrase}. SANS 10400 safety compliant with precision fitment and manufacturer warranty.`,
+        description: `Custom ${serviceTitle.toLowerCase()} services ${locationContextPhrase}, specified for the measured site conditions and applicable safety requirements.`,
         offers: {
           "@type": "Offer",
           priceCurrency: "ZAR",
@@ -273,12 +317,26 @@ export default async function FlatServiceLocationPage({ params }: PageProps) {
     ],
   };
 
-  const nearbyLocations = gautengLocations
-    .filter((l) => (l.slug || l.id) !== parsed.locationSlug && l.municipality === location.municipality)
-    .slice(0, 6);
-
   const currentServiceId = coreService?.id || parsed.serviceSlug;
   const isCurrentSteel = coreService?.category === "steel";
+
+  const sameMunicipalityLocations = gautengLocations
+    .filter(
+      (candidate) =>
+        (candidate.slug || candidate.id) !== parsed.locationSlug &&
+        candidate.municipality === location.municipality &&
+        getServiceLocationSeoEligibility(currentServiceId, candidate).index,
+    );
+  const otherEligibleLocations = gautengLocations.filter(
+    (candidate) =>
+      (candidate.slug || candidate.id) !== parsed.locationSlug &&
+      candidate.municipality !== location.municipality &&
+      getServiceLocationSeoEligibility(currentServiceId, candidate).index,
+  );
+  const nearbyLocations = [
+    ...sameMunicipalityLocations,
+    ...otherEligibleLocations,
+  ].slice(0, 6);
 
   const sameCategoryServices = services
     .filter(
@@ -306,7 +364,11 @@ export default async function FlatServiceLocationPage({ params }: PageProps) {
     ...sameCategoryServices,
     ...oppositeCategoryServices,
     ...(repairServiceItem ? [repairServiceItem] : []),
-  ].slice(0, 8);
+  ]
+    .filter((service) =>
+      getServiceLocationSeoEligibility(service.id, location).index,
+    )
+    .slice(0, 8);
 
   return (
     <div className="bg-surface text-on-surface">
@@ -376,11 +438,11 @@ export default async function FlatServiceLocationPage({ params }: PageProps) {
               </h1>
 
               <p className="font-sans text-on-surface-variant text-base sm:text-lg leading-relaxed max-w-2xl">
-                Expert custom manufacturing and certified installation of{" "}
+              Custom manufacturing and professional installation of{" "}
                 <strong className="text-primary font-semibold">
                   {serviceTitle}
                 </strong>{" "}
-                {locationContextPhrase}. SANS 10400 safety compliant, precision laser-measured, and backed by a comprehensive structural warranty.
+              {locationContextPhrase}. Measured for the property, specified for the application, and supplied with the warranty terms stated in the written quote.
               </p>
 
               {/* Pricing Callout */}
@@ -403,7 +465,7 @@ export default async function FlatServiceLocationPage({ params }: PageProps) {
                       Compliance Assured
                     </span>
                     <span className="text-xs text-on-surface-variant">
-                      SANS 10400-N &amp; SAGGA Glazing
+                  Safety Glazing Specified by Application
                     </span>
                   </div>
                 </div>
@@ -546,7 +608,7 @@ export default async function FlatServiceLocationPage({ params }: PageProps) {
                 <ShieldCheck className="w-5 h-5" />
               </div>
               <h3 className="font-sans text-base font-bold uppercase tracking-tight text-primary">
-                SANS 10400 Safety Glazing
+                  Application-Appropriate Safety Glazing
               </h3>
               <p className="text-xs text-on-surface-variant leading-relaxed">
                 6.38mm laminated safety glass or toughened safety glass fitted to all critical high-impact zones, meeting national building regulations.
@@ -636,6 +698,39 @@ export default async function FlatServiceLocationPage({ params }: PageProps) {
                 </p>
               </div>
             ))}
+          </div>
+
+          <div className="mt-8 flex flex-wrap justify-center gap-3 border-t border-outline-variant pt-8">
+            {coreService?.id && (
+              <Link
+                href={`/services/${coreService.id}`}
+                className="inline-flex items-center gap-1.5 rounded-full border border-outline-variant bg-surface-container-low px-4 py-2 text-xs font-medium text-secondary transition-colors hover:border-accent hover:text-accent"
+              >
+                Compare {serviceTitle} specifications
+                <ArrowUpRight className="h-3.5 w-3.5" />
+              </Link>
+            )}
+            <Link
+              href={`/locations/${parsed.locationSlug}`}
+              className="inline-flex items-center gap-1.5 rounded-full border border-outline-variant bg-surface-container-low px-4 py-2 text-xs font-medium text-secondary transition-colors hover:border-accent hover:text-accent"
+            >
+              Browse all services near {locationName}
+              <ArrowUpRight className="h-3.5 w-3.5" />
+            </Link>
+            <Link
+              href="/pricing"
+              className="inline-flex items-center gap-1.5 rounded-full border border-outline-variant bg-surface-container-low px-4 py-2 text-xs font-medium text-secondary transition-colors hover:border-accent hover:text-accent"
+            >
+              Review pricing guidance
+              <ArrowUpRight className="h-3.5 w-3.5" />
+            </Link>
+            <Link
+              href="/quote"
+              className="inline-flex items-center gap-1.5 rounded-full border border-outline-variant bg-surface-container-low px-4 py-2 text-xs font-medium text-secondary transition-colors hover:border-accent hover:text-accent"
+            >
+              Prepare a project quote
+              <ArrowUpRight className="h-3.5 w-3.5" />
+            </Link>
           </div>
         </div>
       </section>

@@ -104,7 +104,7 @@ export const steelBalustradesService: ServiceObject = {
   ],
   seo: {
     titleTag: "Steel Balustrades & Stair Handrails | South Africa",
-    metaDescription: "Custom steel balustrades and handrails for stairs, balconies, and decks. Solid welded steel, modern powder coating, and professional installation across South Africa.",
+    metaDescription: "Custom steel balustrades and handrails for stairs, balconies and decks, fabricated and installed across Gauteng.",
     keywords: ["steel balustrades", "stair handrails", "balcony steel railings", "wrought iron balustrades SA"],
     canonicalUrl: "https://www.aluminiumdesigns.co.za/services/steel-balustrades",
     openGraphImage: "https://www.aluminiumdesigns.co.za/images/services/steel-balustrades-hero.jpg"

@@ -1,5 +1,8 @@
+import { getServicePresentation } from "@/data/servicePresentation";
+
 export interface ServiceTaxonomyItem {
   name: string;
+  menuLabel?: string;
   slug: string;
   category: ServiceCategory;
   shortDescription: string;
@@ -29,7 +32,7 @@ export type ServiceCategory =
 export const rawServiceTaxonomy: ServiceCategoryGroup[] = [
   {
     category: "Aluminium & Doors",
-    description: "Architectural aluminium window and door systems custom manufactured with AAAMSA-certified extrusions and SANS 10400 safety glazing.",
+    description: "Made-to-measure aluminium window and door systems with glazing and hardware specified for the opening and intended use.",
     services: [
       "Aluminium windows",
       "Aluminium sliding windows",
@@ -97,7 +100,7 @@ export const rawServiceTaxonomy: ServiceCategoryGroup[] = [
   }
 ];
 
-export const allTaxonomyServices: ServiceTaxonomyItem[] = [
+const baseTaxonomyServices: ServiceTaxonomyItem[] = [
   // 1. Aluminium & Doors
   {
     name: "Aluminium windows",
@@ -470,6 +473,13 @@ export const allTaxonomyServices: ServiceTaxonomyItem[] = [
     popular: true,
   }
 ];
+
+export const allTaxonomyServices: ServiceTaxonomyItem[] =
+  baseTaxonomyServices.map((service) => ({
+    ...service,
+    name: getServicePresentation(service.slug).pageTitle,
+    menuLabel: getServicePresentation(service.slug).menuLabel,
+  }));
 
 export const taxonomyBySlug = new Map<string, ServiceTaxonomyItem>(
   allTaxonomyServices.map((srv) => [srv.slug, srv])

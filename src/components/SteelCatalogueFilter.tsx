@@ -107,7 +107,7 @@ export default function SteelCatalogueFilter() {
 
                 <div className="p-5 space-y-3">
                   <h3 className="font-sans font-bold text-lg uppercase text-primary group-hover:text-accent transition-colors">
-                    {service.title}
+                    {service.menuLabel || service.title}
                   </h3>
                   <p className="text-xs text-on-surface-variant leading-relaxed line-clamp-3">
                     {service.shortDescription}

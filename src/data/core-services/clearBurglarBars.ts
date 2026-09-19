@@ -118,7 +118,7 @@ export const clearBurglarBarsService: ServiceObject = {
   ],
   seo: {
     titleTag: "Clear Burglar Bars for Aluminium Windows | Polycarbonate Security SA",
-    metaDescription: "Transparent polycarbonate clear burglar bars for aluminium windows. Unbreakable riot-shield strength, zero rust, crystal clear garden views, and expert installation.",
+    metaDescription: "Clear polycarbonate burglar bars custom-fitted to aluminium windows for security with minimal obstruction across Gauteng.",
     keywords: [
       "clear burglar bars",
       "polycarbonate burglar bars",

@@ -45,16 +45,16 @@ import {
 } from "lucide-react";
 import { services } from "@/data/services";
 import { servicePages } from "@/data/service-pages";
-import { allCoreServices } from "@/data/core-services";
 import { gautengLocations } from "@/data/locations";
 import CTASection from "@/components/CTASection";
 import FAQAccordion from "@/components/FAQAccordion";
-import { absoluteUrl, siteUrl, slugify, whatsappQuoteUrl } from "@/lib/site";
+import { absoluteUrl, siteUrl, whatsappQuoteUrl } from "@/lib/site";
 import {
   getCanonicalServiceLocationSlug,
   isRepairService,
   toSingularServiceTitle,
 } from "@/lib/serviceLocationParser";
+import { getServiceLocationSeoEligibility } from "@/lib/seoEligibility";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -173,53 +173,55 @@ export default async function ServiceDetailPage({ params }: Props) {
   if (!content) notFound();
 
   const otherServices = services.filter((s) => s.id !== service.id);
-  const coreSrv = allCoreServices.find((s) => s.slug === slug || s.slug === service.id);
-
-  const strategicHubSlugs = [
-    // City of Johannesburg
-    "sandton", "randburg", "midrand", "rosebank", "fourways", "roodepoort", "constantia-kloof",
-    // City of Tshwane
-    "pretoria", "centurion", "menlyn", "pretoria-east", "pretoria-north",
-    // City of Ekurhuleni / East Rand
-    "katlehong", "alberton", "boksburg", "benoni", "germiston", "kempton-park", "bedfordview",
-    // West Rand
-    "krugersdorp", "randfontein",
-    // Sedibeng & Vaal
-    "vereeniging", "vanderbijlpark", "meyerton", "heidelberg",
-  ];
-
-  const majorAreas = strategicHubSlugs
-    .map((s) => gautengLocations.find((l) => (l.slug || l.id) === s))
-    .filter((l): l is NonNullable<typeof l> => Boolean(l));
+  const relatedServices = [
+    ...otherServices.filter((candidate) => candidate.category === service.category),
+    ...otherServices.filter((candidate) => candidate.category !== service.category),
+  ].slice(0, 6);
+  const majorAreas = gautengLocations.filter(
+    (location) => getServiceLocationSeoEligibility(service.id, location).index,
+  );
 
   const rawServiceLd = content.structuredDataJsonLd;
+  const aggregateRating = content.reviews.length
+    ? {
+        "@type": "AggregateRating",
+        ratingValue: String(
+          content.reviews.reduce((sum, review) => sum + review.rating, 0) /
+            content.reviews.length,
+        ),
+        reviewCount: String(content.reviews.length),
+        bestRating: "5",
+        worstRating: "1",
+      }
+    : undefined;
+
   const serviceSchema = {
     ...rawServiceLd,
     "@id": `${siteUrl}/services/${slug}#service`,
+    name: service.title,
+    serviceType: service.title,
     url: `${siteUrl}/services/${slug}`,
     image: absoluteUrl(service.imagePath),
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: "5.0",
-      reviewCount: String(content.reviews.length),
-      bestRating: "5",
-      worstRating: "1",
-    },
-    review: content.reviews.map((r) => ({
-      "@type": "Review",
-      author: {
-        "@type": "Person",
-        name: r.authorName,
-      },
-      datePublished: r.date,
-      reviewBody: r.comment,
-      reviewRating: {
-        "@type": "Rating",
-        ratingValue: String(r.rating),
-        bestRating: "5",
-        worstRating: "1",
-      },
-    })),
+    ...(aggregateRating ? { aggregateRating } : {}),
+    ...(content.reviews.length
+      ? {
+          review: content.reviews.map((r) => ({
+            "@type": "Review",
+            author: {
+              "@type": "Person",
+              name: r.authorName,
+            },
+            datePublished: r.date,
+            reviewBody: r.comment,
+            reviewRating: {
+              "@type": "Rating",
+              ratingValue: String(r.rating),
+              bestRating: "5",
+              worstRating: "1",
+            },
+          })),
+        }
+      : {}),
   };
 
   const breadcrumbSchema = {
@@ -614,8 +616,9 @@ export default async function ServiceDetailPage({ params }: Props) {
         </div>
       </section>
 
-      {/* REVIEWS */}
-      <section className="py-20 bg-surface border-b border-outline-variant">
+      {/* Only publish reviews that have been supplied and verified. */}
+      {content.reviews.length > 0 && (
+        <section className="py-20 bg-surface border-b border-outline-variant">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-12 text-center">
             <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-accent">
@@ -652,7 +655,8 @@ export default async function ServiceDetailPage({ params }: Props) {
             ))}
           </div>
         </div>
-      </section>
+        </section>
+      )}
 
       {/* FAQ */}
       <section className="py-20 bg-surface-container-low border-b border-outline-variant">
@@ -682,7 +686,7 @@ export default async function ServiceDetailPage({ params }: Props) {
           </div>
 
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {otherServices.slice(0, 4).map((s) => (
+            {relatedServices.map((s) => (
               <Link
                 key={s.id}
                 href={s.slug}
@@ -728,8 +732,9 @@ export default async function ServiceDetailPage({ params }: Props) {
         </div>
       </section>
 
-      {/* AREAS WE SERVE */}
-      <section className="py-20 bg-surface-container-low border-b border-outline-variant">
+      {/* Only link to local variants approved for indexing. */}
+      {majorAreas.length > 0 && (
+        <section className="py-20 bg-surface-container-low border-b border-outline-variant">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-10 text-center">
             <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-accent">
@@ -748,8 +753,8 @@ export default async function ServiceDetailPage({ params }: Props) {
               const locSlug = area.slug || area.id;
               const isKat = locSlug.toLowerCase() === "katlehong";
               const prep = isKat ? "in" : "Near";
-              const canonicalRoute = getCanonicalServiceLocationSlug(service.title, locSlug);
-              const isRep = isRepairService(service.title);
+              const canonicalRoute = getCanonicalServiceLocationSlug(service.id, locSlug);
+              const isRep = isRepairService(service.id);
               const linkLabel = isRep
                 ? `${service.title} ${prep} ${area.name}`
                 : `${toSingularServiceTitle(service.title)} Installation ${prep} ${area.name}`;
@@ -776,7 +781,8 @@ export default async function ServiceDetailPage({ params }: Props) {
             </Link>
           </div>
         </div>
-      </section>
+        </section>
+      )}
 
       <CTASection />
     </div>

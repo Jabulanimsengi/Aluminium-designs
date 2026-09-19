@@ -1,22 +1,27 @@
 import React from "react";
-import { gautengLocations } from "@/data/locations";
-import { notFound } from "next/navigation";
+import {
+  gautengLocations,
+  getChildLocationsForHub,
+  getHubForLocation,
+  type LocationArea,
+} from "@/data/locations";
+import { notFound, permanentRedirect, RedirectType } from "next/navigation";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight, ChevronRight, MapPin, ShieldCheck, Layers, Paintbrush, Hammer } from "lucide-react";
 import CTASection from "@/components/CTASection";
 import FAQAccordion from "@/components/FAQAccordion";
 import ServiceCard from "@/components/ServiceCard";
 import { services } from "@/data/services";
-import { absoluteUrl, businessContact, siteUrl, whatsappQuoteUrl } from "@/lib/site";
+import { absoluteUrl, siteUrl, whatsappQuoteUrl } from "@/lib/site";
 import {
   getCanonicalServiceLocationSlug,
   isRepairService,
   toSingularServiceTitle,
 } from "@/lib/serviceLocationParser";
-
-function slugify(text: string) {
-  return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
-}
+import {
+  getLocationSeoEligibility,
+  getServiceLocationSeoEligibility,
+} from "@/lib/seoEligibility";
 
 // === DETERMINISTIC SHUFFLE LOGIC ===
 function seededRandom(seed: string) {
@@ -42,12 +47,33 @@ function deterministicShuffle<T>(array: T[], seed: string): T[] {
   return shuffled;
 }
 
+function buildLocationMetaTitle(locationName: string, preposition: "in" | "Near") {
+  const candidates = [
+    `Aluminium Windows & Doors ${preposition} ${locationName} | Aluminium Designs`,
+    `Aluminium Services ${preposition} ${locationName} | Aluminium Designs`,
+    `Aluminium ${preposition} ${locationName} | Aluminium Designs`,
+    `${locationName} Aluminium | Aluminium Designs`,
+    `Aluminium ${preposition} ${locationName}`,
+  ];
+  return candidates.find((candidate) => candidate.length <= 60) || candidates.at(-1)!;
+}
+
+function buildLocationMetaDescription(location: LocationArea, preposition: "in" | "near") {
+  const candidates = [
+    `Custom aluminium windows, doors, glass and steel services ${preposition} ${location.name}. Measurement, fabrication and installation across ${location.municipality}.`,
+    `Aluminium windows, doors, glass and steel services ${preposition} ${location.name}. Custom measurement, fabrication and installation across Gauteng.`,
+  ];
+  return candidates.find((candidate) => candidate.length <= 155) || candidates.at(-1)!;
+}
+
 export const dynamicParams = true;
 
 export async function generateStaticParams() {
-  return gautengLocations.map((location) => ({
-    area: location.slug,
-  }));
+  return gautengLocations
+    .filter((location) => getLocationSeoEligibility(location).index)
+    .map((location) => ({
+      area: location.slug,
+    }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ area: string }> }) {
@@ -62,28 +88,32 @@ export async function generateMetadata({ params }: { params: Promise<{ area: str
   const prep = isKat ? "in" : "Near";
   const prepLower = isKat ? "in" : "near";
 
-  const variations = [
-    `Premium custom aluminium windows, doors, and glass installations ${prepLower} ${location.name}, ${location.municipality}. Contact Aluminium Designs for a free quote in your area.`,
-    `Top-rated aluminium installations ${prepLower} ${location.name}. Custom sizing, sleek finishes, and professional fitting. Get a free quote today!`,
-    `Upgrade your ${location.name} home with modern aluminium windows and doors. Expert manufacturing and flawless installation by Aluminium Designs.`
-  ];
-  
-  const random = seededRandom(location.id);
-  const desc = variations[Math.floor(random() * variations.length)];
+  const desc = buildLocationMetaDescription(location, prepLower);
   const socialImg = absoluteUrl("/images/hero_exterior.png");
-  const metaTitle = `Aluminium Windows & Doors ${prep} ${location.name}`;
+  const metaTitle = buildLocationMetaTitle(location.name, prep);
+  const eligibility = getLocationSeoEligibility(location);
 
   return {
-    title: metaTitle,
+    title: { absolute: metaTitle },
     description: desc,
-    robots: { index: true, follow: true },
+    robots: {
+      index: eligibility.index,
+      follow: true,
+      googleBot: {
+        index: eligibility.index,
+        follow: true,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+        "max-video-preview": -1,
+      },
+    },
     alternates: { canonical: `${siteUrl}/locations/${location.slug}` },
     openGraph: {
       type: "website",
       locale: "en_ZA",
       url: `${siteUrl}/locations/${location.slug}`,
       siteName: "Aluminium Designs",
-      title: `${metaTitle} | Aluminium Designs`,
+      title: metaTitle,
       description: desc,
       images: [
         {
@@ -96,7 +126,7 @@ export async function generateMetadata({ params }: { params: Promise<{ area: str
     },
     twitter: {
       card: "summary_large_image",
-      title: `${metaTitle} | Aluminium Designs`,
+      title: metaTitle,
       description: desc,
       images: [socialImg],
     },
@@ -111,6 +141,15 @@ export default async function LocationPage({ params }: { params: Promise<{ area:
     notFound();
   }
 
+  const eligibility = getLocationSeoEligibility(location);
+  if (!eligibility.index) {
+    const parentHub = getHubForLocation(location);
+    permanentRedirect(
+      parentHub ? `/locations/${parentHub.slug}` : "/locations",
+      RedirectType.replace,
+    );
+  }
+
   const isKat = (location.slug || location.id).toLowerCase() === "katlehong";
   const prep = isKat ? "in" : "Near";
   const prepLower = isKat ? "in" : "near";
@@ -122,10 +161,21 @@ export default async function LocationPage({ params }: { params: Promise<{ area:
     `Aluminium Designs brings durable, easy-to-clean aluminium windows, doors, and security gates to ${location.name} homeowners. Explore our range of custom designs made to fit your property perfectly.`
   ];
   const random = seededRandom(location.id);
-  const heroDescription = heroVariations[Math.floor(random() * heroVariations.length)];
+  const genericHeroDescription = heroVariations[Math.floor(random() * heroVariations.length)];
+  const heroDescription = location.context
+    ? `${location.context}. We measure, manufacture, and install aluminium, glass, and steel systems for properties across ${location.name} and the wider ${location.region} area.`
+    : genericHeroDescription;
 
   // Shuffle services deterministically based on location
   const shuffledServices = deterministicShuffle(services, location.id);
+  const orderedServices = [
+    ...shuffledServices.filter((service) =>
+      getServiceLocationSeoEligibility(service.id, location).index,
+    ),
+    ...shuffledServices.filter((service) =>
+      !getServiceLocationSeoEligibility(service.id, location).index,
+    ),
+  ];
 
   // Benefits logic - Shuffle the content but KEEP the layout spans consistent
   const rawBenefits = [
@@ -164,41 +214,86 @@ export default async function LocationPage({ params }: { params: Promise<{ area:
     span: layoutSpans[index]
   }));
 
+  const coveredLocations = getChildLocationsForHub(location.slug);
+  const localServiceNames = services
+    .filter((service) => getServiceLocationSeoEligibility(service.id, location).index)
+    .map((service) => service.menuLabel || service.title);
+  const coveredAreaNames = coveredLocations.map((area) => area.name);
+  const coveredAreaPreview = coveredAreaNames.slice(0, 10).join(", ");
+  const remainingAreaCount = Math.max(coveredAreaNames.length - 10, 0);
+  const locationFaqs = [
+    {
+      question: `Do you provide on-site aluminium and steel services in ${location.name}?`,
+      answer: `Yes. ${location.name} is one of our established Gauteng service hubs. We arrange site measurements and project visits at residential and commercial addresses in the hub and its assigned surrounding areas.`,
+    },
+    {
+      question: `Which suburbs and townships do you cover around ${location.name}?`,
+      answer: coveredAreaNames.length > 0
+        ? `Coverage includes ${coveredAreaPreview}${remainingAreaCount > 0 ? ` and ${remainingAreaCount} additional listed areas` : ""}. The full coverage list is shown on this page. Confirm the project address when requesting a quote so we can verify travel and scheduling.`
+        : `We cover ${location.name} and nearby addresses within ${location.municipality}. Confirm the exact project address when requesting a quote so we can verify travel and scheduling.`,
+    },
+    {
+      question: `Which services are available near ${location.name}?`,
+      answer: `The main locally targeted services for this hub are ${localServiceNames.join(", ")}. Our broader aluminium, glass, security, and steel catalogue is also available subject to the project specification and site location.`,
+    },
+    {
+      question: `How much does an installation near ${location.name} cost?`,
+      answer: `Pricing depends on measurements, product type, glass or steel specification, hardware, finish, access, removal work, and installation conditions. We provide a written quote after confirming the scope instead of applying one generic area price.`,
+    },
+    {
+      question: `What information is needed for a quote in ${location.name}?`,
+      answer: `Send the project address, approximate opening dimensions, photographs, the product or repair required, preferred finish, and any estate or site-access requirements. A site measurement can then confirm the final manufacturing dimensions and installation scope.`,
+    },
+    {
+      question: `How long do measurement, manufacturing, and installation take near ${location.name}?`,
+      answer: `Timing depends on the product, quantity, selected materials, current workshop schedule, and site readiness. Your written quote should distinguish the measurement appointment, fabrication lead time, and expected installation duration.`,
+    },
+    {
+      question: `Can you remove or repair existing windows, doors, glass, or gates in ${location.name}?`,
+      answer: `Yes, where the existing opening and product condition allow it. Photographs help with an initial assessment, but an on-site inspection may be needed to decide whether repair, component replacement, or full replacement is the safer and more economical option.`,
+    },
+    {
+      question: `Do you work on homes, estates, and commercial properties near ${location.name}?`,
+      answer: `Yes. We assess houses, residential estates, complexes, shops, offices, and other commercial properties. Please disclose security procedures, working-hour restrictions, landlord approvals, parking, lifting, or access constraints before scheduling the visit.`,
+    },
+  ];
+
   // Regional Hubs & Suburbs in Municipality
   const neighboringInMunicipality = gautengLocations.filter(
-    (l) => (l.slug || l.id) !== location.slug && l.municipality === location.municipality
+    (candidate) =>
+      (candidate.slug || candidate.id) !== location.slug &&
+      candidate.municipality === location.municipality &&
+      getLocationSeoEligibility(candidate).index,
   );
   const additionalLocations = gautengLocations.filter(
-    (l) => (l.slug || l.id) !== location.slug && l.municipality !== location.municipality
+    (candidate) =>
+      (candidate.slug || candidate.id) !== location.slug &&
+      candidate.municipality !== location.municipality &&
+      getLocationSeoEligibility(candidate).index,
   );
   const neighboringAreas = [...neighboringInMunicipality, ...additionalLocations].slice(0, 18);
 
   // Schema generation
-  const localBusinessJsonLd = {
+  const serviceAreaJsonLd = {
     "@context": "https://schema.org",
-    "@type": "HomeAndConstructionBusiness",
-    "@id": `${siteUrl}#business`,
-    name: businessContact.name,
+    "@type": "Service",
+    "@id": `${siteUrl}/locations/${location.slug}#service-area`,
+    name: `Aluminium and steel services ${prepLower} ${location.name}`,
+    serviceType: "Custom aluminium, glass, security, and steel fabrication",
+    provider: {
+      "@id": `${siteUrl}#business`,
+    },
     ...(absoluteUrl("/images/hero_exterior.png")
       ? { image: absoluteUrl("/images/hero_exterior.png") }
       : {}),
-    telephone: businessContact.phoneE164,
-    email: businessContact.email,
-    areaServed: {
+    areaServed: [location, ...coveredLocations].map((area) => ({
       "@type": "Place",
-      name: location.name,
+      name: area.name,
       containedInPlace: {
         "@type": "Place",
-        name: location.municipality,
+        name: area.municipality,
       },
-    },
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: businessContact.streetAddress,
-      addressLocality: businessContact.addressCity,
-      addressRegion: businessContact.addressRegion,
-      addressCountry: businessContact.addressCountry,
-    },
+    })),
     url: `${siteUrl}/locations/${location.slug}`,
   };
 
@@ -227,12 +322,26 @@ export default async function LocationPage({ params }: { params: Promise<{ area:
     ],
   };
 
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "@id": `${siteUrl}/locations/${location.slug}#faq`,
+    mainEntity: locationFaqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.answer,
+      },
+    })),
+  };
+
   return (
     <div className="relative w-full bg-surface text-on-surface">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify([localBusinessJsonLd, breadcrumbJsonLd]),
+          __html: JSON.stringify([serviceAreaJsonLd, breadcrumbJsonLd, faqJsonLd]),
         }}
       />
       
@@ -292,6 +401,10 @@ export default async function LocationPage({ params }: { params: Promise<{ area:
               {heroDescription}
             </p>
 
+            <p className="font-mono text-xs leading-relaxed text-on-surface-variant max-w-2xl border-l-2 border-accent pl-4">
+              Area coverage: {location.type === "mall" ? `properties in the precinct surrounding ${location.name}` : location.name}, {location.region}, {location.municipality}. Visits are arranged to the project address; this page does not represent a walk-in branch at the location.
+            </p>
+
             <div className="flex flex-col sm:flex-row items-center gap-3 pt-4">
               <Link
                 href={whatsappQuoteUrl}
@@ -318,12 +431,18 @@ export default async function LocationPage({ params }: { params: Promise<{ area:
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {shuffledServices.map((service) => {
-              const localizedSlug = `/${getCanonicalServiceLocationSlug(service.title, location.slug)}`;
-              const isRep = isRepairService(service.title);
+            {orderedServices.map((service) => {
+              const serviceEligibility = getServiceLocationSeoEligibility(
+                service.id,
+                location,
+              );
+              const localizedSlug = serviceEligibility.index
+                ? `/${getCanonicalServiceLocationSlug(service.id, location.slug)}`
+                : service.slug;
+              const isRep = isRepairService(service.id);
               const cardTitle = isRep
-                ? service.title
-                : `${toSingularServiceTitle(service.title)} Installation`;
+                ? service.menuLabel || service.title
+                : `${toSingularServiceTitle(service.menuLabel || service.title)} Installation`;
               return (
                 <ServiceCard
                   key={service.id}
@@ -382,11 +501,42 @@ export default async function LocationPage({ params }: { params: Promise<{ area:
               Questions About Installations {prep} {location.name}?
             </h2>
           </div>
-          <FAQAccordion limit={4} locationName={location.name} />
+          <FAQAccordion limit={8} items={locationFaqs} />
         </div>
       </section>
 
-      {/* 5. REGIONAL HUBS & SUBURBS IN MUNICIPALITY */}
+      {/* 5. COVERED SUBURBS */}
+      {coveredLocations.length > 0 && (
+        <section className="py-20 bg-surface-container-low border-t border-outline-variant">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center space-y-3 mb-10">
+              <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-accent">
+                Local Coverage
+              </span>
+              <h2 className="font-sans font-bold uppercase tracking-tight text-3xl sm:text-4xl text-primary">
+                Areas We Serve Around {location.name}
+              </h2>
+              <p className="font-sans text-on-surface-variant text-sm max-w-2xl mx-auto leading-relaxed">
+                Our mobile measurement and installation teams serve {location.name} and the following surrounding suburbs and townships. Visits are arranged to your project address.
+              </p>
+            </div>
+
+            <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3" aria-label={`Areas served around ${location.name}`}>
+              {coveredLocations.map((area) => (
+                <li
+                  key={area.slug}
+                  className="flex items-center gap-2 rounded-lg border border-outline-variant bg-surface px-3 py-2.5 text-sm text-on-surface-variant"
+                >
+                  <MapPin className="h-3.5 w-3.5 shrink-0 text-accent" />
+                  <span>{area.name}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )}
+
+      {/* 6. REGIONAL HUBS IN MUNICIPALITY */}
       {neighboringAreas.length > 0 && (
         <section className="py-20 bg-surface-container-low border-t border-outline-variant">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -436,7 +586,7 @@ export default async function LocationPage({ params }: { params: Promise<{ area:
         </section>
       )}
 
-      {/* 6. CTA SECTION */}
+      {/* 7. CTA SECTION */}
       <CTASection />
     </div>
   );

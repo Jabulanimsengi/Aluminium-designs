@@ -118,7 +118,7 @@ export const seamlessAluminiumGuttersService: ServiceObject = {
   ],
   seo: {
     titleTag: "Seamless Aluminium Gutters & Downpipes | Pretoria, Gauteng & SA",
-    metaDescription: "Continuous on-site roll-formed seamless aluminium gutters and downpipes in Pretoria & Gauteng. Leak-proof, zero rust, concealed hangers, and fast 1-day installation.",
+    metaDescription: "Continuous roll-formed aluminium gutters and downpipes measured and installed with concealed hangers across Pretoria and Gauteng.",
     keywords: [
       "seamless gutters pretoria",
       "aluminium gutters pretoria",

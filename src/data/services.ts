@@ -1,8 +1,11 @@
 import { allCoreServices } from "@/data/core-services";
+import { getServicePresentation } from "@/data/servicePresentation";
 
 export interface Service {
   id: string;
   title: string;
+  menuLabel?: string;
+  searchAliases?: string[];
   slug: string;
   shortDescription: string;
   longDescription: string;
@@ -34,9 +37,12 @@ export const steelSlugs = new Set([
 
 export const services: Service[] = allCoreServices.map((srv, index) => {
   const isSteel = steelSlugs.has(srv.slug) || srv.category.toLowerCase().includes("steel");
+  const presentation = getServicePresentation(srv.slug);
   return {
     id: srv.slug,
-    title: srv.serviceName,
+    title: presentation.pageTitle,
+    menuLabel: presentation.menuLabel,
+    searchAliases: presentation.aliases,
     slug: `/services/${srv.slug}`,
     shortDescription: srv.tagline,
     longDescription: srv.overview.paragraphs.join(" "),

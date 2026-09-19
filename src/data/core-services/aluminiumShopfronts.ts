@@ -120,7 +120,7 @@ export const aluminiumShopfrontsService: ServiceObject = {
   ],
   seo: {
     titleTag: "Aluminium Shopfronts & Commercial Glazing | Gauteng & SA",
-    metaDescription: "Commercial aluminium shopfronts, retail display windows, and glass storefront doors in Gauteng. SANS 10400 safety compliant, heavy-duty hardware, and after-hours fitting.",
+    metaDescription: "Commercial aluminium shopfronts, retail display windows and glass entrance doors measured, specified and installed across Gauteng.",
     keywords: [
       "aluminium shopfronts gauteng",
       "commercial glazing gauteng",

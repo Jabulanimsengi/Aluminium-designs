@@ -26,7 +26,7 @@ import { absoluteUrl, businessContact, businessHours, googleMapsDirectionsUrl, s
 export const metadata: Metadata = {
   title: "About Us | Gauteng Aluminium Specialists",
   description:
-    "Meet Aluminium Designs, a Gauteng team measuring, manufacturing, installing, and repairing custom aluminium windows, doors, glass systems, shopfronts, security products, and outdoor structures.",
+    "Meet the Gauteng team behind custom aluminium windows, doors, glass systems, security products, steel structures, repairs and installations.",
   alternates: { canonical: `${siteUrl}/about` },
   openGraph: {
     type: "website",

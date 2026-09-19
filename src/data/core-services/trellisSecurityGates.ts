@@ -118,7 +118,7 @@ export const trellisSecurityGatesService: ServiceObject = {
   ],
   seo: {
     titleTag: "Trellis Doors & Slam Lock Security Gates | Gauteng & SA",
-    metaDescription: "Custom expanding trellis doors and slam lock security gates for patio doors, front doors, and passages. Smooth sliding tracks, anti-crowbar steel, and fast installation.",
+    metaDescription: "Custom retractable trellis security gates for patio doors, entrances and passages, measured and installed across Gauteng.",
     keywords: [
       "trellis doors",
       "slam lock gates",

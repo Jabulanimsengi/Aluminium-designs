@@ -18,9 +18,9 @@ import { siteUrl, businessContact, getWhatsAppQuoteUrl, absoluteUrl } from "@/li
 import CTASection from "@/components/CTASection";
 
 export const metadata: Metadata = {
-  title: "Aluminium & Steel Price Guide in Gauteng | Transparent Cost Hub",
+  title: "Aluminium & Steel Prices Gauteng",
   description:
-    "Explore transparent guide pricing for custom aluminium windows, sliding doors, burglar bars, gates and repairs near Johannesburg, Pretoria & Katlehong. Free quotes.",
+    "Guide prices for aluminium windows, sliding doors, burglar bars, gates, repairs and steel works across Gauteng. Request a written quote.",
   keywords: [
     "aluminium windows price near Johannesburg",
     "sliding doors price near Sandton",
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     locale: "en_ZA",
     url: `${siteUrl}/pricing`,
     siteName: "Aluminium Designs",
-    title: "Aluminium & Steel Price Guide Near Gauteng | Transparent Cost Hub",
+    title: "Aluminium & Steel Prices Gauteng | Aluminium Designs",
     description:
       "Transparent starting guide prices for custom aluminium windows, sliding doors, security gates, and steel works across Gauteng.",
     images: [
@@ -51,7 +51,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Aluminium & Steel Price Guide Near Gauteng | Transparent Cost Hub",
+    title: "Aluminium & Steel Prices Gauteng | Aluminium Designs",
     description:
       "Transparent starting guide prices for custom aluminium windows, sliding doors, security gates, and steel works across Gauteng.",
     images: [absoluteUrl("/images/hero_exterior.png")],

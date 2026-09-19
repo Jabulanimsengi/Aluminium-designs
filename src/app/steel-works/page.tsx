@@ -3,16 +3,13 @@ import { Metadata } from "next";
 import Link from "next/link";
 import {
   Shield,
-  ShieldCheck,
   Wrench,
   Lock,
   ArrowRight,
   Phone,
   Layers,
-  CheckCircle2,
   ChevronRight,
   Hammer,
-  Truck,
   MapPin,
 } from "lucide-react";
 import { absoluteUrl, siteUrl, whatsappQuoteUrl } from "@/lib/site";
@@ -20,18 +17,18 @@ import CTASection from "@/components/CTASection";
 import SteelCatalogueFilter from "@/components/SteelCatalogueFilter";
 
 export const metadata: Metadata = {
-  title: "Custom Steel Works & Security Barriers Gauteng",
+  title: "Steel Works & Security Gauteng",
   description:
-    "Professional steel fabrication & security installation in Gauteng. Heavy-duty steel gates, burglar bars, automated driveway gates, palisade fencing, steel carports & mobile welding.",
+    "Custom steel gates, burglar bars, driveway gates, palisade fencing, carports and mobile welding measured and installed across Gauteng.",
   alternates: { canonical: `${siteUrl}/steel-works` },
   openGraph: {
     type: "website",
     locale: "en_ZA",
     url: `${siteUrl}/steel-works`,
     siteName: "Aluminium Designs",
-    title: "Custom Steel Works, Security Gates, Burglar Bars & Carports Gauteng",
+    title: "Steel Works & Security Gauteng | Aluminium Designs",
     description:
-      "Professional steel fabrication & security installation in Gauteng. Heavy-duty steel gates, burglar bars, automated driveway gates, palisade fencing, steel carports & mobile welding.",
+      "Custom steel gates, burglar bars, driveway gates, palisade fencing, carports and mobile welding measured and installed across Gauteng.",
     images: [
       {
         url: absoluteUrl("/images/services/steel-works-hero.jpg"),
@@ -43,9 +40,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Custom Steel Works, Security Gates, Burglar Bars & Carports Gauteng",
+    title: "Steel Works & Security Gauteng | Aluminium Designs",
     description:
-      "Professional steel fabrication & security installation in Gauteng. Heavy-duty steel gates, burglar bars, automated driveway gates, palisade fencing, steel carports & mobile welding.",
+      "Custom steel gates, burglar bars, driveway gates, palisade fencing, carports and mobile welding measured and installed across Gauteng.",
     images: [absoluteUrl("/images/services/steel-works-hero.jpg")],
   },
 };
@@ -429,32 +426,32 @@ export default function SteelWorksPage() {
               </h3>
               <ul className="space-y-2 text-xs font-mono">
                 <li>
-                  <Link href="/steel-works-installation-near-sandton" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
-                    <span>Steel Works Near Sandton</span>
+                  <Link href="/security-gate-installation-near-johannesburg" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
+                    <span>Security Gates Near Johannesburg</span>
                     <span>&rarr;</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/security-gate-installation-near-sandton" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
-                    <span>Security Gates Near Sandton</span>
+                  <Link href="/security-gate-installation-near-soweto" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
+                    <span>Security Gates Near Soweto</span>
                     <span>&rarr;</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/burglar-bar-installation-near-johannesburg" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
-                    <span>Burglar Bars Near JHB CBD</span>
+                  <Link href="/security-gate-installation-near-alexandra" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
+                    <span>Security Gates Near Alexandra</span>
                     <span>&rarr;</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/driveway-gate-installation-near-randburg" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
-                    <span>Driveway Gates Near Randburg</span>
+                  <Link href="/security-gate-installation-near-roodepoort" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
+                    <span>Security Gates Near Roodepoort</span>
                     <span>&rarr;</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/steel-carport-installation-near-fourways" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
-                    <span>Steel Carports Near Fourways</span>
+                  <Link href="/security-gate-installation-near-lenasia" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
+                    <span>Security Gates Near Lenasia</span>
                     <span>&rarr;</span>
                   </Link>
                 </li>
@@ -469,32 +466,32 @@ export default function SteelWorksPage() {
               </h3>
               <ul className="space-y-2 text-xs font-mono">
                 <li>
-                  <Link href="/steel-works-installation-in-katlehong" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
-                    <span>Steel Works in Katlehong</span>
+                  <Link href="/security-gate-installation-near-kempton-park" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
+                    <span>Security Gates Near Kempton Park</span>
                     <span>&rarr;</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/security-gate-installation-near-alberton" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
-                    <span>Security Gates Near Alberton</span>
+                  <Link href="/security-gate-installation-near-boksburg" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
+                    <span>Security Gates Near Boksburg</span>
                     <span>&rarr;</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/burglar-bar-installation-near-germiston" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
-                    <span>Burglar Bars Near Germiston</span>
+                  <Link href="/security-gate-installation-near-germiston" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
+                    <span>Security Gates Near Germiston</span>
                     <span>&rarr;</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/trellis-door-installation-near-bedfordview" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
-                    <span>Trellis Gates Near Bedfordview</span>
+                  <Link href="/security-gate-installation-near-tembisa" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
+                    <span>Security Gates Near Tembisa</span>
                     <span>&rarr;</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/palisade-fencing-installation-near-boksburg" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
-                    <span>Palisade Fencing Near Boksburg</span>
+                  <Link href="/services/palisade-fencing" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
+                    <span>Palisade Fencing Guide</span>
                     <span>&rarr;</span>
                   </Link>
                 </li>
@@ -509,32 +506,32 @@ export default function SteelWorksPage() {
               </h3>
               <ul className="space-y-2 text-xs font-mono">
                 <li>
-                  <Link href="/steel-works-installation-near-centurion" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
-                    <span>Steel Works Near Centurion</span>
+                  <Link href="/security-gate-installation-near-pretoria-north" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
+                    <span>Security Gates Near Pretoria North</span>
                     <span>&rarr;</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/driveway-gate-installation-near-centurion" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
-                    <span>Driveway Gates Near Centurion</span>
+                  <Link href="/security-gate-installation-near-mamelodi" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
+                    <span>Security Gates Near Mamelodi</span>
                     <span>&rarr;</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/security-gate-installation-near-pretoria" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
-                    <span>Security Gates Near Pretoria</span>
+                  <Link href="/security-gate-installation-near-soshanguve" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
+                    <span>Security Gates Near Soshanguve</span>
                     <span>&rarr;</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/steel-carport-installation-near-midrand" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
-                    <span>Steel Carports Near Midrand</span>
+                  <Link href="/services/steel-carports" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
+                    <span>Steel Carports Guide</span>
                     <span>&rarr;</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/palisade-fencing-installation-near-midrand" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
-                    <span>Palisade Fencing Near Midrand</span>
+                  <Link href="/services/palisade-fencing" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
+                    <span>Palisade Fencing Guide</span>
                     <span>&rarr;</span>
                   </Link>
                 </li>
@@ -549,8 +546,8 @@ export default function SteelWorksPage() {
               </h3>
               <ul className="space-y-2 text-xs font-mono">
                 <li>
-                  <Link href="/steel-works-installation-near-roodepoort" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
-                    <span>Steel Works Near Roodepoort</span>
+                  <Link href="/security-gate-installation-near-krugersdorp" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
+                    <span>Security Gates Near Krugersdorp</span>
                     <span>&rarr;</span>
                   </Link>
                 </li>
@@ -561,20 +558,20 @@ export default function SteelWorksPage() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="/burglar-bar-installation-near-krugersdorp" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
-                    <span>Burglar Bars Near Krugersdorp</span>
+                  <Link href="/security-gate-installation-near-vanderbijlpark" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
+                    <span>Security Gates Near Vanderbijlpark</span>
                     <span>&rarr;</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/driveway-gate-installation-near-soweto" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
-                    <span>Driveway Gates Near Soweto</span>
+                  <Link href="/services/driveway-gates" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
+                    <span>Driveway Gates Guide</span>
                     <span>&rarr;</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/custom-welding-installation-near-alberton" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
-                    <span>Welding Services Near Alberton</span>
+                  <Link href="/services/steel-works" className="text-secondary hover:text-accent transition-colors flex items-center justify-between">
+                    <span>Custom Steel Fabrication Guide</span>
                     <span>&rarr;</span>
                   </Link>
                 </li>

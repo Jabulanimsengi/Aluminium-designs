@@ -16,18 +16,18 @@ import { absoluteUrl, siteUrl, whatsappQuoteUrl } from "@/lib/site";
 import { faqs } from "@/data/faqs";
 
 export const metadata: Metadata = {
-  title: { absolute: "Custom Aluminium Doors, Windows & Steel Works Gauteng | Aluminium Designs" },
+  title: { absolute: "Aluminium Windows & Doors Gauteng | Aluminium Designs" },
   description:
-    "SABS certified custom aluminium windows, sliding doors, folding stackers, security gates & steel carports across Johannesburg, Pretoria & Gauteng. Request a free quote.",
+    "Custom aluminium windows, sliding doors, security gates and steel works measured and installed across Johannesburg, Pretoria and Gauteng.",
   alternates: { canonical: siteUrl || "/" },
   openGraph: {
     type: "website",
     locale: "en_ZA",
     url: siteUrl || "https://www.aluminiumdesigns.co.za",
     siteName: "Aluminium Designs",
-    title: "Custom Aluminium Doors, Windows & Steel Works Gauteng | Aluminium Designs",
+    title: "Aluminium Windows & Doors Gauteng | Aluminium Designs",
     description:
-      "SABS certified custom aluminium windows, sliding doors, folding stackers, security gates & steel carports across Johannesburg, Pretoria & Gauteng.",
+      "Custom aluminium windows, sliding doors, security gates and steel works measured and installed across Johannesburg, Pretoria and Gauteng.",
     images: [
       {
         url: absoluteUrl("/images/hero_exterior.png"),
@@ -39,9 +39,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Custom Aluminium Doors, Windows & Steel Works Gauteng | Aluminium Designs",
+    title: "Aluminium Windows & Doors Gauteng | Aluminium Designs",
     description:
-      "SABS certified custom aluminium windows, sliding doors, folding stackers, security gates & steel carports across Johannesburg, Pretoria & Gauteng.",
+      "Custom aluminium windows, sliding doors, security gates and steel works measured and installed across Johannesburg, Pretoria and Gauteng.",
     images: [absoluteUrl("/images/hero_exterior.png")],
   },
 };
@@ -145,7 +145,7 @@ export default function Home() {
               Custom Aluminium Doors, Windows &amp; Steel
             </h1>
             <p className="text-white/90 max-w-xl mx-auto text-base sm:text-lg leading-relaxed">
-              SABS-certified custom aluminium windows, folding doors, security gates, and steel carports. Measured, manufactured, and neatly installed across Johannesburg, Pretoria &amp; Gauteng.
+              Custom aluminium windows, folding doors, security gates, and steel carports. Measured, manufactured, and neatly installed across Johannesburg, Pretoria &amp; Gauteng.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-3 w-full sm:w-auto">
@@ -177,10 +177,10 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
           <dl className="grid grid-cols-2 lg:grid-cols-4 gap-6 text-center">
             {[
-              ["500+", "Installations across Gauteng"],
-              ["4.9/5", "Average homeowner rating"],
-              ["35km", "Workshop service radius"],
-              ["SABS", "Certified materials & glass"],
+              ["38", "Aluminium, glass & steel services"],
+              ["Gauteng", "Mobile measurement teams"],
+              ["Custom", "Made to measured openings"],
+              ["Written", "Project-specific quotations"],
             ].map(([value, label]) => (
               <div key={label} className="space-y-1">
                 <dt className="sr-only">{label}</dt>

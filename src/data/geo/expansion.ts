@@ -1,5 +1,5 @@
-// Expansion dataset: additional verified Gauteng suburbs/sections and shopping centres
-// to bring the geo footprint to 705 nodes (37 hubs + 542 sections + 126 malls).
+// Additional Gauteng suburbs, township sections, and shopping centres. Duplicate
+// slugs are reconciled centrally so every unique place maps to one coverage hub.
 
 export const extraSections = [
   // City of Johannesburg — northern/eastern residential suburbs
@@ -162,6 +162,17 @@ export const extraSections = [
   { id: "loc-gp-constantia-park", name: "Constantia Park", category: "Suburb", municipality: "City of Tshwane", region: "Pretoria East", notes: "Residential suburb", slug: "constantia-park", province: "Gauteng", provinceAbbr: "GP" },
   { id: "loc-gp-rietvalleirand", name: "Rietvalleirand", category: "Suburb", municipality: "City of Tshwane", region: "Pretoria East", notes: "Residential suburb", slug: "rietvalleirand", province: "Gauteng", provinceAbbr: "GP" },
   { id: "loc-gp-blue-hills", name: "Blue Hills", category: "Suburb", municipality: "City of Johannesburg", region: "Midrand", notes: "Residential suburb", slug: "blue-hills", province: "Gauteng", provinceAbbr: "GP" },
+  // Township and settlement coverage confirmed against municipal regional lists.
+  { id: "loc-gp-kanana-park", name: "Kanana Park", category: "Township", municipality: "City of Johannesburg", region: "Deep South JHB", notes: "Residential township in Johannesburg Region G", slug: "kanana-park", province: "Gauteng", provinceAbbr: "GP" },
+  { id: "loc-gp-stretford", name: "Stretford", category: "Township", municipality: "City of Johannesburg", region: "Deep South JHB", notes: "Residential area in the Greater Orange Farm corridor", slug: "stretford", province: "Gauteng", provinceAbbr: "GP" },
+  { id: "loc-gp-nancefield", name: "Nancefield", category: "Township", municipality: "City of Johannesburg", region: "Lenasia", notes: "Residential area in Johannesburg Region G", slug: "nancefield", province: "Gauteng", provinceAbbr: "GP" },
+  { id: "loc-gp-slovoville", name: "Slovoville", category: "Township", municipality: "City of Johannesburg", region: "Soweto", notes: "Residential township in Greater Soweto", slug: "slovoville", province: "Gauteng", provinceAbbr: "GP" },
+  { id: "loc-gp-tshepisong", name: "Tshepisong", category: "Township", municipality: "City of Johannesburg", region: "Soweto", notes: "Residential township in Greater Soweto", slug: "tshepisong", province: "Gauteng", provinceAbbr: "GP" },
+  { id: "loc-gp-doornkop", name: "Doornkop", category: "Township", municipality: "City of Johannesburg", region: "Soweto", notes: "Residential township in Greater Soweto", slug: "doornkop", province: "Gauteng", provinceAbbr: "GP" },
+  { id: "loc-gp-molapo", name: "Molapo", category: "Township", municipality: "City of Johannesburg", region: "Soweto", notes: "Residential township in Greater Soweto", slug: "molapo", province: "Gauteng", provinceAbbr: "GP" },
+  { id: "loc-gp-noordgesig", name: "Noordgesig", category: "Township", municipality: "City of Johannesburg", region: "Soweto", notes: "Residential township adjoining Greater Soweto", slug: "noordgesig", province: "Gauteng", provinceAbbr: "GP" },
+  { id: "loc-gp-babelegi", name: "Babelegi", category: "Township", municipality: "City of Tshwane", region: "Pretoria North", notes: "Residential and industrial township in northern Tshwane", slug: "babelegi", province: "Gauteng", provinceAbbr: "GP" },
+  { id: "loc-gp-wedela", name: "Wedela", category: "Township", municipality: "West Rand", region: "Carletonville", notes: "Mining township in the Merafong area", slug: "wedela", province: "Gauteng", provinceAbbr: "GP" },
 ];
 
 export const extraMalls = [
