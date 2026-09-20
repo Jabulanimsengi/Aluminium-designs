@@ -8,7 +8,7 @@ export async function POST(request: Request) {
     secure: process.env.NODE_ENV === "production",
     sameSite: "strict",
     maxAge: 0,
-    path: "/admin",
+    path: "/",
   });
   response.headers.set("Cache-Control", "no-store");
   return response;

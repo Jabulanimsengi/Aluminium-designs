@@ -1,6 +1,5 @@
-import { open, stat } from "node:fs/promises";
+import { appendFile, chmod, mkdir, open, stat } from "node:fs/promises";
 import path from "node:path";
-import { appendNdjsonLine, getDataDir } from "@/lib/monitoring";
 
 export type Lead = {
   name: string;
@@ -18,8 +17,24 @@ export type Lead = {
 
 const MAX_READ_BYTES = 5 * 1024 * 1024;
 
+let pendingAppend: Promise<void> = Promise.resolve();
+
+export function getLeadsDataDir() {
+  const configuredPath =
+    process.env.LEADS_DATA_PATH?.trim() ||
+    process.env.MONITORING_EVENTS_PATH?.trim();
+
+  if (process.env.NODE_ENV === "production" && !configuredPath) {
+    throw new Error(
+      "Lead storage is not configured. Set LEADS_DATA_PATH to durable storage outside the release directory.",
+    );
+  }
+
+  return configuredPath || path.join(process.cwd(), "data");
+}
+
 export function getLeadsPath() {
-  return path.join(getDataDir(), "leads.ndjson");
+  return path.join(getLeadsDataDir(), "leads.ndjson");
 }
 
 export async function readLeads(): Promise<Lead[]> {
@@ -68,10 +83,22 @@ export async function readLeads(): Promise<Lead[]> {
     const code = error instanceof Error && "code" in error ? error.code : undefined;
     if (code === "ENOENT") return [];
     console.error("Unable to read leads", error);
-    return [];
+    throw error;
   }
 }
 
 export async function appendLead(lead: Lead) {
-  await appendNdjsonLine(getLeadsPath(), `${JSON.stringify(lead)}\n`);
+  const filePath = getLeadsPath();
+  const operation = pendingAppend.then(async () => {
+    await mkdir(path.dirname(filePath), { recursive: true, mode: 0o700 });
+    await chmod(path.dirname(filePath), 0o700);
+    await appendFile(filePath, `${JSON.stringify(lead)}\n`, {
+      encoding: "utf8",
+      mode: 0o600,
+    });
+    await chmod(filePath, 0o600);
+  });
+
+  pendingAppend = operation.catch(() => undefined);
+  await operation;
 }

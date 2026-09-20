@@ -17,6 +17,8 @@ APP_NAME="aluminiumdesigns"
 CURRENT_LINK="${BASE_DIR}/${APP_NAME}-current"
 PORT="${PORT:-3002}"
 TARGET_REF="${1:-main}"
+PERSISTENT_DATA_DIR="${PERSISTENT_DATA_DIR:-/var/lib/aluminiumdesigns}"
+LEADS_BACKUP_DIR="${LEADS_BACKUP_DIR:-/var/backups/aluminiumdesigns}"
 
 echo "=================================================="
 echo " Starting deployment for ${APP_NAME} (${TARGET_REF})"
@@ -58,6 +60,18 @@ cd /
 cp -a "${TMP_CLONE}/." "${RELEASE_DIR}/"
 cd "$RELEASE_DIR"
 
+# Runtime records must never be stored inside a disposable release directory.
+install -d -m 700 "$PERSISTENT_DATA_DIR" "$LEADS_BACKUP_DIR"
+
+# Migrate data from an older release if this is the first deployment using the
+# persistent directory. Copy only when the destination file does not exist.
+if [ -f "${CURRENT_LINK}/data/leads.ndjson" ] && [ ! -f "${PERSISTENT_DATA_DIR}/leads.ndjson" ]; then
+  install -m 600 "${CURRENT_LINK}/data/leads.ndjson" "${PERSISTENT_DATA_DIR}/leads.ndjson"
+fi
+if [ -f "${CURRENT_LINK}/data/monitoring-events.ndjson" ] && [ ! -f "${PERSISTENT_DATA_DIR}/monitoring-events.ndjson" ]; then
+  install -m 600 "${CURRENT_LINK}/data/monitoring-events.ndjson" "${PERSISTENT_DATA_DIR}/monitoring-events.ndjson"
+fi
+
 # Step 3: Copy Environment Variables
 if [ -f "${CURRENT_LINK}/.env" ]; then
   echo "--> Copying .env from current release (${CURRENT_LINK})..."
@@ -91,6 +105,10 @@ if [ -d "${RELEASE_DIR}/public" ]; then
   mkdir -p "${RELEASE_DIR}/.next/standalone"
   cp -r "${RELEASE_DIR}/public" "${RELEASE_DIR}/.next/standalone/"
 fi
+
+# Take a versioned, checksummed lead backup before changing the active release.
+LEADS_DATA_PATH="$PERSISTENT_DATA_DIR" LEADS_BACKUP_PATH="$LEADS_BACKUP_DIR" \
+  bash "${RELEASE_DIR}/scripts/backup-leads.sh"
 
 # Ensure runner script is executable
 if [ -f "${RELEASE_DIR}/run-aluminiumdesigns.sh" ]; then

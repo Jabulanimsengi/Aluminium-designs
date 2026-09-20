@@ -36,6 +36,13 @@ docker run -v ad-monitoring:/app/data --env-file .env -p 3000:3000 aluminium-des
 
 Monitoring uses random anonymous browser and session identifiers to connect page views and clicks into visitor journeys. No names, personal contact details, form contents, or full referring query strings are collected.
 
+Lead contact records are stored separately at `LEADS_DATA_PATH`. Production
+deployments must point this at durable storage outside the release directory;
+the included server runner defaults to `/var/lib/aluminiumdesigns`. Lead files
+are created with owner-only permissions and are not subject to monitoring-event
+retention pruning. Run `scripts/backup-leads.sh` from a daily scheduler and keep
+an additional provider-level or off-server encrypted backup.
+
 ## Search indexing
 
 Set the production canonical domain before building:

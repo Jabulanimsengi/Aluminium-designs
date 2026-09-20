@@ -10,6 +10,13 @@ set +a
 export NODE_ENV=production
 export HOSTNAME=0.0.0.0
 export PORT="${PORT:-3002}"
+export MONITORING_EVENTS_PATH="${MONITORING_EVENTS_PATH:-/var/lib/aluminiumdesigns}"
+export LEADS_DATA_PATH="${LEADS_DATA_PATH:-$MONITORING_EVENTS_PATH}"
+
+# Runtime data must live outside versioned release directories so it survives
+# the atomic symlink switch and old-release cleanup performed during deploys.
+mkdir -p "$MONITORING_EVENTS_PATH" "$LEADS_DATA_PATH"
+chmod 700 "$MONITORING_EVENTS_PATH" "$LEADS_DATA_PATH"
 
 # Locate server.js (handles both direct standalone and nested project directory output)
 if [ -f "$RELEASE_DIR/.next/standalone/server.js" ]; then

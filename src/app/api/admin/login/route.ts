@@ -74,7 +74,9 @@ export async function POST(request: NextRequest) {
     secure: process.env.NODE_ENV === "production",
     sameSite: "strict",
     maxAge: ADMIN_SESSION_MAX_AGE,
-    path: "/admin",
+    // The authenticated export endpoint lives under /api/admin, so the cookie
+    // must cover both the dashboard and its private API routes.
+    path: "/",
     priority: "high",
   });
   response.headers.set("Cache-Control", "no-store");
