@@ -1,5 +1,5 @@
 import { services } from "../src/data/services";
-import { gautengLocations } from "../src/data/locations";
+import { gautengLocations, type LocationArea } from "../src/data/locations";
 import { slugify } from "../src/lib/site";
 import { getTaxonomyServiceBySlug } from "../src/data/serviceTaxonomy";
 
@@ -148,7 +148,7 @@ export function parseServiceLocationSlug(rawSlug: string) {
     return lenB - lenA;
   });
 
-  let matchedLocation: any = null;
+  let matchedLocation: LocationArea | null = null;
   let matchedPreposition: "in" | "near" = "in";
   let isInstallation = false;
   let rawServicePart = "";

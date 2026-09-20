@@ -7,7 +7,6 @@ import type { LucideIcon } from "lucide-react";
 import {
   Activity,
   AlertTriangle,
-  ArrowRight,
   ArrowUpRight,
   ChevronDown,
   Clock,
@@ -371,7 +370,6 @@ export default async function AdminMonitoringPage({
   const emailSessions = new Set(emailEvents.map((event) => event.sessionId).filter(Boolean)).size;
   const conversionRate = pageViews.length ? (conversions.length / pageViews.length) * 100 : 0;
   const topPages = countBy(pageViews, "page").slice(0, 8);
-  const topReferrers = countBy(pageViews, "referrer").slice(0, 8);
   const topActions = countBy(conversions, "event").slice(0, 8);
   const topClickedDestinations = countBy(
     clickEvents.filter((event) => event.destination),
@@ -414,7 +412,6 @@ export default async function AdminMonitoringPage({
     errorGroups.set(key, group);
   }
   const topErrors = [...errorGroups.values()].sort((a, b) => b.count - a.count).slice(0, 20);
-  const recentErrors = errorEvents.slice(0, 50);
   const errorSessions = new Set(errorEvents.map((event) => event.sessionId).filter(Boolean)).size;
 
   const whatsappByIp = groupByIp(whatsappEvents);
@@ -444,9 +441,6 @@ export default async function AdminMonitoringPage({
   const leadsUniqueIps = new Set(leads.map((lead) => lead.ipAddress).filter(Boolean)).size;
   const whatsappLeads = leads.filter((lead) => lead.source === "whatsapp").length;
   const quoteLeads = leads.filter((lead) => lead.source === "quote").length;
-
-  const emailPages = countBy(emailEvents, "page").slice(0, 3);
-  const latestEmailEvent = emailEvents[0];
 
   const now = new Date();
   const todayKey = activityDateKey(now.toISOString());
@@ -814,12 +808,13 @@ export default async function AdminMonitoringPage({
                         </Link>
                       ) : null}
                     </form>
-                    <a
+                    <Link
                       href="/api/admin/leads/export"
+                      prefetch={false}
                       className="inline-flex items-center justify-center gap-1.5 rounded-full border border-outline-variant bg-white px-4 py-2 font-mono text-[10px] font-bold uppercase tracking-wider text-secondary hover:text-primary transition-colors shrink-0 shadow-xs"
                     >
                       <Download className="h-3 w-3" /> Export CSV
-                    </a>
+                    </Link>
                   </div>
                 )}
               />

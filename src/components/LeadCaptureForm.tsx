@@ -181,18 +181,30 @@ export default function LeadCaptureForm({ source, onCancel, buttonLabel }: LeadC
         </p>
       ) : null}
 
-      <button
-        type="submit"
-        disabled={isSubmitting}
-        className="inline-flex w-full items-center justify-center gap-2.5 rounded-xl bg-[#25D366] hover:bg-[#20ba5a] px-5 py-3 sm:py-3.5 font-sans text-sm font-semibold text-white shadow-sm transition-all hover:shadow-md active:scale-[0.99] disabled:cursor-wait disabled:opacity-70"
-      >
-        {isSubmitting ? (
-          <LoaderCircle className="h-4 w-4 animate-spin" />
-        ) : (
-          <MessageCircle className="h-4 w-4" />
-        )}
-        {isSubmitting ? "Opening WhatsApp..." : buttonLabel || "Continue to WhatsApp"}
-      </button>
+      <div className="flex flex-col-reverse gap-2 sm:flex-row">
+        {onCancel ? (
+          <button
+            type="button"
+            onClick={onCancel}
+            disabled={isSubmitting}
+            className="inline-flex items-center justify-center rounded-xl border border-outline-variant bg-surface px-5 py-3 font-sans text-sm font-semibold text-secondary transition-colors hover:bg-surface-container disabled:opacity-60 sm:w-auto"
+          >
+            Cancel
+          </button>
+        ) : null}
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          className="inline-flex flex-1 items-center justify-center gap-2.5 rounded-xl bg-[#25D366] hover:bg-[#20ba5a] px-5 py-3 sm:py-3.5 font-sans text-sm font-semibold text-white shadow-sm transition-all hover:shadow-md active:scale-[0.99] disabled:cursor-wait disabled:opacity-70"
+        >
+          {isSubmitting ? (
+            <LoaderCircle className="h-4 w-4 animate-spin" />
+          ) : (
+            <MessageCircle className="h-4 w-4" />
+          )}
+          {isSubmitting ? "Opening WhatsApp..." : buttonLabel || "Continue to WhatsApp"}
+        </button>
+      </div>
     </form>
   );
 }

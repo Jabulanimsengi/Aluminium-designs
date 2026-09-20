@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { metadata as homeMetadata } from "../src/app/page";
 import { metadata as aboutMetadata } from "../src/app/about/page";
 import { metadata as contactMetadata } from "../src/app/contact/page";
@@ -17,25 +18,27 @@ console.log("===============================================================");
 const template = "%s | Aluminium Designs";
 console.log(`Layout template: "${template}"\n`);
 
-function resolveTitle(titleConfig: any): string {
+type MetadataTitle = Metadata["title"];
+
+function resolveTitle(titleConfig: MetadataTitle): string {
   if (!titleConfig) return "";
   if (typeof titleConfig === "string") {
     // If it's a string, Next.js layout applies template
     return template.replace("%s", titleConfig);
   }
   if (typeof titleConfig === "object") {
-    if (titleConfig.absolute) {
+    if ("absolute" in titleConfig && titleConfig.absolute) {
       // absolute overrides template completely
       return titleConfig.absolute;
     }
-    if (titleConfig.default) {
+    if ("default" in titleConfig && titleConfig.default) {
       return titleConfig.default;
     }
   }
   return String(titleConfig);
 }
 
-function checkTitle(pageName: string, titleConfig: any) {
+function checkTitle(pageName: string, titleConfig: MetadataTitle) {
   const finalTitle = resolveTitle(titleConfig);
   const isDoubleBranded =
     finalTitle.includes("Aluminium Designs | Aluminium Designs") ||

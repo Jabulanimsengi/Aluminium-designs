@@ -106,6 +106,5 @@ export interface ServiceObject {
   faqs: ServiceFAQ[];
   relatedServices: RelatedServiceLink[];
   seo: ServiceSEO;
-  structuredDataJsonLd: Record<string, any>;
+  structuredDataJsonLd: Record<string, unknown>;
 }
-

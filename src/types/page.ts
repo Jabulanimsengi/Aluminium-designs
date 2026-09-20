@@ -1,5 +1,4 @@
 import {
-  ServiceObject,
   ServiceFAQ,
   ServiceFeature,
   ServiceSpec,
@@ -130,5 +129,5 @@ export interface LocalizedPageContent {
   };
   
   // Structured Data (JSON-LD)
-  structuredDataJsonLd: Record<string, any>[];
+  structuredDataJsonLd: Record<string, unknown>[];
 }

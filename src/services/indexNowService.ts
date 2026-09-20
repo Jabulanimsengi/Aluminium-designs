@@ -189,9 +189,10 @@ export class IndexNowService {
           message: errorMessage,
           timestamp: new Date().toISOString()
         };
-      } catch (err: any) {
+      } catch (error: unknown) {
+        const message = error instanceof Error ? error.message : String(error);
         if (attempt < maxRetries) {
-          console.warn(`[IndexNow] Network error: ${err.message}. Retrying in ${delayMs}ms...`);
+          console.warn(`[IndexNow] Network error: ${message}. Retrying in ${delayMs}ms...`);
           await new Promise(resolve => setTimeout(resolve, delayMs));
           delayMs *= 2;
           continue;
@@ -203,7 +204,7 @@ export class IndexNowService {
           statusText: 'Network Error',
           success: false,
           urlsSubmitted: 0,
-          message: `Network failure connecting to IndexNow endpoint (${this.endpoint}): ${err.message}`,
+          message: `Network failure connecting to IndexNow endpoint (${this.endpoint}): ${message}`,
           timestamp: new Date().toISOString()
         };
       }
@@ -246,7 +247,7 @@ export class IndexNowService {
         bodyContent: text,
         isValidMatch
       };
-    } catch (err: any) {
+    } catch {
       return {
         reachable: false,
         statusCode: 0,

@@ -100,8 +100,6 @@ export class ContentSynthesizer {
     location: SALocationObject,
     archetype: LocationArchetype
   ): LocalGeoContext {
-    const climate = location.climateZone || 'Highveld Inland';
-
     switch (archetype) {
       case 'luxury-estate':
         return {
@@ -139,7 +137,7 @@ export class ContentSynthesizer {
   /**
    * Generates a structured price matrix in ZAR.
    */
-  private static generatePriceMatrix(service: ServiceObject, areaName: string): ServicePriceMatrixItem[] {
+  private static generatePriceMatrix(service: ServiceObject): ServicePriceMatrixItem[] {
     const slug = service.slug;
 
     if (slug.includes('window')) {
@@ -428,7 +426,7 @@ export class ContentSynthesizer {
         }
       : undefined;
 
-    const priceMatrix = this.generatePriceMatrix(service, areaName);
+    const priceMatrix = this.generatePriceMatrix(service);
     const glassSpecs = this.generateGlassSpecs();
     const finishOptions = this.generateFinishOptions();
     const useCases = this.generateUseCases(service, areaName);
@@ -747,4 +745,3 @@ export class ContentSynthesizer {
     return localized;
   }
 }
-

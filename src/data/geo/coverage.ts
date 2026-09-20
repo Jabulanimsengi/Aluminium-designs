@@ -6,64 +6,10 @@ export interface CoverageLocationInput {
   parentLocationSlug?: string;
 }
 
-const CORE_LOCAL_SERVICES = [
-  "aluminium-windows",
-  "aluminium-sliding-doors",
-  "aluminium-repairs",
-] as const;
-
-const PREMIUM_HUBS = new Set([
-  "johannesburg",
-  "sandton",
-  "fourways",
-  "randburg",
-  "rosebank",
-  "midrand",
-  "pretoria",
-  "pretoria-east",
-  "centurion",
-  "bedfordview",
-  "edenvale",
-  "alberton",
-]);
-
-const SECURITY_HUBS = new Set([
-  "katlehong",
-  "johannesburg",
-  "roodepoort",
-  "soweto",
-  "alexandra",
-  "johannesburg-south",
-  "lenasia",
-  "pretoria-north",
-  "mamelodi",
-  "soshanguve",
-  "kempton-park",
-  "boksburg",
-  "germiston",
-  "tembisa",
-  "krugersdorp",
-  "vanderbijlpark",
-]);
-
-const GLASS_REPAIR_HUBS = new Set([
-  "katlehong",
-  "johannesburg",
-  "sandton",
-  "randburg",
-  "rosebank",
-  "midrand",
-  "pretoria",
-  "pretoria-east",
-  "centurion",
-  "kempton-park",
-  "bedfordview",
-]);
-
 /**
- * The established Gauteng hubs form the indexable coverage layer. Smaller
- * places belong to one of these hubs instead of becoming independent SEO
- * landing pages by default.
+ * Established Gauteng cities, towns, and major townships form the indexable
+ * coverage layer. Smaller suburbs and landmarks belong to one of these hubs
+ * instead of becoming independent SEO landing pages by default.
  */
 export const GAUTENG_HUB_SLUGS = [
   "katlehong",
@@ -104,6 +50,35 @@ export const GAUTENG_HUB_SLUGS = [
   "vereeniging",
   "meyerton",
   "heidelberg",
+  // Major townships previously represented only as non-indexable child areas.
+  "vosloorus",
+  "thokoza",
+  "daveyton",
+  "etwatwa",
+  "kwathema",
+  "tsakane",
+  "duduza",
+  "reiger-park",
+  "wattville",
+  "ivory-park",
+  "atteridgeville",
+  "hammanskraal",
+  "ga-rankuwa",
+  "mabopane",
+  "refilwe",
+  "kagiso",
+  "mohlakeng",
+  "bekkersdal",
+  "khutsong",
+  "kokosi",
+  "sebokeng",
+  "evaton",
+  "sharpeville",
+  "boipatong",
+  "bophelong",
+  "ratanda",
+  "lawley",
+  "eldorado-park",
 ] as const;
 
 export type GautengHubSlug = (typeof GAUTENG_HUB_SLUGS)[number];
@@ -111,26 +86,139 @@ export type GautengHubSlug = (typeof GAUTENG_HUB_SLUGS)[number];
 const hubSlugSet = new Set<string>(GAUTENG_HUB_SLUGS);
 
 /**
- * This is intentionally an explicit matrix, not a services × locations
- * cross-product. Expand it only after search demand or real project evidence
- * justifies another local page.
+ * Search-intent groups deliberately broaden local coverage without creating a
+ * thin services x 805-location cross-product. Every core service is assigned
+ * to at least one substantial group of Gauteng hubs.
  */
+const PREMIUM_HUBS: readonly GautengHubSlug[] = [
+  "johannesburg", "sandton", "fourways", "randburg", "rosebank", "midrand",
+  "pretoria", "pretoria-east", "centurion", "bedfordview", "edenvale", "alberton",
+];
+
+const RESIDENTIAL_HUBS: readonly GautengHubSlug[] = [
+  ...PREMIUM_HUBS,
+  "roodepoort", "soweto", "johannesburg-south", "lenasia", "pretoria-north",
+  "mamelodi", "soshanguve", "kempton-park", "boksburg", "benoni", "germiston",
+  "brakpan", "springs", "tembisa", "krugersdorp", "vanderbijlpark", "vereeniging",
+  "vosloorus", "thokoza", "daveyton", "ivory-park", "atteridgeville", "sebokeng",
+];
+
+const COMMERCIAL_HUBS: readonly GautengHubSlug[] = [
+  "johannesburg", "sandton", "fourways", "randburg", "rosebank", "roodepoort",
+  "midrand", "johannesburg-south", "pretoria", "pretoria-east", "centurion",
+  "kempton-park", "boksburg", "benoni", "germiston", "bedfordview", "edenvale",
+  "alberton", "springs", "krugersdorp", "vanderbijlpark", "vereeniging",
+];
+
+const SECURITY_HUBS: readonly GautengHubSlug[] = [
+  "katlehong", "johannesburg", "roodepoort", "soweto", "alexandra",
+  "johannesburg-south", "lenasia", "pretoria", "pretoria-north", "mamelodi",
+  "soshanguve", "kempton-park", "boksburg", "benoni", "germiston", "alberton",
+  "brakpan", "springs", "tembisa", "krugersdorp", "randfontein", "westonaria",
+  "carletonville", "vanderbijlpark", "vereeniging", "meyerton", "heidelberg",
+  "vosloorus", "thokoza", "daveyton", "etwatwa", "kwathema", "tsakane",
+  "duduza", "reiger-park", "wattville", "ivory-park", "atteridgeville",
+  "hammanskraal", "ga-rankuwa", "mabopane", "refilwe", "kagiso", "mohlakeng",
+  "bekkersdal", "khutsong", "kokosi", "sebokeng", "evaton", "sharpeville",
+  "boipatong", "bophelong", "ratanda", "lawley", "eldorado-park",
+];
+
+const REGIONAL_HUBS: readonly GautengHubSlug[] = [
+  ...COMMERCIAL_HUBS,
+  "katlehong", "soweto", "lenasia", "pretoria-north", "mamelodi", "soshanguve",
+  "cullinan", "brakpan", "nigel", "tembisa", "randfontein", "westonaria",
+  "carletonville", "meyerton", "heidelberg", "vosloorus", "daveyton", "tsakane",
+  "atteridgeville", "hammanskraal", "ga-rankuwa", "kagiso", "sebokeng",
+];
+
+const ALL_HUBS: readonly GautengHubSlug[] = GAUTENG_HUB_SLUGS;
+
+export const SERVICE_TARGET_HUBS: Readonly<Record<string, readonly GautengHubSlug[]>> = {
+  "aluminium-windows": ALL_HUBS,
+  "steel-to-aluminium-conversions": RESIDENTIAL_HUBS,
+  "aluminium-sliding-doors": ALL_HUBS,
+  "aluminium-stacking-doors": PREMIUM_HUBS,
+  "aluminium-front-doors": RESIDENTIAL_HUBS,
+  "aluminium-french-doors": RESIDENTIAL_HUBS,
+  "aluminium-garage-doors": RESIDENTIAL_HUBS,
+  "aluminium-sliding-windows": RESIDENTIAL_HUBS,
+  "double-glazed-windows": PREMIUM_HUBS,
+  "glass-balustrades": PREMIUM_HUBS,
+  "glass-patio-enclosures": PREMIUM_HUBS,
+  "aluminium-skylights": RESIDENTIAL_HUBS,
+  "aluminium-awnings": RESIDENTIAL_HUBS,
+  "aluminium-pergolas": PREMIUM_HUBS,
+  "aluminium-shopfronts": COMMERCIAL_HUBS,
+  "seamless-aluminium-gutters": REGIONAL_HUBS,
+  "office-glass-partitions": COMMERCIAL_HUBS,
+  "frameless-shower-doors": RESIDENTIAL_HUBS,
+  "custom-steam-rooms": PREMIUM_HUBS,
+  "aluminium-fly-screens": RESIDENTIAL_HUBS,
+  "aluminium-repairs": ALL_HUBS,
+  "sliding-door-repairs": ALL_HUBS,
+  "glass-replacement": ALL_HUBS,
+  "burglar-bars": SECURITY_HUBS,
+  "clear-burglar-bars": SECURITY_HUBS,
+  "trellis-doors": SECURITY_HUBS,
+  "security-gates": SECURITY_HUBS,
+  "driveway-gates": SECURITY_HUBS,
+  "gate-motors": SECURITY_HUBS,
+  "palisade-fencing": SECURITY_HUBS,
+  "mesh-fencing": SECURITY_HUBS,
+  "steel-carports": REGIONAL_HUBS,
+  "steel-balustrades": RESIDENTIAL_HUBS,
+  "steel-staircases": RESIDENTIAL_HUBS,
+  "steel-sheds": REGIONAL_HUBS,
+  "custom-welding": REGIONAL_HUBS,
+  "steel-repairs": ALL_HUBS,
+  "steel-works": REGIONAL_HUBS,
+};
+
 export const GAUTENG_HUB_SERVICE_MAP: Readonly<Record<GautengHubSlug, readonly string[]>> =
   Object.fromEntries(
-    GAUTENG_HUB_SLUGS.map((hubSlug) => {
-      const services = new Set<string>(CORE_LOCAL_SERVICES);
-      if (PREMIUM_HUBS.has(hubSlug)) services.add("aluminium-stacking-doors");
-      if (SECURITY_HUBS.has(hubSlug)) services.add("security-gates");
-      if (GLASS_REPAIR_HUBS.has(hubSlug)) services.add("glass-replacement");
-      return [hubSlug, [...services]];
-    }),
+    GAUTENG_HUB_SLUGS.map((hubSlug) => [
+      hubSlug,
+      Object.entries(SERVICE_TARGET_HUBS)
+        .filter(([, targetHubs]) => targetHubs.includes(hubSlug))
+        .map(([serviceSlug]) => serviceSlug),
+    ]),
   ) as unknown as Record<GautengHubSlug, readonly string[]>;
 
 const HUB_REGION_ALIASES: ReadonlyArray<{
   hub: GautengHubSlug;
   aliases: readonly string[];
 }> = [
-  { hub: "katlehong", aliases: ["katlehong", "spruitview", "vosloorus", "thokoza", "palm ridge"] },
+  // Promoted township hubs come first so their surrounding sections attach to
+  // the township rather than falling through to a broader metro hub.
+  { hub: "vosloorus", aliases: ["vosloorus"] },
+  { hub: "thokoza", aliases: ["thokoza"] },
+  { hub: "daveyton", aliases: ["daveyton"] },
+  { hub: "etwatwa", aliases: ["etwatwa"] },
+  { hub: "kwathema", aliases: ["kwathema", "kwa thema"] },
+  { hub: "tsakane", aliases: ["tsakane"] },
+  { hub: "duduza", aliases: ["duduza"] },
+  { hub: "reiger-park", aliases: ["reiger park"] },
+  { hub: "wattville", aliases: ["wattville"] },
+  { hub: "ivory-park", aliases: ["ivory park"] },
+  { hub: "atteridgeville", aliases: ["atteridgeville"] },
+  { hub: "hammanskraal", aliases: ["hammanskraal"] },
+  { hub: "ga-rankuwa", aliases: ["ga rankuwa"] },
+  { hub: "mabopane", aliases: ["mabopane"] },
+  { hub: "refilwe", aliases: ["refilwe"] },
+  { hub: "kagiso", aliases: ["kagiso"] },
+  { hub: "mohlakeng", aliases: ["mohlakeng"] },
+  { hub: "bekkersdal", aliases: ["bekkersdal"] },
+  { hub: "khutsong", aliases: ["khutsong"] },
+  { hub: "kokosi", aliases: ["kokosi"] },
+  { hub: "sebokeng", aliases: ["sebokeng"] },
+  { hub: "evaton", aliases: ["evaton"] },
+  { hub: "sharpeville", aliases: ["sharpeville"] },
+  { hub: "boipatong", aliases: ["boipatong"] },
+  { hub: "bophelong", aliases: ["bophelong"] },
+  { hub: "ratanda", aliases: ["ratanda"] },
+  { hub: "lawley", aliases: ["lawley"] },
+  { hub: "eldorado-park", aliases: ["eldorado park"] },
+  { hub: "katlehong", aliases: ["katlehong", "spruitview", "palm ridge"] },
   { hub: "pretoria-east", aliases: ["pretoria east", "east pretoria", "east tshwane", "silver lakes", "menlyn", "waterkloof"] },
   { hub: "pretoria-north", aliases: ["pretoria north", "north pretoria", "north tshwane", "montana", "sinoville"] },
   { hub: "johannesburg-south", aliases: ["johannesburg south", "jhb south", "deep south jhb", "south jhb", "bassonia", "oakdene", "suideroord", "mondeor"] },

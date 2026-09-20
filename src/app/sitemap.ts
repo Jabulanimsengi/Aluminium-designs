@@ -58,6 +58,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }));
 
   const localServiceEntries: MetadataRoute.Sitemap = [];
+  const localPageCountByService = new Map(
+    services.map((service) => [service.id, 0]),
+  );
   for (const location of gautengLocations) {
     for (const service of services) {
       if (!getServiceLocationSeoEligibility(service.id, location).includeInSitemap) {
@@ -69,13 +72,35 @@ export default function sitemap(): MetadataRoute.Sitemap {
         changeFrequency: "monthly",
         priority: 0.7,
       });
+      localPageCountByService.set(
+        service.id,
+        (localPageCountByService.get(service.id) || 0) + 1,
+      );
     }
   }
 
-  return [
+  const servicesWithoutLocalPages = services.filter(
+    (service) => (localPageCountByService.get(service.id) || 0) === 0,
+  );
+  if (servicesWithoutLocalPages.length > 0) {
+    throw new Error(
+      `SEO coverage is missing local pages for: ${servicesWithoutLocalPages
+        .map((service) => service.id)
+        .join(", ")}`,
+    );
+  }
+
+  const entries = [
     ...coreEntries,
     ...serviceEntries,
     ...locationEntries,
     ...localServiceEntries,
   ];
+
+  const uniqueUrls = new Set(entries.map((entry) => entry.url));
+  if (uniqueUrls.size !== entries.length) {
+    throw new Error("Sitemap contains duplicate canonical URLs.");
+  }
+
+  return entries;
 }

@@ -18,7 +18,7 @@ export class SchemaGenerator {
     canonicalUrl: string,
     breadcrumbs: BreadcrumbItem[],
     localizedFaqs: ServiceFAQ[]
-  ): Record<string, any>[] {
+  ): Record<string, unknown>[] {
     const localBusinessSchema = this.generateLocalBusinessSchema(service, location, areaName, canonicalUrl);
     const faqSchema = this.generateFaqSchema(localizedFaqs);
     const breadcrumbSchema = this.generateBreadcrumbSchema(breadcrumbs);
@@ -31,7 +31,7 @@ export class SchemaGenerator {
     location: SALocationObject,
     areaName: string,
     canonicalUrl: string
-  ): Record<string, any> {
+  ): Record<string, unknown> {
     const phone = `${location.dialingCode} 450 8899`;
     const priceRange = service.pricingGuide
       ? `${service.pricingGuide.estimatedStartingPrice} ${service.pricingGuide.priceUnit}`
@@ -96,7 +96,7 @@ export class SchemaGenerator {
     };
   }
 
-  private static generateFaqSchema(faqs: ServiceFAQ[]): Record<string, any> {
+  private static generateFaqSchema(faqs: ServiceFAQ[]): Record<string, unknown> {
     return {
       "@context": "https://schema.org",
       "@type": "FAQPage",
@@ -111,7 +111,7 @@ export class SchemaGenerator {
     };
   }
 
-  private static generateBreadcrumbSchema(breadcrumbs: BreadcrumbItem[]): Record<string, any> {
+  private static generateBreadcrumbSchema(breadcrumbs: BreadcrumbItem[]): Record<string, unknown> {
     const baseUrl = this.getBaseUrl().replace(/\/+$/, '');
     return {
       "@context": "https://schema.org",
@@ -127,4 +127,3 @@ export class SchemaGenerator {
     };
   }
 }
-

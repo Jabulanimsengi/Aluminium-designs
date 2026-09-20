@@ -1,10 +1,6 @@
 import sitemap from "../src/app/sitemap";
-import { services } from "../src/data/services";
-import { gautengLocations } from "../src/data/locations";
-import { getAllLocationServiceRoutes } from "../src/data/location-service-pages";
 import { parseServiceLocationSlug } from "../src/lib/serviceLocationParser";
 import { allTaxonomyServices } from "../src/data/serviceTaxonomy";
-import nextConfig from "../next.config";
 
 console.log("===============================================================");
 console.log("             COMPREHENSIVE CODEBASE & SEO AUDIT                ");

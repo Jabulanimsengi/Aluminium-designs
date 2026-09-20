@@ -15,7 +15,11 @@ import {
   HelpCircle,
   FileCheck,
 } from "lucide-react";
-import { gautengLocations, getHubForLocation } from "@/data/locations";
+import {
+  gautengLocations,
+  getChildLocationsForHub,
+  getHubForLocation,
+} from "@/data/locations";
 import { services } from "@/data/services";
 import { getLocationServicePage } from "@/data/location-service-pages";
 import {
@@ -231,9 +235,15 @@ export default async function FlatServiceLocationPage({ params }: PageProps) {
       ? locContent.localFaqs
       : defaultFaqs;
 
+  const nearbyServiceAreas = getChildLocationsForHub(location.slug)
+    .slice(0, 8)
+    .map((area) => area.name);
+  const localAreaPhrase = nearbyServiceAreas.length > 0
+    ? `including ${nearbyServiceAreas.join(", ")}`
+    : `across the wider ${location.region} area`;
   const defaultStoryParagraphs = [
-    `Properties across ${locationName} and ${location.municipality} experience strong Highveld sun, summer storms, and cold winter mornings. The material, coating, hardware, drainage, and sealing for ${serviceTitle.toLowerCase()} are selected for the measured opening and exposure.`,
-    `Whether replacing worn window and door frames or supplying a commercial system, the work scope covers measurement, specification, fabrication or ordering, installation, testing, and the handover documents listed in the written quote.`,
+    `${location.context ? `${location.context}. ` : ""}${locationName} sits within ${location.region} and ${location.municipality}. Properties ${localAreaPhrase} experience strong Highveld sun, summer storms, and cold winter mornings, so the material, coating, hardware, drainage, and sealing for ${serviceTitle.toLowerCase()} are selected for the measured opening and exposure.`,
+    `${coreService?.shortDescription || `${serviceTitle} is specified for the measured site conditions.`} For projects ${prepWord} ${locationName}, the work scope covers measurement, specification, fabrication or ordering, installation, testing, and the handover items identified in the written quote.`,
   ];
 
   const storyParagraphs =
@@ -245,7 +255,9 @@ export default async function FlatServiceLocationPage({ params }: PageProps) {
     locContent?.localizedStory?.heading ||
     `Engineered Glazing & Architectural Security ${prepWord} ${locationName}`;
   const climateNotice = locContent?.localizedStory?.localClimateNotice;
-  const servicedSuburbs = locContent?.localNAP?.servicedSuburbs || [];
+  const servicedSuburbs = locContent?.localNAP?.servicedSuburbs?.length
+    ? locContent.localNAP.servicedSuburbs
+    : nearbyServiceAreas;
 
   // Structured Data (JSON-LD): Service / FAQPage / Breadcrumbs linked to root #business
   const structuredData = {

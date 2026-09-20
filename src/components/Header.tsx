@@ -21,21 +21,18 @@ import { rawServiceTaxonomy, allTaxonomyServices } from "@/data/serviceTaxonomy"
 import { whatsappQuoteUrl } from "@/lib/site";
 
 export default function Header() {
+  const pathname = usePathname();
+  return <HeaderContent key={pathname} pathname={pathname} />;
+}
+
+function HeaderContent({ pathname }: { pathname: string }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [servicesDropdownOpen, setServicesDropdownOpen] = useState(false);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
-  const pathname = usePathname();
   const mobileMenuButtonRef = useRef<HTMLButtonElement>(null);
   const mobilePanelRef = useRef<HTMLDivElement>(null);
   const servicesMenuRef = useRef<HTMLDivElement>(null);
   const servicesButtonRef = useRef<HTMLButtonElement>(null);
-
-  // Automatically close dropdowns on route changes
-  useEffect(() => {
-    setServicesDropdownOpen(false);
-    setMobileMenuOpen(false);
-    setMobileServicesOpen(false);
-  }, [pathname]);
 
   const handleLogoClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
     if (pathname === "/" || pathname === "") {
