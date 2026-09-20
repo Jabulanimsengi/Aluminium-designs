@@ -20,11 +20,13 @@ ENV NODE_ENV=production
 ENV PORT=3000
 ENV HOSTNAME=0.0.0.0
 ENV MONITORING_EVENTS_PATH=/app/data
+ENV LEADS_DATA_PATH=/app/data
+ENV LEADS_MIRROR_PATH=/app/data/lead-mirror
 
 RUN addgroup --system --gid 1001 nodejs \
   && adduser --system --uid 1001 nextjs \
-  && mkdir -p /app/data \
-  && chown nextjs:nodejs /app/data
+  && mkdir -p /app/data/lead-mirror \
+  && chown -R nextjs:nodejs /app/data
 
 COPY --from=builder /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./

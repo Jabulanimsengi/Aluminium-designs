@@ -19,6 +19,7 @@ PORT="${PORT:-3002}"
 TARGET_REF="${1:-main}"
 PERSISTENT_DATA_DIR="${PERSISTENT_DATA_DIR:-/var/lib/aluminiumdesigns}"
 LEADS_BACKUP_DIR="${LEADS_BACKUP_DIR:-/var/backups/aluminiumdesigns}"
+LEADS_MIRROR_DIR="${LEADS_MIRROR_DIR:-${LEADS_BACKUP_DIR}/live}"
 
 echo "=================================================="
 echo " Starting deployment for ${APP_NAME} (${TARGET_REF})"
@@ -61,7 +62,7 @@ cp -a "${TMP_CLONE}/." "${RELEASE_DIR}/"
 cd "$RELEASE_DIR"
 
 # Runtime records must never be stored inside a disposable release directory.
-install -d -m 700 "$PERSISTENT_DATA_DIR" "$LEADS_BACKUP_DIR"
+install -d -m 700 "$PERSISTENT_DATA_DIR" "$LEADS_BACKUP_DIR" "$LEADS_MIRROR_DIR"
 
 # Migrate data from an older release if this is the first deployment using the
 # persistent directory. Copy only when the destination file does not exist.
@@ -70,6 +71,9 @@ if [ -f "${CURRENT_LINK}/data/leads.ndjson" ] && [ ! -f "${PERSISTENT_DATA_DIR}/
 fi
 if [ -f "${CURRENT_LINK}/data/monitoring-events.ndjson" ] && [ ! -f "${PERSISTENT_DATA_DIR}/monitoring-events.ndjson" ]; then
   install -m 600 "${CURRENT_LINK}/data/monitoring-events.ndjson" "${PERSISTENT_DATA_DIR}/monitoring-events.ndjson"
+fi
+if [ -f "${PERSISTENT_DATA_DIR}/leads.ndjson" ] && [ ! -f "${LEADS_MIRROR_DIR}/leads.ndjson" ]; then
+  install -m 600 "${PERSISTENT_DATA_DIR}/leads.ndjson" "${LEADS_MIRROR_DIR}/leads.ndjson"
 fi
 
 # Step 3: Copy Environment Variables

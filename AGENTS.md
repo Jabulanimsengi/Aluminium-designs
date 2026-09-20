@@ -23,6 +23,9 @@ handled as production data, not as disposable application files.
   directory.
 - Lead backups live at `/var/backups/aluminiumdesigns` and are configured by
   `LEADS_BACKUP_PATH`.
+- Every accepted lead is synchronously written and flushed to the live mirror
+  at `/var/backups/aluminiumdesigns/live/leads.ndjson`, configured by
+  `LEADS_MIRROR_PATH`, before the API returns success.
 - Never store production leads under `/var/www/aluminiumdesigns-current`, an
   `aluminiumdesigns-release-*` directory, `.next`, the repository working tree,
   or any other directory replaced or removed during deployment.
@@ -32,7 +35,8 @@ handled as production data, not as disposable application files.
   may expire; customer leads must remain until an explicit, approved retention
   policy says otherwise.
 - Production must fail visibly when durable lead storage is not configured. Do
-  not reintroduce a silent production fallback to `process.cwd()/data`.
+  not reintroduce a silent production fallback to `process.cwd()/data`, and do
+  not make the live mirror optional in production.
 
 ## Data protection and privacy
 
@@ -88,6 +92,8 @@ handled as production data, not as disposable application files.
   and `/api/admin/*`. Narrowing it to `/admin` breaks the CSV export endpoint.
 - Lead reads must not convert unexpected storage errors into an empty list.
   Missing data and unreadable storage must be distinguishable in production.
+- Admin reads must merge and deduplicate the primary and live-mirror files so a
+  record remains available when either individual file is missing.
 - Changes touching lead capture, admin access, storage, or deployment require:
   targeted ESLint, TypeScript/production build, shell syntax validation, a
   storage-permission check, backup checksum verification, application health

@@ -40,8 +40,10 @@ Lead contact records are stored separately at `LEADS_DATA_PATH`. Production
 deployments must point this at durable storage outside the release directory;
 the included server runner defaults to `/var/lib/aluminiumdesigns`. Lead files
 are created with owner-only permissions and are not subject to monitoring-event
-retention pruning. Run `scripts/backup-leads.sh` from a daily scheduler and keep
-an additional provider-level or off-server encrypted backup.
+retention pruning. Every accepted lead is synchronously flushed to a second
+owner-only copy at `LEADS_MIRROR_PATH` before the API acknowledges the request.
+Run `scripts/backup-leads.sh` from a daily scheduler and keep an additional
+provider-level or off-server encrypted backup.
 
 ## Search indexing
 
