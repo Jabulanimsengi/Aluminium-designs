@@ -2,7 +2,11 @@ const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "https://www.aluminiumdesi
   .trim()
   .replace(/\/$/, "");
 const INDEXNOW_KEY = "2dd5bed102f767224668a7ca8d8ba216";
-const INDEXNOW_ENDPOINT = "https://api.indexnow.org/indexnow";
+const INDEXNOW_ENDPOINTS = [
+  process.env.INDEXNOW_ENDPOINT,
+  "https://api.indexnow.org/indexnow",
+  "https://www.bing.com/indexnow",
+].filter((endpoint, index, endpoints) => endpoint && endpoints.indexOf(endpoint) === index);
 const KEY_LOCATION = `${SITE_URL}/${INDEXNOW_KEY}.txt`;
 const MAX_URLS_PER_REQUEST = 10_000;
 
@@ -57,22 +61,30 @@ async function main() {
     throw new Error(`IndexNow key verification failed (HTTP ${keyResponse.status}).`);
   }
 
-  const response = await fetch(INDEXNOW_ENDPOINT, {
-    method: "POST",
-    headers: { "content-type": "application/json; charset=utf-8" },
-    body: JSON.stringify({
-      host: new URL(SITE_URL).host,
-      key: INDEXNOW_KEY,
-      keyLocation: KEY_LOCATION,
-      urlList: urls,
-    }),
+  const payload = JSON.stringify({
+    host: new URL(SITE_URL).host,
+    key: INDEXNOW_KEY,
+    keyLocation: KEY_LOCATION,
+    urlList: urls,
   });
+  const failures = [];
 
-  if (![200, 202].includes(response.status)) {
-    throw new Error(`IndexNow submission failed (HTTP ${response.status}).`);
+  for (const endpoint of INDEXNOW_ENDPOINTS) {
+    const response = await fetch(endpoint, {
+      method: "POST",
+      headers: { "content-type": "application/json; charset=utf-8" },
+      body: payload,
+    });
+
+    if ([200, 202].includes(response.status)) {
+      console.log(`IndexNow accepted ${urls.length} canonical URLs (HTTP ${response.status}).`);
+      return;
+    }
+
+    failures.push(response.status);
   }
 
-  console.log(`IndexNow accepted ${urls.length} canonical URLs (HTTP ${response.status}).`);
+  throw new Error(`IndexNow submission failed (HTTP ${failures.join(", ")}).`);
 }
 
 main().catch((error) => {
