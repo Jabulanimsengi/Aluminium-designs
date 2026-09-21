@@ -204,6 +204,12 @@ function buildServiceTitleTag(pageTitle: string): string {
   return branded.length <= 60 ? branded : `${pageTitle} | Gauteng`;
 }
 
+function buildServiceMetaDescription(srv: ServiceObject, pageTitle: string): string {
+  const raw = `${pageTitle}: ${srv.tagline} Custom measurement, written specifications, and quotes across Gauteng.`;
+  if (raw.length <= 160) return raw;
+  return `${raw.slice(0, 156).replace(/\s+\S*$/, "").replace(/[.,;:]$/, "")}…`;
+}
+
 function buildSharedIntentFaqs(srv: ServiceObject, serviceName: string): ServicePageFaq[] {
   const lowerName = serviceName.toLowerCase();
   const pluralSubject = /s$/i.test(serviceName);
@@ -236,6 +242,14 @@ function buildSharedIntentFaqs(srv: ServiceObject, serviceName: string): Service
     {
       question: `What warranty applies to ${lowerName}?`,
       answer: `Warranty coverage varies by product, hardware, finish and type of work. The written quotation identifies the applicable manufacturer and workmanship coverage, exclusions and maintenance requirements before you approve the project.`,
+    },
+    {
+      question: `Where in Gauteng do you provide ${lowerName}?`,
+      answer: `We serve established hubs, suburbs and townships across Gauteng through scheduled site visits. Share the exact project address when enquiring so we can confirm coverage, access and appointment availability.`,
+    },
+    {
+      question: `Do you provide ${lowerName} for homes and commercial properties?`,
+      answer: `Yes. We assess houses, residential estates, complexes, shops, offices and other commercial properties. The design, specification and work plan are adapted to the property type, intended use and site-access requirements.`,
     },
   ];
 
@@ -334,8 +348,12 @@ function convertServicePage(srv: ServiceObject): ServicePageContent {
     fullPageUrl: `${siteUrl}/services/${srv.slug}`,
     seo: {
       titleTag: buildServiceTitleTag(presentation.pageTitle),
-      metaDescription: srv.seo.metaDescription,
-      keywords: srv.seo.keywords,
+      metaDescription: buildServiceMetaDescription(srv, presentation.pageTitle),
+      keywords: Array.from(new Set([
+        presentation.pageTitle.toLowerCase(),
+        `${presentation.pageTitle.toLowerCase()} Gauteng`,
+        ...srv.seo.keywords,
+      ])),
       canonicalUrl: `${siteUrl}/services/${srv.slug}`,
       openGraphImage: ogImage,
     },

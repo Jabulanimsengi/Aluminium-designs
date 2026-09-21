@@ -77,14 +77,14 @@ async function runAudit() {
   const flatSandtonMeta = await generateFlatMetadata({ params: Promise.resolve({ slug: "aluminium-window-installation-near-sandton" }) });
   checkTitle("Flat Route: aluminium-window-installation-near-sandton", flatSandtonMeta.title);
 
-  const flatKatlehongMeta = await generateFlatMetadata({ params: Promise.resolve({ slug: "aluminium-window-installation-in-katlehong" }) });
-  checkTitle("Flat Route: aluminium-window-installation-in-katlehong", flatKatlehongMeta.title);
+  const flatKatlehongMeta = await generateFlatMetadata({ params: Promise.resolve({ slug: "aluminium-window-installation-near-katlehong" }) });
+  checkTitle("Flat Route: aluminium-window-installation-near-katlehong", flatKatlehongMeta.title);
 
   const flatRepairSandton = await generateFlatMetadata({ params: Promise.resolve({ slug: "aluminium-repairs-near-sandton" }) });
   checkTitle("Flat Route: aluminium-repairs-near-sandton", flatRepairSandton.title);
 
-  const flatRepairKatlehong = await generateFlatMetadata({ params: Promise.resolve({ slug: "aluminium-repairs-in-katlehong" }) });
-  checkTitle("Flat Route: aluminium-repairs-in-katlehong", flatRepairKatlehong.title);
+  const flatRepairKatlehong = await generateFlatMetadata({ params: Promise.resolve({ slug: "aluminium-repairs-near-katlehong" }) });
+  checkTitle("Flat Route: aluminium-repairs-near-katlehong", flatRepairKatlehong.title);
 
   console.log("===============================================================");
   console.log("ALL METADATA TITLES CLEAN & FREE OF DOUBLE-BRANDING!");

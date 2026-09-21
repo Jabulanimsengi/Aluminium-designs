@@ -5,6 +5,7 @@ import { businessContact, siteUrl } from "@/lib/site";
 import {
   getCanonicalServiceLocationSlug,
   isRepairService,
+  parseServiceLocationSlug,
   toSingularServiceTitle,
 } from "@/lib/serviceLocationParser";
 import { getServiceLocationSeoEligibility } from "@/lib/seoEligibility";
@@ -484,38 +485,53 @@ function buildNap(location: LocationArea, suburbs: string[]): LocationServiceNap
 function buildFaqs(
   location: LocationArea,
   service: Service,
-  page: ServicePageContent,
   suburbs: string[],
+  targetPhrase?: string,
 ) {
   const suburbList = suburbs.slice(0, 6).join(", ");
-  const serviceFaqs = page.faqs.map((f) => ({ question: f.question, answer: f.answer }));
   const useCase = getServiceUseCase(service);
   const repair = isRepairService(service.id);
+  const displayTitle = repair ? service.title : toSingularServiceTitle(service.title);
+  const resolvedTargetPhrase = targetPhrase || (repair
+    ? `${displayTitle} near ${location.name}`
+    : `${displayTitle} installation near ${location.name}`);
+  const targetPhraseLower = resolvedTargetPhrase.toLowerCase();
 
   return [
-    ...serviceFaqs.slice(0, 3),
     {
-      question: `Do you provide ${service.title.toLowerCase()} near ${location.name} and surrounding areas?`,
+      question: `Do you provide ${targetPhraseLower}?`,
       answer: `Yes. Our mobile team serves project addresses near ${location.name}${suburbList ? `, including ${suburbList}` : ""}. Share the exact address when enquiring so we can confirm coverage, access, and appointment availability.`,
     },
     {
-      question: `What affects the price of ${service.title.toLowerCase()} near ${location.name}?`,
+      question: `How much does ${targetPhraseLower} cost?`,
       answer: `The quote is based on ${useCase}, opening dimensions, materials, hardware, finish, access, removal work, quantity, and installation conditions. Photographs and approximate measurements help with an initial estimate, while final dimensions may require an on-site visit.`,
     },
     {
-      question: `How long will ${service.title.toLowerCase()} take near ${location.name}?`,
+      question: `What information is needed to quote ${targetPhraseLower}?`,
+      answer: `Send the project address, photographs, approximate dimensions, the required product or repair, preferred finish, and any estate or site-access requirements. We use those details to prepare the initial scope and confirm whether an on-site measurement is required.`,
+    },
+    {
+      question: `How long does ${targetPhraseLower} take?`,
       answer: `Timing depends on the confirmed scope, material availability, workshop schedule, quantity, and site readiness. Your written quote should state whether fabrication is required and separate the expected lead time from the on-site work duration.`,
     },
     {
       question: repair
-        ? `How do you decide whether to repair or replace the existing product near ${location.name}?`
-        : `What happens during measurement and installation near ${location.name}?`,
+        ? `How do you assess ${targetPhraseLower} before recommending replacement?`
+        : `What happens during ${targetPhraseLower}?`,
       answer: repair
         ? `We assess the frame or structure, moving parts, glazing, seals, alignment, and the availability of compatible replacement components. We recommend replacement only when a repair would be unsafe, unreliable, or poor value.`
         : `We confirm the opening, specification, finish, hardware, access, and any removal work before manufacture. During installation, the team fits and aligns the product, completes the agreed sealing or fixing work, tests its operation, and clears the work area.`,
     },
     {
-      question: `What warranty and aftercare apply to ${service.title.toLowerCase()} near ${location.name}?`,
+      question: `Which suburbs and townships do you cover for ${service.title.toLowerCase()} near ${location.name}?`,
+      answer: `We cover the ${location.name} service hub and its listed surrounding areas${suburbList ? `, including ${suburbList}` : ""}. Confirm the exact project address when requesting a quote so travel and scheduling can be checked.`,
+    },
+    {
+      question: `Is ${targetPhraseLower} available for homes, estates, and commercial properties?`,
+      answer: `Yes. We assess houses, residential estates, complexes, shops, offices, and other commercial properties. Tell us about landlord approvals, working-hour restrictions, parking, lifting, security induction, or access constraints before the visit is scheduled.`,
+    },
+    {
+      question: `What warranty and aftercare apply to ${targetPhraseLower}?`,
       answer: `Warranty coverage depends on the selected product, components, finish, and scope of work. The written quote should identify the applicable coverage, exclusions, maintenance requirements, and the process for reporting an installation or component issue.`,
     },
   ];
@@ -525,55 +541,31 @@ function buildSeo(
   location: LocationArea,
   service: Service,
   page: ServicePageContent,
-  suburbs: string[],
+  _suburbs: string[],
   routeServiceId: string,
-  isNear: boolean,
   isInstallation: boolean = false,
+  targetPhrase?: string,
 ): LocationServiceSeo {
   const canonical = `${siteUrl}/${routeServiceId}`;
-  const firstSuburbs = suburbs.slice(0, 2).join(" & ");
-  const isSteel = service.category === "steel";
-  const isMall = location.type === "mall";
-
-  let titleTag: string;
-  let metaDescription: string;
   const displayTitle = isInstallation ? toSingularServiceTitle(service.title) : service.title;
+  const titleTag = targetPhrase || (isInstallation
+    ? `${displayTitle} Installation Near ${location.name}`
+    : `${displayTitle} Near ${location.name}`);
+  const rawMetaDescription = `${titleTag}: custom measurement, written specifications, professional ${isInstallation ? "installation" : "service"}, and clear quotes across ${location.municipality}.`;
+  const metaDescription = rawMetaDescription.length <= 160
+    ? rawMetaDescription
+    : `${rawMetaDescription.slice(0, 156).replace(/\s+\S*$/, "").replace(/[.,;:]$/, "")}…`;
 
-  if (isInstallation) {
-    titleTag = `${displayTitle} Installation ${isNear ? "Near" : "in"} ${location.name}`;
-    metaDescription = `${displayTitle} installation ${isNear ? "near" : "in"} ${location.name}${firstSuburbs ? ` and ${firstSuburbs}` : ""}. Custom measurement, written specifications and professional fitting.`;
-  } else if (isMall || isNear) {
-    titleTag = `${service.title} Near ${location.name}`;
-    metaDescription = isMall
-      ? `${service.title} near ${location.name} for homes and businesses in ${location.region}. Custom site measurement, fabrication and installation. Request a written quote.`
-      : `${service.title} near ${location.name}${firstSuburbs ? `, ${firstSuburbs}` : ""}. ${service.shortDescription} Custom site measurement, professional installation and written quotes.`;
-  } else {
-    titleTag = `${service.title} in ${location.name}`;
-    metaDescription = `Custom ${service.title.toLowerCase()} in ${location.name}${firstSuburbs ? ` and ${firstSuburbs}` : ""}. Site measurement, written specifications, professional fitting and quotes.`;
-  }
-
-  const singularService = service.title
-    .toLowerCase()
-    .replace(/s$/, "")
-    .replace(/doors$/, "door")
-    .replace(/windows$/, "window");
+  const singularService = toSingularServiceTitle(service.title).toLowerCase();
 
   const keywords = [
-    `${service.title.toLowerCase()} installation ${location.name}`,
-    `${singularService} installation ${location.name}`,
-    `${service.title.toLowerCase()} installers ${location.name}`,
-    `install ${service.title.toLowerCase()} in ${location.name}`,
+    titleTag.toLowerCase(),
     `${service.title.toLowerCase()} near ${location.name}`,
     `${service.title.toLowerCase()} near me`,
-    isMall ? `custom ${service.title.toLowerCase()} ${location.region}` : `${service.title.toLowerCase()} ${location.name}`,
-    `steel works near ${location.name}`,
-    `security gates near ${location.name}`,
-    `burglar bars near ${location.name}`,
-    `aluminium windows near ${location.name}`,
-    `sliding doors near ${location.name}`,
-    isSteel ? `welders near ${location.name}` : `glaziers near ${location.name}`,
-    `best ${service.title.toLowerCase()} near ${location.name}`,
-    `cheap ${service.title.toLowerCase()} near ${location.name}`,
+    isInstallation
+      ? `${singularService} installers near ${location.name}`
+      : `${service.title.toLowerCase()} services near ${location.name}`,
+    `${service.title.toLowerCase()} cost near ${location.name}`,
     ...page.seo.keywords.slice(0, 2),
   ];
 
@@ -682,6 +674,7 @@ export function getLocationServicePage(area: string, routeServiceId: string): Lo
 
   const isInstallation = routeServiceId.includes("-installation-");
   const isNear = location.type === "mall" || routeServiceId.includes("-near-");
+  const parsedRoute = parseServiceLocationSlug(routeServiceId);
 
   // Extract service identifier part from the route
   let parsedServiceKey = routeServiceId;
@@ -705,7 +698,7 @@ export function getLocationServicePage(area: string, routeServiceId: string): Lo
 
   const resolvedKey = aliasServiceMap[parsedServiceKey] || parsedServiceKey;
 
-  const service = services.find((s) => {
+  const service = parsedRoute?.coreService || services.find((s) => {
     const slug = slugify(s.title);
     const singularSlug = slug.replace(/s$/, "").replace(/doors$/, "door").replace(/windows$/, "window");
     return (
@@ -723,10 +716,11 @@ export function getLocationServicePage(area: string, routeServiceId: string): Lo
 
   const suburbs = getLocalSuburbs(location);
 
-  const hero = buildHero(location, service, page, isNear, isInstallation);
+  const targetPhrase = parsedRoute?.h1;
+  const hero = buildHero(location, service, page, isNear, isInstallation, targetPhrase);
   const localizedStory = buildStory(location, service, page, suburbs);
   const localNAP = buildNap(location, suburbs);
-  const localFaqs = buildFaqs(location, service, page, suburbs);
+  const localFaqs = buildFaqs(location, service, suburbs, targetPhrase);
 
   const base: LocationServiceObject = {
     id: `loc-srv-${location.slug}-${service.id}${isInstallation ? "-inst" : ""}`,
@@ -739,7 +733,15 @@ export function getLocationServicePage(area: string, routeServiceId: string): Lo
     localProjects: [],
     localReviews: [],
     localFaqs,
-    seo: buildSeo(location, service, page, suburbs, routeServiceId, isNear, isInstallation),
+    seo: buildSeo(
+      location,
+      service,
+      page,
+      suburbs,
+      routeServiceId,
+      isInstallation,
+      targetPhrase,
+    ),
     structuredDataJsonLd: {},
   };
 

@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import { MessageCircle, X } from "lucide-react";
+import { X } from "lucide-react";
 import LeadCaptureForm from "./LeadCaptureForm";
 
 type GateSource = "whatsapp" | "quote" | "phone" | "email";
@@ -95,31 +95,20 @@ export default function LeadGate() {
         if (event.target === event.currentTarget) close();
       }}
     >
-      <div className="relative w-full max-w-md max-h-[92dvh] overflow-y-auto rounded-2xl border border-outline-variant/60 bg-surface-container-lowest p-6 shadow-2xl">
-        <button
-          type="button"
-          onClick={close}
-          aria-label="Close"
-          className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full text-secondary transition-colors hover:bg-surface-container hover:text-primary"
-        >
-          <X className="h-4 w-4" />
-        </button>
+      <div className="relative w-full max-w-lg max-h-[92dvh] overflow-y-auto rounded-3xl border border-outline-variant/60 bg-surface-container-lowest p-5 shadow-2xl sm:p-6">
+        <h2 id="lead-gate-title" className="sr-only">
+          Contact details
+        </h2>
 
-        <div className="flex items-center gap-3 pr-8 mb-4">
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#25D366]/15 text-[#25D366]">
-            <MessageCircle className="h-5 w-5 fill-[#25D366]/20" />
-          </div>
-          <div>
-            <h2
-              id="lead-gate-title"
-              className="font-sans text-lg font-bold text-primary"
-            >
-              Chat on WhatsApp
-            </h2>
-            <p className="text-xs text-on-surface-variant">
-              Direct connection with our workshop estimators
-            </p>
-          </div>
+        <div className="mb-1 flex justify-end">
+          <button
+            type="button"
+            onClick={close}
+            aria-label="Close contact form"
+            className="flex h-9 w-9 items-center justify-center rounded-full text-secondary transition-colors hover:bg-surface-container hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40"
+          >
+            <X className="h-4 w-4" />
+          </button>
         </div>
 
         <LeadCaptureForm source={source} onCancel={close} />

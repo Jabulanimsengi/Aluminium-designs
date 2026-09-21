@@ -58,28 +58,25 @@ for (const tc of testCases) {
   }
 
   if (tc.locSlug === "katlehong") {
-    if (title.includes("Near Katlehong")) {
-      throw new Error(`Strict Katlehong rule failed! "Near Katlehong" found in title: "${title}"`);
+    if (!title.includes("Near Katlehong")) {
+      throw new Error(`Near-intent rule failed for Katlehong: "${title}"`);
     }
-    console.log(`  ✓ Katlehong strictly omitted 'Near'`);
+    console.log(`  ✓ Katlehong targets 'Near' consistently`);
   }
 }
 
 // 3. Verify Dynamic H1 Logic Formulas
-console.log("\n[3] Verifying H1 Formula & Katlehong Exception:");
-function computeH1(serviceName: string, locationSlug: string, locationName: string): string {
-  const isKatlehong = locationSlug.toLowerCase() === "katlehong";
-  return isKatlehong
-    ? `${serviceName} Installation in Katlehong`
-    : `${serviceName} Installation Near ${locationName}`;
+console.log("\n[3] Verifying consistent near-intent H1 formula:");
+function computeH1(serviceName: string, _locationSlug: string, locationName: string): string {
+  return `${serviceName} Installation Near ${locationName}`;
 }
 
 const h1Katlehong = computeH1("Aluminium Windows", "katlehong", "Katlehong");
 console.log(`  Katlehong H1: "${h1Katlehong}"`);
-if (h1Katlehong !== "Aluminium Windows Installation in Katlehong") {
+if (h1Katlehong !== "Aluminium Windows Installation Near Katlehong") {
   throw new Error(`Unexpected Katlehong H1: ${h1Katlehong}`);
 }
-console.log(`  ✓ Katlehong H1 formula verified: strictly omitted "Near"`);
+console.log(`  ✓ Katlehong H1 formula verified: includes "Near"`);
 
 const h1Sandton = computeH1("Aluminium Windows", "sandton", "Sandton");
 console.log(`  Sandton H1: "${h1Sandton}"`);

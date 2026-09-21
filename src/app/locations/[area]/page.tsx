@@ -47,23 +47,15 @@ function deterministicShuffle<T>(array: T[], seed: string): T[] {
   return shuffled;
 }
 
-function buildLocationMetaTitle(locationName: string, preposition: "in" | "Near") {
-  const candidates = [
-    `Aluminium Windows & Doors ${preposition} ${locationName} | Aluminium Designs`,
-    `Aluminium Services ${preposition} ${locationName} | Aluminium Designs`,
-    `Aluminium ${preposition} ${locationName} | Aluminium Designs`,
-    `${locationName} Aluminium | Aluminium Designs`,
-    `Aluminium ${preposition} ${locationName}`,
-  ];
-  return candidates.find((candidate) => candidate.length <= 60) || candidates.at(-1)!;
+function buildLocationTargetPhrase(locationName: string) {
+  return `Aluminium, Glass & Steel Services Near ${locationName}`;
 }
 
-function buildLocationMetaDescription(location: LocationArea, preposition: "in" | "near") {
-  const candidates = [
-    `Custom aluminium windows, doors, glass and steel services ${preposition} ${location.name}. Measurement, fabrication and installation across ${location.municipality}.`,
-    `Aluminium windows, doors, glass and steel services ${preposition} ${location.name}. Custom measurement, fabrication and installation across Gauteng.`,
-  ];
-  return candidates.find((candidate) => candidate.length <= 155) || candidates.at(-1)!;
+function buildLocationMetaDescription(location: LocationArea) {
+  const targetPhrase = buildLocationTargetPhrase(location.name);
+  const raw = `${targetPhrase}: custom measurement, fabrication, installation, repairs, and written quotes across ${location.municipality}.`;
+  if (raw.length <= 160) return raw;
+  return `${raw.slice(0, 156).replace(/\s+\S*$/, "").replace(/[.,;:]$/, "")}…`;
 }
 
 export const dynamicParams = true;
@@ -84,18 +76,21 @@ export async function generateMetadata({ params }: { params: Promise<{ area: str
     return { title: "Location Not Found" };
   }
 
-  const isKat = (location.slug || location.id).toLowerCase() === "katlehong";
-  const prep = isKat ? "in" : "Near";
-  const prepLower = isKat ? "in" : "near";
-
-  const desc = buildLocationMetaDescription(location, prepLower);
+  const targetPhrase = buildLocationTargetPhrase(location.name);
+  const desc = buildLocationMetaDescription(location);
   const socialImg = absoluteUrl("/images/hero_exterior.png");
-  const metaTitle = buildLocationMetaTitle(location.name, prep);
   const eligibility = getLocationSeoEligibility(location);
 
   return {
-    title: { absolute: metaTitle },
+    title: { absolute: targetPhrase },
     description: desc,
+    keywords: [
+      targetPhrase.toLowerCase(),
+      `aluminium services near ${location.name}`,
+      `glass services near ${location.name}`,
+      `steel works near ${location.name}`,
+      `aluminium installers near me`,
+    ],
     robots: {
       index: eligibility.index,
       follow: true,
@@ -113,20 +108,20 @@ export async function generateMetadata({ params }: { params: Promise<{ area: str
       locale: "en_ZA",
       url: `${siteUrl}/locations/${location.slug}`,
       siteName: "Aluminium Designs",
-      title: metaTitle,
+      title: targetPhrase,
       description: desc,
       images: [
         {
           url: socialImg,
           width: 1200,
           height: 630,
-          alt: `Aluminium Designs ${prep} ${location.name}`,
+          alt: targetPhrase,
         },
       ],
     },
     twitter: {
       card: "summary_large_image",
-      title: metaTitle,
+      title: targetPhrase,
       description: desc,
       images: [socialImg],
     },
@@ -150,9 +145,9 @@ export default async function LocationPage({ params }: { params: Promise<{ area:
     );
   }
 
-  const isKat = (location.slug || location.id).toLowerCase() === "katlehong";
-  const prep = isKat ? "in" : "Near";
-  const prepLower = isKat ? "in" : "near";
+  const prep = "Near";
+  const prepLower = "near";
+  const h1Title = buildLocationTargetPhrase(location.name);
 
   // Rotating Hero Paragraphs
   const heroVariations = [
@@ -223,37 +218,37 @@ export default async function LocationPage({ params }: { params: Promise<{ area:
   const remainingAreaCount = Math.max(coveredAreaNames.length - 10, 0);
   const locationFaqs = [
     {
-      question: `Do you provide on-site aluminium and steel services in ${location.name}?`,
+      question: `Do you provide ${h1Title.toLowerCase()}?`,
       answer: `Yes. ${location.name} is one of our established Gauteng service hubs. We arrange site measurements and project visits at residential and commercial addresses in the hub and its assigned surrounding areas.`,
     },
     {
-      question: `Which suburbs and townships do you cover around ${location.name}?`,
+      question: `Which suburbs and townships do your aluminium, glass, and steel services near ${location.name} cover?`,
       answer: coveredAreaNames.length > 0
         ? `Coverage includes ${coveredAreaPreview}${remainingAreaCount > 0 ? ` and ${remainingAreaCount} additional listed areas` : ""}. The full coverage list is shown on this page. Confirm the project address when requesting a quote so we can verify travel and scheduling.`
         : `We cover ${location.name} and nearby addresses within ${location.municipality}. Confirm the exact project address when requesting a quote so we can verify travel and scheduling.`,
     },
     {
-      question: `Which services are available near ${location.name}?`,
+      question: `Which aluminium, glass, and steel services are available near ${location.name}?`,
       answer: `The main locally targeted services for this hub are ${localServiceNames.join(", ")}. Our broader aluminium, glass, security, and steel catalogue is also available subject to the project specification and site location.`,
     },
     {
-      question: `How much does an installation near ${location.name} cost?`,
+      question: `How much do aluminium, glass, and steel installations near ${location.name} cost?`,
       answer: `Pricing depends on measurements, product type, glass or steel specification, hardware, finish, access, removal work, and installation conditions. We provide a written quote after confirming the scope instead of applying one generic area price.`,
     },
     {
-      question: `What information is needed for a quote in ${location.name}?`,
+      question: `What information is needed to quote services near ${location.name}?`,
       answer: `Send the project address, approximate opening dimensions, photographs, the product or repair required, preferred finish, and any estate or site-access requirements. A site measurement can then confirm the final manufacturing dimensions and installation scope.`,
     },
     {
-      question: `How long do measurement, manufacturing, and installation take near ${location.name}?`,
+      question: `How long do aluminium, glass, and steel projects near ${location.name} take?`,
       answer: `Timing depends on the product, quantity, selected materials, current workshop schedule, and site readiness. Your written quote should distinguish the measurement appointment, fabrication lead time, and expected installation duration.`,
     },
     {
-      question: `Can you remove or repair existing windows, doors, glass, or gates in ${location.name}?`,
+      question: `Can your services near ${location.name} include repairs or removal of existing products?`,
       answer: `Yes, where the existing opening and product condition allow it. Photographs help with an initial assessment, but an on-site inspection may be needed to decide whether repair, component replacement, or full replacement is the safer and more economical option.`,
     },
     {
-      question: `Do you work on homes, estates, and commercial properties near ${location.name}?`,
+      question: `Are aluminium, glass, and steel services near ${location.name} available for homes and businesses?`,
       answer: `Yes. We assess houses, residential estates, complexes, shops, offices, and other commercial properties. Please disclose security procedures, working-hour restrictions, landlord approvals, parking, lifting, or access constraints before scheduling the visit.`,
     },
   ];
@@ -278,7 +273,7 @@ export default async function LocationPage({ params }: { params: Promise<{ area:
     "@context": "https://schema.org",
     "@type": "Service",
     "@id": `${siteUrl}/locations/${location.slug}#service-area`,
-    name: `Aluminium and steel services ${prepLower} ${location.name}`,
+    name: h1Title,
     serviceType: "Custom aluminium, glass, security, and steel fabrication",
     provider: {
       "@id": `${siteUrl}#business`,
@@ -393,8 +388,7 @@ export default async function LocationPage({ params }: { params: Promise<{ area:
             </div>
 
             <h1 className="font-sans font-bold uppercase tracking-tight text-4xl sm:text-5xl lg:text-6xl text-primary leading-[1.1]">
-              Aluminium Windows, Doors &amp; Steel Works {prep}{" "}
-              <span className="text-accent">{location.name}</span>
+              {h1Title}
             </h1>
 
             <p className="font-sans text-on-surface-variant text-lg leading-relaxed max-w-2xl">
@@ -498,7 +492,7 @@ export default async function LocationPage({ params }: { params: Promise<{ area:
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center space-y-4 mb-16">
             <h2 className="font-sans font-bold uppercase tracking-tight text-3xl sm:text-4xl text-primary">
-              Questions About Installations {prep} {location.name}?
+              Questions About {h1Title}?
             </h2>
           </div>
           <FAQAccordion limit={8} items={locationFaqs} />

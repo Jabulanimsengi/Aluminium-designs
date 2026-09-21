@@ -1,8 +1,9 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { AlertCircle, LoaderCircle, MessageCircle } from "lucide-react";
+import { AlertCircle, LoaderCircle } from "lucide-react";
 import { BUDGET_OPTIONS } from "@/lib/lead-options";
+import WhatsAppIcon from "./WhatsAppIcon";
 
 type LeadCaptureFormProps = {
   source: "whatsapp" | "quote" | "phone" | "email";
@@ -200,7 +201,7 @@ export default function LeadCaptureForm({ source, onCancel, buttonLabel }: LeadC
           {isSubmitting ? (
             <LoaderCircle className="h-4 w-4 animate-spin" />
           ) : (
-            <MessageCircle className="h-4 w-4" />
+            <WhatsAppIcon className="h-[18px] w-[18px]" />
           )}
           {isSubmitting ? "Opening WhatsApp..." : buttonLabel || "Continue to WhatsApp"}
         </button>

@@ -40,16 +40,14 @@ function toSingularServiceSlug(serviceSlugOrTitle: string): string {
 
 function getCanonicalServiceLocationSlug(serviceSlugOrTitle: string, locationSlug: string): string {
   const locSlug = locationSlug.toLowerCase();
-  const isKatlehong = locSlug === "katlehong";
-  const prep = isKatlehong ? "in" : "near";
   const slug = slugify(serviceSlugOrTitle);
 
   if (isRepairService(slug)) {
-    return `${slug}-${prep}-${locSlug}`;
+    return `${slug}-near-${locSlug}`;
   }
 
   const singular = toSingularServiceSlug(slug);
-  return `${singular}-installation-${prep}-${locSlug}`;
+  return `${singular}-installation-near-${locSlug}`;
 }
 
 console.log("Testing all 38 services with getCanonicalServiceLocationSlug for Sandton and Katlehong:\n");

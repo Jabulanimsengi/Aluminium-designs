@@ -70,16 +70,14 @@ export function getCanonicalServiceLocationSlug(
   locationSlug: string
 ): string {
   const locSlug = locationSlug.toLowerCase();
-  const isKatlehong = locSlug === "katlehong";
-  const prep = isKatlehong ? "in" : "near";
   const slug = slugify(serviceSlugOrTitle);
 
   if (isRepairService(slug)) {
-    return `${slug}-${prep}-${locSlug}`;
+    return `${slug}-near-${locSlug}`;
   }
 
   const singular = toSingularServiceSlug(slug);
-  return `${singular}-installation-${prep}-${locSlug}`;
+  return `${singular}-installation-near-${locSlug}`;
 }
 
 const aliasServiceMap: Record<string, string> = {
@@ -188,10 +186,6 @@ export function parseServiceLocationSlug(rawSlug: string) {
 
   if (!matchedLocation || !rawServicePart) {
     return null;
-  }
-
-  if ((matchedLocation.slug || matchedLocation.id).toLowerCase() === "katlehong") {
-    matchedPreposition = "in";
   }
 
   const resolvedServiceSlug = aliasServiceMap[rawServicePart] || rawServicePart;

@@ -109,10 +109,10 @@ console.log(`  - 'near-katlehong' in sitemap: ${katlehongNearInSitemap.length}`)
 const katlehongInInSitemap = sm.filter((e) => e.url.includes("-in-katlehong"));
 console.log(`  - '-in-katlehong' in sitemap: ${katlehongInInSitemap.length}`);
 
-if (katlehongNearInSitemap.length === 0 && katlehongInInSitemap.length > 0) {
-  console.log("✓ Strict Katlehong Rule: PASSED (Zero 'near', 100% 'in')");
+if (katlehongNearInSitemap.length > 0 && katlehongInInSitemap.length === 0) {
+  console.log("✓ Near-intent rule: PASSED (Katlehong routes use 'near')");
 } else {
-  console.error("❌ Strict Katlehong Rule: FAILED!");
+  console.error("❌ Near-intent rule: FAILED for Katlehong!");
 }
 
 // ---------------------------------------------------------------------------

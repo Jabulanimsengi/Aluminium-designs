@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "audit:links": "node scripts/audit-internal-links.mjs",
+    "indexnow:submit": "node scripts/submit-indexnow.mjs",
     "images:optimize": "node scripts/optimize-images.js",
     "cloudinary:upload": "node scripts/upload-to-cloudinary.js",
     "cloudinary:dry-run": "node scripts/upload-to-cloudinary.js --dry-run"

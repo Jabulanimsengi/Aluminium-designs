@@ -28,10 +28,6 @@ import {
   isRepairService,
   toSingularServiceTitle,
 } from "@/lib/serviceLocationParser";
-import {
-  generateMetaTitleVariant,
-  generateMetaDescriptionVariant,
-} from "@/lib/seoVariants";
 import { getServiceLocationSeoEligibility } from "@/lib/seoEligibility";
 import { absoluteUrl, siteUrl, getWhatsAppQuoteUrl } from "@/lib/site";
 import CTASection from "@/components/CTASection";
@@ -67,29 +63,23 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     return { title: "Page Not Found" };
   }
 
-  const priceDisplay = parsed.taxonomyService?.startingPriceDisplay || "Competitive Rates";
-  const isInst = !isRepairService(parsed.serviceSlug);
-
-  const title = generateMetaTitleVariant({
-    serviceName: parsed.serviceTitle,
-    locationName: parsed.locationName,
-    locationSlug: parsed.locationSlug,
-    preposition: parsed.preposition,
-    category: parsed.taxonomyService?.category || "",
-    priceDisplay,
-    isInstallation: isInst,
-  });
-
-  const description = generateMetaDescriptionVariant({
-    serviceName: parsed.serviceTitle,
-    locationName: parsed.locationName,
-    locationSlug: parsed.locationSlug,
-    preposition: parsed.preposition,
-    priceDisplay,
-    trustSignal1: "Made to Measure",
-    trustSignal2: "Written Quote",
-    isInstallation: isInst,
-  });
+  const title = parsed.h1;
+  const action = parsed.isInstallation
+    ? "made-to-measure fabrication and professional installation"
+    : "site assessment, repair options, and replacement guidance";
+  const rawDescription = `${title}: ${action}, written specifications, and clear quotes for homes and businesses across ${parsed.location.municipality}.`;
+  const description = rawDescription.length <= 160
+    ? rawDescription
+    : `${rawDescription.slice(0, 156).replace(/\s+\S*$/, "").replace(/[.,;:]$/, "")}…`;
+  const keywordStem = parsed.serviceTitle.toLowerCase();
+  const keywords = [
+    title.toLowerCase(),
+    `${keywordStem} near ${parsed.locationName}`,
+    `${keywordStem} near me`,
+    parsed.isInstallation
+      ? `${keywordStem} installers near ${parsed.locationName}`
+      : `${keywordStem} services near ${parsed.locationName}`,
+  ];
 
   const canonicalUrl = `${siteUrl}/${parsed.canonicalSlug}`;
   const eligibility = getServiceLocationSeoEligibility(
@@ -103,6 +93,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: { absolute: title },
     description,
+    keywords,
     alternates: { canonical: canonicalUrl },
     robots: {
       index: eligibility.index,
@@ -127,7 +118,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
           url: socialImage,
           width: 1200,
           height: 630,
-          alt: `${parsed.serviceTitle} in ${parsed.locationName}`,
+          alt: title,
         },
       ],
     },
@@ -194,38 +185,39 @@ export default async function FlatServiceLocationPage({ params }: PageProps) {
   const startingPriceZar = taxonomyService?.startingPriceZar || 1500;
 
   const locContent = getLocationServicePage(parsed.locationSlug, parsed.canonicalSlug);
+  const targetPhraseLower = h1Title.toLowerCase();
 
   const defaultFaqs = [
     {
-      question: `What is the estimated cost of ${serviceTitle.toLowerCase()} ${locationContextPhrase}?`,
+      question: `How much does ${targetPhraseLower} cost?`,
       answer: `Indicative pricing begins at ${priceDisplay} (${priceUnit}), but the written quote depends on confirmed dimensions, materials, hardware, finish, access, removal work, and installation conditions.`,
     },
     {
-      question: `What information do you need to quote ${serviceTitle.toLowerCase()} ${prepWord} ${locationName}?`,
+      question: `What information do you need to quote ${targetPhraseLower}?`,
       answer: `Send the project address, photographs, approximate dimensions, the required product or repair, preferred finish, and any access restrictions. Final manufacturing dimensions may require an on-site measurement.`,
     },
     {
-      question: `How long does manufacturing and installation take ${prepWord} ${locationName}?`,
+      question: `How long does ${targetPhraseLower} take?`,
       answer: `Timing depends on the confirmed specification, material availability, quantity, workshop schedule, and site readiness. The written quote should separate the expected fabrication lead time from the on-site work duration.`,
     },
     {
-      question: `Which areas around ${locationName} do you serve?`,
+      question: `Which areas do you cover for ${serviceTitle.toLowerCase()} near ${locationName}?`,
       answer: `We serve project addresses across the ${locationName} hub and its listed surrounding suburbs and townships. Confirm the exact address when enquiring so we can verify coverage and appointment availability.`,
     },
     {
-      question: `Can you remove, repair, or replace an existing product ${prepWord} ${locationName}?`,
+      question: `Can ${targetPhraseLower} include removal of an existing product?`,
       answer: `Yes, where the existing condition and opening allow it. We assess the frames or structure, glazing, seals, hardware, alignment, and compatible parts before recommending repair, component replacement, or full replacement.`,
     },
     {
-      question: `How do you confirm the right specification for ${serviceTitle.toLowerCase()}?`,
+      question: `How do you specify ${serviceTitle.toLowerCase()} near ${locationName}?`,
       answer: `The specification is based on dimensions, intended use, security, ventilation, glazing or steel requirements, weather exposure, finish, hardware, and the condition of the supporting opening or structure.`,
     },
     {
-      question: `Can you work at estates, complexes, shops, and offices ${prepWord} ${locationName}?`,
+      question: `Is ${targetPhraseLower} available for homes and commercial properties?`,
       answer: `Yes. Tell us about estate rules, landlord approvals, working-hour restrictions, parking, lifting, security induction, or other access requirements before the site visit is scheduled.`,
     },
     {
-      question: `What warranty and aftercare apply to ${serviceTitle.toLowerCase()}?`,
+      question: `What warranty and aftercare apply to ${targetPhraseLower}?`,
       answer: `Coverage depends on the chosen product, components, finish, and work scope. The written quote should identify the applicable warranty, exclusions, maintenance requirements, and issue-reporting process.`,
     },
   ];

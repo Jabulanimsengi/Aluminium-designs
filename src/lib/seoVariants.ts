@@ -52,10 +52,10 @@ function hashString(input: string): number {
 /**
  * Generates a high-CTR meta title tag strictly under 60 characters for mobile SERPs.
  * Rotates descriptive modifiers without unverifiable superlatives.
- * and respects the Katlehong strict location rule (omitting "Near").
+ * while keeping the local-search preposition consistent across locations.
  *
  * Example Output: "Custom Aluminium Window | Installation Near Sandton"
- * Katlehong Output: "Custom Aluminium Window | Installation in Katlehong"
+ * Katlehong Output: "Custom Aluminium Window | Installation Near Katlehong"
  */
 export function generateMetaTitleVariant(options: TitleVariantOptions): string {
   const {
@@ -69,8 +69,7 @@ export function generateMetaTitleVariant(options: TitleVariantOptions): string {
     isInstallation = true,
   } = options;
 
-  const isKatlehong = locationSlug.toLowerCase() === "katlehong";
-  const prep = isKatlehong ? "in" : (options.preposition || "near");
+  const prep = options.preposition || "near";
   const locationPhrase = prep === "in" ? `in ${locationName}` : `Near ${locationName}`;
 
   const seed = `${serviceName}:${locationSlug}`;
@@ -146,15 +145,13 @@ export function generateMetaDescriptionVariant(options: DescriptionVariantOption
   const {
     serviceName,
     locationName,
-    locationSlug,
     priceDisplay = "competitive rates",
     trustSignal1 = "No Call-Out Fee",
     trustSignal2 = "SANS 10400 Compliant",
     cta = "Get a free quote today!",
   } = options;
 
-  const isKatlehong = locationSlug.toLowerCase() === "katlehong";
-  const prep = isKatlehong ? "in" : (options.preposition || "near");
+  const prep = options.preposition || "near";
 
   const actionWord = options.isInstallation === false ? "repairs" : "installation";
   const cleanPrice = priceDisplay.replace(/^from\s+/i, "").trim();
