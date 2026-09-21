@@ -329,7 +329,11 @@ export default async function AdminMonitoringPage({
   const session = (await cookies()).get(ADMIN_SESSION_COOKIE)?.value;
   if (!verifyAdminSessionToken(session)) redirect("/admin/login");
 
-  const params = await searchParams;
+  const [params, allEvents, allLeads] = await Promise.all([
+    searchParams,
+    readMonitoringEvents(),
+    readLeads(),
+  ]);
   const requestedRange = params.range as RangeKey | undefined;
   const range = requestedRange && requestedRange in ranges ? requestedRange : "7d";
   const requestedView = params.view as ViewKey | undefined;
@@ -338,36 +342,59 @@ export default async function AdminMonitoringPage({
   const leadQueryLower = leadQuery.toLowerCase();
 
   const cutoff = monitoringWindowStart(ranges[range].milliseconds);
-  const allEvents = await readMonitoringEvents();
   const events = allEvents
     .filter((event) => range === "all" || new Date(event.timestamp).getTime() >= cutoff)
     .filter((event) => !isAdminPath(event.page) && !isAdminPath(event.destination))
     .sort((a, b) => Date.parse(b.timestamp) - Date.parse(a.timestamp));
 
-  const humanEvents = events.filter((event) => !event.isBot);
-  const botEventCount = events.length - humanEvents.length;
+  const humanEvents: MonitoringEvent[] = [];
+  const pageViews: MonitoringEvent[] = [];
+  const conversions: MonitoringEvent[] = [];
+  const clickEvents: MonitoringEvent[] = [];
+  const whatsappEvents: MonitoringEvent[] = [];
+  const emailEvents: MonitoringEvent[] = [];
+  const quoteClickEvents: MonitoringEvent[] = [];
+  const errorEvents: MonitoringEvent[] = [];
+  const uniqueSessionIds = new Set<string>();
+  const uniqueVisitorIds = new Set<string>();
+  const whatsappSessionIds = new Set<string>();
+  const emailSessionIds = new Set<string>();
+  let botEventCount = 0;
 
-  const pageViews = humanEvents.filter((event) => event.event === "page_view");
-  const conversions = humanEvents.filter((event) => conversionEvents.has(event.event));
-  const clickEvents = humanEvents.filter((event) => event.event.endsWith("_click"));
-  const whatsappEvents = humanEvents.filter((event) => event.event === "whatsapp_click");
-  const emailEvents = humanEvents.filter((event) => event.event === "email_click");
-  const quoteClickEvents = humanEvents.filter((event) => event.event === "quote_request_click");
-  const errorEvents = humanEvents.filter((event) => event.event === "js_error");
+  for (const event of events) {
+    if (event.isBot) {
+      botEventCount += 1;
+      continue;
+    }
 
-  const uniqueSessions = new Set(humanEvents.map((event) => event.sessionId).filter(Boolean)).size;
-  const uniqueVisitors = new Set(
-    humanEvents
-      .map((event) => event.visitorId || (event.sessionId ? `legacy:${event.sessionId}` : ""))
-      .filter(Boolean),
-  ).size;
+    humanEvents.push(event);
+    if (event.sessionId) uniqueSessionIds.add(event.sessionId);
+    const visitorId = event.visitorId || (event.sessionId ? `legacy:${event.sessionId}` : "");
+    if (visitorId) uniqueVisitorIds.add(visitorId);
+    if (event.event === "page_view") pageViews.push(event);
+    if (conversionEvents.has(event.event)) conversions.push(event);
+    if (event.event.endsWith("_click")) clickEvents.push(event);
+    if (event.event === "whatsapp_click") {
+      whatsappEvents.push(event);
+      if (event.sessionId) whatsappSessionIds.add(event.sessionId);
+    }
+    if (event.event === "email_click") {
+      emailEvents.push(event);
+      if (event.sessionId) emailSessionIds.add(event.sessionId);
+    }
+    if (event.event === "quote_request_click") quoteClickEvents.push(event);
+    if (event.event === "js_error") errorEvents.push(event);
+  }
+
+  const uniqueSessions = uniqueSessionIds.size;
+  const uniqueVisitors = uniqueVisitorIds.size;
   const uniqueEngagedIps = new Set(conversions.map((event) => event.ipAddress).filter(Boolean)).size;
   const engagedIps = countBy(
     conversions.filter((event) => event.ipAddress),
     "ipAddress",
   ).slice(0, 10);
-  const whatsappSessions = new Set(whatsappEvents.map((event) => event.sessionId).filter(Boolean)).size;
-  const emailSessions = new Set(emailEvents.map((event) => event.sessionId).filter(Boolean)).size;
+  const whatsappSessions = whatsappSessionIds.size;
+  const emailSessions = emailSessionIds.size;
   const conversionRate = pageViews.length ? (conversions.length / pageViews.length) * 100 : 0;
   const topPages = countBy(pageViews, "page").slice(0, 8);
   const topActions = countBy(conversions, "event").slice(0, 8);
@@ -419,7 +446,6 @@ export default async function AdminMonitoringPage({
   const quoteByIp = groupByIp(quoteClickEvents);
   const quoteUniqueIps = new Set(quoteClickEvents.map((event) => event.ipAddress).filter(Boolean)).size;
 
-  const allLeads = await readLeads();
   const searchedLeads = leadQueryLower
     ? allLeads.filter((lead) =>
         [lead.name, lead.phone, lead.location, lead.budget, lead.source].some((value) =>
@@ -449,7 +475,9 @@ export default async function AdminMonitoringPage({
   const activityGroups = new Map<string, MonitoringEvent[]>();
   for (const event of humanEvents) {
     const ipAddress = event.ipAddress || "Unknown";
-    activityGroups.set(ipAddress, [...(activityGroups.get(ipAddress) || []), event]);
+    const activity = activityGroups.get(ipAddress);
+    if (activity) activity.push(event);
+    else activityGroups.set(ipAddress, [event]);
   }
 
   const trendBuckets = buildTrend(range, pageViews, conversions);
